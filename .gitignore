@@ -1,4 +1,5 @@
 *.DS_Store
+*.swp
 *.aux
 *.out
 *.toc
@@ -11,3 +12,4 @@
 *.snm
 *.nav
 thesis.pdf
+*.fdb_latexmk
