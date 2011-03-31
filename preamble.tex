@@ -1,0 +1,107 @@
+% dmthesis.sty : LaTeX style for my Master's Theses
+% created by :
+%    Dan Michael Olsen Heggø
+%    (danmichaelo@gmail.com)
+
+%\typeout{Hello world}
+
+\KOMAoptions{parskip=half, BCOR=7.5mm, DIV=11, mpinclude=false}  % skip margin notes
+% DIV=11 gir oss i utg. pkt. 152.73 mm tekstbredde og 216 mm teksthøyde.
+% men vi trekker fra 7.5 mm som forsvinner i innbindingen (BCOR)
+% og står igjen med 147.26 mm tekstbredde.
+
+\usepackage[greek,english]{babel}		% Localization
+\usepackage[utf8]{inputenc}				% For typing accentuated characters directly
+
+%\usepackage{kpfonts}                   % kp is nice for text, but the math isn't acceptable 
+\usepackage{lmodern}                    % Use fully scalable fonts
+\usepackage[T1]{fontenc}            	% T1 contains the french guillements.. 
+\usepackage{lettrine}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATH:
+
+\usepackage{amsmath,amsthm,amssymb}		% AMS Math support
+\usepackage{empheq,mathtools}
+\usepackage{siunitx} 					% For consistent units. Includes upright mu.
+										% Must be loaded after amssymb
+
+\renewcommand{\vec}[1]{\boldsymbol{\mathrm{#1}}} 	% Use bold vectors
+\newcommand{\nvec}[1]{\mathrm{#1}} 	                % matrices, etc.. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FONT:
+
+%\usepackage{kmath,kerkis}          	% The order of the packages matters; 
+                                    	% kmath changes the default text font
+                                    	% Must be loaded after amsmath
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures and tables:
+
+\usepackage[usenames,dvipsnames]{color}	% usenames + dvipsnames gives us 66 predefined colors. 
+\usepackage{graphicx}					% Graphicx is the extended graphics package.
+%\graphicspath{{imgs/}{moreimgs/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg} 	% specifies the behaviour of the system when no 
+											% file extension is specified in the argument
+\usepackage{subfigure} 					% for subfigures
+
+%\usepackage{wrapfig} 					% for \begin{wrapfigure}
+
+% Print figure and table labels in a smaller font, and print `Figure:' and `Table:' in boldface:
+\usepackage[margin=10pt,font=small,labelfont=bf,labelsep=colon,format=plain,indention=.5cm]{caption}
+
+
+\usepackage{booktabs}					% production quality tables
+\usepackage{threeparttable}				% for placing footnotes under tables
+%\usepackage{multirow} 					% for multi-row table cells
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHEMISTRY :
+
+%\usepackage[version=3]{mhchem}			% Latest version: 3.07
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MISC :
+
+\usepackage{fancybox}					% For boxed environments
+\usepackage{layout}						% For page layout debug (\layout)
+\usepackage{soul}                       % For highlighting (in the draft phase)
+
+
+% Note that LaTeX can only draw lines with slope = x/y, where x and y have integer values from −6 through 6.
+\newcommand{\crossbox}[1]{ %
+    \setlength{\unitlength}{#1}
+    \begin{picture}(1,1)(0,0)
+       \put(0,0){\framebox(1,1){ }}
+       \put(0,0){\line(1,1){1}}         % (slope x, slope y){length}
+       \put(1,0){\line(-1,1){1}}        % (slope x, slope y){length}
+    \end{picture} %
+    }
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY :
+\usepackage[backend=biber,hyperref=true,sorting=none,style=numeric]{biblatex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYPERREF :
+\usepackage{hyperref} 	% Make sure it comes last of your loaded packages, 
+						% to give it a fighting chance of not being over-written, 
+						% since its job is to redefine many LATEX commands.
+						% It is preferable to load it after biblatex.
+\hypersetup{pdftex,unicode, 
+    colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,    
+    pdfdisplaydoctitle=true, 
+    bookmarksopen=true,bookmarksopenlevel=2,        
+    pdfauthor   = {Dan Michael Olsen Heggø},            
+    pdftitle    = {Not Set Yet},                         
+    pdfkeywords = {phosphorus, diffusion, silicon, solar cells, master thesis}
+}
+
+

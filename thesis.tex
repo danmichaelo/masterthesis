@@ -6,8 +6,7 @@
 % designed for European and German typography (komascript.de):
 \documentclass[11pt]{scrbook}   % paper=a4 is default, 11pt is actually also default
 
-% I put most preamble-stuff in the file dmstyle.sty
-\usepackage{dmstyle}
+\include{preamble}
 
 % Macros
 \newcommand{\ksorb}{\ensuremath{\psi^{\mathrm{KS}}}}
@@ -73,12 +72,8 @@ As an introduction, table XX presents some key properties of silicon,
 
 
 \begin{table}[htb]
- \begin{center}
-  \caption{Some key properties of silicon}
-  \label{tb:si}
-  \newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
-  \newcommand{\mr}[3]{\multirow{#1}{#2}{#3}}
-  \begin{tabular}{ll}
+  \centering
+  \begin{tabular}{lll}
     \hline
      & 300~K & 1100~K\\
      Crystal structure & Diamond  \\ 
@@ -88,7 +83,8 @@ As an introduction, table XX presents some key properties of silicon,
      Melting point & \SI{1685}{\kelvin} \\
      Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\
   \end{tabular}
- \end{center}
+  \caption{Some key properties of silicon}
+  \label{tb:si}
 \end{table} 
 
 

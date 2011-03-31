@@ -1,0 +1,13 @@
+*.DS_Store
+*.aux
+*.out
+*.toc
+*.log
+*.dvi
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.snm
+*.nav
+thesis.pdf
