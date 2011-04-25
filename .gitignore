@@ -13,3 +13,6 @@
 *.nav
 thesis.pdf
 *.fdb_latexmk
+*.ind
+*.ilg
+*.idx
