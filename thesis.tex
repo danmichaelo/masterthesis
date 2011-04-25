@@ -71,20 +71,20 @@ than 60 years\footnote{
 , data that can be used to test our models. 
 For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by [Fahey:1989] and [Hu:1994]. And the PhD thesis of [Bentzen:2006] provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
 
-As an introduction, table XX presents some key properties of silicon,
+As an introduction, table \ref{tb:si} presents some key properties of silicon,
+
 
 
 \begin{table}[htb]
   \centering
-  \begin{tabular}{lll}
-    \hline
+  \begin{tabular}{lll}\toprule
      & 300~K & 1100~K\\
      Crystal structure & Diamond  \\ 
-     Lattice constant / Å  & 5.43086 \cite{Ghandhi:1994} \\
+     Lattice constant / Å  & 5.43086 \cite{Ghandhi:1994}, 5.43072 $\pm$ 0.00004 Å at \SI{25}{\celsius} \cite{Smakula:1955} \\
      Distance between neighboring atoms / Å & 2.35163 \\
      Atomic density & \SI{4.99441e22}{\per\centi\metre\cubed} \\
-     Melting point & \SI{1685}{\kelvin} \\
-     Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\
+     Melting point & \SI{1685}{\kelvin} / \SI{1412}{\kelvin} \\
+     Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\\bottomrule
   \end{tabular}
   \caption{Some key properties of silicon}
   \label{tb:si}
@@ -183,13 +183,26 @@ computer modelling give us insight into what the ideal solar cell material would
 be?
 
 
-\section{Diffusivity}
+\section{Diffusion and diffusivity}
 
-At a macroscopic level, the flux of particles $\vec{J}$ of a given species is proportional to the negative concentration gradient of that species, $\nabla c$, with the coefficient of proportionality being a material parameter known as the diffusion coefficient or diffusivity $D$, with units typically in \si{\metre\squared\per\second} or \si{\centi\metre\squared\per\second}.
-In mathematical language,
+Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here although the theories of diffusion are not limited to atoms} due to their thermal motion. 
+
+Such redistribution occurs in all materials, but at a negligible rate at temperatures much below the melting point of the material.
+For silicon, with a melting point of \SI{1414}{\celsius}, diffusion is negligible at room temperature, 
+but significant at elevated temperatures, and controlled diffusion is commonly carried out at temperatures 
+of about 800-\SI{1000}{\celsius}. 
+
+As is not uncommon in physics, different descriptions exists depending on the scale of interest. 
+On a macroscopic scale\footnote{\comment{Clarify macroscopic / microscopic?}
+}, a description involving every single atom becomes impractical, and we are better off with a viscous fluid description.
+Such a description was first introduced by Adolf Fick in 1855\cite{Fick:1855} as a phenomenological description involving empirical diffusion coefficients. 
+In this picture, a species with concentration $c(\vec{r})$ will flow in the opposite direction of the concentration gradient of that species, $\nabla c(\vec{r})$. That is, it will show a flux,
 \begin{equation}
   \vec{J}(\vec{r},t) = - D \nabla c(\vec{r},t).
+  \label{eq:ficks1st}
 \end{equation}
+This relationship between the concentration gradient and the flux is known as Fick's first law, and the constant of proportionality $D$ is known as the coefficient of diffusion or \emph{diffusivity}\index{diffusivity} and are often reported in \si{\metre\squared\per\second} or \si{\centi\metre\squared\per\second}.
+
 The picture is slightly complicated by the fact that the diffusivity itself in general will vary with the concentration $c$.
 For the diffusivity of species at very low concentrations, such as dopants, this concentration dependence will be negligible, but at high concentrations, such as the typical phosphorus concentrations in the solar cell emitter layer, the effect is significant.
 A. Bentzen has obtained the concentration dependence of the phosphorus diffusion coefficient over a large range of concentrations using Boltzmann-Matano analysis of experimental data at \SI{890}{\celsius}. 
@@ -206,7 +219,7 @@ One mechanism may, however, be the dominating one. In the case of phosphorus in 
 
 Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $e^{-E_a/KT}$, and so the probability for a jump to happen is just $e^{-E_a/kT}$. 
 
-In a simple model, we can estimate the number of jumps per second by multiplying this probability by the attempt frequency $\nu$,
+In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by the attempt frequency $\nu$,
 \begin{equation}
   \Gamma = \nu e^{-E_a/kT}
   \label{eq:jump-freq}
@@ -260,6 +273,16 @@ while in solids its magnitudes smaller, typically of the order of $10^{-11}$ cm2
 
 
 The diffusion coefficient in crystals with a cubic lattice should be isotropic.
+
+\section{Atomistic diffusion models}
+
+\ldots
+
+\section{The case of phosphorus in silicon}
+
+The solubility of phosphorus in silicon is rather high
+
+
 
 \chapter{Density Functional Theory}
 
