@@ -4,9 +4,12 @@
 % are often deemed too wide by Europeans using A4 paper. The classes in the 
 % Koma-Script bundle (scrartcl.cls, scrrepr t.cls, scrbook.cls) are specially
 % designed for European and German typography (komascript.de):
-\documentclass[11pt]{scrbook}   % paper=a4 is default, 11pt is actually also default
+\documentclass[11pt,bibliography=totoc,index=totoc]{scrbook}   % paper=a4 is default, 11pt is actually also default
 
 \include{preamble}
+
+\usepackage{makeidx}
+\makeindex
 
 % Macros
 \newcommand{\ksorb}{\ensuremath{\psi^{\mathrm{KS}}}}
@@ -1753,5 +1756,7 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 \layout
 
 \printbibliography
+
+\printindex
 
 \end{document}
