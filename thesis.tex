@@ -1,3 +1,5 @@
+% vim:spell:spl=en_gb:fenc=utf-8:et:sw=4:ts=4:sts=4
+%
 % This document has been prepared for use with pdfLaTeX 
 
 % The margins produced by standard classes (ar ticle.cls, report.cls, book.cls) 
@@ -38,27 +40,48 @@
 \frontmatter
 \maketitle
 
+Acknowledgement
+
+Abstract
+
+Sammendrag på norsk
+
+%Grasping the amount of work behind this possibility is hard,
+%generations before you have laid out the theories of quantum mechanics and of
+%solid state physics, prepared a huge library of crystallographic data, 
+%developed computing power at a remarkable pace, and written millions of lines
+%of computer code. 
+
+
 \tableofcontents
 
 \mainmatter
 
-\chapter{Prolegomena}
+\part{Background and theory}
 
-\section{Tja}
+\chapter{Background} % Prolegomena
 
-\lettrine[lines=3, findent=.2em, slope=-0.5em, nindent=0pt]{W}{hile}
-I personally have no preference for materials over any other matter,
-it happened that I ended up in materials science, the study of materials 
--- ``matter from which a thing is or can be made''\footnote{New Oxford American Dictionary 2nd ed. 2005. I will not 
-dive into what a `thing' is.}. I was driven into this discipline by my
-interest in materials for utilisation of some of the \SI{120000}{\tera\watt}
+\section{Introduction}
+
+%\lettrine[lines=3, findent=.2em, slope=-0.5em, nindent=0pt]{W}{hile}
+%I personally have no preference for materials over any other matter,
+%it happened that I ended up in materials science, the study of 
+
+materials -- ``matter from which a thing is or can be made''\footnote{New Oxford American Dictionary 2nd ed. 2005. I will not 
+go into what a `thing' may or may not be.}. 
+
+%I was driven into this discipline by my interest in materials for 
+
+utilisation of some of the \SI{120000}{\tera\watt}
 of net power we receive from the Sun -- most of which is `spilled' today. 
 
-Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very tempting from a theoretical point of view (finne kilder), but has often been considered unfeasable from a practical point of view due to the great computational cost involved.
+Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very tempting from a theoretical point of view (finne kilder), but has generally been considered unfeasable from a practical point of view due to the great computational cost involved.
 Modeling at the \textit{ab initio}, while 
-This thesis was started without knowing \textit{a priori} if simulations at the \textit{ab initio} level could be 
-simulation times long enough could be obtained with 
 
+
+I'm grateful to the developers of the VASP software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ldots 
+
+This work was started without knowing \textit{a priori} if simulations at the \textit{ab initio} level could be carried out with simulation times long enough to obtain useful statistics, but with new potentials and \ldots we found it worthwhile to test.
 
 A privilege with studying phosphorus in silicon is that there exists a wealth of experimental and theoretical results from more 
 than 60 years\footnote{
@@ -69,11 +92,9 @@ than 60 years\footnote{
   phosphorus is mentioned as a donor. But I'm not sure just when phosphorus was first introduced.
 } of studies on this system. 
 , data that can be used to test our models. 
-For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by [Fahey:1989] and [Hu:1994]. And the PhD thesis of [Bentzen:2006] provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
+For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by (Fahey:198) and (Hu:1994). And the PhD thesis of (Bentzen:2006) provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
 
 As an introduction, table \ref{tb:si} presents some key properties of silicon,
-
-
 
 \begin{table}[htb]
   \centering
@@ -86,19 +107,17 @@ As an introduction, table \ref{tb:si} presents some key properties of silicon,
      Melting point & \SI{1685}{\kelvin} / \SI{1412}{\kelvin} \\
      Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\\bottomrule
   \end{tabular}
-  \caption{Some key properties of silicon}
+  \caption{Some key properties of silicon (Har ikke helt bestemt hvilke som bør være med her)}
   \label{tb:si}
 \end{table} 
 
 
-
-\section{The resource}
+\section{The power of the sun}
 \lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
-stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE], an
-energy flux which is diluted by the fourth power of the distance [CHECK]. 8 light
-minutes away, our small, blue planet receive about 100 petawatts ($10^{17}$
-) of radiative power [CHECK], a fairly constant value. In thermodynamic terms, 
-the radiation is an
+stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
+8 light minutes away, our small, blue planet receives about 100 petawatts ($10^{17}$
+) of radiative power [CHECK].
+In thermodynamic terms, the radiation is an
 energy flux of relatively low entropy, meaning that it's easier to utilize
 than lower-entropy energy fluxes such as heat. It is a `high-quality' energy
 flux, an energy flux that is the starting point for all processes on earth
@@ -117,11 +136,14 @@ roughly 10 hard working days can be replaced by a single litre of gasoline in te
 of energy content. 
 
 How about solar power? In a solar-rich area, we receive the same amount of energy 
-over 9.5 square metres in one hour. We often say that solar power is 
+over 9.5 square metres in one hour. That's why we say that solar power is rather
 \emph{area-intensive}.
 
+Blabla. solceller må derfor være tynnest mulig og mest mulig effektiv.
 
-solar constant: $1366\pm 40$ W/m$^2$. The yearly variation of about $\pm 3\%$ 
+solar constant: 
+
+$1366\pm 40$ W/m$^2$. The yearly variation of about $\pm 3\%$ 
 due to the variation of Earth's distance to the Sun during the year, is much
 larger than the known variations in the radiation itself.\footnote{
 Phillips, Kenneth J. H. (1995). Guide to the Sun. Cambridge University Press. 
@@ -131,12 +153,19 @@ pp. 14–15, 34–38. ISBN 9780521397889.
 }
 
 solar constant $1353\pm 45$ W/m$^2$ (Marstein forelesningsnotater)
+. de Vos, s. 19: 1353, pm 3.5\%.
 
 About $5.8\times 10^{17}$ photons/sec/cm$^2$ reach the outer atmosphere, while
 some $10^{17}$ survive through the atmosphere.\footnote{Solar Cells (Backus)}
 
+\section{The silicon solar cell}
 
-\section{Short solar cell history}
+Silicon doped with a donor, like phosphorus, is called n-Si. Highly-doped areas in the proximity of the metal contacts are often referred to as n+ or n++.
+
+The contact resistivity $\rho_c$ depends strongly on the doping concentration $N_D$, as reviewed by Schröder\cite{Schroder:1984}. 
+If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$,but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.
+
+\subsection{Short solar cell history (kan kanskje sløyfes)}
 
 The ``Effect of Light on Selenium during the passage of an Electric Current''
 was described by W. Smith in 1873\cite{Smith:1873}.
@@ -157,56 +186,117 @@ Solar cells later became practical for power uses after Russell Ohl's 1941
 development of silicon p/n junction cells that reached efficiencies above 
 5\% by the 1950s/1960s.
 
-Multicrystalline silicon (mc-Si) wafers are widely used for man- 
-ufacturing of solar cells due to their relatively low price and high 
-performance. is responsible for the kink-and-tail profile [11–13]. The effective 
-diffusivities describing the high and low concentration regions of 
+%Multicrystalline silicon (mc-Si) wafers are widely used for man- 
+%ufacturing of solar cells due to their relatively low price and high 
+%performance. is responsible for the kink-and-tail profile [11–13]. The effective 
+%diffusivities describing the high and low concentration regions of 
 
 
-Today, silicon-based solar cells are most widely used because of their
-relatively low price and high performance. Even cheaper are many of the thin
-film approaches, but at the cost of lower performance, meaning larger areal
-cost. The most popular also make use of scarce elements, which mean that such
-solar cells cannot play a major part of a renewable energy scenario.
+%Today, silicon-based solar cells are most widely used because of their
+%relatively low price and high performance. Even cheaper are many of the thin
+%film approaches, but at the cost of lower performance, meaning larger areal
+%cost. The most popular also make use of scarce elements, which mean that such
+%solar cells cannot play a major part of a renewable energy scenario.
 
-While solar cells today are commonly quoted as being to expensive, a remarkable
-project initiated by the Barefoot College in India have shown that even the
-poorest of the poor can often reduce their expenses by replacing kerosene with
-silicon solar cell based lightning.
+%While solar cells today are commonly quoted as being to expensive, a remarkable
+%project initiated by the Barefoot College in India have shown that even the
+%poorest of the poor can often reduce their expenses by replacing kerosene with
+%silicon solar cell based lightning.
 
-The main problem is of course that fossil fuel is underpriced.
+%The main problem is of course that fossil fuel is underpriced.
 
-Even so, there is a broad hope for a great increase in solar cell performance in
-the coming years. How is it to be achieved? From a modelling point of view we
-can study both materials that have never been tested in the real world. Can
-computer modelling give us insight into what the ideal solar cell material would
-be?
+%Even so, there is a broad hope for a great increase in solar cell performance in
+%the coming years. How is it to be achieved? From a modelling point of view we
+%can study both materials that have never been tested in the real world. Can
+%computer modelling give us insight into what the ideal solar cell material would
+%be?
 
 
 \section{Diffusion and diffusivity}
 
-Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here although the theories of diffusion are not limited to atoms} due to their thermal motion. 
-
-Such redistribution occurs in all materials, but at a negligible rate at temperatures much below the melting point of the material.
+Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria} due to their thermal motion. 
+Such redistribution occurs in all materials, but at a negligible rate at temperatures considerably below the melting point of the material.
 For silicon, with a melting point of \SI{1414}{\celsius}, diffusion is negligible at room temperature, 
 but significant at elevated temperatures, and controlled diffusion is commonly carried out at temperatures 
 of about 800-\SI{1000}{\celsius}. 
 
-As is not uncommon in physics, different descriptions exists depending on the scale of interest. 
-On a macroscopic scale\footnote{\comment{Clarify macroscopic / microscopic?}
-}, a description involving every single atom becomes impractical, and we are better off with a viscous fluid description.
-Such a description was first introduced by Adolf Fick in 1855\cite{Fick:1855} as a phenomenological description involving empirical diffusion coefficients. 
+How do we describe and model diffusion?
+As is not uncommon in physics, different pictures exist for different scales of interest. 
+When it comes to describing diffusion, two main pictures exists: the continuum picture and the atomistic picture. 
+Since materials consists of atoms, it is clear that the most fundamental picture of diffusion should be an atomistic one.
+But a description involving every single atom becomes highly impractical on a macroscopic scale\footnote{\comment{Clarify macroscopic / microscopic?}
+}, in which it becomes more practical to invoke a viscous fluid model in which the atoms are smoothed out into a continuum.
+The two pictures can be connected through parameters known as diffusion coefficients in order to produce integral diffusion models,
+but the diffusion coefficients are also commonly obtained empirically.
+
+\subsection{The continuum picture}
+
+Following Joseph Fourier's 1822 treatise on heat diffusion\cite{Fourier:1822} and Georg Ohm's 1827 work on `electricity diffusion' (Ohm's law),\cite{Ohm:1827} Adolf Fick presented his phenomenological description of `mass diffusion' in 
+1855.\cite{Fick:1855}
 In this picture, a species with concentration $c(\vec{r})$ will flow in the opposite direction of the concentration gradient of that species, $\nabla c(\vec{r})$. That is, it will show a flux,
 \begin{equation}
   \vec{J}(\vec{r},t) = - D \nabla c(\vec{r},t).
   \label{eq:ficks1st}
 \end{equation}
-This relationship between the concentration gradient and the flux is known as Fick's first law, and the constant of proportionality $D$ is known as the coefficient of diffusion or \emph{diffusivity}\index{diffusivity} and are often reported in \si{\metre\squared\per\second} or \si{\centi\metre\squared\per\second}.
+This relationship between the concentration gradient and the flux is known as Fick's first law, and the constant of proportionality $D$ is known as the coefficient of diffusion or \emph{diffusivity}\index{diffusivity} for the species in question. 
+Often reported in units of \si{\metre\squared\per\second} or \si{\centi\metre\squared\per\second}, the diffusivity is in general a tensor, but it reduces to a scalar in cubic crystals. 
+In general the diffusivity of species $i$ will depend on both the concentration of the same species $c_i$ and of other species $c_j$, on temperature, pressure, crystal defects and other factors that will be quickly discussed below.
 
-The picture is slightly complicated by the fact that the diffusivity itself in general will vary with the concentration $c$.
-For the diffusivity of species at very low concentrations, such as dopants, this concentration dependence will be negligible, but at high concentrations, such as the typical phosphorus concentrations in the solar cell emitter layer, the effect is significant.
-A. Bentzen has obtained the concentration dependence of the phosphorus diffusion coefficient over a large range of concentrations using Boltzmann-Matano analysis of experimental data at \SI{890}{\celsius}. 
-From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, his diffusivity increases slowly up to a maximum of \SI{1e-13}{\centi\metre\squared\per\second} at a phosphorus concentration of \SI{e19}{\per\centi\metre\cubed}, before it dips down to \SI{1e-14}{\centi\metre\squared\per\second} at \SI{e20}{\per\centi\metre\cubed}, before it increases again.\cite{Bentzen:2006}
+If $G$ and $R$ are the generation and recombination rates for the species in question, a continuity equation could be set up as
+\begin{equation}
+    \frac{\partial c}{\partial t} = -\nabla \vec{J} + G - R
+  \label{eq:continuity}
+\end{equation}
+In the absences of sinks and sources ($G=R=0$), the continuity equation combined with Fick's first law forms what is known as Fick's second law,
+\begin{equation}
+    \frac{\partial c}{\partial t} = \nabla (D \nabla c) = D \nabla^2 c
+  \label{eq:ficks2nd}
+\end{equation}
+where the last equality is true only when $D$ is independent of position (via the concentration).
+
+The picture is slightly complicated by the fact that the diffusivity $D$ itself may vary with the concentration $c$.
+\index{diffusivity!dependence on concentration}
+For the diffusivity of species at very low concentrations, such as dopants, this concentration dependence is generally negligible, but at high concentrations, such as the typical phosphorus concentrations in the solar cell emitter layer, the effect may be quite significant.
+As an example, A. Bentzen has obtained the concentration dependence of the phosphorus diffusion coefficient over a large range of concentrations using Boltzmann-Matano analysis of experimental data at \SI{890}{\celsius}. 
+From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, his diffusivity increases slowly up to a maximum of \SI{1e-13}{\centi\metre\squared\per\second} at a phosphorus concentration of \SI{e19}{\per\centi\metre\cubed}, before it dips down to \SI{1e-14}{\centi\metre\squared\per\second} at \SI{e20}{\per\centi\metre\cubed}, before it increases again.\cite{Bentzen:2006} Concentration gradients will nevertheless not be considered in this work.\comment{upresist?}
+
+\index{diffusivity!dependence on temperature}
+The diffusivity depends strongly on the temperature, and the temperature dependence found from experiments often takes the simple Arrhenius form,
+\begin{equation}
+  D(T) = D_0 e^{-E_a/kT}
+\end{equation}
+defined by a prefactor $D_0$ and an activation energy $E_a$. 
+Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and interceipt $\ln D_0$. 
+\begin{equation}
+  \ln D = \ln D_0 - E_a (kT)^{-1}
+\end{equation}
+The parameters $D_0$ and $E_a$ can thus easily be extracted if a good fit can be made to a straight line.
+
+%While diffusion is an activated process, the activation energy obtained from experiments will in general not result from a single activated process, but rather a mix of different processes, and this necessarily complicates the determination of the processes involved.
+%In fortunate cases, a single process may be dominating.
+
+%Since the diffusion of atoms in an crystal is though of as an activated process with an activation energy $E_a$, the temperature dependence will often take the simple Arrhenius-form,
+
+As mentioned, the diffusivity may also depend on other factors, such as crystal defects, pressure, et cetera, that will not be touched upon in this work, but these are discussed by e.g. Pichler.\cite{Pichler:2004}
+
+\subsection{The atomistic picture}
+
+In the continuum picture, the diffusion coefficients are just empirical parameters, and we have to invoke a model involving atoms to explain them.
+
+From the Gaussian diffusion outwards from a point,
+\begin{equation}
+    c(x,t) = \frac{n}{\sqrt{4\pi D}} e^{-x^2/4Dt} / \sqrt{t},
+\end{equation}
+\comment{SJEKK OPP}
+Einstein related the displacement along the $x$ axis, $\lambda_x$, to the diffusivity\cite{Einstein:1905},
+\begin{equation}
+    \lambda_x = \sqrt{x^2} = \sqrt{2Dt}
+  \label{eq:einsteinRelationSimple}
+\end{equation}
+Na\"{\i}vely, the diffusion coefficient of a species can thus be found from a knowledge of the displacement of all atoms of that species,
+and this is actually the approach followed in molecular dynamics simulations.
+While it's a tempting approach, and also the one followed in this work, it should not come to a surprise that simulating a large number of atoms over a sufficient amount of time is a computationally demanding task, and for many systems it's just not feasible. 
+A short discussion of other approaches is therefore in place, especially since these to a large degree have formed the way we understand and describe diffusion.
 
 In the solid phase, very little diffusion occurs compared to the liquid or gas phase. 
 In a crystal, the atoms remain at given lattice sites most of the time.
@@ -249,12 +339,6 @@ As seen in fig. \ref{fig:figures/md_test_fft}, the atoms may be described roughl
 
 
 
-Since the diffusion of atoms in an crystal is though of as an activated process with an activation energy $E_a$, the temperature dependence will often take the simple Arrhenius-form,
-\begin{equation}
-  D(T) = D_0 e^{-E_a/kT}
-\end{equation}
-This will be investigated by carrying out simulations at different temperatures. 
-If a good fit can be made, the diffusion pre-factor $D_0$ and the activation energy $E_a$ can be extracted from the fit.
 
 At the microscopic scale, an atom in a crystal will not move freely, but vibrate in a unharmonic and complicated way in the potential well of the other atoms. 
 If its motion is averaged over the timescale of the vibrations, which are in the order of pico-seconds, it will appear more or less fixed in space. 
@@ -274,13 +358,10 @@ while in solids its magnitudes smaller, typically of the order of $10^{-11}$ cm2
 
 The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
-\section{Atomistic diffusion models}
+\section{The case of phosphorus diffusion in silicon}
 
-\ldots
-
-\section{The case of phosphorus in silicon}
-
-The solubility of phosphorus in silicon is rather high
+The solubility of phosphorus in silicon is rather high. 
+\comment{Hent inn bakgrunn fra f.eks. Pichler}
 
 
 
@@ -295,28 +376,22 @@ $\rho$ somewhere?
 Electrons Really Doing in Molecules? \textit{The Vortex}, Cal. Sec. of
 Am. Chem. Soc., Spring, 1960.}
 
-\section{Describing materials}
+\section{Describing materials (bør antakelig kortes ned)}
 
-\lettrine[lines=3,slope=0pt,nindent=0pt]{M}{aterials}
-can be considered large systems made up of positive nuclei and 
-negative electrons. An accurate description of such systems must be a 
-quantum mechanical one rather than a classical one. The small size of the
-electrons make their ``wavelike'' properties especially important.
+%\lettrine[lines=3,slope=0pt,nindent=0pt]{M}{aterials} can be described and 
+As touched upon in section \ldots, matter can be described in different pictures. When radioactivity is not of interest, we are usually not interested in what happens within the nuclei, but rather the interaction between nuclei and electrons, from which chemical bonding and almost all material properties can be understood to the accuracy of interest (with higher accuracy taking longer time to calculate).
 
-Matter consists of atoms, which consists of positive nuclei and negative 
-electrons. We call the lump of matter of interest (usually a tiny, little lump
-of matter) our \emph{system}. 
+%most cases of interest within the atomistic picture. 
+%modelled accurately enough for 
+%in 
+%can be modelled very accurately by considering it
+%as large collections of positive nuclei and 
+%negative electrons, and we call the 
 
-As de Broglie first hypothesised in 1924\cite{deBroglie:1924}, matter has wave
-properties. 
-
-our system must 
-be threated quantum mechanically rather than classically because of the electrons, which are so tiny that quantum
-mechanical effects become important. 
-
-Quantum effects become important when the
-de Broglie wavelength of a particle is comparable to the average inter-particle
-separation\footnote{\url{http://cmt.dur.ac.uk/sjc/thesis_ppr/node5.html}. [Finn
+As de Broglie first hypothesised in 1924,\cite{deBroglie:1924} matter has wave
+properties. Quantum effects become important when the average inter-particle
+separation is of a size comparable to or smaller than the de Broglie wavelength 
+of the particle.\footnote{\url{http://cmt.dur.ac.uk/sjc/thesis_ppr/node5.html}. [Finn
 en bedre kilde!}. The de Broglie wavelength of an electron is $\lambda=h/p$.
 Using the classical energy-momentum relation $E=p^2/2m$, we obtain
 \begin{equation}
@@ -327,13 +402,16 @@ For a free electron, the thermal energy $E\sim kT$,
 giving $\lambda\sim\SI{77}{\angstrom}$ at
 room temperature. In comparison, the lightest element, hydrogen, has thermal
 energy $E\sim\frac32 kT$ and 
-$\lambda\sim\SI{1.5}{\angstrom}$. While atoms most often are threated
-classically, quantum effects have practical effects on them. Many
-chemical reactions involving hydrogen, carbon and oxygen proceeds much faster
-because of tunneling, for example.
+$\lambda\sim\SI{1.5}{\angstrom}$. While atoms as a whole generally can be 
+threated classically, quantum effects do have some practical effects on them.
+For instance, many chemical reactions involving hydrogen, carbon and oxygen 
+proceeds much faster because of tunneling. In the molecular dynamics simulations, 
+a combination of the classical and quantum mechanical pictures will be used, as 
+described below, but tunneling will be negligible for the rather heavy elements 
+of interest; silicon and phosphorus.
 
 For solid-state systems, the average separation between two non-interacting
-electrons can be roughly estimated by the Wigner-Seitz radius $r_s$ [source], 
+electrons can be roughly estimated by the Wigner-Seitz radius $r_s$, 
 which is the radius of a sphere whose volume encloses a single electron
 
 If the average electron density is $\rho$, then one electron occupies a volume
@@ -384,7 +462,7 @@ Yet, with the close analogy with classical kinetic energy, we will continue to u
 and the potential energy arising from interactions with other particles.
 Terms describing relativistic and magnetic effects may be included.
 If the state of interest is the ground state, we find the ground state energy.
-[\dots] At each point in space $\vec{r}$, the quantum state is represented by a 
+[\dots] At each point in space $\vec{r}$, the quantum state can be represented by a 
 wavefunction $\Psi(\vec{r})=\langle\vec{r}|\Psi\rangle$.
 
 
@@ -415,16 +493,10 @@ of excited state properties among others.
 Still, electronic structure software can today be downloaded from the
 internet to your home, sometimes for free, where it can run calculations 
 not thought possible a few
-decades ago. Grasping the amount of work behind this possibility is hard,
-generations before you have laid out the theories of quantum mechanics and of
-solid state physics, prepared a huge library of crystallographic data, 
-developed computing power at a remarkable pace, and written millions of lines
-of computer code. 
+decades ago. 
 
-
-
-
-\section{The many-particle problem and the Born Oppenheimer approximation}
+\section{The many-particle problem and the Born Oppenheimer approximation}\label{seq:born-oppenheimer}
+\comment{Skille mellom adiabatisk og BO eller ikke?}
 
 Our system of interest consists of a large number of nuclei and electrons, particles whose motion are correlated by their Coulombic interactions. 
 While there is no known way to describe the mutual interaction of many particles in general, the reductionist principle of physics leads us to describe it as a sum of two-particle interactions between particles, for which simple equations exist.\footnote{
@@ -468,14 +540,13 @@ and nuclei-electron interactions, respectively.
 The indexes $i$ and $j$ runs over all electrons, while $k$ and $l$ runs over all nuclei. 
 
 As seen, only electromagnetic (Coulombic) interaction is included. 
-The particles also interact gravitationally, but this can safely be ignored since the gravitational force is so much weaker than electromagnetic one.
-Just think of a small kitchen magnet, which is able to counteract the gravitational pull of the entire Earth!
+The particles also interact gravitationally, but this can safely be ignored since the gravitational force is so much weaker than electromagnetic one.\footnote{Remember that a small kitchen magnet counteracts the gravitational pull of the entire Earth.}
 At the atomic scale, gravitation is completely negligible. But there are
 other terms we could include in the Hamiltonian, like interaction with external electric or magnetic fields, spin coupling terms, etc.
 
 While the many-body problem prevents exact analytic solutions, solutions to any given accurancy can be found from iterative, numerical methods, only limited by numerical accuracy and computational power. Computational power is a severe practical limitation though, and even with quite drastical approximations involved, it limits us to study systems of roughly a few thousand atoms. Computational power increase rapidly, and in 10 years, we may study tens of thousands of atoms, but still we will be far away from, say, the $10^{22}$ atoms in a gram of salt.
 
-\section{The Born-Oppenheimer approximation}\label{seq:born-oppenheimer}
+%\section{The Born-Oppenheimer approximation}
 
 The reduction from a fully quantum description to a classical potential entails two main approximations. The first one is the Born-Oppenheimer approximation, which states that the dynamics of electrons is so fast that they can be considered to react instantaneously to the motion of their nuclei. As a consequence, they may be treated separately. The second one treats the nuclei, which are much heavier than electrons, as point particles that follow classical Newtonian dynamics. In classical molecular dynamics the effect of the electrons is approximated as a single potential energy surface, usually representing the ground state.
 
@@ -506,7 +577,8 @@ We will return to the nuclei Hamiltonian in chapter \ref{seq:molecular-dynamics}
 
 
 The Born-Oppenheimer approximation is justified in most 
-cases\cite[p. 111]{Cramer:2004}, but \dots.
+cases,\cite[p. 111]{Cramer:2004} but it should not be applied blindly.
+The common phenomena of Joule heating, for instance, utilitised in everyday electrical heating appliances, can not be described using the approximation, since it involves electrons dissipating energy into ionic vibrations, coupling the motion of the electrons and the nuclei.\cite{Horsfield:2004b}
 
 We start by splitting the total Hamiltonian $\hat{H}$ into a so-called `electronic Hamiltonian' $H_e$ and a `nuclear Hamiltonian' $H_n$, with
 \begin{equation}
@@ -554,7 +626,7 @@ But if there already is an electron at $\vec{r}$, what is the probability of fin
   \rho(\vec{x},\vec{x}') = N_e(N_e-1)\int |\Phi(\vec{x},\vec{x}',\vec{x}_3,\ldots,\vec{x}_{N_e} )|^2
  \,d\vec{x}_3\cdots d\vec{x}_{N_e}
 \end{equation}
-Note that even if the electrons are treated as free, $\rho(\vec{x},\vec{x}')\neq\rho(\vec{x})\rho(\vec{x}')$, the probability of finding two electrons with the same spin close to each other is lowered by the exchange symmetry. If there is an electron at $\vec{x}$, the probability $\rho(\vec{x},\vec{x}')$ of finding another electron at $\vec{x}'$ is reduced for $\vec{x}'$ near $\vec{x}$. 
+Even if the electrons are treated as free, $\rho(\vec{x},\vec{x}')\neq\rho(\vec{x})\rho(\vec{x}')$, the probability of finding two electrons with the same spin close to each other is lowered by the exchange symmetry. If there is an electron at $\vec{x}$, the probability $\rho(\vec{x},\vec{x}')$ of finding another electron at $\vec{x}'$ is reduced for $\vec{x}'$ near $\vec{x}$. 
 This is termed the `exchange hole'.
 If the electrons are interacting, correlation effects produce a further reduction, termed the `correlation hole'.
 
@@ -685,9 +757,7 @@ Thus, the exchange-correlation potential
 \end{equation}
 takes care of not only correlation and exchange, but also the difference in kinetic energies between the interacting and the non-interacting electrons.
 
-\url{http://cmt.dur.ac.uk/sjc/thesis/thesis/node13.html}
-
-
+%\url{http://cmt.dur.ac.uk/sjc/thesis/thesis/node13.html}
 
 
 \section{Bloch waves}
@@ -719,18 +789,17 @@ unpredictable results due to the limited basis set, so the convergence of the
 total energy with respect to the energy cutoff should be tested for the 
 problem at hand.
 
-\subsection{Defects}
+\section{Defects}
 
 The Block scheme is well suited for for repeating units, but how do we make a
-model a repeating system with a few random defects. This is a large field of
-study at the current time.
+model a repeating system with a few random defects.
 Making a completely realistic model for normal doping 
 concentrations ($~10^{-16}$ cm$^{-3}$) is impossible since we would need to 
 model a unit cell containing $10^{16}$ atoms, while a $10^4$ atom system is more or
 less the limit for what's practical today [CHECK]. In the emitter of the
 solar cell, the doping level is normally above $10^{18}$~cm$^{-3}$ and can be
 as high as $10^{21}$~cm$^{-3}$. The solubility limit of a solid solution of
-phosphorus in silicon is \comment{[FYLL INN]}
+phosphorus in silicon is close to \SI{e21}{\per\centi\metre\cubed}\cite{Ghandhi:1994}.
 
 \section{Pseudopotentials}
 
@@ -811,7 +880,7 @@ To fully describe a statistical ensemble it is also necessary to specify the pro
 
 
 We imagine having a large number of copies of the \emph{same} system. 
-\url{http://en.wikipedia.org/wiki/Statistical_mechanics#Statistical_ensembles}
+%\url{http://en.wikipedia.org/wiki/Statistical_mechanics#Statistical_ensembles}
 
 
 The probability that a system will be in an energy eigenstate $i$ at temperature $T$ is 
@@ -1271,7 +1340,11 @@ der to obtain forces that are properly tangent to the energy surface
 
 
 
-\chapter{Results}
+
+
+\part{Results and discussion}
+
+\chapter{Diffusion of phosphorus in silicon}
 
 \section{Choice of parameters}
 
@@ -1316,12 +1389,20 @@ It is also acceptably close to the typical experimental value of \SI{5.43}{\angs
 
 \subsection{k points}
 
-Calculations of observables involves integrals over the Brillouin zone\footnote{The term `Brillouin zone' will be used throughout this work as
-a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. For example,
+\begin{framed}
+    \comment{Klippet og limt fra GULP-manualen!! SKRIV OM}
+    If the space group symmetry has been specified for the material, then it is pos- sible to determine the Patterson group, which is the equivalent of the space group in reciprocal space. Note that all systems have at least inversion symmetry (also known as time-reversal symmetry) in the Brillouin zone - a fact that is always used to accelerate the Ewald sum. By using the Patterson group, it is only necessary to sum over k-points that lie within the asymmetric wedge of the Brillouin zone, with appropriate weighting of points situated on the boundary (Ramirez:1988). This can lead to substantial computational savings for systems with small unit cells (and therefore high shrinking factors) and high symmetry.
+\end{framed}
+
+
+Calculations of observables generally involves integrals over the Brillouin zone\footnote{The term `Brillouin zone' will be used throughout this work as
+a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. 
+For example, we may compute the total energy as
 \begin{equation}
   E_{\text{tot}} = \frac{1}{\Omega} \int_{\text{BZ}} E(\vec{k}) \,d\vec{k}
 \end{equation}
-where $\Omega$ is the Brillouin zone volume. For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
+where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the energy of a \comment{eigen?}state $|\vec{k}\rangle$
+For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
 Baldereschi suggested a first approximation could be made by including only a single $k$-point,
 \begin{equation}
   E_{\text{tot}} = \frac{(2\pi)^3}{\Omega} \bar{E}, \qquad \bar{E}=E_{\vec{k}^*}
@@ -1735,7 +1816,147 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   \label{fig:md_arrhenius_plot}
 \end{figure}
 
+\chapter{Phosphorus near the silicon-silicon nitride interface}
 
+\section{Introduction}
+
+\subsection{Silicon nitride as a passivation and anti-reflection coating}
+\comment{move section into  Background-chapter?}
+
+The grey, metallic appearance of polished, pure silicon is an indication of the material's undesirable high reflectivity.
+When light moves from a medium with refractive index $n_1$ to a medium with refractive index $n_2$ at normal incidence, 
+the reflectivity is found from the Fresnel equations as
+\begin{equation}
+    R = \left(\frac{\tilde{n}_0-\tilde{n}}{\tilde{n}_0+\tilde{n}}\right)^2 \approx
+    \frac{(1 - n)^2 + \kappa^2}{(1 + n)^2 + \kappa^2}
+  \label{eq:reflectivity}
+\end{equation}
+taking $\tilde{n}_0\approx 1$ to be the refractive index of air.
+This gives a reflectivity of 35~\% for light moving from air into silicon ($n=3.96$, $\kappa=0.021$ at 590 nm\cite{www:refractiveindex-Si}).
+More accurately, a weighted averaged over the whole AM1.5G spectrum gives a reflectivity of about 34~\%, still at normal incidence\cite{Macdonald:2004}
+A reflectivity of over 30~\% is much too high for a solar cell material, and
+two well-established techniques are used in combination to lower it.
+
+The first technique is \emph{texturing} the silicon surface, so that multiple scattering can take place.
+For single crystal silicon with (001) surface, (111) face V-grooves are readily made using anisotropic alkaline wet etching.
+Texturing for multi-crystalline silicon is more difficult, but can be carried out successfully using for instance
+isotropic acidic etching or reactive ion etching\cite{Macdonald:2004,Panek:2005,Koynov:2006} or laser surface texturing\cite{Iyengar:2010}.
+
+The second well-established technique to lower reflection is to add one or more layers of anti-reflection coating (ARC). 
+An ARC should have a refractive index $n$ in-between that of silicon ($n_{\text{Si}}=3.96$) and that of air ($n_{\text{air}}=1.0$).
+If we take the total reflection from two interfaces to be just the sum of the reflectivities from each interface, we find that
+the total reflectivity
+\begin{equation}
+    \left(\frac{n_{\text{air}}-n}{n_{\text{air}}+n}\right)^2 + \left(\frac{n-n_{\text{Si}}}{n+n_{\text{air}}}\right)^2 
+\end{equation}
+has a minima at the geometric mean $n=\sqrt{n_{\text{air}}n_{\text{Si}}} \approx \sqrt{n_{\text{Si}}}$.
+Furthermore, the wave reflected from the ARC-Si interface can be made to interfere destructively with an incoming wave if
+the thickness of the film is made so that the optical path length $nd$ equals a quarter of the wavelength of the wave in air, $\lambda_0$.
+Thus, the optical thickness is
+\begin{equation}
+  d = \frac{\lambda_0}{4n}
+\end{equation}
+Since sunlight is far from monochromatic, the ARC has to be optimized for a single wavelength.
+While multiple ARC layers can be used to minimize reflection over a larger range of wavelengths, 
+the additional cost and complexity often outweighs the improved transmission.
+
+\subsection{The silicon - silicon nitride interface}
+
+For a dielectric of thickness $d$ and refractive index $n$, the reflection from the back side 
+With an optical path length $nd$ e
+An ARC is a thin dielectric whose optical path length $nd$ is one quarter the wavelength $\lambda_0$ of the original wave in air.
+is the quarter-wavelength of the incoming wave, in order to create 
+destructive interference between the wave reflected at the front and back side of the ARC.
+
+with a thickness chosen so that the wavelength of the incoming wave in the ARC is one quarter the wavelength of the wave in air (or free space). 
+
+Plasma enhanced chemical vapour deposition (PECVD)\cite{Hoex:2005}
+
+anti-reflection coatings are therefore added. 
+The de facto standard material today is silicon nitride, which in addition to being an excellent anti-reflection layer, also acts as an excellent surface passivation. 
+
+
+
+
+Pure silicon reflects over 30~\% of the incoming light
+Silicon by itself 
+As thin films 
+During the last decade, silicon nitride has become the standard front surface
+
+In silicon solar cell technology, silicon nitride is 
+Silicon nitride as a passivating and anti
+
+Silicon nitride has 3:4 stoichiometry with each silicon atom bound to four nitrogen atoms,
+and each nitrogen atom bound to three silicon atoms. It can be pictured as consisting of 
+corner-sharing tetrahedra with a silicon at the centre of each SiN$_4$ tetrahedron, see fig. XXX.
+
+\cite{Riley:2000}
+
+Two crystallographic polymorphs are found under ambient pressure conditions:
+a trigonal structure with P31c symmetry known as $\alpha$-Si$_3$Ni$_4$, and a hexagonal structure with P63 symmetry
+known as $\beta$-Si$_3$Ni$_4$.
+The $\beta$ form is the thermodynamically more stable than the $\alpha$ form, and under heating the $\alpha$ form will transform into the $\beta$ form.
+\cite{Riley:2000}
+
+\cite{Morita:1999}
+
+The unit cell of the $\alpha$-form contains two Si$_3$N$_4$ units, while the unit cell of the $\beta$-form contains four.
+The unit cell of the $\alpha$-form can be seen as two unit cells of the $\beta$ form stacked on top of each other in the $c$ direction, with one of the two layers shifted relative to the other, introducing a glide plane.
+The unit cell of the $\alpha$-form differ from the unit cell of the $\beta$-form in that the $c$ axis is double as long in the 
+
+Both are built up by corner-sharing tetrahedra, and the slightly more symmetric $\beta$-form is the most stable.
+
+is commonly grown on silicon using plasma enhanced chemical vapour deposition (PECVD), 
+in which an amorphous, hydrogen-rich and not necessarily stoichiometric Si$_3$N$_4$ layers is formed. 
+This is often referred to as SiN$_x$:H. Since the clean silicon surface oxidises slightly during the loading into the 
+deposition chamber, there will also be a thin (< 2nm) oxygen-rich film in-between, referred to as SiN$_x$O$_y$.
+\cite{Aberle:2001}
+
+But silicon nitride can also be grown epitaxially on the 111 surface of silicon due to the very small lattice mismatch
+between the Si 111 plane and the $\beta$-Si$_3$N$_4$ 0001 plane.
+The side length of the hexagonal two-dimensional unit cell of the 111 surface is $\sqrt{2}a/2=\SI{3.83}{\angstrom}$, half the face diagonal of the conventional (cubic) unit cell with side length $a=\SI{5.416}{\angstrom}$. The side length of the $2\times 2$ cell is therefore \SI{7.660}{\angstrom}, only XXX percent bigger than the side length of the $\beta$-Si$_3$N$_4$ 0001 surface (\SI{7.595}{\angstrom}).
+
+
+
+
+Si-Si 2.37 Å in both bulk and the slab model
+
+Si-N 1.73 Å i Si3N4, men varierende (opptil 1.76)
+1.75-1.76 Å i slab
+forces acting on the atoms were smaller than 10 meV/Å = 0.01 eV/Å
+
+
+In order to study the energetics of phosphorus near the silicon-silicon nitride interface,
+a slab model was invoked in which a 48-atom silicon phase contacted a silicon nitride phase containing 
+8 Si$_3$N$_4$ units.
+
+\section{Choice of parameters}
+
+
+
+\section{Results}
+
+In a pure silicon system, a full geometry relaxation including the cell volume, results in a bond length is \SI{2.367}{\angstrom}. %Si64
+In the interface system, a full relaxation resulted in bond lengths of $2.36\pm0.08\si{\angstrom}$ in silicon, and $1.76\pm 0.05\si{angstrom}$ in silicon nitride.
+
+\subsection{Effect on the density of states}
+
+The density of states (DOS) is calculated as
+\begin{equation}
+    \bar{n}(\varepsilon_i) = \frac{N(\varepsilon_i) - N(\varepsilon_{i-1})}{\varepsilon_i - \varepsilon_{i-1}},
+\end{equation}
+where $N(\varepsilon_i)$ is the integrated DOS
+\begin{equation}
+    N(\varepsilon_i) = \int_{-\inf}^{\varepsilon_i} n(\varepsilon) d\varepsilon
+\end{equation}
+
+
+\chapter{Final discussion}
+
+
+\printbibliography
+
+\appendix
 \chapter{List of selected symbols used}
   Mainly used in sections on DFT:
 
@@ -1777,8 +1998,6 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   \end{tabular}
   
 \layout
-
-\printbibliography
 
 \printindex
 
