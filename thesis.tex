@@ -830,12 +830,49 @@ or the first-order formulation of Hamilton,
 where motion occurs in a way as to preserve the Hamiltonian function.
 \comment{[Se Haile, p. 40-42]}
 
+\subsection{Monitoring lattice integrity}
 
-To monitor the integrity of the fcc lattice, Verlet introduced a simple translational order parameter $\lambda$, which we define as
+A perfect lattice is described by $e^{i(\vec{g}\cdot\vec{r})}=1$ for a reciprocal lattice vector $\vec{g}$ and all positions $\vec{r}$. 
+Using Euler's formula,
 \begin{equation}
-  \lambda = \frac{1}{3N} \sum_{j=1}^M  \left[ \cos\left( 4^s\pi x_i \right) + \right]
+    e^{i(\vec{g}\cdot\vec{r})} = \cos(\vec{g}\cdot\vec{r}) + i\sin(\vec{g}\cdot\vec{r}) = 1
 \end{equation}
-where $s$ is the `supercell size' ($s=2$ for a $2\times 2 \times 2$ cell) and the lattice constant is taken to be unity.
+Summing over all $\vec{r}$ vectors and ignoring the complex term,
+\begin{equation}
+    \frac{1}{M}\sum_{\vec{r}} \cos(\vec{g}\cdot\vec{r}) = 1
+\end{equation}
+Taking the reciprocal vector to be $\vec{g}=[2\pi/x_m,0,0]$ where $x_m$ is the smallest interatomic distance along the x axis, we find a simple parameter to monitor the integrity of the lattice that should be unity for the perfect lattice and fluctuate about zero for a disordered system, as first introduced by Verlet;
+\begin{equation}
+  \lambda = \frac{1}{N} \sum_{j=1}^M  \left[ \cos\left( \frac{2\pi}{x_m} x_j \right)\right]
+  \label{eq:simple_lattice_order_parameter}
+\end{equation}
+For a diamond lattice with a 8-atom cubic unitcell, $x_m=1/4$. For a 64-atom cubic cell, $x_m=1/8$, and so on.
+An unfortunate feature of this simple parameter is that it depends on the choice of origin. 
+If the whole crystal (all the atoms) are translated $x_m/4$ (in the same direction), say, the parameter is zero, even though the crystal is still perfect.
+To cope with this, we may instead calculate\footnote{\url{http://www.ccl.net/cca/software/SOURCES/FORTRAN/allen-tildesley-book/f.25.shtml}}
+\begin{equation}
+  \lambda = \frac{1}{M}\sqrt{\left[\sum_{\vec{r}}\cos(\vec{g}\cdot\vec{r})\right]^2 + \left[\sum_{\vec{r}}\sin(\vec{g}\cdot\vec{r})\right]^2}
+  \label{eq:lattice_order_parameter}
+\end{equation}
+
+Figure \ref{fig:tlotest} shows how the two translational lattice order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, as a function of random displacements of atoms from their lattice sites. Each point is averaged over 1000 random positions. 
+As we see, the origin-independent order parameter converges towards roughly $1/\sqrt(N)$ for a disordered system,\footnote{$1/\sqrt{8}=1.35$, $1/\sqrt{64}=0.125$, $1/\sqrt{512}=0.044$.}
+and by this parameter a system is described as disordered when the mean random displacements of atoms from their lattice sites increase above about 0.12~Å.
+Also, while the origin-independent parameter depends on the number of atoms, the effect is quite small.
+A disordered system here is a system 
+
+Plot standard deviation as solid color?
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics{../figures/test_lattice_integrity_plot}
+  \end{center}
+  \caption{Translational lattice order parameters $\lambda_0$ (dashed lines) and $\lambda$ (solid lines) as a function of mean random displacement from lattice sites.}
+  \label{fig:tlotest}
+\end{figure}
+
+
+
 Figure \ref{fig:md_test_lattice_integrity} shows a plot of $\lambda(t)$ for a simulation at a few different temperatures. 
 After the simulation start at a perfect lattice ($\lambda=1$), the systems spends a few cycles to equilibrate before a quite constant trend follows.
 
@@ -1770,20 +1807,27 @@ SII	 0.37500	 0.37500	 0.62500
   \caption{Different interstitial positions for a phosphorous atom in 1x1x1 silicon.}
 \end{figure}
 
-\section{Diffusion coefficient}
+\section{Diffusion}
 
 \subsection{Interstitialcy-mediated}
 
 Does there exist a PI complex, in which the phoshphorus atom is bonded to a silicon self-interstitial?
-The relaxed bond length in silicon is 
 
-In the initial structure, a silicon-phosphorus pair shares the lattice site (0.250,0.250,0.500).
-After having carried out a selective relaxation of the pair, followed by a relaxation of the full structure,
-the center of the pair has relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction. 
-The bond length between the pair atoms is \SI{2.44}{\angstrom}, slightly longer than the 
-equilibrium bond length in silicon, \SI{2.37}{\angstrom}. Another Si-P pair is formed, however, 
-with bond length \SI{2.23}{\angstrom}.
+An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
+The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
+The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site, and the bond length of the Si-P pair increases to \SI{2.44}{\angstrom}. This makes the bond length slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, which is slighlty surprising. Another Si-P pair is formed, however, with bond length \SI{2.23}{\angstrom}.
 
+It should be noted that Sahli (2005) reported the distance from silicon atoms to a split site as 1.45 Å. 
+This was for a Si-Si self interstitial.
+
+TEST: What happens if we relax say the final structure of the split110 at 1000 K run? What would the Si-Si selfinterstitial bond length be?
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=6cm]{../figures/split110_initial.png}
+  \caption{Relaxed Si-P split ``pair''.}
+  \label{fig:relaxedSIPsplit}
+\end{figure}
 
 %Initially:
 %   0.35000000000000   0.35000000000000   0.42000000000000  T T T
@@ -1802,10 +1846,83 @@ with bond length \SI{2.23}{\angstrom}.
 %  0.3262387215307114  0.3287387215307114  0.4503431188936880
 %  0.1700365383985873  0.1700365383985873  0.4418843932377862
 
+The integrity of the lattice remains high during the entire simulation, so the lattice sites are well defined,
+
+Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
+where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
 
 At low temperatures, the P atom is more or less trapped between the neighbour lattice site 28 (0.250,0.250,0.500) and lattice site 60 (0.375,0.375,0.625)
 
+  The lower figure shows the distance from the phosphorus atom $r(t)$ to the nearest three lattice sites $R$.
+  and are taken to be positions of the silicon atom in a perfect structure with the same volume, but without the extra phosphorus atom.
+  The dashed lines indicates the distances at the beginning of the simulation. 1.32 and 2.05 Å are thus the distance to the nearest
+  and second nearest lattice position when in a split site.
 
+  \clearpage
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
+  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
+  \label{fig:split110_1000_occ}
+\end{figure}
+
+\begin{figure}[H]
+  % Making of:
+  % Picture -> Layout
+  %     Target -> Bitmap
+  %     Resolution: 300 dpi
+  %     Width: 5cm, height: 5 cm
+  %     Background: black-on-white mode
+  % Picture -> Adjust
+  % Border : -.2
+  % Objects -> Coordinate System:
+  %     Position: 0.8, 0.15 relative to bottom left
+  %     Axes lengths (cm): 0.6
+  % Objects -> Legend:
+  %     Atomic radii: atom-group specific
+  %     Border width: 0
+  % Picture -> Viewing direction
+  %     View along -1 -2 0
+  %     Rotate: 4 <down>
+  % Model and radii:
+  %     Bond radius: 0.05
+  \centering
+  \subfigure[Relaxed initial structure, with a Si-P pair sharing site 2.]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t0.png}
+    \label{fig:cartoon1.1}
+  }
+  \subfigure[Si-P pair sharing site 1.]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t5.png}
+    \label{fig:cartoon1.2}
+  }
+  \subfigure[P at site 2. The resulting Si-Si pair shares the adjacent site in the plane above (not depicted).]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t20.png}
+    \label{fig:cartoon1.3}
+  }
+  \subfigure[P at intermediate position before jumping to site 4.]{ %More or less hexagonal interstitial position?
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t24.png}
+    \label{fig:cartoon1.4}
+  }
+  \subfigure[P at site 4. Si-Si pair sharing adjacent site.]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30.png}
+    \label{fig:cartoon1.5}
+  }
+  %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
+  %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
+  %  \label{fig:cartoon1.6}
+  %}
+  \subfigure[Full diffusion path]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/full_path.png}
+    \label{fig:cartoon1.6}
+  }
+  \caption{View of a single crystal plane along (a-e) the [$\bar{1}1\bar{1}$] direction (f) the [$1\overline{11}$] direction. 
+  Interstitial silicon atoms indicated with a darker shade.}
+\end{figure}
+
+  %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
+  %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
+  %  \label{fig:cartoon1.6}
+  %}
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics{../figures/md_arrhenius_plot}
@@ -1938,6 +2055,20 @@ a slab model was invoked in which a 48-atom silicon phase contacted a silicon ni
 
 In a pure silicon system, a full geometry relaxation including the cell volume, results in a bond length is \SI{2.367}{\angstrom}. %Si64
 In the interface system, a full relaxation resulted in bond lengths of $2.36\pm0.08\si{\angstrom}$ in silicon, and $1.76\pm 0.05\si{angstrom}$ in silicon nitride.
+
+
+\subsection{Energetics}
+
+From a start volume of \SI{1576.8}{\angstrom\cubed}, the cell relaxed to \SI{1571.8}{\angstrom\cubed}, mainly by a contraction of 0,3\% in the z-direction. No significant changes to the cell shape occured.
+% ../notur/hipersol/si-sin/p_ladder_relax/volumeplot.py
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=12cm]{../notur/hipersol/si-sin/p_ladder_relax_fixvolume/makeplot.pdf}
+  \caption{}
+  \label{fig:nome}
+\end{figure}
+
 
 \subsection{Effect on the density of states}
 
