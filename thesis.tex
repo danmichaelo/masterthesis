@@ -1277,16 +1277,16 @@ This is not unlikely to be an effect of non-ergodicity, with the distribution no
 
 \begin{figure}[htbp]
   \centering
-  \subfigure[No thermostat (Microcanonical)]{
+  \subfloat[No thermostat (Microcanonical)]{
     \rule{7cm}{7cm}
     %\includegraphics{../figures/md_test_temperature_micro}
     \label{fig:md_test_temperature_micro}
   }
-  \subfigure[Velocity-scaling]{
+  \subfloat[Velocity-scaling]{
     \includegraphics{../figures/md_test_temperature_scaled}
     \label{fig:md_test_temperature_scaled}
   }
-  \subfigure[Nose-Hoover thermostat]{
+  \subfloat[Nose-Hoover thermostat]{
     %\includegraphics[width=5cm]{../figures/silicon_with_p_interstitial_octahedral}
     \includegraphics{../figures/md_test_temperature_nose}
     %\crossbox{7cm}
@@ -1792,16 +1792,16 @@ SII	 0.37500	 0.37500	 0.62500
   % Model and radii:
   %     Bond radius: 0.05
   \centering
-  \subfigure[Tetrahedral]{
+  \subfloat[Tetrahedral]{
     \includegraphics[width=4.3cm]{../figures/silicon_with_p_interstitial_tetrahedral}
     \label{fig:silicon_with_p_interstitial_tetrahedral}
   }
-  \subfigure[Octahedral]{
+  \subfloat[Octahedral]{
     \includegraphics[width=4.3cm]{../figures/silicon_with_p_interstitial_octahedral}
     %\crossbox{4.3cm}
     \label{fig:silicon_with_p_interstitial_octahedral}
   }
-  \subfigure[Split 110]{
+  \subfloat[Split 110]{
     \includegraphics[width=4.3cm]{../figures/silicon_with_p_split110}
     %\rule{4.5cm}{4.5cm}
     %\crossbox{4.3cm}
@@ -1862,12 +1862,12 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   and second nearest lattice position when in a split site.
 
   \clearpage
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
-  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
-  \label{fig:split110_1000_occ}
-\end{figure}
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
+%  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
+%  \label{fig:split110_1000_occ}
+%\end{figure}
 
 \begin{figure}[H]
   % Making of:
@@ -1890,23 +1890,27 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   % Model and radii:
   %     Bond radius: 0.05
   \centering
-  \subfigure[Relaxed initial structure, with a Si-P pair sharing site 2.]{
+  \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.]{
+    \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
+    \label{fig:split110_1000_occ}
+  }\\
+  \subfloat[Relaxed initial structure, with a Si-P pair sharing site 2.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t0.png}
     \label{fig:cartoon1.1}
   }
-  \subfigure[Si-P pair sharing site 1.]{
+  \subfloat[Si-P pair sharing site 1.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t5.png}
     \label{fig:cartoon1.2}
   }
-  \subfigure[P at site 2. The resulting Si-Si pair shares the adjacent site in the plane above (not depicted).]{
+  \subfloat[P at site 2. The resulting Si-Si pair shares the adjacent site in the plane above (not depicted).]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t20.png}
     \label{fig:cartoon1.3}
-  }
-  \subfigure[P at intermediate position before jumping to site 4.]{ %More or less hexagonal interstitial position?
+  }\\
+  \subfloat[P at intermediate position before jumping to site 4.]{ %More or less hexagonal interstitial position?
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t24.png}
     \label{fig:cartoon1.4}
   }
-  \subfigure[P at site 4. Si-Si pair sharing adjacent site.]{
+  \subfloat[P at site 4. Si-Si pair sharing adjacent site.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30.png}
     \label{fig:cartoon1.5}
   }
@@ -1914,11 +1918,12 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
   %  \label{fig:cartoon1.6}
   %}
-  \subfigure[Full diffusion path]{
+  \subfloat[Full diffusion path]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/full_path.png}
     \label{fig:cartoon1.6}
   }
-  \caption{View of a single crystal plane along (a-e) the [$\bar{1}1\bar{1}$] direction (f) the [$1\overline{11}$] direction. 
+  \caption{View of a single crystal plane along the [$\bar{1}1\bar{1}$] direction. 
+  (a-e) shows 5 selected configurations, and (f) shows the whole diffusion path. 
   Interstitial silicon atoms indicated with a darker shade.}
 \end{figure}
 
@@ -1926,6 +1931,96 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
   %  \label{fig:cartoon1.6}
   %}
+
+\subtitle{Jump figure}
+
+Aware that the simulations times were probably too short, an attempt was still made to estimate jump frequencies as a function of temperature, in order to see if some pattern emerged and if the numbers made sense.
+To count jumps, we first have to define what constitutes a ''jump''. 
+We assume that there exists well-defined, static lattice sites throughout each simulation, creating a reference point of frame.
+To be sure, this is actually monitored using the translational order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, which together tells us both if the system remains crystalline, and if the lattice is static or drifts. 
+
+Figure \ref{fig:danceb} shows how atoms vibrate around well-defined lattice sites in a metastable system at 1700~K (lattice order parameter 0.6), and figure \ref{fig:dancec} how no such sites can be defined in a melted system at 1600~K (lattice order parameter 0.1).\footnote{At 1700 K, the simulation is above the melting point, but if the starting structure is crystalline, the structure may be preserved for at least tens of picoseconds, and probably even longer, before melting takes place, even with the interstitial defect present.}
+
+  \begin{figure}[htp]
+    \begin{center}
+      %\subfigure[700~K. Kinetic energy 89 meV/atom]{
+      %  \label{fig:dancea}
+      %  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_700/dance6.png}
+      %}
+      \subfloat[1700~K. Kinetic energy 216 meV/atom]{
+        \label{fig:danceb}
+        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/hexagonal_1700/dance5.png}
+      }
+      \subfloat[1600~K. Kinetic energy 204 meV/atom]{
+        \label{fig:dancec}
+        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1600/dance_1200x1200.png}
+      }
+    \end{center}
+    \caption{20 ps trajectories of 64 Si + 1 P. Viewing along the 001 direction, at the same scale. The scale bar in the lower left is 1~Å.}
+    \label{fig:dance}
+  \end{figure}
+
+An atom A is defined to \emph{sit} on a lattice site X when (a) X has been the nearest lattice site to A for more than $t_{\text{min}}$ ps, and (b) the distance between X and A has been less than $x_{\text{max}}$ (not necessarily for any long time). Having defined what it means to \emph{sit} on a lattice site, an atom \emph{jumps} simply when it changes from sitting at one site to another.
+
+Two different attemps at calculating the jump frequencies of the single phosphorus atom were made.
+In the first ``liberal'' attempt, the distance criterion is ignored altogether, but the time criterion is set to 0.3~ps.
+This should suffice to avoid counting particularly long vibrations as jumps, but still be short enough to avoid missing jumps if multiple jumps are made in series. 
+In the second ``conservative'' attempt, a distance criterion of 0.3~Å is imposed. This should filter out most cases where the atom jumps from one interstitial position to another. 
+
+Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs.
+
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}[htbp]
+
+    \begin{tabular}{rrrrrr}
+      \toprule
+        Temp. [K]   & Duration [ps]   & \multicolumn{2}{c}{Liberal estimate}\tnote{a} & \multicolumn{2}{c}{Conservative estimate}\tnote{b} \\
+         &   & Jumps & Jump frequency [/ps] & Jumps & Jump frequency [/ps] \\
+      \midrule
+         700 &  30 & 23 & 0.767 &  0 & 0.000 \\
+         800 &  30 & 20 & 0.667 &  0 & 0.000 \\
+         900 &  28 & 19 & 0.668 &  2 & 0.070 \\
+        1000 &  30 & 19 & 0.633 &  1 & 0.033 \\
+        1100 &  30 & 24 & 0.800 &  0 & 0.000 \\
+        1200 &  30 & 13 & 0.433 &  2 & 0.067 \\
+        1300 &  90 & 43 & 0.478 & 12 & 0.133 \\
+        1300 &  30 & 19 & 0.633 &  0 & 0.000 \\
+        1400 &  90 & 10 & 0.111 &  3 & 0.033 \\
+        1400 &  80 &  4 & 0.050 &  1 & 0.013 \\
+        1400 & 160\tnote{c} & 27 & 0.169 &  5 & 0.031 \\
+        1400 &  60 & 11 & 0.183 &  4 & 0.067 \\
+        1400 &  51 & 34 & 0.659 &  0 & 0.000 \\
+        1450 &  60 &  5 & 0.083 &  2 & 0.033 \\
+        1500 &  60 & 20 & 0.333 &  4 & 0.067 \\
+        1500 &  80 & 15 & 0.188 &  1 & 0.013 \\
+        1500 &  60 & 26 & 0.433 &  5 & 0.083 \\
+        1550 &  15 &  5 & 0.333 &  0 & 0.000 \\
+        1550 &  60 & 19 & 0.317 &  5 & 0.083 \\
+        1600 &  47 & 35 & 0.734 &  5 & 0.105 \\
+        1600 &  20 &  4 & 0.200 &  1 & 0.050 \\
+        1600 &  30 & 10 & 0.333 &  3 & 0.100 \\
+        1600 &  49 & 42 & 0.852 &  5 & 0.101 \\
+        1650 &  15 &  9 & 0.600 &  1 & 0.067 \\
+        1700 &  19 &  9 & 0.454 &  1 & 0.050 \\
+      \bottomrule
+    \end{tabular}
+    {\footnotesize
+    \begin{tablenotes}
+      \item[a] In the liberal estimate, $t_{\text{min}}=0.3$~ps and $x_{\text{max}}=\infty$
+      \item[b] In the conservative estimate, $t_{\text{min}}=0.5$~ps and $x_{\text{max}}=0.3$~Å
+      \item[c] This run was carried out using a timestep three times larger than the other runs (3~fs vs. 1~fs). 
+          It may not be directly comparable to the other runs.
+    \end{tablenotes}
+    }
+  \end{threeparttable}
+  \caption{Jump frequencies at different temperatures}
+  \label{tab:jumps}
+\end{table}
+
+
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics{../figures/md_arrhenius_plot}
@@ -1935,6 +2030,7 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   }
   \label{fig:md_arrhenius_plot}
 \end{figure}
+
 
 \chapter{Phosphorus near the silicon-silicon nitride interface}
 
