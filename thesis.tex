@@ -27,10 +27,8 @@
 % Title page (koma-script options):
 %\titlehead{Titlehead}
 %\subject{Subject}
-\title{Ab initio modelling (molecular dynamics simulations) of phosphorus diffusion in the silicon solar cell emitter layer}
+%\usepackage{titling}
 %\subtitle{Subtitle}
-\author{Dan Michael Olsen Heggø}
-%\date{2011}
 %\publishers{Pub}
 
 \newcommand{\vasp}{{\texttt{VASP}}} % eller \sc?
@@ -38,13 +36,16 @@
 
 \begin{document}
 \frontmatter
-\maketitle
+\includepdf{frontpage/frontpage.pdf}
 
 Acknowledgement
 
 Abstract
 
 Sammendrag på norsk
+
+% pdflatex -v | head -n1
+Set with the help of {\LaTeXe} and {\KOMAScript}.
 
 %Grasping the amount of work behind this possibility is hard,
 %generations before you have laid out the theories of quantum mechanics and of
