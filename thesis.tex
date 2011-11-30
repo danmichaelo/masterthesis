@@ -861,7 +861,11 @@ and by this parameter a system is described as disordered when the mean random d
 Also, while the origin-independent parameter depends on the number of atoms, the effect is quite small.
 A disordered system here is a system 
 
-Plot standard deviation as solid color?
+Another estimate of the lattice integrity is the Lindemann index.\cite{Lindemann:1910}
+\begin{equation}
+  \delta = \frac{2}{N(N-1)} \sum_{i<j} \frac{\sqrt{\langle r_{ij}^2\rangle_t - \langle r_{ij} \rangle^2_t }}{ \langle r_{ij} \rangle_t }
+  \label{eq:lindemannindex}
+\end{equation}
 
 \begin{figure}[htbp]
   \begin{center}
@@ -870,8 +874,6 @@ Plot standard deviation as solid color?
   \caption{Translational lattice order parameters $\lambda_0$ (dashed lines) and $\lambda$ (solid lines) as a function of mean random displacement from lattice sites.}
   \label{fig:tlotest}
 \end{figure}
-
-
 
 Figure \ref{fig:md_test_lattice_integrity} shows a plot of $\lambda(t)$ for a simulation at a few different temperatures. 
 After the simulation start at a perfect lattice ($\lambda=1$), the systems spends a few cycles to equilibrate before a quite constant trend follows.
