@@ -313,7 +313,7 @@ Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having 
 In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by the attempt frequency $\nu$,
 \begin{equation}
   \Gamma = \nu e^{-E_a/kT}
-  \label{eq:jump-freq}
+  \label{eq:jumpfreq-est}
 \end{equation}
 For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, a typical textbook value for the vibration of atoms in a crystal at room temperature.
 As seen in fig. \ref{fig:figures/md_test_fft}, the atoms may be described roughly as vibrating at frequencies of this order of magnitude, although the motion is of course much more complicated than a simple harmonic motion. Otherwise we would not need \emph{simulation}.
@@ -334,8 +334,8 @@ As seen in fig. \ref{fig:figures/md_test_fft}, the atoms may be described roughl
   \begin{center}
     \includegraphics{../figures/jump_frequency}
   \end{center}
-  \caption{Estimated jump frequency from \eqref{eq:jump-freq} with $\nu=\SI{e13}{\hertz}$.}
-  \label{fig:../figures/jump_frequency}
+  \caption{Estimated jump frequency from \eqref{eq:jumpfreq-est} with $\nu=\SI{e13}{\hertz}$.}
+  \label{fig:jumpfreq-est}
 \end{figure}
 
 
@@ -1674,12 +1674,12 @@ With the parameters now chosen, short test runs with just 100 MD steps was carri
 \begin{table}[htbp]
   \centering
   \begin{tabular}{lcccccccc}\toprule
-    Mesh	& pts in IBZ    & Dist. & Toten     & CPU	& Mem [MB]  & Force	    & Press.	& Drift  \\\midrule
-    1 1 1	&  1    	    &-1.000	& -42.5595	& 82	& 54        & 0.0000	& 6.5500	& 0.0000 \\
-    2 2 2	&  4    	    & 0.500	& -43.3740	& 296	& 64        & 0.0000	& -1.0700	& 0.0000 \\
-    3 3 3	&  4    	    & 0.333	& -43.3932	& 297   & 64        & 0.0000	& -1.2100	& 0.0000 \\
-    4 4 4	& 10    	    & 0.250	& -43.3942	& 739	& 84        & 0.0000	& -1.2100	& 0.0000 \\
-    5 5 5	& 10	        & 0.200	& -43.3940	& 765	& 84        & 0.0000	& -1.2000	& 0.0000 \\\bottomrule
+    Mesh	& pts in IBZ    & Dist. & Toten     & CPU	& Mem [MB]  & Force	    & Press.	 \\\midrule
+    1 1 1	&  1    	    &-1.000	& -42.5595	& 82	& 54        & 0.0000	& 6.5500	 \\
+    2 2 2	&  4    	    & 0.500	& -43.3740	& 296	& 64        & 0.0000	& -1.0700	 \\
+    3 3 3	&  4    	    & 0.333	& -43.3932	& 297   & 64        & 0.0000	& -1.2100	 \\
+    4 4 4	& 10    	    & 0.250	& -43.3942	& 739	& 84        & 0.0000	& -1.2100	 \\
+    5 5 5	& 10	        & 0.200	& -43.3940	& 765	& 84        & 0.0000	& -1.2000	 \\\bottomrule
   \end{tabular}
   \caption{k points test 2x2x2, 350 eV}
   \label{tab:ktest2}
@@ -1747,90 +1747,159 @@ After these initial tests, a feeling about the parameters involved have been obt
 
 
 
+
+\section{Cell size}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/supercell/vmdscene3.png}
+  \includegraphics[width=7.5cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/supercell/plot_radial_displacement.pdf}
+  \caption{Effect of a split~$\langle 110 \rangle$ Si-P pair in a $6\times 6\times 6$ cubic diamond unit cell (side length 32.8~Å). The blue cube is the $6\times 6\times 6$ cell (side length 10.94~Å) used in the simulations.}
+  \label{fig:peffect}
+\end{figure}
+
+
 \section{Choice of initial structures}\label{seq:initial-structures}
 
-The diamond crystal structure of silicon is a relatively open one, and many interstitial configurations have been reported.
+The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$. \footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
+
+And as such many interstitial configurations have been reported.
+
 \comment{SITERINGER}
 
 In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
-They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The center of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
-Furhter they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
+They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
+Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
 
-
-
-Hexagonal relax 1: -339.644215 -> 340.418075 eV
-neighbour Si atoms relaxe slightly outward, about 0.1 Å.
-
-where one P atom and one Si atom share a lattice site
-
-found the most stable phosphorus interstitial configuration to be a
- study using the nudged elastic band method, Liu 
-Liu:2003
-[110] dumbbell interstitial where one P atom and one Si atom share a lattice site, ori- ented in [110] direction.
-
-
-SII	 0.37500	 0.37500	 0.62500
+% Sammenlign med perfekt 64Si
+% test_structures/perfect
+%   VENTER PÅ KJØRING
 
 \begin{figure}[htbp]
-  % Making of:
-  % Picture -> Layout
-  %     Target -> Bitmap
-  %     Resolution: 300 dpi
-  %     Width: 5cm, height: 5 cm
-  %     Background: black-on-white mode
-  % Picture -> Adjust
-  % Border : -.2
-  % Objects -> Coordinate System:
-  %     Position: 0.8, 0.15 relative to bottom left
-  %     Axes lengths (cm): 0.6
-  % Objects -> Legend:
-  %     Atomic radii: atom-group specific
-  %     Border width: 0
-  % Picture -> Viewing direction
-  %     View along -1 -2 0
-  %     Rotate: 4 <down>
-  % Model and radii:
-  %     Bond radius: 0.05
   \centering
+  % 1) test_structures/tetrahedral
+  %    -339.349832 eV
+  % 2) test_structures/tetrahedral/accurate3
+  %    -348.636614 eV
   \subfloat[Tetrahedral]{
-    \includegraphics[width=4.3cm]{../figures/silicon_with_p_interstitial_tetrahedral}
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/tetrahedral/accurate3/vmd_detail2.png}
     \label{fig:silicon_with_p_interstitial_tetrahedral}
   }
-  \subfloat[Octahedral]{
-    \includegraphics[width=4.3cm]{../figures/silicon_with_p_interstitial_octahedral}
-    %\crossbox{4.3cm}
-    \label{fig:silicon_with_p_interstitial_octahedral}
+  % 1) test_structures/hexagonal/01-relax
+  %    -340.418075 eV
+  % 2) test_structures/hexagonal/01-relax/accurate
+  %    KJØRER
+  \subfloat[Hexagonal]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/hexagonal/01-relax/vmd_detail2.png}
+    \label{fig:silicon_with_p_hexagonal.png}
+  }\\
+  % 1) split-110-from-md/relax_frame4493
+  %    -340.627774 eV
+  % 2) test_structures/split-110-from-md/accurate
+  %    KJØRER
+  \subfloat[Split $\langle110\rangle$]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
+    \label{fig:silicon_with_p_split110w.png}
   }
-  \subfloat[Split 110]{
-    \includegraphics[width=4.3cm]{../figures/silicon_with_p_split110}
-    %\rule{4.5cm}{4.5cm}
-    %\crossbox{4.3cm}
-    \label{fig:silicon_with_p_split110.png}
+  % 1) test_structures/bond-centered-111
+  %    KRÆSJA
+  % 2) test_structures/bond-centered-111/accurate
+  %    -344.934249 eV
+  \subfloat[Bond-centred $\langle111\rangle$]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/bond-centered-111/accurate/vmd_detail5.png}
+    \label{fig:silicon_with_p_interstitial_bc111}
   }
-  \caption{Different interstitial positions for a phosphorous atom in 1x1x1 silicon.}
+  \caption{Different interstitial positions for a phosphorous atom in the diamond lattice of silicon. 
+  The light-grey bond-framework is the perfect silicon structure with no defects, 
+  while the spherical atoms come from a fully-relaxed structure with one P defect.}
+  \label{fig:interstitial_positions}
 \end{figure}
+
+%Does there exist a PI complex, in which the phoshphorus atom is bonded to a silicon self-interstitial?
+
+The four (?) different interstitial configurations shown in fig. \ref{fig:interstitial_positions} were prepared and relaxed.
+All the structures were relaxed twice, requiring forces to be less than 0.05 eV/Å.(?)
+None of the structures changed significantly, indicating that the different structures form different local minima.
+Upon comparison, it was found that the energy of the split~$\langle110\rangle$ was the most stable structure,
+having an energy XXXXX lower than the hexagonal and YYYY lower than the tetragonal. The bond-centered $\langle 111 \rangle$
+position was the most unfavourable. Since the phosphorus atom is about the same size as the silicon atom, it is not surprising that positioning a phosphorus atom in-between two silicon atoms results in a great outward relaxation for the silicon atoms. 
+It is probably unlikely to find such a configuration in a simulation, while we expect the three other configurations to be visited.
+
+Pichler also noted a similar ``antibond-centered $\langle 111 \rangle$'' interstitial position, but this position was not tested here.
+
+
+%Hexagonal relax 1: -339.644215 -> 340.418075 eV
+%neighbour Si atoms relaxe slightly outward, about 0.1 Å.
+
+%where one P atom and one Si atom share a lattice site
+
+%found the most stable phosphorus interstitial configuration to be a
+% study using the nudged elastic band method, Liu 
+%Liu:2003
+%[110] dumbbell interstitial where one P atom and one Si atom share a lattice site, ori- ented in [110] direction.
+
+
+%SII	 0.37500	 0.37500	 0.62500
+
+
+% si-pi/si64/test_structures/split-110-opt2
+%Split 110:
+%-340.827613 eV
+
+%% si-pi/si64/test_structures/hexagonal/01b-relax_isif3
+%Hexagonal:
+%-340.447951 eV
+
+%% 
+%Octahedral:
+%-339.352901 eV
+
+%
+%Tetrahedral
+%-339.349832 eV
+
+\subsubsection{Preparation of the split 110 cell}
+An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
+The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
+The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site.
+More surprisingly the distance between the Si and P atoms sharing a lattice site increased to \SI{2.44}{\angstrom}, slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, making the description of them as a pair questionable. 
+
+
+%\begin{figure}[htp]
+%  \centering
+%  \includegraphics[width=6cm]{../figures/split110_initial.png}
+%  \caption{Relaxed Si-P split ``pair''.}
+%  \label{fig:relaxedSIPsplit}
+%\end{figure}
+
+\begin{figure}[htp]
+  \centering
+    \subfloat[First -340.827613 eV]{
+      \label{fig:split110a}
+      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-opt2/view011.png}
+    }
+    \subfloat[Second -340.627774 eV]{
+      \label{fig:split110b}
+      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_011.png}
+    }
+    \subfloat[Second -340.627774 eV]{
+      \label{fig:split110c}
+      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_0m11.png}
+    }
+  \caption{Relaxation of the split 110 Si-P pair}
+  \label{fig:relaxedSIPsplit}
+\end{figure}
+
 
 \section{Diffusion}
 
 \subsection{Interstitialcy-mediated}
-
-Does there exist a PI complex, in which the phoshphorus atom is bonded to a silicon self-interstitial?
-
-An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
-The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
-The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site, and the bond length of the Si-P pair increases to \SI{2.44}{\angstrom}. This makes the bond length slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, which is slighlty surprising. Another Si-P pair is formed, however, with bond length \SI{2.23}{\angstrom}.
 
 It should be noted that Sahli (2005) reported the distance from silicon atoms to a split site as 1.45 Å. 
 This was for a Si-Si self interstitial.
 
 TEST: What happens if we relax say the final structure of the split110 at 1000 K run? What would the Si-Si selfinterstitial bond length be?
 
-\begin{figure}[htp]
-  \centering
-  \includegraphics[width=6cm]{../figures/split110_initial.png}
-  \caption{Relaxed Si-P split ``pair''.}
-  \label{fig:relaxedSIPsplit}
-\end{figure}
 
 %Initially:
 %   0.35000000000000   0.35000000000000   0.42000000000000  T T T
@@ -1869,6 +1938,7 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 %  \label{fig:split110_1000_occ}
 %\end{figure}
 
+
 \begin{figure}[H]
   % Making of:
   % Picture -> Layout
@@ -1890,11 +1960,15 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   % Model and radii:
   %     Bond radius: 0.05
   \centering
-  \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.]{
-    \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
-    \label{fig:split110_1000_occ}
+  \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for the P atom.]{ %
+     \includegraphics[width=9cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf} %
+     \label{fig:split110_1000_occ} %
+    }
+  \subfloat[The full diffusion path for the P atom]{%
+     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/full_path.png} %
+     \label{fig:cartoon1.all} %
   }\\
-  \subfloat[Relaxed initial structure, with a Si-P pair sharing site 2.]{
+  \subfloat[Relaxed initial structure, with P at a hexagonal interstitial site.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t0.png}
     \label{fig:cartoon1.1}
   }
@@ -1914,17 +1988,14 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30.png}
     \label{fig:cartoon1.5}
   }
-  %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
-  %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
-  %  \label{fig:cartoon1.6}
-  %}
-  \subfloat[Full diffusion path]{
-    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/full_path.png}
+  \subfloat[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
     \label{fig:cartoon1.6}
   }
-  \caption{View of a single crystal plane along the [$\bar{1}1\bar{1}$] direction. 
-  (a-e) shows 5 selected configurations, and (f) shows the whole diffusion path. 
-  Interstitial silicon atoms indicated with a darker shade.}
+  \caption{30 ps simulation at 1000 K. (c-g) shows 5 selected configurations viewed 
+  along the [$\bar{1}1\bar{1}$] direction, indicated on (a) by vertical grey lines.
+  (h) shows the final structure after geometry relaxation.
+  Interstitial silicon atoms are drawn with a darker shade than silicon atoms at lattice sites.}
 \end{figure}
 
   %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
@@ -1933,6 +2004,51 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   %}
 
 \subtitle{Jump figure}
+
+
+\begin{figure}[H]
+  \centering
+  \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom.]{
+    \includegraphics[width=9cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/plot_dist_from_lattice.pdf} %
+    \label{fig:hexagonal_1300_2_occ} %
+  }
+  \subfloat[Full diffusion path]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/full_path.png} %
+    \label{fig:cartoon2.all} %
+  }\\
+  \subfloat[Relaxed initial structure, with P at hexagonal interstitial site.]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_v2_t0.png}
+    \label{fig:cartoon2.1}
+  }
+  \subfloat[P-Si sharing site 1]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_v3_t1.png}
+    \label{fig:cartoon2.2}
+  }
+  \subfloat[P at site 2. Si-Si sharing site 1]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_t13_combined2.png}
+    \label{fig:cartoon2.3}
+  }\\
+  \subfloat[P-Si sharing site 3]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_t23.png}
+    \label{fig:cartoon2.4}
+  }
+  \subfloat[P at hexagonal site on its way from site 6 to 7]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_64188.png}
+    \label{fig:cartoon2.5}
+  }
+  \subfloat[P-Si split at site 9]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_81633_combined}
+    \label{fig:cartoon2.6}
+  }
+  \caption{90 ps simulation at 1300 K.
+  (c-f) shows 6 selected configurations, indicated on (a) by vertical grey lines. 
+  Only interstitial silicon atoms are shown.}
+  %The non-interstitial silicon atoms vibrate about their lattice positions, indicated by
+  %the static lattice framework.}
+  %VjjViewing along the [$\bar{5}04$] direction 
+  %(slightly rotated from [$\bar{1}01$] to provide a perspective.
+\end{figure}
+
 
 Aware that the simulations times were probably too short, an attempt was still made to estimate jump frequencies as a function of temperature, in order to see if some pattern emerged and if the numbers made sense.
 To count jumps, we first have to define what constitutes a ''jump''. 
@@ -1967,7 +2083,10 @@ In the first ``liberal'' attempt, the distance criterion is ignored altogether, 
 This should suffice to avoid counting particularly long vibrations as jumps, but still be short enough to avoid missing jumps if multiple jumps are made in series. 
 In the second ``conservative'' attempt, a distance criterion of 0.3~Å is imposed. This should filter out most cases where the atom jumps from one interstitial position to another. 
 
-Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs.
+Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs, plotted in figure \ref{fig:jumpfreq}. \comment{Logplott og 1/T}
+
+Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
+
 
 
 
@@ -1977,8 +2096,8 @@ Table \ref{tab:jumps} shows the results of applying the two attempts for all the
 
     \begin{tabular}{rrrrrr}
       \toprule
-        Temp. [K]   & Duration [ps]   & \multicolumn{2}{c}{Liberal estimate}\tnote{a} & \multicolumn{2}{c}{Conservative estimate}\tnote{b} \\
-         &   & Jumps & Jump frequency [/ps] & Jumps & Jump frequency [/ps] \\
+        Temp.  & Duration & \multicolumn{2}{c}{Liberal estimate}\tnote{a} & \multicolumn{2}{c}{Conservative estimate}\tnote{b} \\
+        {[K]} & {[ps]}  & Jumps & Jump frequency [/ps] & Jumps & Jump frequency [/ps] \\
       \midrule
          700 &  30 & 23 & 0.767 &  0 & 0.000 \\
          800 &  30 & 20 & 0.667 &  0 & 0.000 \\
@@ -2019,6 +2138,14 @@ Table \ref{tab:jumps} shows the results of applying the two attempts for all the
   \caption{Jump frequencies at different temperatures}
   \label{tab:jumps}
 \end{table}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=12cm]{../notur/hipersol/si-pi/si64/find_jump_frequencies.pdf}
+  \caption{Jump frequencies as a function of temperature}
+  \label{fig:jumpfreq}
+\end{figure}
+
 
 
 \begin{figure}[htbp]
