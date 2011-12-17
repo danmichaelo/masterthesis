@@ -32,7 +32,8 @@
 %\publishers{Pub}
 
 \newcommand{\vasp}{{\texttt{VASP}}} % eller \sc?
-
+\newcommand{\vesta}{{\texttt{VESTA}}} % eller \sc?
+\newcommand{\vmd}{{\texttt{VMD}}} % eller \sc?
 
 \begin{document}
 \frontmatter
@@ -51,8 +52,7 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 %generations before you have laid out the theories of quantum mechanics and of
 %solid state physics, prepared a huge library of crystallographic data, 
 %developed computing power at a remarkable pace, and written millions of lines
-%of computer code. 
-
+%of computer code. Sometimes you feel very tiny.
 
 \tableofcontents
 
@@ -361,10 +361,22 @@ The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
 \section{The case of phosphorus diffusion in silicon}
 
-The solubility of phosphorus in silicon is rather high. 
-\comment{Hent inn bakgrunn fra f.eks. Pichler}
+The solid solubility of phosphorus is in the order of 1\%. After in-diffusion of phosphorus into silicon , an annealing step 
+After proper annealing, the density of electrically active dopants can reach about 2–\SI{3e20}{\per\centi\metre\cubed}, or 0.4--0.6\%,
+or even \SI{4e20}{\per\centi\metre\cubed} for annealing temperatures higher than those used in normal solar cell processing.
 
+but at temperatures above \SI{750}{\celsius}, 
+however, the limit of solunlieven more phosphorus appears to be solv
 
+Newero\cite{Borisenko:1987} and \cite{Safarian:2011} 
+
+According to the standard phosphorus-silicon binary phase diagram, more than 2\% P can be solved in silicon at temperatures at temperatures between \SI{1350}{\kelvin} and \SI{1500}{\kelvin} without the formation of new phases, and even at 1000 K about half a percent can be solved.\cite{PSiPhaseDiagram} 
+Sheet resistivity and Hall effect measurements have shown that below about 2–\SI{3e20}{\per\centi\metre\cubed} (or 0.4-0.6\%), the density of electrically active dopants in properly annealed samples follow the chemical concentration of phosphorus closely, but above such a concentration, the density of electrically active dopants $n_e$ plateau.\cite{Tannenbaum:1961}
+A concentration of about half a percent therefore seems to be the maximum solubility of unclustered P,\cite{Solmi:1998} but higher concentrations
+%(reached above about \SI{750}{\celsius},\cite{Solmi:1996} and)
+are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b}
+The exact nature of the ``extra'', inactive phosphorus is not known, but a mix of SiP precipitates and mobile P defects have been suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
+%When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
 
 \chapter{Density Functional Theory}
 
@@ -1772,46 +1784,91 @@ They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in
 Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
 
 % Sammenlign med perfekt 64Si
-% test_structures/perfect
-%   VENTER PÅ KJØRING
+% test_structures/perfect/stdrelax/OUTCAR.3
+%  -347.657766 eV
 
 \begin{figure}[htbp]
   \centering
+  %
+  % 3) test_structures/perfect/stdrelax/OUTCAR3
+  %    KJØRER
+  %
+  % ----------------------------------------------------
+  % Tetrahedral: 
   % 1) test_structures/tetrahedral
   %    -339.349832 eV
-  % 2) test_structures/tetrahedral/accurate3
-  %    -348.636614 eV
-  \subfloat[Tetrahedral]{
-    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/tetrahedral/accurate3/vmd_detail2.png}
-    \label{fig:silicon_with_p_interstitial_tetrahedral}
+  % 2) test_structures/tetrahedral/accurate3/OUTCAR2
+  %    -348.796980 eV
+  % 3) test_structures/tetrahedral/stdrelax-short/OUTCAR.1
+  %    -348.787620 eV
+  % 3) test_structures/tetrahedral/stdrelax-short/OUTCAR.2  [FINAL!]
+  %    -348.846128 eV
+  \subfloat[Tetrahedral, -1.188 eV]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/tetrahedral/stdrelax-short/vmd_detail2.png}
+    \label{fig:tetrahedral}
   }
+  % ----------------------------------------------------
+  % Hexagonal: 
   % 1) test_structures/hexagonal/01-relax
   %    -340.418075 eV
-  % 2) test_structures/hexagonal/01-relax/accurate
-  %    KJØRER
-  \subfloat[Hexagonal]{
-    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/hexagonal/01-relax/vmd_detail2.png}
-    \label{fig:silicon_with_p_hexagonal.png}
-  }\\
-  % 1) split-110-from-md/relax_frame4493
-  %    -340.627774 eV
-  % 2) test_structures/split-110-from-md/accurate
-  %    KJØRER
-  \subfloat[Split $\langle110\rangle$]{
-    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
-    \label{fig:silicon_with_p_split110w.png}
+  % 2) test_structures/hexagonal/01-relax/accurate/OUTCAR.2
+  %    -349.732751 eV
+  % 3) test_structures/hexagonal/stdrelax/OUTCAR.2
+  %    -349.720359 eV
+  % 3) test_structures/hexagonal/stdrelax/OUTCAR.3  [FINAL!]
+  %    -349.794169 eV
+  % relaxed -> hexagonal
+  \subfloat[Hexagonal, -2.136 eV]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/hexagonal/stdrelax/vmd_detail.png}
+    \label{fig:hexagonal}
   }
+  %
   % 1) test_structures/bond-centered-111
   %    KRÆSJA
   % 2) test_structures/bond-centered-111/accurate
   %    -344.934249 eV
-  \subfloat[Bond-centred $\langle111\rangle$]{
-    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/bond-centered-111/accurate/vmd_detail5.png}
-    \label{fig:silicon_with_p_interstitial_bc111}
+  % 3) test_structures/bond-centered-111/stdrelax/OUTCAR.3  [FINAL!]
+  %    -348.540818 eV
+  \subfloat[Bond-centred $\langle111\rangle$, -0.883 eV]{
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/bond-centered-111/stdrelax/vmd_detail.png}
+    \label{fig:bc111}
+  }\\
+  %
+  \subfloat[split $\langle110\rangle$, -2.214 eV ]{
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-modelled2/stdrelax-short/vmd_detail.png}
+    \label{fig:split110-2}
   }
+  %
+  \subfloat[split $\langle110\rangle$, -2.215 eV]{
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-modelled/stdrelax-short/vmd_detail2.png}
+    \label{fig:split110}
+  }
+  %
+  % 1) split-110-from-md/relax_frame4493
+  %    -340.627774 eV
+  % 2) test_structures/split-110-from-md/accurate/OUTCAR1
+  %    -346.593830 eV 
+  % 3) test_structures/split-110-from-md/stdrelax/OUTCAR.1
+  %    -349.965976 eV
+  % 4) test_structures/split-110-from-md/stdrelax/OUTCAR.2
+  %    -350.023235 eV
+  % 5) test_structures/split-110-from-md/stdrelax-strange/OUTCAR.3
+  %    -350.041718 eV
+  \subfloat[not split $\langle110\rangle$, -2.384 eV]{
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
+    %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
+    \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-strange/vmd_detail3.png}
+    \label{fig:split110w}
+  }
+  %
   \caption{Different interstitial positions for a phosphorous atom in the diamond lattice of silicon. 
   The light-grey bond-framework is the perfect silicon structure with no defects, 
-  while the spherical atoms come from a fully-relaxed structure with one P defect.}
+  while the spherical atoms come from a fully-relaxed structure with one P defect. 
+  The bond lengths can be compared with the Si-Si bond length in this work, 2.37~Å. }
   \label{fig:interstitial_positions}
 \end{figure}
 
@@ -1819,6 +1876,11 @@ Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-
 
 The four (?) different interstitial configurations shown in fig. \ref{fig:interstitial_positions} were prepared and relaxed.
 All the structures were relaxed twice, requiring forces to be less than 0.05 eV/Å.(?)
+The tetrahedral position (fig. \ref{fig:tetrahedral}), where the phosphorus atom is surrounded by four nearest neighbours, 
+was less stable than anticipated.
+On the first relaxation attempts, it relaxed into the more stable hexagonal position (fig. \ref{fig:hexagonal}), where 
+phosphorus is surrounded by six neighbours.
+
 None of the structures changed significantly, indicating that the different structures form different local minima.
 Upon comparison, it was found that the energy of the split~$\langle110\rangle$ was the most stable structure,
 having an energy XXXXX lower than the hexagonal and YYYY lower than the tetragonal. The bond-centered $\langle 111 \rangle$
@@ -2088,8 +2150,6 @@ Table \ref{tab:jumps} shows the results of applying the two attempts for all the
 Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
 
 
-
-
 \begin{table}[htbp]
   \centering
   \begin{threeparttable}[htbp]
@@ -2353,9 +2413,45 @@ where $N(\varepsilon_i)$ is the integrated DOS
     $p_i$   & Generalized momentum coordinate \\
     $\nvec{x}$ & Phase space vector with $6N$ components $x_i=\{q_i,p_i\}$
   \end{tabular}
-  
-\layout
 
-\printindex
+\chapter{Code}
+
+\section{VMD plugins}
+
+For visualisation purposes, the two programs {\vesta} (Visualization for Electronic and STructural Analysis) and {\vmd} (Visual Molecular Dynamics) have been used, both free for non-commercial use.
+As the name suggest, \vmd was developed for visualising trajectories, while \vesta only supports still structures.
+But there are other major differences between the programs. While \vmd originates from the biophysics community, \vesta comes from the crystallographic community.
+\vesta therefore is better suited for viewing crystals, and I found that I especially missed a visualization of and alignment to crystal vectors in \vmd.
+\vmd comes with embedded Tcl (and Python if you build it yourself), so I wrote a plugin first mimicking \vesta's Orientation dialogue, and then adding 
+display of crystal vectors, view vectors and some extras.
+
+\url{https://github.com/danmichaelo/crystallography}
+The plugin is available to download using git
+\lstset{language=Bash}
+% Using read-only URL
+\begin{lstlisting}
+git clone git://github.com/danmichaelo/crystallography.git
+\end{lstlisting}
+
+\section{Python packages}
+
+\url{https://github.com/danmichaelo/oppvasp}
+\begin{lstlisting}
+git clone git://github.com/danmichaelo/oppvasp.git
+\end{lstlisting}
+
+The vtf writer writes both positions and forces, and the latter can be read by newer versions of VMD's vtfplugin.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/vmdscene4.png}
+  \caption{Force visualization}
+  \label{fig:forceviz}
+\end{figure}
+
+
+%\layout
+
+%\printindex
 
 \end{document}
