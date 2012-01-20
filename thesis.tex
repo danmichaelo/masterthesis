@@ -1490,17 +1490,36 @@ As Castleton et al. point out\cite{Castleton:2009}, incomplete $k$-point converg
 As a consequence, they recommend using either fully converged $k$-point sets or the $\Gamma$-point only when comparing supercells of different size.
 
 
+     The minimum for the cubic-spline interpolation is at
+     \SI{-43.38}{\electronvolt} for $a=\SI{5.474}{\angstrom}$.
 \cite{Haas:2010}
+
+
+k point density
+
+%Volume of cubic unit cell:  1.51558 Å^-3
+%k1: 0.66 / Å^-3
+%k8: 5.28
+%k27: 17.82
+
+%Volume of 2x2x2: 0.18945 Å^-3
+%k1: 1/0.19 = 5.28 / Å^-3
+%k3: 142.52 / ^¨-3
+
+
+
+
 
 \begin{figure}[htbp]
   \begin{center}
     %\includegraphics{figs/si_bulk_conv_vol}
-    \includegraphics{../figures/tests/si8_volumeopt.pdf}
+    \includegraphics{figs/tests/lattice_parameter.pdf}
   \end{center}
   \caption{
-     Volume optimization of the cubic unitcell (8 atoms). 
-     The minimum for the cubic-spline interpolation is at
-     \SI{-43.38}{\electronvolt} for $a=\SI{5.474}{\angstrom}$.
+     Total energy and pressure as a function of varying the lattice parameter $a$ of a cubic unit cell (Si8).
+     For the Si64 cell, the lattice parameter is $2a$, and the energy plotted is the cube root of the total energy,
+     for comparison with the Si8 cell. All energies are given relative to the minimum for each configuration.
+     The minimum energy of the different configurations are in general not the same.
   }
   \label{fig:si_bulk_conv_vol}
 \end{figure}
@@ -1524,16 +1543,17 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
 Having established the lattice constant and the $k$ point density, the energy cutoff determining the basis set size
 should be established.
 At worst the computational cost of a DFT calculation scales as the third power of the basis set size. 
-Thanks to efficient codes, the scaling is often better, as in figure \ref{fig:si_bulk_conv_e_cpu}, where the 
+Thanks to efficient codes, the scaling is often better, 
+%as in figure \ref{fig:si_bulk_conv_e_cpu}, where the 
 cpu time scales roughly as the cube of the basis set size. Still, optimizing the energy cutoff is important.
 
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics[width=8cm]{figs/si8_bulk_etest_cpu}
-  \end{center}
-  \caption{CPU time as a function of cutoff energy}
-  \label{fig:si_bulk_conv_e_cpu}
-\end{figure}
+%\begin{figure}[htbp]
+%  \begin{center}
+%    \includegraphics[width=8cm]{figs/si8_bulk_etest_cpu}
+%  \end{center}
+%  \caption{CPU time as a function of cutoff energy}
+%  \label{fig:si_bulk_conv_e_cpu}
+%\end{figure}
 
 As the size of the basis set is increased by increasing $E_{\text{cut}}$,
 the total energy of the system should eventually converge towards a constant value, 
@@ -1542,18 +1562,18 @@ In figure \ref{fig:figs/si64_bulk_conv_encut_stress}, the difference
 in total energy obtained by by increasing the energy cutoff $E_{\text{cut}}$ by 1 eV is shown as a function of $E_{\text{cut}}$.
 From the rapid increase in energy differences below about 150 eV, we may expect severe basis set effects to occur below such an energy.
 
-In figure \ref{fig:figs/si64_bulk_conv_vol} the volume optimization carried out above is repeated while reducing the 
-energy cutoff. Even for the lowest value, \SI{180}{\electronvolt}, the curves resemble closely that of \SI{800}{\electronvolt},
-and we see a slight systematic shift towards the right as $E_{\text{cut}}$ is reduced.
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics{figs/si64_bulk_conv_vol}
-  \end{center}
-  \caption{
-  Volume optimization of $2\times2\times2$ supercell with varying $E_{\text{cut}}$.
-  }
-  \label{fig:figs/si64_bulk_conv_vol}
-\end{figure}
+%In figure \ref{fig:figs/si64_bulk_conv_vol} the volume optimization carried out above is repeated while reducing the 
+%energy cutoff. Even for the lowest value, \SI{180}{\electronvolt}, the curves resemble closely that of \SI{800}{\electronvolt},
+%and we see a slight systematic shift towards the right as $E_{\text{cut}}$ is reduced.
+%\begin{figure}[htbp]
+%  \begin{center}
+%    \includegraphics{figs/si64_bulk_conv_vol}
+%  \end{center}
+%  \caption{
+%  Volume optimization of $2\times2\times2$ supercell with varying $E_{\text{cut}}$.
+%  }
+%  \label{fig:figs/si64_bulk_conv_vol}
+%\end{figure}
 
 While force-minimized high-symmetric configurations may be described well by a relatively low number of plane waves, 
 less symmetric and stressed configurations will require more plane waves for a good description. 
@@ -1571,7 +1591,7 @@ In the `high stress' configuration this was reduced further to \SI{1.23}{\angstr
 
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{figs/si_bulk_conv_encut}
+    \includegraphics{figs2/si_bulk_conv_encut}
   \end{center}
   \caption{
   (a) Energy convergence for 2x2x2 cell
@@ -1767,12 +1787,20 @@ After these initial tests, a feeling about the parameters involved have been obt
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/supercell/vmdscene3.png}
-  \includegraphics[width=7.5cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/supercell/plot_radial_displacement.pdf}
-  \caption{Effect of a split~$\langle 110 \rangle$ Si-P pair in a $6\times 6\times 6$ cubic diamond unit cell (side length 32.8~Å). The blue cube is the $6\times 6\times 6$ cell (side length 10.94~Å) used in the simulations.}
-  \label{fig:peffect}
+    \subfloat[]{
+      \label{fig:cellsize_pic}
+      \includegraphics[width=6cm]{figs/tests/cellsize}
+    }
+    \subfloat[]{
+      \label{fig:cellsize_rad}
+      \includegraphics[width=6cm]{figs/tests/cellsize_radial_displacement}
+    }
+  \caption{Left) A small part of the $6\times 6\times 6$ unit cell (side length 32.8~Å), showing the 
+  relaxed split~$\langle 110 \rangle$ Si-P pair.
+  Indicated with a blue frame is the $2\times 2\times 2$ cell with side length 10.94~Å.
+  Right) Relaxation distance for all the 1728 atoms in the cell as a function of radial distance from the defect centre.}
+  \label{fig:cellsize}
 \end{figure}
-
 
 \section{Choice of initial structures}\label{seq:initial-structures}
 
@@ -1956,34 +1984,21 @@ More surprisingly the distance between the Si and P atoms sharing a lattice site
 \end{figure}
 
 
-\section{Diffusion}
+\section{Trajectories}
+%It should be noted that Sahli (2005) reported the distance from silicon atoms to a split site as 1.45 Å. 
+%This was for a Si-Si self interstitial.
 
-\subsection{Interstitialcy-mediated}
+%TEST: What happens if we relax say the final structure of the split110 at 1000 K run? What would the Si-Si selfinterstitial bond length be?
 
-It should be noted that Sahli (2005) reported the distance from silicon atoms to a split site as 1.45 Å. 
-This was for a Si-Si self interstitial.
+%The integrity of the lattice remains high during the entire simulation, so the lattice sites are well defined,
 
-TEST: What happens if we relax say the final structure of the split110 at 1000 K run? What would the Si-Si selfinterstitial bond length be?
+A total of X trajectories was obtained at temperatures varying from X K to X K. 
+In this section I will discuss two specific trajectories in some detail before the more statistically oriented discussions that follow in the next sections.
+The first one is a 30 ps simulation at 1000 K, in which a single diffusion jump takes place. 
+The trajectory shows many features that are quite typical of most simulations.
+The second example is one of extraordinary diffusion, in which phosphorus diffuses about 10 Å in 90 ps at 1300 K.
 
-
-%Initially:
-%   0.35000000000000   0.35000000000000   0.42000000000000  T T T
-%   0.15000000000000   0.15000000000000   0.42000000000000  T T T
-
-%After selective relax
-%   0.32776792000000   0.32776792000000   0.43729558000000
-%   0.16386458000000   0.16386458000000   0.42712416000000
-
-%After full relax:
-%  0.3264387215307114  0.3264387215307114  0.4493431188936880
-%  0.1700365383985873  0.1700365383985873  0.4418843932377862
-   
-
-%After relaxation
-%  0.3262387215307114  0.3287387215307114  0.4503431188936880
-%  0.1700365383985873  0.1700365383985873  0.4418843932377862
-
-The integrity of the lattice remains high during the entire simulation, so the lattice sites are well defined,
+\subsection{Example 1}
 
 Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
 where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
@@ -2068,8 +2083,10 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   %  \label{fig:cartoon1.6}
   %}
 
-\subtitle{Jump figure}
+%\subtitle{Jump figure}
 
+
+\subsection{Example 2}
 
 \begin{figure}[H]
   \centering
@@ -2114,6 +2131,11 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   %(slightly rotated from [$\bar{1}01$] to provide a perspective.
 \end{figure}
 
+\section{Melting}
+
+\ldots
+
+\section{Jump frequencies}
 
 Aware that the simulations times were probably too short, an attempt was still made to estimate jump frequencies as a function of temperature, in order to see if some pattern emerged and if the numbers made sense.
 To count jumps, we first have to define what constitutes a ''jump''. 
@@ -2151,7 +2173,6 @@ In the second ``conservative'' attempt, a distance criterion of 0.3~Å is impose
 Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs, plotted in figure \ref{fig:jumpfreq}. \comment{Logplott og 1/T}
 
 Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
-
 
 \begin{table}[htbp]
   \centering
