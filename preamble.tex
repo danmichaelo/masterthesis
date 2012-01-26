@@ -19,6 +19,18 @@
 \usepackage{lettrine}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page headers and footers:
+\usepackage{scrpage2}  % part of koma-script
+\ohead{\pagemark}   % outer
+\rehead{\headmark}  % right even
+\lohead{\headmark}  % left odd
+\ofoot{} % clear default
+\automark[section]{chapter}  % right, left
+%\setheadtopline{2pt}
+%\setheadsepline{.4pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MATH:
 
 \usepackage{amsmath,amsthm,amssymb}		% AMS Math support

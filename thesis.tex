@@ -57,6 +57,7 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 \tableofcontents
 
 \mainmatter
+\pagestyle{scrheadings}
 
 \part{Background and theory}
 
@@ -1493,6 +1494,38 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
      The minimum for the cubic-spline interpolation is at
      \SI{-43.38}{\electronvolt} for $a=\SI{5.474}{\angstrom}$.
 \cite{Haas:2010}
+
+Increasing the size of the cell, has the effect of reducing the size of reciprocal space. 
+Hence, the Brillouin zone becomes smaller and the k point density can be reduced. 
+The number of bands increases, however, since the bands ``wrap back'' into the smaller cell,
+making the calculation just as costly.
+
+This is illustrated, for the sake of simplicity, for a one-dimensional 
+lithium chain with bond length 2.38~Å. Since the atoms are evenly spaced,
+the system is periodic, and we can define a unit cell with lattice parameter 
+$a=2.38$~Å containing a single atom. 
+The brillouin zone is then a line segment of length $2\pi/a$. 
+The left part of figure \label{fig:kpointdensity} shows the energy bands sampled at 17 k points between $-\pi/a$ and $\pi/a$. 
+Of course there is some symmetry here. Really, we would only have to sample the irreducible brillouin zone of length $\pi/a$, 
+but the whole Brillouin zone was sampled here for the purpose of illustration.
+
+Now we are free to define the unit cell as we want, so we could define a
+cell with lattice parameter $a'=2a=4.76$~Å containing two atoms. 
+The brillouin zone is then reduced to a line segment of length $2\pi/a'=\pi/a$,
+but should still contain the whole band structure, since the choice of unit cell size is arbritrary.
+In the right figure it is shown how the band ``wraps back'' into the brillouin zone.
+
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics{figs/kpointdensity.pdf}
+  \caption{Illustration of the effect of using supercells in one dimension. 
+  The left figure shows the band structure calculated from a `unit cell' with
+  lattice parameter 2.38~Å containing a single Li atom.
+  The right figure shows the band structure calculated from a `supercell' with
+  lattice parameter 4.76~Å containing two Li atoms.}
+  \label{fig:kpointdensity}
+\end{figure}
 
 
 k point density
