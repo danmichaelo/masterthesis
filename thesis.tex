@@ -69,8 +69,6 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 %I personally have no preference for materials over any other matter,
 %it happened that I ended up in materials science, the study of 
 
-materials -- ``matter from which a thing is or can be made''\footnote{New Oxford American Dictionary 2nd ed. 2005. I will not 
-go into what a `thing' may or may not be.}. 
 
 %I was driven into this discipline by my interest in materials for 
 
@@ -214,7 +212,7 @@ development of silicon p/n junction cells that reached efficiencies above
 %be?
 
 
-\section{Diffusion and diffusivity}
+\section{Diffusion and diffusivity}\label{sec:Diffusion}
 
 Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria} due to their thermal motion. 
 Such redistribution occurs in all materials, but at a negligible rate at temperatures considerably below the melting point of the material.
@@ -388,19 +386,36 @@ The exact nature of the ``extra'', inactive phosphorus is not known, but a mix o
 
 \chapter{Density Functional Theory}
 
-Note to self: In DFT, the electron density is usually denoted $n(\vec{r})$ or
-$\rho(\vec{r})$. I think $n$ may be the more common choice, but that conflicts
-with $n$ as the free carrier density in semiconductor theory. Are we using
-$\rho$ somewhere?
+This chapter consists of two parts. The short sections \ref{sec:materials}-\ref{sec:pseudopot} give a general presentation of density functional theory, 
+while the lengthy section \ref{sec:parameters} is concerned with the practical choices made in the application of the theory in this specific work.
 
-``What are the electrons really doing in molecules?''\footnote{What are the
-Electrons Really Doing in Molecules? \textit{The Vortex}, Cal. Sec. of
-Am. Chem. Soc., Spring, 1960.}
+The aim of the first part has not been to \emph{introduce} density functional theory,\footnote{A good practical introduction is given by Scholl(2009)\cite{Scholl:2009} 
+and a more authorative one by Parr(1994)\cite{Parr:1994}.
+Chapter 12 in Kantorovich(2004)\cite{Kantorovich:2004} is somewhere in the middle, and is a personal favourite of mine.
+DFT put in the context of other electronic structure methods is introduced in e.g. the compact and elegant book by Kohanoff(2006)\cite{Kohanoff:2006} and in the comprehensive book by Martin(2004).\cite{Martin:2004}
+}
 
-\section{Describing materials (bør antakelig kortes ned)}
+but rather to \emph{describe} or summarise important concepts in DFT (sec. 2.1-2.4) as implemented in \vasp\ (sec. 2.5-2.10), and since notation varies between different authors, to provide a consistent notation to be used when referring to the concepts later on. 
+I've tried hard to keep the first part short, but some pieces I just couldn't cut away. On the other hand, important pieces are left out. 
+Readers experienced with DFT may safely jump directly to the second part (section \ref{sec:parameters}). 
+
+%Note to self: In DFT, the electron density is usually denoted $n(\vec{r})$ or
+%$\rho(\vec{r})$. I think $n$ may be the more common choice, but that conflicts
+%with $n$ as the free carrier density in semiconductor theory. Are we using
+%$\rho$ somewhere?
+
+%``What are the electrons really doing in molecules?''\footnote{What are the
+%Electrons Really Doing in Molecules? \textit{The Vortex}, Cal. Sec. of
+%Am. Chem. Soc., Spring, 1960.}
+
+\section{Describing materials}\label{sec:materials}
 
 %\lettrine[lines=3,slope=0pt,nindent=0pt]{M}{aterials} can be described and 
-As touched upon in section \ldots, matter can be described in different pictures. When radioactivity is not of interest, we are usually not interested in what happens within the nuclei, but rather the interaction between nuclei and electrons, from which chemical bonding and almost all material properties can be understood to the accuracy of interest (with higher accuracy taking longer time to calculate).
+
+As touched upon in section \ref{sec:Diffusion}, matter – or materials, ``matter from which a thing is or can be made''\footnote{New Oxford American Dictionary 2nd ed. 2005. I will not delve into the definition of `thing'.} – can be described in different pictures. 
+With theories such as density functional theory, materials are pictured as \emph{nuclei} and \emph{electrons}.%\footnote{Or more precisely, an electron cloud, in which no individuality exists.}
+From a knowledge of the constituent nuclei and electrons, all properties of a material can in principle be calculated to the accuracy of interest, limited only by the available computational power (this is a most severe limitation though).
+And unless radioactivity is of interest, there is no need to worry about what happens within the nuclei (not to say what might happen within the electrons, if anything happens there).
 
 %most cases of interest within the atomistic picture. 
 %modelled accurately enough for 
@@ -409,406 +424,415 @@ As touched upon in section \ldots, matter can be described in different pictures
 %as large collections of positive nuclei and 
 %negative electrons, and we call the 
 
-As de Broglie first hypothesised in 1924,\cite{deBroglie:1924} matter has wave
-properties. Quantum effects become important when the average inter-particle
-separation is of a size comparable to or smaller than the de Broglie wavelength 
-of the particle.\footnote{\url{http://cmt.dur.ac.uk/sjc/thesis_ppr/node5.html}. [Finn
-en bedre kilde!}. The de Broglie wavelength of an electron is $\lambda=h/p$.
-Using the classical energy-momentum relation $E=p^2/2m$, we obtain
-\begin{equation}
-  \lambda = \frac{h}{p} = \frac{h}{\sqrt{2m_eE}} 
-  \label{eq:deBroglieWavelength}
-\end{equation}
-For a free electron, the thermal energy $E\sim kT$, 
-giving $\lambda\sim\SI{77}{\angstrom}$ at
-room temperature. In comparison, the lightest element, hydrogen, has thermal
-energy $E\sim\frac32 kT$ and 
-$\lambda\sim\SI{1.5}{\angstrom}$. While atoms as a whole generally can be 
-threated classically, quantum effects do have some practical effects on them.
-For instance, many chemical reactions involving hydrogen, carbon and oxygen 
-proceeds much faster because of tunneling. In the molecular dynamics simulations, 
-a combination of the classical and quantum mechanical pictures will be used, as 
-described below, but tunneling will be negligible for the rather heavy elements 
-of interest; silicon and phosphorus.
+While nuclei can be described well using classical mechanics in most situations, electrons require a quantum mechanical description, as their de Broglie wavelength
+is often larger than the average inter-particle separation.\footnote{The de broglie wavelength is $\lambda=h/p$ after de Broglie's 1924 hypothesis of the wave properties of matter.\cite{deBroglie:1924} A (classical) particle with mass $m$ has momentum $p=\sqrt{2mE}$ and thermal energy $E=k_BT$, giving a ``thermal de Broglie wavelength''\cite[114]{Styer:2007} of $\lambda=h/\sqrt{2mk_BT}=\SI{18}{\angstrom}/\sqrt{A_r T}$, where $A_r=m/m_u$ is the (dimensionless) relative atomic mass with
+$m_u\approx\SI{1.66e-27}{\kilogram}$ being the atomic mass constant, and $T$ is the temperature in Kelvin. For an electron, $A_r=1/1800$, and the thermal de Broglie wavelength at room temperature is about $\SI{77}{\angstrom}$, much larger than the expected inter-particle separation. For a Si-atom, on the other hand, $A_r=28$ and $\lambda ~ \SI{0.2}{\angstrom}$. It should be noted that for the lightest elements, quantum effects such as tunneling \emph{do} have practical effects e.g. on the kinetics of reactions, but we are in the luck of working with no element lighter than Si, so we don't have to worry about this as a non-negligible source of error.}
 
-For solid-state systems, the average separation between two non-interacting
-electrons can be roughly estimated by the Wigner-Seitz radius $r_s$, 
-which is the radius of a sphere whose volume encloses a single electron
+%For solid-state systems, the average separation between two non-interacting
+%electrons can be roughly estimated by the Wigner-Seitz radius $r_s$, 
+%the radius of a sphere whose volume encloses a single electron
+%If the average electron density is $\rho$, then one electron occupies a volume
+%$1/\rho$. If we assume this volume is spherical, the average distance between
+%two electrons is two times the radius of this sphere, often termed the 
+%Wigner-Seitz radius (Phys. Rev. 43, 804 (1933)),
+%\begin{equation}
+%  \frac43\pi r_{wz}^3 = \frac{1}{\rho}\quad
+%  \Rightarrow \quad r_{wz} = \left(\frac{3}{4\pi\rho}\right)^{1/3}
+%  \label{eq:wigner-seitz}
+%\end{equation}
+%For typical materials, $r_s$ is of the same order of magnitude as $\lambda$. The
+%de Broglie waves overlap and a quantum mechanical treatment is necessary.
 
-If the average electron density is $\rho$, then one electron occupies a volume
-$1/\rho$. If we assume this volume is spherical, the average distance between
-two electrons is two times the radius of this sphere\footnote{This is a
-typical back-of-the-envelope type calculation.}, often termed the 
-Wigner-Seitz radius\footnote{Phys. Rev. 43, 804 (1933)},
-\begin{equation}
-  \frac43\pi r_{wz}^3 = \frac{1}{\rho}\quad
-  \Rightarrow \quad r_{wz} = \left(\frac{3}{4\pi\rho}\right)^{1/3}
-  \label{eq:wigner-seitz}
-\end{equation}
-For typical materials, $r_s$ is of the same order of magnitude as $\lambda$. The
-de Broglie waves overlap and a quantum mechanical treatment is necessary.
-
-The thermal wavelength for an ideal gas is
-\begin{equation}
-  \Lambda = \frac{h}{\sqrt{2\pi m k_B T}} \approx \frac{\SI{18}{\angstrom}}{\sqrt{A_r T}}
-\end{equation}
-where $A_r=m/m_u$ is the (dimensionless) relative atomic mass with
-$m_u\approx\SI{1.66e-27}{\kilogram}$ as the atomic mass constant.
-$T$ is the temperature in Kelvin.
-We see that for very light atoms at very low temperatures, quantum
-effects becomes important, but for most atoms at normal temperatures they are not.
-The relative atomic mass of the electron, however, is about $1/1800$, so 
-electrons must be described quantum mechanically
-
-In quantum mechanics, the system is fully
-described by the concept of a quantum state $|\Psi\rangle$. The state (or
-states) with the lowest energy is called the \emph{ground state} (GS), 
-while the other states are called excited states. We extract information about 
-observables like energy, momentum, \textit{et cætera} from the state by 
-letting Hermitian linear operators act on the state. As an example, the 
-kinetic energy of a particle $i$ is the expectation value of the kinetic 
-energy operator
-\begin{equation}
-  \hat{T}_i = -\frac{\hbar^2}{2m_i}\nabla_i^2.
-  \label{eq:kineticenergy}
-\end{equation}
-The energy of a state is the expectation value of an energy operator (A
-Hamiltonian $\mathcal{H}$) consisting of terms describing the kinetic 
-energy\footnote{Since quantum mechanical particles do not follow \emph{trajectories} 
-in the way classical particles do, the name `kinetic energy' is 
-a bit misleading, Reflecting the spatial variation of the wavefunction, Sauer and Kuhn suggested the 
-name `localization energy' instead for this term\cite{Sauer:1982}.
-Yet, with the close analogy with classical kinetic energy, we will continue to use that name.
-}
-and the potential energy arising from interactions with other particles.
-Terms describing relativistic and magnetic effects may be included.
-If the state of interest is the ground state, we find the ground state energy.
-[\dots] At each point in space $\vec{r}$, the quantum state can be represented by a 
-wavefunction $\Psi(\vec{r})=\langle\vec{r}|\Psi\rangle$.
+%The thermal wavelength for an ideal gas is
+%\begin{equation}
+%  \Lambda = \frac{h}{\sqrt{2\pi m k_B T}} \approx \frac{\SI{18}{\angstrom}}{\sqrt{A_r T}}
+%\end{equation}
+%$T$ is the temperature in Kelvin.
+%We see that for very light atoms at very low temperatures, quantum
+%effects becomes important, but for most atoms at normal temperatures they are not.
 
 
+%In comparison, the lightest element, hydrogen, has thermal energy $E\sim\frac32 kT$ makes $\lambda\sim\SI{1.5}{\angstrom}$. It should be noted that quantum effects ''do'' have some practical effects on the lightest atoms, such as tunneling, but no such effects are expected for the rather heavy elements of this study; silicon and phosphorus.}
 
-\lettrine[lines=3,slope=0pt,nindent=0pt]{S}{ome}
-of the first tests of quantum mechanics were optical measurements of
-isolated atoms (i.e. gases), which resulted in spectra with sharp, narrow 
-lines interpreted as resulting from transitions between the allowed energy 
-levels. Predicting and interpreting the broad spectra obtained from condensed 
-matter, although they also contained definitive electronic structure, required 
-far more sophistication. In the early 1960s, high quality energy level diagrams 
-(band diagrams) was calculated for silicon and germanium with the aid of a few
-parameters determined from optical experiments, using the empirical
-pseudopotential method\footnote{JC Philips, L Kleiman. Phys. Rev 116, 287
-(1959), MH Cohen, V. Heine. Phys. Rev. 122, 1821 (1961).}. While such
-empirical approaches have been very important for our understanding of
-semiconductors, it has been a major aspiration of condensed matter
-physics to explain and predict the properties of solids from `first
-principles', knowing only the identities of the constituent
-atoms\footnote{Cohen, Chelichowsky. Electronic structure and optical
-properties of solids. Introduction.}. Today this goal has been reached for
-most of the properties of pure semiconductors, and more realistic
-semiconductors involving defects are also studied. While some calculations
-are straightforward today, many are still not. This includes calculations of
-materials with highly correlated or localised electrons, and the calculation
-of excited state properties among others.
+%The relative atomic mass of the electron, however, is about $1/1800$, so 
+%electrons must be described quantum mechanically
+In quantum mechanics, a system of particles is fully described by the concept of a (time-dependent) quantum state $|\Psi(t)\rangle$, 
+or its representation in position-space; a many-body wavefunction $\Psi(\vec{X},t)=\langle\vec{X}|\Psi(t)\rangle$, with $\vec{X}=\{\vec{x}_i,\vec{R}_k\}$ being the set of all electron spin coordinates $\vec{x}_i$ and all nuclei coordinates $\vec{R}_k$.
+%of $\vec{x}=\vec{r}_1,\vec{r},\cdots$ is the (spin) coordinates of all particles in the system.
+The state (or states) with the lowest energy is called the \emph{ground state} (GS), while the others are called excited states. 
+Observables like energy, momentum, \textit{et cætera} are extracted by letting the appropriate Hermitian linear operator act on the state. 
+%For instance, the kinetic energy of a particle $i$ is the expectation value of the kinetic energy operator
+For instance, the energy is the expectation value of an energy operator, a \emph{Hamiltonian} $\hat{H}$, 
+consisting of operators for the kinetic energy\footnote{Since quantum mechanical particles do not follow \emph{trajectories} in the way classical particles do, the name `kinetic energy' is a bit misleading, Reflecting the spatial variation of the wavefunction, Sauer and Kuhn suggested the name `localization energy' instead\cite{Sauer:1982}. Yet, there is an analogy with classical kinetic energy, and with `kinetic energy' being the dominating expression, it will be used here too.} and various potential energy terms.
+The (non-relativistic) Hamiltonian for a system of $N_e$ electrons and $N_N$ nuclei, in Hartree atomic units\footnote{SJEKK
+in which the electron mass $m_e$, the elementary
+charge $e$, the reduced Planck constant $\hbar$ and the Coulomb constant
+$k_e$ all are unity by definition.
+}, is
+%\comment{foreløpig IKKE i atomære enheter, har ikke helt bestemt meg}
+\begin{align}
+  \hat{H} &= \hat{T}_N + \hat{V}_{NN} + \hat{T} + \hat{V}_{ee} + \hat{V}_{Ne}\\
+    &= \underbrace{
+        - \frac{1}{2}\sum_{k=1}^{N_N} \frac{1}{m_k}\nabla_k^2 
+        + \sum_{k<l}\frac{Z_kZ_l}{r_{kl}}
+		}_{\text{nuclei}}
+  \underbrace{
+      -\frac{1}{2}\sum_{i=1}^{N_e}\frac{1}{m_e}\nabla_i^2
+	+ \sum_{i<j}\frac{e^2}{r_{ij}}
+	}_{\text{electrons}}
+    + \sum_{i=1}^{N_e}\sum_{k=1}^{N_N} \frac{Z_k}{r_{ik}}
+  \label{eq:mol-hamiltonian}
+\end{align}
+with the five terms representing nucleus kinetic energy $\hat{T}_N$, nucleus-nucleus interactions $\hat{V}_{NN}$, electron kinetic energy $\hat{T}$, electron-electron interactions $\hat{V}_{ee}$ and electron-nucleus interactions $\hat{V}_{Ne}$, respectively.
+The indices $i$ and $j$ run over all electrons, while $k$ and $l$ run over all nuclei. 
 
-Still, electronic structure software can today be downloaded from the
-internet to your home, sometimes for free, where it can run calculations 
-not thought possible a few
-decades ago. 
+As seen, only electromagnetic (Coulombic) interaction is included. 
+The particles also interact gravitationally, but this can safely be ignored since the gravitational force is so much weaker than electromagnetic one.\footnote{Remember that a small kitchen magnet counteracts the gravitational pull of the entire Earth.}
+At the atomic scale, gravitation is completely negligible. 
+But other terms could be included in the Hamiltonian depending on the problem at hand, 
+such as interaction with external electric or magnetic fields, spin coupling terms, et cetera.
+%Terms describing relativistic and magnetic effects may also be included when necessary.
+%If the state of interest is the ground state, we find the ground state energy.
+
+%\lettrine[lines=3,slope=0pt,nindent=0pt]{S}{ome}
+%of the first tests of quantum mechanics were optical measurements of
+%isolated atoms (i.e. gases), which resulted in spectra with sharp, narrow 
+%lines interpreted as resulting from transitions between the allowed energy 
+%levels. Predicting and interpreting the broad spectra obtained from condensed 
+%matter, although they also contained definitive electronic structure, required 
+%far more sophistication. In the early 1960s, high quality energy level diagrams 
+%(band diagrams) was calculated for silicon and germanium with the aid of a few
+%parameters determined from optical experiments, using the empirical
+%pseudopotential method\footnote{JC Philips, L Kleiman. Phys. Rev 116, 287
+%(1959), MH Cohen, V. Heine. Phys. Rev. 122, 1821 (1961).}. While such
+%empirical approaches have been very important for our understanding of
+%semiconductors, it has been a major aspiration of condensed matter
+%physics to explain and predict the properties of solids from `first
+%principles', knowing only the identities of the constituent
+%atoms\footnote{Cohen, Chelichowsky. Electronic structure and optical
+%properties of solids. Introduction.}. Today this goal has been reached for
+%most of the properties of pure semiconductors, and more realistic
+%semiconductors involving defects are also studied. While some calculations
+%are straightforward today, many are still not. This includes calculations of
+%materials with highly correlated or localised electrons, and the calculation
+%of excited state properties among others.
+
+%Still, electronic structure software can today be downloaded from the
+%internet to your home, sometimes for free, where it can run calculations 
+%not thought possible a few
+%decades ago. 
 
 \section{The many-particle problem and the Born Oppenheimer approximation}\label{sec:born-oppenheimer}
-\comment{Skille mellom adiabatisk og BO eller ikke?}
+%\comment{Skille mellom adiabatisk og BO eller ikke?}
 
-Our system of interest consists of a large number of nuclei and electrons, particles whose motion are correlated by their Coulombic interactions. 
-While there is no known way to describe the mutual interaction of many particles in general, the reductionist principle of physics leads us to describe it as a sum of two-particle interactions between particles, for which simple equations exist.\footnote{
-Such a description is usually a very good one for particles interacting by relatively weak forces such as gravitational forces or Coulomb forces, but a description of particles interacting by strong nuclear forces requires the inclusion of at least three-particle interactions.}
-With this approach we can set up equations describing the motion of a general system of many particles, with `many' now meaning `more than two', but we can not solve the correlated equations exactly (analytically) even when using the relatively simple Newtonian equations of classical mechanics. 
-This is the `many-particle problem' or `many-body problem', perhaps first encountered by Newton as he studied the three-body problem of the motion of the Earth-Moon-Sun system interacting gravitationally.\footnote{Principia, Book 1, section XI, Proposition 66 and its corollaries,
+Our systems of interest consist of large number of nuclei and electrons, particles whose motion are correlated by their Coulombic interactions. 
+While there is no known way to describe the mutual interaction of many particles in general, 
+the reductionist principle of physics leads to a description in terms of a sum of pairwise interactions, for which simple expressions exist.\footnote{
+Two-particle interactions are often sufficient for relatively weak forces such as gravitational forces or Coulomb forces, 
+while for strong interactions the inclusion of three-particle interactions is hardly avoidable.\cite{Lovelace:1964}}
+With such an approach, equations describing the motion of a general system of many particles can be set up, 
+with `many' now meaning `more than two',
+but the correlated equations cannot be solved `exactly' (analytically), 
+no matter which specific equations are used for the pairwise interactions.
+This is the \emph{many-particle problem} or \emph{many-body problem}, perhaps first encountered by Newton as he studied the three-body problem of the motion of the Earth-Moon-Sun system interacting gravitationally.\footnote{Principia, Book 1, section XI, Proposition 66 and its corollaries,
 \url{http://en.wikisource.org/wiki/The_Mathematical_Principles_of_Natural_Philosophy_(1729)/Book_1/Section_11\#Prop66}
 \url{http://books.google.com/books?id=ySYULc7VEwsC&pg=PA173}
 (Newton, 1687, english transl. by Motte 1729) 
 The problem received great attention, as exemplified by the two-volume work La Théorie du mouvement de la lune, 1800 pages in length, published in1860 and 1867 by Charles-Eugène Delaunay on the system.}
-Approximate solutions to the Earth-Moon-Sun system can be found quite easily. 
-Due to the large mass difference between the three `particles' the problem can be decoupled into the Earth-Sun and the Earth-Moon problems.
-Interactions with the other planets may also be ignored successfully at first.
+Now, approximate solutions to the Earth-Moon-Sun system can be found quite easily by noting that 
+the problem can be decoupled into the Earth-Sun and the Earth-Moon problems, due to the large mass difference between the three `particles'.
 
 Similarly, the quantum-mechanical two-body problem of a single electron interacting with a single nuclei is solvable, while the introduction of more particles makes approximate numerical solutions necessary. 
-And with the electron being 1800 times lighter than the lightest nuclei, the hydrogen nuclei, approximate solutions may be found by decoupling the motion of the nuclei and the electrons. 
+And with the electron being 1800 times lighter than the lightest nucleus, the hydrogen nucleus, approximate solutions may be found by decoupling the motion of the nuclei and the electrons. 
 This is the central idea of the Born Oppenheimer approximation\cite{BO:1927}.
 
-To put this in a mathematical language, a system of $N$ electrons and $M$ nuclei can be described in Hartree atomic units\footnote{SJEKK
-in which the electron mass $m_e$, the elementary
-charge $e$, the reduced Planck constant $\hbar$ and the Coulomb constant
-$k_e$ all are unity by definition.
-} by the Hamiltonian (foreløpig IKKE i atomære enheter)
-\begin{align}
-  \hat{H} &= 
-	 \underbrace{
-		- \frac{\hbar^2}{2}\sum_{k=1}^M \frac{1}{m_k}\nabla_k^2 
-        + k_e \sum_{k<l}\frac{e^2Z_kZ_l}{r_{kl}}
-		}_{\text{nuclei}}
-  +
-  \underbrace{
-	-\frac{\hbar^2}{2}\sum_{i=1}^N\frac{1}{m_e}\nabla_i^2
-	+ k_e  \sum_{i<j}\frac{e^2}{r_{ij}}
-	}_{\text{electrons}}
-		+ k_e \sum_{i=1}^N\sum_{k=1}^M \frac{e^2Z_k}{r_{ik}}
-  \label{eq:mol-hamiltonian}
-\end{align}
-with the first two terms representing the kinetic energy of nuclei and electrons, respectively, 
-and the last three terms representing nuclei-nuclei interactions, electron-electron interactions
-and nuclei-electron interactions, respectively.
-The indexes $i$ and $j$ runs over all electrons, while $k$ and $l$ runs over all nuclei. 
-
-As seen, only electromagnetic (Coulombic) interaction is included. 
-The particles also interact gravitationally, but this can safely be ignored since the gravitational force is so much weaker than electromagnetic one.\footnote{Remember that a small kitchen magnet counteracts the gravitational pull of the entire Earth.}
-At the atomic scale, gravitation is completely negligible. But there are
-other terms we could include in the Hamiltonian, like interaction with external electric or magnetic fields, spin coupling terms, etc.
-
-While the many-body problem prevents exact analytic solutions, solutions to any given accurancy can be found from iterative, numerical methods, only limited by numerical accuracy and computational power. Computational power is a severe practical limitation though, and even with quite drastical approximations involved, it limits us to study systems of roughly a few thousand atoms. Computational power increase rapidly, and in 10 years, we may study tens of thousands of atoms, but still we will be far away from, say, the $10^{22}$ atoms in a gram of salt.
+%While the many-body problem prevents exact analytic solutions, solutions to any given accurancy can be found from iterative, numerical methods, only limited by numerical accuracy and computational power. Computational power is a severe practical limitation though, and even with quite drastical approximations involved, it limits us to study systems of roughly a few thousand atoms. Computational power increase rapidly, and in 10 years, we may study tens of thousands of atoms, but still we will be very far away from, say, the $10^{22}$ atoms in a gram of salt.
 
 %\section{The Born-Oppenheimer approximation}
 
-The reduction from a fully quantum description to a classical potential entails two main approximations. The first one is the Born-Oppenheimer approximation, which states that the dynamics of electrons is so fast that they can be considered to react instantaneously to the motion of their nuclei. As a consequence, they may be treated separately. The second one treats the nuclei, which are much heavier than electrons, as point particles that follow classical Newtonian dynamics. In classical molecular dynamics the effect of the electrons is approximated as a single potential energy surface, usually representing the ground state.
-
-The mass of a proton or a neutron is about 1800 times the mass of an electron.
-Since the nuclei are so much heavier than the electrons, they will move much
-slower. In the Born-Oppenheimer approximation, the motion of the 
-nuclei and
-electrons are de-coupled: we assume that the electrons update their positions
-instantaneously for a given placement of the nuclei, and we can compute
-electronic energies for fixed nuclear positions. This gives us the so-called
-\emph{electronic} Hamiltonian, which only includes terms involving the
-electrons,
+%Since the nuclei are so much heavier than the electrons, they will move much
+%slower. 
+In the Born-Oppenheimer approximation, we assume that the full wavefunction $\Psi(\vec{R},\vec{x},t)$ can be decoupled into 
+a nuclei wavefunction $\Theta_n(\vec{R},t)$ and an electronic wavefunction $\Phi(\vec{x};\vec{R})$ depending only parametrically on $\vec{R}$
+(indicated following a semicolon here, but usually left out)
 \begin{equation}
-  \hat{H}_e = 
-	k_e  \sum_{i<j}\frac{e^2}{r_{ij}}
-	-\frac{\hbar^2}{2}\sum_{i=1}^N\frac{1}{m_e}\nabla_i^2
-		+ k_e \sum_{i=1}^N\sum_{k=1}^M \frac{e^2Z_k}{r_{ik}}
+  \Psi(\vec{R},\vec{x},t) = \Theta(\vec{R},t)\Phi(\vec{x};\vec{R})
+\end{equation}
+where the electronic manybody wavefunction is now an eigenfunction of the so-called \emph{electronic} Hamiltonian,
+\begin{equation}
+    \hat{H}_e = \hat{T} + \hat{V}_{ee} + \hat{V}_{Ne}
   \label{eq:el-hamiltonian}
 \end{equation}
-The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear 
-repulsion energy $V_N$ is the \emph{electronic energy}, which
-is now a parametric function of the nuclear coordinates. The Born-Oppenheimer
-approximation is fundamental in most electronic structure methods, including
-DFT. Further references to the Hamiltonian in this chapter will implicitly 
-be to the \emph{electronic} Hamiltonian unless otherwise stated. 
-We will return to the nuclei Hamiltonian in chapter \ref{cha:molecular-dynamics}
+The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear repulsion energy $V_{NN}$ is the \emph{electronic energy}, 
+a parametric function of the nuclear coordinates called the potential energy surface.\comment{Skal $V_{NN}$ v\ae re med?}
+This parametric dependence on the nuclear coordinates amounts to the electrons adjusting their positions $\vec{x}$ \emph{instantaneously} to a given placement of the nuclei $\vec{R}$.
+The Born-Oppenheimer approximation is fundamental in most electronic structure methods, including DFT, and further references to the Hamiltonian in this chapter will implicitly be to the \emph{electronic} Hamiltonian unless otherwise stated. 
+We will return to the nuclei Hamiltonian in chapter \ref{cha:molecular-dynamics}.
+
+While the Born-Oppenheimer approximation is justified in most cases,\cite[p. 111]{Cramer:2004} it's important to keep in mind the limitations it impose.
+A phenomena such as Joule heating, for instance, utilised in everyday electrical heating appliances, can not be described using the approximation, since it involves electrons dissipating energy into ionic vibrations, coupling the motion of the electrons and the nuclei.\cite{Horsfield:2004b}
+
+%It should be noted that the reduction from a fully quantum description entails two main approximations. 
+%The first one is the Born-Oppenheimer approximation.
+%%, which states that the dynamics of electrons is so fast that they can be considered to react instantaneously to the motion of their nuclei. As a consequence, they may be treated separately. 
+%This will be discussed in the chapter on molecular dynamics below.
+%In classical molecular dynamics the effect of the electrons is approximated as a single potential energy surface, usually representing the ground state.
+
+%We start by splitting the total Hamiltonian $\hat{H}$ into a so-called `electronic Hamiltonian' $H_e$ and a `nuclear Hamiltonian' $H_n$, with
+%\begin{equation}
+%  \hat{H}_e = \hat{H} - \hat{T}_n - \hat{V}_{nn} = \hat{T} + \hat{V}_{ee} + \hat{V}_{ne}
+%\end{equation}
+
+%The full wavefunction $\Psi$ depends on the set of electron coordinates $\vec{x}=\{\vec{x}_i\}$, the set of nuclear coordinates $\vec{R}=\{\vec{R}_i\}$ and the time $t$.
+
+%The full wavefunction of the system can be expanded in the complete set of adiabatic electronic eigenstates $\Phi(\vec{x}\;\vec{R})$
+%where the \emph{parametric} dependence of $\Phi$ on $\vec{R}$ is indicated by the semicolon.
 
 
+%\section{Electron density and the exchange-correlation hole}
+%\comment{(Er denne delen fremdeles litt ute av kontekst?)}
 
-The Born-Oppenheimer approximation is justified in most 
-cases,\cite[p. 111]{Cramer:2004} but it should not be applied blindly.
-The common phenomena of Joule heating, for instance, utilitised in everyday electrical heating appliances, can not be described using the approximation, since it involves electrons dissipating energy into ionic vibrations, coupling the motion of the electrons and the nuclei.\cite{Horsfield:2004b}
+%The electronic density $\rho(\vec{r})$ is the probability that any one electron will be located in a small volume $d\vec{r}$ 
+%around $\vec{r}$.
+%Now, the probability of finding electron 1 in a small volume $d\vec{x}$ around $\vec{x}$ is $\langle\Phi|\delta(x-x_1)|\Phi\rangle = |\Phi(x,x_2,x_3,\ldots)|^2$. 
+%Likewise, the probability of finding electron 2 in the same volume is $\langle\Phi\delta(x-x_2)|\Phi\rangle = |\Phi(x_1,x,x_3,\ldots)|^2$, and so on.
+%Defining the density operator
+%\begin{equation}
+%  \hat{\rho}(\vec{x}) =\sum_{i=1}^{N_e} \delta(\vec{x}-\vec{x}_i),\qquad
+%  \hat{\rho}(\vec{r}) = \sum_{\sigma=\pm\frac12} \hat{\rho}(\vec{x})
+%\end{equation}
+%the probability of finding \emph{any} one electron can be written as the expectation value of this operator:
+%\begin{equation}
+%  \rho(\vec{x}) = \langle \Phi | \hat{\rho}(\vec{x}) | \Phi\rangle 
+%  = N_e \int |\Phi(\vec{x},\vec{x}_2,\vec{x}_3,\ldots,\vec{x}_{N_e} )|^2
+% \,d\vec{x}_2\cdots d\vec{x}_{N_e}
+%\end{equation}
+%The last equality is valid since the electrons are indistinguishable, so the probability of finding any one of them should be the same.
+%Note that the integrals include spin summation. For a closed shell system, $\rho(\vec{r}) = 2 \rho(\vec{x})$.
 
-We start by splitting the total Hamiltonian $\hat{H}$ into a so-called `electronic Hamiltonian' $H_e$ and a `nuclear Hamiltonian' $H_n$, with
+%But if there already is an electron at $\vec{r}$, what is the probability of finding another one at $\vec{r}'$? 
+%\begin{equation}
+%  \rho(\vec{x},\vec{x}') = N_e(N_e-1)\int |\Phi(\vec{x},\vec{x}',\vec{x}_3,\ldots,\vec{x}_{N_e} )|^2
+% \,d\vec{x}_3\cdots d\vec{x}_{N_e}
+%\end{equation}
+%Even if the electrons are treated as free, $\rho(\vec{x},\vec{x}')\neq\rho(\vec{x})\rho(\vec{x}')$, the probability of finding two electrons with the same spin close to each other is lowered by the exchange symmetry. If there is an electron at $\vec{x}$, the probability $\rho(\vec{x},\vec{x}')$ of finding another electron at $\vec{x}'$ is reduced for $\vec{x}'$ near $\vec{x}$. 
+%This is termed the `exchange hole'.
+%If the electrons are interacting, correlation effects produce a further reduction, termed the `correlation hole'.
+
+%We may define a pair correlation function $g(\vec{x},\vec{x}')$ as the difference in density between the real electrons and a fictitious system with no exchange and correlation
+%\begin{equation}
+%  \rho(\vec{x},\vec{x}') = \rho(\vec{x}\rho(\vec{x}')[1 + g(\vec{x},\vec{x}')]
+%  \label{eq:paircorrf}
+%\end{equation}
+%We have
+%\begin{equation}
+%  \int \rho(\vec{x},\vec{x}') d\vec{x}' = (N_e-1)\rho(\vec{x})
+%\end{equation}
+%which inserted into \eqref{eq:paircorrf} gives
+%\begin{equation}
+%  \int \rho(\vec{x}') g(\vec{x},\vec{x}')\, d\vec{x}' = -1
+%\end{equation}
+%for any $\vec{x}$. We may now define the exchange-correlation hole for an electron at $\vec{x}$ as $\rho_{\text{xc}}(\vec{x},\vec{x}') = \rho(\vec{x}')g(\vec{x},\vec{x}')$. It follows that the hole contains a charge of $-1$.
+
+\section{Electron density as the fundamental variable}\label{sec:dft}
+
+In density functional theory (DFT), the electron density $\rho(\vec{r})$ is the fundamental entity rather than the quantum state or the electronic wavefunction $\Phi(\{\vec{x}_i\})$, 
+and observables are extracted from functionals of the electron density $\rho(\vec{r})$ rather than from operators acting on the state.
+This approach was first tried by Thomas\cite{Thomas:1927} and Fermi\cite{Fermi:1928} in the late 1920s, 
+and formally justified in 1964 by Hohenberg and Kohn (HK), who proved that a degenerate ground state density determines the external potential and thus the Hamiltonian (first HK theorem),
+and also that the energy functional $E[\rho(\vec{r})]$ is variational with respect to the density (second HK theorem).\cite{HohenbergKohn:1964}
+Later, Levy generalized their proofs to also include degenerate ground states, and to allow a larger set of trial densities.\footnote{by only requiring densities to be $N_e$-representable, not necessarily $V$-representable}\cite{Levy:1979,Levy:1982}
+
+The energy functional consists of the same three contributions as the Hamiltonian \eqref{eq:el-hamiltonian}; the electronic kinetic energy $T$, the electron-electron interaction $V_{ee}$ and the electron-nuclei interaction $V_{Ne}$. 
+The latter is called the external potential $V_{\text{ext}}$ in DFT, since the nuclei set up a fixed potential for the electrons under the BO approximation, and in principle other external fields can also be included in this term.
+The energy functional can then be written
+%In a system of $N$ electrons in an external potential $V_{\text{ext}}(\vec{r})$ (normally corresponding to the potential set up the nuclei $V_{Ne}$ in \eqref{eq:el-hamiltonian}, but may also include external fields), the non-relativistic many-body electronic Hamiltonian is given by 
+%\begin{align}
+%  \hat{H}_e &= \hat{T} + \hat{V}_{ee} + V_{\text{ext}}(\vec{r})
+%  \label{eq:hamiltonian}
+%\end{align}
+%where $T$ is the kinetic energy (called $T_e$ in \eqref{eq:el-hamiltonian} above) and $V_{ee}$ is the electron-electron repulsion.
 \begin{equation}
-  \hat{H}_e = \hat{H} - \hat{T}_n - \hat{V}_{nn} = \hat{T} + \hat{V}_{ee} + \hat{V}_{ne}
+    E[\rho(\vec{r})] = T[\rho(\vec{r})] + V_{ee}[\rho(\vec{r})] + V_{\text{ext}}[\rho(\vec{r})].
+    \label{eq:energy_functional}
 \end{equation}
 
-The full wavefunction $\Psi$ depends on the set of electron coordinates $\vec{x}=\{\vec{x}_i\}$, the set of nuclear coordinates $\vec{R}=\{\vec{R}_i\}$ and the time $t$.
-We start by expanding it into a complete set of functions $\Phi(\vec{x}\;\vec{R})$,
+With the nuclei at fixed positions $\{\vec{R}_k\}$, the potential energy functional for the electron density $\rho(\vec{r})$ is just
 \begin{equation}
-  \Psi(\vec{R},\vec{x},t) = \sum_n \Theta_n(\vec{R},t)\Phi_n(\vec{x}\;\vec{R})
-\end{equation}
-where 
-The 
-
-The full wavefunction of the system can be expanded in the complete set of adiabatic electronic eigenstates $\Phi(\vec{x}\;\vec{R})$
-where the \emph{parametric} dependence of $\Phi$ on $\vec{R}$ is indicated by the semicolon.
-
-The BO accounts to
-\begin{equation}
-  \Psi(\vec{R},\vec{x},t) = \Theta_n(\vec{R},t)\Phi_n(\vec{x}\;\vec{R})
-\end{equation}
-
-\section{The exchange-correlation hole}
-
-The electronic density $\rho(\vec{r})$ is the probability that any one electron will be located in a small volume $d\vec{r}$ 
-around $\vec{r}$.
-Now, the probability of finding electron 1 in a small volume $d\vec{x}$ around $\vec{x}$ is $\langle\Phi|\delta(x-x_1)|\Phi\rangle = |\Phi(x,x_2,x_3,\ldots)|^2$. 
-Likewise, the probability of finding electron 2 in the same volume is $\langle\Phi\delta(x-x_2)|\Phi\rangle = |\Phi(x_1,x,x_3,\ldots)|^2$, and so on.
-Defining the density operator
-\begin{equation}
-  \hat{\rho}(\vec{x}) =\sum_{i=1}^{N_e} \delta(\vec{x}-\vec{x}_i),\qquad
-  \hat{\rho}(\vec{r}) = \sum_{\sigma=\pm\frac12} \hat{\rho}(\vec{x})
-\end{equation}
-the probability of finding \emph{any} one electron can be written as the expectation value of this operator:
-\begin{equation}
-  \rho(\vec{x}) = \langle \Phi | \hat{\rho}(\vec{x}) | \Phi\rangle 
-  = N_e \int |\Phi(\vec{x},\vec{x}_2,\vec{x}_3,\ldots,\vec{x}_{N_e} )|^2
- \,d\vec{x}_2\cdots d\vec{x}_{N_e}
-\end{equation}
-The last equality is valid since the electrons are indistinguishable, so the probability of finding any one of them should be the same.
-Note that the integrals include spin summation. For a closed shell system, $\rho(\vec{r}) = 2 \rho(\vec{x})$.
-
-But if there already is an electron at $\vec{r}$, what is the probability of finding another one at $\vec{r}'$? 
-\begin{equation}
-  \rho(\vec{x},\vec{x}') = N_e(N_e-1)\int |\Phi(\vec{x},\vec{x}',\vec{x}_3,\ldots,\vec{x}_{N_e} )|^2
- \,d\vec{x}_3\cdots d\vec{x}_{N_e}
-\end{equation}
-Even if the electrons are treated as free, $\rho(\vec{x},\vec{x}')\neq\rho(\vec{x})\rho(\vec{x}')$, the probability of finding two electrons with the same spin close to each other is lowered by the exchange symmetry. If there is an electron at $\vec{x}$, the probability $\rho(\vec{x},\vec{x}')$ of finding another electron at $\vec{x}'$ is reduced for $\vec{x}'$ near $\vec{x}$. 
-This is termed the `exchange hole'.
-If the electrons are interacting, correlation effects produce a further reduction, termed the `correlation hole'.
-
-We may define a pair correlation function $g(\vec{x},\vec{x}')$ as the difference in density between the real electrons and a fictitious system with no exchange and correlation
-\begin{equation}
-  \rho(\vec{x},\vec{x}') = \rho(\vec{x}\rho(\vec{x}')[1 + g(\vec{x},\vec{x}')]
-  \label{eq:paircorrf}
-\end{equation}
-We have
-\begin{equation}
-  \int \rho(\vec{x},\vec{x}') d\vec{x}' = (N_e-1)\rho(\vec{x})
-\end{equation}
-which inserted into \eqref{eq:paircorrf} gives
-\begin{equation}
-  \int \rho(\vec{x}') g(\vec{x},\vec{x}')\, d\vec{x}' = -1
-\end{equation}
-for any $\vec{x}$. We may now define the exchange-correlation hole for an electron at $\vec{x}$ as $\rho_{\text{xc}}(\vec{x},\vec{x}') = \rho(\vec{x}')g(\vec{x},\vec{x}')$. It follows that the hole contains a charge of $-1$.
-
-
-\section{Electron density as the fundamental variable}
-
-In density functional theory, the electron density $\rho(\vec{r})$ is the
-fundamental entity instead of the quantum state or wavefunction
-$\Psi(\{\vec{r}_i\})$, an
-approach first carried out by Thomas\cite{Thomas:1927} and 
-Fermi\cite{Fermi:1928} in the late 1920s. The approach was
-justified in 1964 by the first Hohenberg-Kohn theorem\cite{HohenbergKohn:1964}, 
-which shows that the ground state density determines the external potential,
-which determines the Hamiltonian, which in principle determines all the 
-states of the system.
-
-In a system of $N$ electrons in an external potential $V_{\text{ext}}(\vec{r})$ 
-(normally set up by the nuclei), the non-relativistic many-body electronic 
-Hamiltonian is given by 
-\begin{align}
-  \hat{H} &= \hat{T} + \hat{V}_{ee} + \sum_{i=1}^N V_{\text{ext}}(\vec{r}_i)
-  \label{eq:hamiltonian}
-\end{align}
-where $T$ is the kinetic energy and $V_{ee}$ is the electron-electron repulsion.
-
-In density functional theory (DFT), the energy and other properties of a 
-system are found from functionals of the electron density $\rho(\vec{r})$.
-
-In a system of fixed nuclei at $\{\vec{R}_k\}$, the attractive potential 
-felt by a single electron at $\vec{r}$, and the potential energy for the 
-electron density $\rho(\vec{r})$ are
-\begin{equation}
-  V_{\text{ext}}(\vec{r}) = \sum_{k=1}^M \frac{Z_k}{
-  |\vec{r}-\vec{R}_k|}
-  ,\qquad
-  E_{\text{ext}}[\rho(\vec{r})] = \int\rho(\vec{r})V_{\text{ext}}d\vec{r}.
+  U_{\text{ext}}(\vec{r}) = \sum_{k=1}^M \frac{Z_k}{|\vec{r}-\vec{R}_k|},\
+    \qquad\text{and then}\qquad
+    V_{\text{ext}}[\rho(\vec{r})] = \int\rho(\vec{r})U_{\text{ext}}(\vec{r})\;d\vec{r}.
   \label{eq:nuclei-pot}
 \end{equation}
-The repulsive potential between the electrons are more difficult to describe in
-a simple manner. The Hartree potential describes the classical interaction
+
+The repulsive potential between the electrons $V_{ee}$ is more difficult to describe in a simple manner due to the many-body problem. 
+To start with, the classical interaction is described by the Hartree potential,
 \begin{equation}
-  V_H(\vec{r}) = \int\frac{\rho(\vec{r}')}{4\pi\varepsilon_0|\vec{r}-\vec{r}'|}
-  d\vec{r}',\qquad
-  E_{H}[\rho(\vec{r})] = \int \rho(\vec{r}) V_H(\vec{r}) d\vec{r}
+  U_H(\vec{r}) = \int\frac{\rho(\vec{r}')}{|\vec{r}-\vec{r}'|}d\vec{r}',
+  \qquad\text{and then}\qquad
+  V_{H}[\rho(\vec{r})] = \int \rho(\vec{r}) U_H(\vec{r}) d\vec{r},
   \label{eq:hartree-pot}
 \end{equation}
-The Hartree potential assumes that the electrons are not correlated, and
-includes a self-self-interaction. For a better description, we need to take
-the exchange-correlation hole into account\cite{Sutton:1993}. Therefore the
-electron-electron repulsion is
+but the Hartree potential assumes that the electrons are not correlated, and includes self-interaction. 
+Approximating $V_{ee}[\rho]\approx V_H[\rho]$ is just not an acceptable approximation.
+For a realistic description, we need to take into account exchange and correlation too,\cite{Sutton:1993}
+%\begin{equation}
+%    V_{ee}[\rho(\vec{r})] = V_H[\rho(\vec{r})] + V_{xc}[\rho(\vec{r})].
+%    \label{eq:E_ee}
+%\end{equation}
+the topic of section \ref{sec:xc} below.
+
+But first, how is the kinetic energy to be found from an electron density, $T[\rho(\vec{r})]$?
+That's not a trivial problem, and the most successful solution involves the re-introduction of a one-particle formalism, in what is known as the Kohn-Sham method.
+
+\section{The Kohn-Sham self-consistent field method}\label{sec:kohnsham}
+%To keep with a
+%one-particle formalism, we describe this by a potential $V_{XC}(\vec{r}) = 
+%\delta E_{XC}[\rho]/\delta \rho$.
+
+%Hohenberg and Kohn showed that the ground state energy can indeed be written as a unique functional of the electron density $\rho(\vec{r})$\cite{HohenbergKohn:1964} 
+%and 
+
+Kohn and Sham\cite{KohnSham:1965} re-introduced a one-particle formalism, with the density made up of orbitals,
+
+$\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$
+
+, in which the density
+
+set of \emph{interacting} electrons $\phi_n(\vec{r})$ is viewed as a set of \emph{non-interacting} quasiparticles $\varphi_n(\vec{r})$, with the corresponding electron density $\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$, where $f_n$ is the occupation number ($f_n=2$ for closed-shell orbitals), having kinetic energy
 \begin{equation}
-  V_{ee} = V_H + V_{XC}
+    T_0[\rho] = \sum_n f_n \langle \varphi_n | -\frac12\nabla^2 | \varphi_n \rangle
 \end{equation}
 
-But how do we find the kinetic energy from the density??
-
-\section{Kohn-Sham DFT}
-
-To keep with a
-one-particle formalism, we describe this by a potential $V_{XC}(\vec{r}) = 
-\delta E_{XC}[\rho]/\delta \rho$.
-
-Hohenberg and Kohn showed that the ground state energy can be written as a
-unique functional of the electron density
-$\rho(\vec{r})$\cite{HohenbergKohn:1964} and Hohenberg, Kohn and Sham 
-showed\cite{HohenbergKohn:1964,KohnSham:1965} that it could be written as 
-\begin{equation}
-  E[\rho(\vec{r})] = T_S[\rho(\vec{r})] + 
-  \int \rho(\vec{r})
-  V_{\text{eff}}(\vec{r})d\vec{r},
-  \label{eq:kohnshamfunc}
-\end{equation}
-where $T_S$ is the kinetic energy of the non-interacting electrons and
-
-Their proof has been simplified and extended by Levy 
-\comment{Les Kantorovich, s.521-522}
-
-Minimization of this energy, subject to the constraint
-of charge conservation,
-\begin{equation}
-  \int \rho(\vec{r})d\vec{r} = N,
-\end{equation}
-leads to the $N$ one-particle Kohn-Sham eigenvalue equations,
+Algebraically we can rewrite the energy functional \eqref{eq:energy_functional},
 \begin{align}
-  \left(-\frac{\hbar^2}{2m}\nabla^2 + V_{\text{eff}}\right) \psi_i =
-  \varepsilon_i^\text{KS} \psi_i
+    E[\rho] &= T[\rho] + V_{ee}[\rho] + V_{\text{ext}}[\rho] \\
+     &= T_0[\rho] + V_H[\rho] + V_{\text{ext}}[\rho] + (T[\rho] - T_0[\rho]) + (V_{ee}[\rho]-V_H[\rho])  \\
+     &= T_0[\rho] + V_H[\rho] + V_{\text{ext}}[\rho] + V_{xc}[\rho],\label{eq:efunctional}
 \end{align}
-from which we obtain $N$ Kohn-Sham orbitals $\psi_i$. We can then 
-find the electron density
+where all the `difficulties' are now collected in the exchange-correlation (xc) functional,
 \begin{equation}
-  \rho(\vec{r}) = \sum_{i=1}^N \langle \psi_i|\psi_i\rangle
+    V_{xc}[\rho] = (V_{ee}[\rho] - V_H[\rho]) + (T[\rho]-T_0[\rho]),
+  \label{eq:E_eeKS}
 \end{equation}
-and the kinetic energy
-\begin{equation}
-  V_{\text{eff}}(\vec{r}) = V_H(\vec{r}) + V_N(\vec{r}) + V_{XC}(\vec{r}).
-  \label{eq:eff-pot}
-\end{equation}
+to which we will return in the next section. 
 
-Since the effective potential $V_{\text{eff}}$ depends on the electron 
-density $\rho$, which in turn depends on the effective potential, the equations
-must be solved in an iterative way until a self-consistent electron density is 
-reached.
+while the difference $T-T_0$ is included in the exchange-correlation potential \eqref{eq:E_eeKS}.
+The particles move in some effective one-particle potential,
+\begin{align}
+    U_{\text{eff}}(\vec{r},[\rho]) &= U_H(\vec{r}) + U_{\text{ext}}(\vec{r}) + U_{xc}(\vec{r}),\qquad\text{where}\qquad
+    U_{xc}(\vec{r}) = \frac{\delta V_{xc}[\rho]}{\delta \rho}
+  \label{eq:v_eff}
+\end{align}
+is not known.
+\begin{align}
+    \left[-\frac12\nabla^2 + U_{\text{eff}}(\vec{r},[\rho])\right] \varphi_n(\vec{r}) = \varepsilon_n \varphi_n(\vec{r})
+    \label{eq:KS}
+  %  |\psi_n\rangle = \varepsilon_n |\psi_n\rangle
+  %\left(-\frac{\hbar^2}{2m}\nabla^2 + v_{\text{eff}}\right) 
+\end{align}
 
-\section{The exchange-correlation potential}
+and the corresponding energy is found from \eqref{eq:efunctional}.
 
-All the unknown terms of the energy functional $E[\rho]$ are included in the exchange-correlation energy, 
-\begin{equation}
-  E_{\mathrm{xc}}[\rho] = F[\rho] - E_H[\rho] - T_0[\rho] = (V_{\text{ee}}[\rho] - E_H[\rho]) + (T[\rho] - T_0[\rho])
-\end{equation}
-Thus, the exchange-correlation potential
-\begin{equation}
-  V_{\mathrm{xc}} = \frac{\delta E_{\mathrm{xc}}[\rho(\vec{r})]}{\delta\rho(\vec{r})}
-\end{equation}
-takes care of not only correlation and exchange, but also the difference in kinetic energies between the interacting and the non-interacting electrons.
+$E[\rho] = \sum \varepsilon_n$, summed over occupied orbitals.
+Since the effective potential depends on the electron density $\rho$ itself, which in turn depends on the effective potential, 
+the equations must be solved iteratively until self-consistency is reached. 
 
+%As the individual orbitals arise from the \emph{effective} potential \eqref{eq:v_eff}, 
+%they should be interpreted as belonging to \emph{quasiparticles}, not to the real electrons. 
+
+%\begin{equation}
+%  E[\rho(\vec{r})] = T_S[\rho(\vec{r})] + 
+%  \int \rho(\vec{r})
+%  V_{\text{eff}}(\vec{r})d\vec{r},
+%  \label{eq:kohnshamfunc}
+%\end{equation}
+%where $T_0$ is the kinetic energy of a corresponding non-interacting electrons in the same external potential,
+
+%leads to the $N$ one-particle Kohn-Sham eigenvalue equations,
+
+%Minimization of this energy, subject to the constraint
+%of charge conservation,
+%\begin{equation}
+%  \int \rho(\vec{r})d\vec{r} = N,
+%\end{equation}
+%The single orbitals should not be interpreted as representing single electrons though, but quasiparticles moving in the effective potential 
+%but the single orbitals should be interpreted as belonging to quasi-particles rather than electrons.
+%and the kinetic energy
+%\begin{equation}
+%  V_{\text{eff}}(\vec{r}) = V_H(\vec{r}) + V_N(\vec{r}) + V_{XC}(\vec{r}).
+%  \label{eq:eff-pot}
+%\end{equation}
+
+\section{The exchange-correlation potential}\label{sec:xc}
+
+The Kohn-Sham scheme provides a neat solution to the problem of defining a kinetic energy functional, 
+and the mapping of the of interacting electrons onto non-interacting quasiparticles is exact in the limit of an exact $U_{\text{eff}}$.
+The remaining challenge is to provide a good approximation to $U_{\text{eff}}$, or rather to $U_{xc}$, in which all the difficulties are now collected.
+
+The most common approach, as taken by Kohn and Sham themselves in their 1965 paper,\cite{KohnSham:1965} makes use of the exchange and correlation of a \emph{uniform} electron gas of the same density, $\varepsilon_{xc}[\rho]$. For a uniform electron gas, the exact exchange is known analytically, and the correlation has been parametrised to a very high level of accuracy from monte carlo simulations.
+
+In the simplest form, the local density approximation (LDA), only the local value of the density is taken into account. 
+While this is expected to work well only for sufficiently slowly varying densities, since the exchange-correlation potential of a \emph{non-uniform} electron gas is non-local,
+the approach has been tremendously successful, later shown to be due to the fact that each electron is surrounded by exactly one exchange-correlation hole, even though the shape may look very different from the experimental results, and therefore partly due to fortunate cancellation of errors.\cite{Gunnarson:1976}\cite[529]{Kantorovich:2004}
+
+A better approximation can be obtained if not only the local density $\rho(\vec{r})$, but also the gradient of the density $\nabla\rho(\vec{r})$ is taken into account, 
+as done in the generalized gradient approximation (GGA). 
+
+Many different functionals have evolved over the years, some implementing exact exchange from Hartree Fock, expansions of the density beyond the gradient, or empirical parametrization, 
+but good approxmiations to $U_{xc}$ remains the biggest challenge for the DFT method.\cite[527]{Kantorovich:2004} 
+In this work, a well-tested GGA functional by Perdew, Burke and Ernzerhof from 1996 will be used.\cite{PBE}
+
+%One of the most successful approximations was suggested by Kohn and Sham themselves in their 1965 paper;\cite{KohnSham:1965} the local density approximation (LDA) based on 
 %\url{http://cmt.dur.ac.uk/sjc/thesis/thesis/node13.html}
 
+\section{Bloch waves and the plane wave basis}
 
-\section{Bloch waves}
-
-The eigenstate $|\phi\rangle$ of a one-electron Hamiltonian can be expressed 
-as a sum of Bloch states,
+Some words should be said about the orbitals $\varphi_n$ used in the Kohn-Sham equations \eqref{eq:KS}.
+In a periodic system, they should be Bloch states. In general for some reciprocal vector $\vec{k}$,
 \begin{equation}
-  |\phi\rangle = \sum_{\vec{k}} A_k |\phi_{\vec{k}}\rangle,\qquad \text{where} 
-  \langle\vec{r}|\phi_k\rangle = e^{i\,\vec{k}\cdot\vec{r}} u_k(\vec{r})
+    \varphi_{n\vec{k}}(\vec{r}) = e^{i\vec{k}\cdot\vec{r}} u_{n\vec{k}}(\vec{r})
+  \label{eq:Blochwave}
 \end{equation}
-is a Bloch state identified by a quantum number $\vec{k}$ called a wave vector.
-$u_k$ is a periodic function with the same periodicity as
-the potential $V$, that is, $u_k(\vec{r}+\vec{G}) = u_k(\vec{r})$, and
+where $u_{n\vec{k}}(\vec{r})$ is a function that shares the periodicity of the lattice, $u_k(\vec{r}+\vec{G}) = u_k(\vec{r})$,
+where $\vec{G} = h\vec{b}_1 + k\vec{b}_2 + l\vec{b}_3$ and $\vec{k}$ is any reciprocal space vector.
+
+In the \vasp\ code used in this work, a plane wave basis is used.
+Such a basis make use of the fact that a periodic function can always be represented by a Fourier series, 
 \begin{equation}
   u_{\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{\vec{G}} e^{i\,\vec{G}\cdot\vec{r}}
 \end{equation}
-For this plane-wave basis to be complete, we would have to include all possible
-reciprocal lattice vectors $\vec{G} = h\vec{b}_1 + k\vec{b}_2 + l\vec{b}_3$ in
-the sum. In practical calculations we define a plane-wave energy cutoff, and
-only include plane-waves with kinetic energy less than this energy, that is
+making \eqref{eq:Blochwave}
 \begin{equation}
-  \text{Likn. fra DFT boken her!}
+  \varphi_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{\vec{k}\vec{G}} e^{i(\vec{k}+\vec{G})\cdot\vec{r}}
+  \label{eq:pwbasis}
 \end{equation}
-This makes sense because \ldots
+This makes for a well-defined basis, exact in the limit of all $\vec{G}$, and just as important, 
+one that can be systematically truncated by including only components with 
+\begin{equation}
+  \frac{|\vec{G}+\vec{k}|^2}{2} \leq E_{\text{cut}}
+\end{equation}
+for some scalar cutoff energy $E_{\text{cut}}$.
+%A single Kohn-Sham orbital can then be expressed as a sum of Bloch states,
+%\begin{equation}
+%  |\psi_n\rangle = \sum_{\vec{k}} A_k |\phi_{\vec{k}}\rangle,\qquad \text{where} 
+%  \langle\vec{r}|\phi_k\rangle = e^{i\,\vec{k}\cdot\vec{r}} u_k(\vec{r})
+%\end{equation}
+%is a Bloch state identified by a quantum number $\vec{k}$ called a wave vector.
+%For this plane-wave basis to be complete, we would have to include all possible
+%reciprocal lattice vectors $\vec{G} $ in
+%the sum. In practical calculations we define a plane-wave energy cutoff, and
+%only include plane-waves with kinetic energy less than this energy, that is
+%\begin{equation}
+%  \text{Likn. fra DFT boken her!}
+%\end{equation}
+%This makes sense because \ldots
 
-The computational cost increases rapidly with increasing energy cutoff, so it
-must be chosen as small as possible. Chosing it too small will lead to
-unpredictable results due to the limited basis set, so the convergence of the 
-total energy with respect to the energy cutoff should be tested for the 
-problem at hand.
+%The computational cost increases rapidly with increasing energy cutoff, so it
+%must be chosen as small as possible. Chosing it too small will lead to
+%unpredictable results due to the limited basis set, so the convergence of the 
+%total energy with respect to the energy cutoff should be tested for the 
+%problem at hand.
 
 \section{Defects}
 
@@ -822,9 +846,24 @@ solar cell, the doping level is normally above $10^{18}$~cm$^{-3}$ and can be
 as high as $10^{21}$~cm$^{-3}$. The solubility limit of a solid solution of
 phosphorus in silicon is close to \SI{e21}{\per\centi\metre\cubed}\cite{Ghandhi:1994}.
 
-\section{Pseudopotentials}
+\section{Pseudopotentials}\label{sec:pseudopot}
 
-\comment{Les Lev Kantorovich, section 9.4.3 s 546 og 9.4.4 PAW, s. 551 ->}
+So far, two important approximations have been introduced; the Born Oppenheimer approximation 
+and the approximate handling of exchange and correlation using the PBE-GGA functional. 
+Still, calculations using a plane-wave basis, except for very small systems, would not be feasible without one more important approximation.
+
+When expanding the one-particle orbitals in a plane wave basis, \eqref{eq:pwbasis}, 
+it is evident that a much larger amount of plane waves must be included to accurately describe the more localized core orbitals than the less localized valence orbitals. 
+Further, the core orbitals for a givent atom resemble each other when the atom is in different environments, since it's the valence orbitals that take part in chemical binding and most interesting material properties.
+
+The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential.
+For the element of silicon, for instance, only the four valence electrons are treated variationally in the Kohn-Sham method, while the remaining ten core electrons are part of the pseudopotential. 
+Of course all kinds of practical difficulties may arise, such as the question of which electrons to include in the core, and how to do the partitioning. 
+Several different methods have evolved over the years.
+Here, the projector augmented-wave (PAW) method is used, which has the elegant feature that the wavefunction in the core region can be reconstructed.
+The pseudopotentials were provided by Georg Kresse.
+
+%\comment{Les Lev Kantorovich, section 9.4.3 s 546 og 9.4.4 PAW, s. 551 ->}
 
 \section{Choice of parameters}\label{sec:parameters}
 
@@ -920,13 +959,16 @@ Second, we have no simple way of actually finding the volume expansion. Or do we
 %    If the space group symmetry has been specified for the material, then it is pos- sible to determine the Patterson group, which is the equivalent of the space group in reciprocal space. Note that all systems have at least inversion symmetry (also known as time-reversal symmetry) in the Brillouin zone - a fact that is always used to accelerate the Ewald sum. By using the Patterson group, it is only necessary to sum over k-points that lie within the asymmetric wedge of the Brillouin zone, with appropriate weighting of points situated on the boundary (Ramirez:1988). This can lead to substantial computational savings for systems with small unit cells (and therefore high shrinking factors) and high symmetry.
 %\end{framed}
 
-Calculations of observables generally involves integrals over the Brillouin zone\footnote{The term `Brillouin zone' will be used throughout this work as
+Calculations of observables generally involves integrals over the Brillouin zone\cite[89]{Martin:2004}\footnote{The term `Brillouin zone' will be used throughout this work as
 a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. 
-For example, we may compute the total energy as
+For example, we may compute the total energy per unit cell as\cite[24]{slides:castep_06}
 \begin{equation}
   E_{\text{tot}} = \frac{1}{\Omega} \int_{\text{BZ}} E(\vec{k}) \,d\vec{k}
 \end{equation}
-where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the energy of a \comment{eigen?}state $|\vec{k}\rangle$
+where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the 
+
+
+energy of a \comment{eigen?}state $|\vec{k}\rangle$
 For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
 In 1973 Baldereschi suggested a first approximation could be made by including only a single $k$-point,
 \begin{equation}
@@ -1029,23 +1071,6 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
 
 \subsection{Plane wave energy cutoff}\label{sec:parameters:e}
 
-For each electronic step, the Kohn~Sham equations have to be solved,
-\begin{equation}
-  (\nabla^2 + V_{\text{eff}}) |\psi_n\rangle = \varepsilon_n |\psi_n\rangle
-\end{equation}
-The Kohn~Sham orbitals $\psi_i(\vec{r})$ can be expanded in any complete basis set. 
-The \vasp\ code, used in this work, expands them in plane waves. 
-This is a practical choice when studying crystals with periodic boundary conditions, as we can do a Fourier series expansion
-\begin{equation}
-  \psi_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{\vec{k}\vec{G}} e^{i(\vec{k}+\vec{G})\cdot\vec{r}}
-\end{equation}
-where the $\vec{G}$ vectors are reciprocal lattice vectors and $\vec{k}$ is a reciprocal space vector, discussed in the previous subsection.
-This is Bloch's theorem. The sum above includes an infinite number of $\vec{G}$ vectors. In practical calculations, we
-truncate the sum by including only $\vec{G}$ vectors that satisfy
-\begin{equation}
-  \frac{|\vec{G}+\vec{k}|^2}{2} \leq E_{\text{cut}}
-\end{equation}
-for a given cutoff energy $E_{\text{cut}}$.
 
 %In all cases, Blöchl's projector augmented wave (PAW) method\cite{Blochl:1994,Kresse:1999} has been used with the generalized gradient approximation (GGA) 
 %and Perdew, Burke and Enzerhof (PBE) exchange. The potentials used were those supplied with \vasp\ 5.2.
@@ -1158,26 +1183,6 @@ This is very impressive, but since this is just a model reaction, we increase th
 %\end{figure}
 
 
-\subsection{Parallelisation}
-
-In order to 
-Having chosen the important parameters determining the accuracy of the calculation, 
-
-With the parameters now chosen, short test runs with just 100 MD steps was carried out with different degree of parallelisation.
-
-
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{lrrrr}
-    Cores & Wall time & User CPU time & System CPU time & Total CPU time \\
-    1     & 12.79 & 12.63 & 0.14 & 12.77 \\
-    8     & 2.65 & 2.44 & 0.18 & 2.62 \\
-    16    & 2.56 & 2.13 & 0.37 & 2.50 \\
-    24    & 4.29 & 2.97 & 1.29 & 4.26 \\
-  \end{tabular}
-  \caption{Time spent in seconds per MD step in a 100 step simulation. The wall time is the time you could read off your watch, and is the most important.}
-  \label{tab:}
-\end{table}
 
 
 %\subsection{Not in use}
@@ -1280,12 +1285,12 @@ With the parameters now chosen, short test runs with just 100 MD steps was carri
 %The number of plane waves 
 %After these initial tests, a feeling about the parameters involved have been obtained. 
 
-\section{Cell size}
+\subsection{Cell size}
 
 A too small simulation cell will result in spurious self-interaction across the periodic boundaries, but it from 
 a computational cost perspective it was quickly found that a simulation cell larger than $2\times 2\times 2$ (64 atoms) would not be viable
 with MD simulations. 
-While we can give no authorative answer to whether this cell is ``large enough'', a small test was carried out to check the ``range'' of a P-Si defect (one of the configurations discussed in section \ref{seq:structures} below).
+While we can give no authorative answer to whether this cell is ``large enough'', a small test was carried out to check the ``range'' of a P-Si defect (one of the configurations discussed in section \ref{sec:structures} below).
 The defect was introduced into very large cell, a $6\times 6\times 6$ cell with lattice parameter 32.8~Å containing 1728 atoms, and the whole cell was relaxed.
 
 The right part of fig. \ref{fig:tests/cellsize} shows the distance each of the atoms in the cell relaxed as a function of the radial distance from the defect center. The two vertical lines indicate the length of 8-atom cell (5.47~Å) and a 64-atom cell (10.74~Å). 
@@ -1309,6 +1314,30 @@ As we see, the defect causes some distortion even beyond the boundaries of the 6
   \label{fig:tests/cellsize}
 \end{figure}
 
+\subsection{Summary and parallelisation}
+
+After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized VASP build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
+For this setup, table \ref{tab:tests/parallelisation} shows the calculation times for a single calculation with different degrees of parallelisation, averaged over 100 calculations. As indicated, the calculation time is about 13 seconds, but the scaling is really poor, probably due to the low number of bands included, so parallelising beyond 8 cores is not beneficial here. 
+
+While the calculation time is small considered it's \textit{ab initio}, still simulating a nanosecond would take 31 days when parallelised over eight cores only ($10^6\times\SI{2.65}{\second} \div 86400 \si{\second}\text{/day}$)
+
+\comment{Denne tabellen er gammel. Sjekk for korrekthet! F.eks. om parametre som NPAR var satt.}
+
+\comment{plott speedup vs number of CPU's, ala Vasp manual p. 31}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lrrrr}\toprule
+    Cores & NPAR & Wall time   & \multicolumn{2}{c}{CPU time per core} \\
+          &      &             & User time     & System time   \\ \midrule
+    1     &      & 12.79       & 12.63         & 0.14          \\
+    8     &      & 2.65        & 2.44          & 0.18          \\
+    16    &      & 2.56        & 2.13          & 0.37          \\
+    24    &      & 4.29        & 2.97          & 1.29          \\ \bottomrule
+  \end{tabular}
+  \caption{Time spent in seconds per MD step in a 100 step simulation. The wall time is the time you could read off your watch, and is the most important.}
+  \label{tab:tests/parallelisation}
+\end{table}
 
 \chapter{Molecular dynamics simulations}\label{cha:molecular-dynamics}
 
