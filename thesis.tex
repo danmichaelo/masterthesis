@@ -263,7 +263,7 @@ From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, h
 \index{diffusivity!dependence on temperature}
 The diffusivity depends strongly on the temperature, and the temperature dependence found from experiments often takes the simple Arrhenius form,
 \begin{equation}
-  D(T) = D_0 e^{-E_a/kT}
+  D(T) = D_0 \e^{-E_a/kT}
 \end{equation}
 defined by a prefactor $D_0$ and an activation energy $E_a$. 
 Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and interceipt $\ln D_0$. 
@@ -285,7 +285,7 @@ In the continuum picture, the diffusion coefficients are just empirical paramete
 
 From the Gaussian diffusion outwards from a point,
 \begin{equation}
-    c(x,t) = \frac{n}{\sqrt{4\pi D}} e^{-x^2/4Dt} / \sqrt{t},
+    c(x,t) = \frac{n}{\sqrt{4\pi D}} \e^{-x^2/4Dt} / \sqrt{t},
 \end{equation}
 \comment{SJEKK OPP}
 Einstein related the displacement along the $x$ axis, $\lambda_x$, to the diffusivity\cite{Einstein:1905},
@@ -307,11 +307,11 @@ This is an example of what is called an \emph{activated process}, and the tresho
 In general there is not just one diffusion mechanism involved, and the value for the activation energy obtained by experiment or simulation is a weighted average over all possible mechanisms.
 One mechanism may, however, be the dominating one. In the case of phosphorus in silicon, there is a general consensus that interstial-mediated diffusion is the dominating mechanism. \comment{KILDER!}
 
-Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $e^{-E_a/KT}$, and so the probability for a jump to happen is just $e^{-E_a/kT}$. 
+Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $\e^{-E_a/KT}$, and so the probability for a jump to happen is just $\e^{-E_a/kT}$. 
 
 In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by the attempt frequency $\nu$,
 \begin{equation}
-  \Gamma = \nu e^{-E_a/kT}
+  \Gamma = \nu \e^{-E_a/kT}
   \label{eq:jumpfreq-est}
 \end{equation}
 For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, a typical textbook value for the vibration of atoms in a crystal at room temperature.
@@ -386,17 +386,19 @@ The exact nature of the ``extra'', inactive phosphorus is not known, but a mix o
 
 \chapter{Density Functional Theory}
 
-This chapter consists of two parts. The short sections \ref{sec:materials}-\ref{sec:pseudopot} give a general presentation of density functional theory, 
+This chapter consists of two parts. The short sections \ref{sec:materials}--\ref{sec:pseudopot} give a general presentation of density functional theory, 
 while the lengthy section \ref{sec:parameters} is concerned with the practical choices made in the application of the theory in this specific work.
 
-The aim of the first part has not been to \emph{introduce} density functional theory,\footnote{A good practical introduction is given by Scholl(2009)\cite{Scholl:2009} 
-and a more authorative one by Parr(1994)\cite{Parr:1994}.
+The aim of the first part has not been to \emph{introduce} density functional theory,\footnote{
+A good practical introduction is given by Scholl(2009)\cite{Scholl:2009}, while a more theoretical and authoritative introduction is given by Parr(1994)\cite{Parr:1994}.
 Chapter 12 in Kantorovich(2004)\cite{Kantorovich:2004} is somewhere in the middle, and is a personal favourite of mine.
-DFT put in the context of other electronic structure methods is introduced in e.g. the compact and elegant book by Kohanoff(2006)\cite{Kohanoff:2006} and in the comprehensive book by Martin(2004).\cite{Martin:2004}
+The comprehensive book by Martin(2004)\cite{Martin:2004} and the more compact book by Kohanoff(2006)\cite{Kohanoff:2006} are good reference books that put DFT in context of other methods, 
+but they may be a bit daunting on their own.
+Chemists may find chapter 8 in Cramer(2004)\cite{Cramer:2004} a good read.
+This chapter borrows from all the aforementioned books.
 }
-
-but rather to \emph{describe} or summarise important concepts in DFT (sec. 2.1-2.4) as implemented in \vasp\ (sec. 2.5-2.10), and since notation varies between different authors, to provide a consistent notation to be used when referring to the concepts later on. 
-I've tried hard to keep the first part short, but some pieces I just couldn't cut away. On the other hand, important pieces are left out. 
+but rather to \emph{describe} or summarise important concepts in the theory (sec. \ref{sec:materials}--\ref{sec:kohnsham}) as implemented in \vasp\ (sec. \ref{sec:xc}--\ref{sec:pseudopot}) in a somewhat superficial way, 
+and since notation varies between different authors, to provide a consistent notation to be used when referring to the concepts later on. 
 Readers experienced with DFT may safely jump directly to the second part (section \ref{sec:parameters}). 
 
 %Note to self: In DFT, the electron density is usually denoted $n(\vec{r})$ or
@@ -413,7 +415,7 @@ Readers experienced with DFT may safely jump directly to the second part (sectio
 %\lettrine[lines=3,slope=0pt,nindent=0pt]{M}{aterials} can be described and 
 
 As touched upon in section \ref{sec:Diffusion}, matter – or materials, ``matter from which a thing is or can be made''\footnote{New Oxford American Dictionary 2nd ed. 2005. I will not delve into the definition of `thing'.} – can be described in different pictures. 
-With theories such as density functional theory, materials are pictured as \emph{nuclei} and \emph{electrons}.%\footnote{Or more precisely, an electron cloud, in which no individuality exists.}
+With theories such as density functional theory, materials are pictured as \emph{nuclei} and \emph{electrons}. %\footnote{Or more precisely, an electron cloud, in which no individuality exists.} 
 From a knowledge of the constituent nuclei and electrons, all properties of a material can in principle be calculated to the accuracy of interest, limited only by the available computational power (this is a most severe limitation though).
 And unless radioactivity is of interest, there is no need to worry about what happens within the nuclei (not to say what might happen within the electrons, if anything happens there).
 
@@ -464,10 +466,8 @@ Observables like energy, momentum, \textit{et cætera} are extracted by letting 
 %For instance, the kinetic energy of a particle $i$ is the expectation value of the kinetic energy operator
 For instance, the energy is the expectation value of an energy operator, a \emph{Hamiltonian} $\hat{H}$, 
 consisting of operators for the kinetic energy\footnote{Since quantum mechanical particles do not follow \emph{trajectories} in the way classical particles do, the name `kinetic energy' is a bit misleading, Reflecting the spatial variation of the wavefunction, Sauer and Kuhn suggested the name `localization energy' instead\cite{Sauer:1982}. Yet, there is an analogy with classical kinetic energy, and with `kinetic energy' being the dominating expression, it will be used here too.} and various potential energy terms.
-The (non-relativistic) Hamiltonian for a system of $N_e$ electrons and $N_N$ nuclei, in Hartree atomic units\footnote{SJEKK
-in which the electron mass $m_e$, the elementary
-charge $e$, the reduced Planck constant $\hbar$ and the Coulomb constant
-$k_e$ all are unity by definition.
+The (non-relativistic) Hamiltonian for a system of $N_e$ electrons and $N_N$ nuclei, in Hartree atomic units\footnote{
+where the electron mass $m_e$, the elementary charge $e$, the reduced Planck constant $\hbar$ and the Coulomb constant $k_e=4\pi/\varepsilon_0$ all are unity by definition.
 }, is
 %\comment{foreløpig IKKE i atomære enheter, har ikke helt bestemt meg}
 \begin{align}
@@ -478,7 +478,7 @@ $k_e$ all are unity by definition.
 		}_{\text{nuclei}}
   \underbrace{
       -\frac{1}{2}\sum_{i=1}^{N_e}\frac{1}{m_e}\nabla_i^2
-	+ \sum_{i<j}\frac{e^2}{r_{ij}}
+	+ \sum_{i<j}\frac{\e^2}{r_{ij}}
 	}_{\text{electrons}}
     + \sum_{i=1}^{N_e}\sum_{k=1}^{N_N} \frac{Z_k}{r_{ik}}
   \label{eq:mol-hamiltonian}
@@ -558,16 +558,16 @@ a nuclei wavefunction $\Theta_n(\vec{R},t)$ and an electronic wavefunction $\Phi
 \begin{equation}
   \Psi(\vec{R},\vec{x},t) = \Theta(\vec{R},t)\Phi(\vec{x};\vec{R})
 \end{equation}
-where the electronic manybody wavefunction is now an eigenfunction of the so-called \emph{electronic} Hamiltonian,
+and the \emph{electronic structure problem} is now to find solutions $\Phi$ to the Hamiltonian,
 \begin{equation}
-    \hat{H}_e = \hat{T} + \hat{V}_{ee} + \hat{V}_{Ne}
+    \hat{H}_{\text{e}} = \hat{T} + \hat{V}_{\text{ee}} + \hat{V}_{\text{Ne}}
   \label{eq:el-hamiltonian}
 \end{equation}
-The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear repulsion energy $V_{NN}$ is the \emph{electronic energy}, 
-a parametric function of the nuclear coordinates called the potential energy surface.\comment{Skal $V_{NN}$ v\ae re med?}
-This parametric dependence on the nuclear coordinates amounts to the electrons adjusting their positions $\vec{x}$ \emph{instantaneously} to a given placement of the nuclei $\vec{R}$.
+The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear repulsion energy $V_{\text{NN}}$ is the \emph{electronic energy},\cite[110]{Cramer:2004}
+a parametric function of the nuclear coordinates called the potential energy surface.
+This parametric dependence on the nuclear coordinates amounts to the electrons adjusting their positions $\vec{x}$ \emph{instantaneously} to a given \emph{nuclei structure}.
 The Born-Oppenheimer approximation is fundamental in most electronic structure methods, including DFT, and further references to the Hamiltonian in this chapter will implicitly be to the \emph{electronic} Hamiltonian unless otherwise stated. 
-We will return to the nuclei Hamiltonian in chapter \ref{cha:molecular-dynamics}.
+We will return to the nuclei structure in chapter \ref{cha:molecular-dynamics}.
 
 While the Born-Oppenheimer approximation is justified in most cases,\cite[p. 111]{Cramer:2004} it's important to keep in mind the limitations it impose.
 A phenomena such as Joule heating, for instance, utilised in everyday electrical heating appliances, can not be described using the approximation, since it involves electrons dissipating energy into ionic vibrations, coupling the motion of the electrons and the nuclei.\cite{Horsfield:2004b}
@@ -636,15 +636,14 @@ A phenomena such as Joule heating, for instance, utilised in everyday electrical
 
 \section{Electron density as the fundamental variable}\label{sec:dft}
 
-In density functional theory (DFT), the electron density $\rho(\vec{r})$ is the fundamental entity rather than the quantum state or the electronic wavefunction $\Phi(\{\vec{x}_i\})$, 
-and observables are extracted from functionals of the electron density $\rho(\vec{r})$ rather than from operators acting on the state.
+In density functional theory (DFT), the (observable) electron density $\rho(\vec{r})$ rather than the (non-observable) quantum state $|\Phi\rangle$ is considered the fundamental entity for the electronic structure problem, and other observables are extracted from functionals of the electron density $\rho(\vec{r})$ rather than from operators acting on the state.
 This approach was first tried by Thomas\cite{Thomas:1927} and Fermi\cite{Fermi:1928} in the late 1920s, 
 and formally justified in 1964 by Hohenberg and Kohn (HK), who proved that a degenerate ground state density determines the external potential and thus the Hamiltonian (first HK theorem),
 and also that the energy functional $E[\rho(\vec{r})]$ is variational with respect to the density (second HK theorem).\cite{HohenbergKohn:1964}
 Later, Levy generalized their proofs to also include degenerate ground states, and to allow a larger set of trial densities.\footnote{by only requiring densities to be $N_e$-representable, not necessarily $V$-representable}\cite{Levy:1979,Levy:1982}
 
-The energy functional consists of the same three contributions as the Hamiltonian \eqref{eq:el-hamiltonian}; the electronic kinetic energy $T$, the electron-electron interaction $V_{ee}$ and the electron-nuclei interaction $V_{Ne}$. 
-The latter is called the external potential $V_{\text{ext}}$ in DFT, since the nuclei set up a fixed potential for the electrons under the BO approximation, and in principle other external fields can also be included in this term.
+The energy functional consists of the same three contributions as the Hamiltonian \eqref{eq:el-hamiltonian}; with $\hat{V}_{\text{ee}}(\{\vec{r}\}) \leftrightarrow E_{\text{int}}[\rho(\vec{r})]$, the potential energy arising from the `internal' electronic field, and $V_{\text{Ne}}(\{\vec{r}\}) \leftrightarrow E_{\text{ext}}[\rho(\vec{r})]$, the potential energy arising from the `external field' set up by the nuclei (and in general other external fields).
+
 The energy functional can then be written
 %In a system of $N$ electrons in an external potential $V_{\text{ext}}(\vec{r})$ (normally corresponding to the potential set up the nuclei $V_{Ne}$ in \eqref{eq:el-hamiltonian}, but may also include external fields), the non-relativistic many-body electronic Hamiltonian is given by 
 %\begin{align}
@@ -653,90 +652,110 @@ The energy functional can then be written
 %\end{align}
 %where $T$ is the kinetic energy (called $T_e$ in \eqref{eq:el-hamiltonian} above) and $V_{ee}$ is the electron-electron repulsion.
 \begin{equation}
-    E[\rho(\vec{r})] = T[\rho(\vec{r})] + V_{ee}[\rho(\vec{r})] + V_{\text{ext}}[\rho(\vec{r})].
+    E[\rho(\vec{r})] = T[\rho(\vec{r})] + E_{\text{int}}[\rho(\vec{r})] + E_{\text{ext}}[\rho(\vec{r})].
     \label{eq:energy_functional}
 \end{equation}
 
 With the nuclei at fixed positions $\{\vec{R}_k\}$, the potential energy functional for the electron density $\rho(\vec{r})$ is just
 \begin{equation}
-  U_{\text{ext}}(\vec{r}) = \sum_{k=1}^M \frac{Z_k}{|\vec{r}-\vec{R}_k|},\
+  V_{\text{ext}}(\vec{r}) = \sum_{k=1}^M \frac{Z_k}{|\vec{r}-\vec{R}_k|},\
     \qquad\text{and then}\qquad
-    V_{\text{ext}}[\rho(\vec{r})] = \int\rho(\vec{r})U_{\text{ext}}(\vec{r})\;d\vec{r}.
+    E_{\text{ext}}[\rho(\vec{r})] = \int\rho(\vec{r})V_{\text{ext}}(\vec{r})\;d\vec{r}.
   \label{eq:nuclei-pot}
 \end{equation}
+where $Z_k$ is the atomic number
 
-The repulsive potential between the electrons $V_{ee}$ is more difficult to describe in a simple manner due to the many-body problem. 
-To start with, the classical interaction is described by the Hartree potential,
+The repulsive potential between the electrons $V_{\text{int}}$ is more difficult to describe in a simple manner.
+A simple first approximation is the classical electrostatic interaction described by the Hartree potential,
 \begin{equation}
-  U_H(\vec{r}) = \int\frac{\rho(\vec{r}')}{|\vec{r}-\vec{r}'|}d\vec{r}',
+    V_{\text{H}}(\vec{r}) = \int\frac{\rho(\vec{r}')}{|\vec{r}-\vec{r}'|}d\vec{r}',
   \qquad\text{and then}\qquad
-  V_{H}[\rho(\vec{r})] = \int \rho(\vec{r}) U_H(\vec{r}) d\vec{r},
+  E_{\text{H}}[\rho(\vec{r})] = \int \rho(\vec{r}) V_{\text{H}}(\vec{r}) d\vec{r},
   \label{eq:hartree-pot}
 \end{equation}
-but the Hartree potential assumes that the electrons are not correlated, and includes self-interaction. 
-Approximating $V_{ee}[\rho]\approx V_H[\rho]$ is just not an acceptable approximation.
-For a realistic description, we need to take into account exchange and correlation too,\cite{Sutton:1993}
-%\begin{equation}
-%    V_{ee}[\rho(\vec{r})] = V_H[\rho(\vec{r})] + V_{xc}[\rho(\vec{r})].
-%    \label{eq:E_ee}
-%\end{equation}
-the topic of section \ref{sec:xc} below.
+Since the potential depends on the density, this is a self-consistent field problem, 
+but the main problem is that the potential does not take account of quantum mechanical exchange and correlation, and that it includes self-interaction.
+For these reasons, approximating $E_{\text{int}}[\rho]\approx E_{\text{H}}[\rho]$ is considered a very poor approximation,\cite[208]{Sutton:1993}
+and better approximations are discussed in the next two sections below.
 
-But first, how is the kinetic energy to be found from an electron density, $T[\rho(\vec{r})]$?
+But first, how is the kinetic energy to be found from an electron density ($T[\rho]$)?
 That's not a trivial problem, and the most successful solution involves the re-introduction of a one-particle formalism, in what is known as the Kohn-Sham method.
 
 \section{The Kohn-Sham self-consistent field method}\label{sec:kohnsham}
-%To keep with a
-%one-particle formalism, we describe this by a potential $V_{XC}(\vec{r}) = 
-%\delta E_{XC}[\rho]/\delta \rho$.
 
-%Hohenberg and Kohn showed that the ground state energy can indeed be written as a unique functional of the electron density $\rho(\vec{r})$\cite{HohenbergKohn:1964} 
-%and 
+The \emph{ansatz} in the Kohn-Sham (KS) method\cite{KohnSham:1965} is that a system of correlated electrons can be described by an auxillary system of independent electrons (or formally \emph{quasielectrons}) moving in a potential altered to make the density \emph{the same} for both systems. 
+Since the density determines all properties of the full many-body system according to the Hohenberg-Kohn (HK) theorems, an exact solution to the independent-particle problem should yield an exact solution to the correlated-particle problem.
+This is represented schematically in figure \ref{fig:kohnshamscheme}. 
 
-Kohn and Sham\cite{KohnSham:1965} re-introduced a one-particle formalism, with the density made up of orbitals,
+\begin{figure}[htbp]
+  \centering
+  \input{figs/kohnshamscheme}
+  \caption{Schematic representation of the Kohn-Sham \emph{ansatz}. Adopted from \cite[137]{Martin:2004}.}
+  \label{fig:kohnshamscheme}
+\end{figure}
 
-$\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$
+The unlabelled arrows in the left part indicate the usual solution of the Schrödinger equation of a correlated many-electron system, in which the potential $V_{\text{ext}}(\vec{r})$ determines all the states of the system $\Psi_i(\{\vec{r}\})$, including the ground state $\Psi_0(\vec{r})$ with the corresponding density $\rho(\vec{r})$.\footnote{An index 0 is omitted since $\rho$ will always refer to the ground state density} 
+The Hohenberg-Kohn theorem completes the circle by proving that the ground state density $\rho(\vec{r})$ determines $V_{\text{ext}}(\vec{r})$.
+Note that in theory the ground state density determines excited states as well as the ground state, but practical methods for calculating properties of excited states still represents a big challenge.\cite[136]{Martin:2004} We will, however, only be concerned with the ground state here.
 
-, in which the density
-
-set of \emph{interacting} electrons $\phi_n(\vec{r})$ is viewed as a set of \emph{non-interacting} quasiparticles $\varphi_n(\vec{r})$, with the corresponding electron density $\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$, where $f_n$ is the occupation number ($f_n=2$ for closed-shell orbitals), having kinetic energy
+While the left part of the figure represents the ``real'' correlated many-body problem, the right part is the fictitious independent-particle system introduced by Kohn and Sham. 
+If $\{\varphi_i\}$ is the set of the lowest $N_e$ quasielectron orbitals, the ground state density is\footnote{Single-electron orbitals are assumed here. If closed-shell orbitals are used, the sum is multiplied by two and upper-limited by $N_e/2$. The same goes for the sums below.}
 \begin{equation}
-    T_0[\rho] = \sum_n f_n \langle \varphi_n | -\frac12\nabla^2 | \varphi_n \rangle
+    \rho(\vec{r}) = \sum_{i=1}^{N_e} |\varphi_i(\vec{r})|^2,
+    \label{eq:rho}
 \end{equation}
+%$\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$
+Now, the kinetic energy of these quasielectrons is just
+\begin{equation}
+    T_0[\rho] = \sum_{i=1}^{N_e} \langle \varphi_i | \hat{t} | \varphi_i \rangle,\qquad\text{where}\qquad \hat{t} = -\frac12\nabla^2
+  \label{eq:T0}
+\end{equation}
+is the single-particle kinetic energy operator.
+
+%set of \emph{interacting} electrons $\phi_n(\vec{r})$ is viewed as a set of \emph{non-interacting} quasiparticles $\varphi_n(\vec{r})$, with the corresponding electron density $\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$, where $f_n$ is the occupation number ($f_n=2$ for closed-shell orbitals), having kinetic energy
+%\begin{equation}
+%    T_0[\rho] = \sum_n f_n \langle \varphi_n | -\frac12\nabla^2 | \varphi_n \rangle
+%\end{equation}
 
 Algebraically we can rewrite the energy functional \eqref{eq:energy_functional},
 \begin{align}
-    E[\rho] &= T[\rho] + V_{ee}[\rho] + V_{\text{ext}}[\rho] \\
-     &= T_0[\rho] + V_H[\rho] + V_{\text{ext}}[\rho] + (T[\rho] - T_0[\rho]) + (V_{ee}[\rho]-V_H[\rho])  \\
-     &= T_0[\rho] + V_H[\rho] + V_{\text{ext}}[\rho] + V_{xc}[\rho],\label{eq:efunctional}
+    E[\rho] &= T[\rho] + E_{\text{int}}[\rho] + E_{\text{ext}}[\rho] \\
+    &= T_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + (T[\rho] - T_0[\rho]) + (E_{\text{int}}[\rho]-E_{\text{H}}[\rho])  \\
+    &= T_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + E_{\text{xc}}[\rho],\label{eq:efunctional}
 \end{align}
 where all the `difficulties' are now collected in the exchange-correlation (xc) functional,
 \begin{equation}
-    V_{xc}[\rho] = (V_{ee}[\rho] - V_H[\rho]) + (T[\rho]-T_0[\rho]),
+    E_{\text{xc}}[\rho] = (E_{\text{int}}[\rho] - E_{\text{H}}[\rho]) + (T[\rho]-T_0[\rho]),
   \label{eq:E_eeKS}
 \end{equation}
 to which we will return in the next section. 
+Note that the exchange-correlation functional includes not only quantum mechanical exchange and correlation, 
+but also corrections for the classical self-interaction in the Hartree potential,
+and for the difference in kinetic energy between the non-interacting system and the real one; $T-T_0$.
+The name is therefore really a misnomer.\cite[256]{Cramer:2004}
 
-while the difference $T-T_0$ is included in the exchange-correlation potential \eqref{eq:E_eeKS}.
-The particles move in some effective one-particle potential,
+The quasielectrons\footnote{At some point I may forget to include `quasi-' and just write `electrons'.
+    To avoid any confusion, Kohn-Sham DFT is \emph{only} concerned with quasielectrons, so even if omitted, `quasi-' should still really be there.}
+    move in an effective potential
 \begin{align}
-    U_{\text{eff}}(\vec{r},[\rho]) &= U_H(\vec{r}) + U_{\text{ext}}(\vec{r}) + U_{xc}(\vec{r}),\qquad\text{where}\qquad
-    U_{xc}(\vec{r}) = \frac{\delta V_{xc}[\rho]}{\delta \rho}
+    V_{\text{KS}}(\vec{r},[\rho]) &= V_{\text{H}}(\vec{r}) + V_{\text{ext}}(\vec{r}) + V_{\text{xc}}(\vec{r}),\qquad\text{where}\qquad
+    V_{\text{xc}}(\vec{r}) = \frac{\delta E_{\text{xc}}[\rho]}{\delta \rho}
   \label{eq:v_eff}
 \end{align}
-is not known.
+is not known, and we can find the quasielectron orbitals from the set of equations
 \begin{align}
-    \left[-\frac12\nabla^2 + U_{\text{eff}}(\vec{r},[\rho])\right] \varphi_n(\vec{r}) = \varepsilon_n \varphi_n(\vec{r})
+    \left[\hat{t} + V_{\text{KS}}(\vec{r},[\rho])\right] \varphi_n(\vec{r}) = \varepsilon_n \varphi_n(\vec{r})
     \label{eq:KS}
   %  |\psi_n\rangle = \varepsilon_n |\psi_n\rangle
   %\left(-\frac{\hbar^2}{2m}\nabla^2 + v_{\text{eff}}\right) 
 \end{align}
+and the corresponding energy from \eqref{eq:rho} and \eqref{eq:efunctional}.
+Note that the total energy is not just the sum of the quasielectron eigenergies $\varepsilon_n$.
+These are self-consistent field problems requiring iterative solutions, since $V_{\text{KS}}(\vec{r},[\rho])$ depends on the density.
 
-and the corresponding energy is found from \eqref{eq:efunctional}.
-
-$E[\rho] = \sum \varepsilon_n$, summed over occupied orbitals.
-Since the effective potential depends on the electron density $\rho$ itself, which in turn depends on the effective potential, 
-the equations must be solved iteratively until self-consistency is reached. 
+%$E[\rho] = \sum \varepsilon_n$, summed over occupied orbitals.
+%Since the effective potential depends on the electron density $\rho$ itself, which in turn depends on the effective potential, 
+%the equations must be solved iteratively until self-consistency is reached. 
 
 %As the individual orbitals arise from the \emph{effective} potential \eqref{eq:v_eff}, 
 %they should be interpreted as belonging to \emph{quasiparticles}, not to the real electrons. 
@@ -767,31 +786,49 @@ the equations must be solved iteratively until self-consistency is reached.
 \section{The exchange-correlation potential}\label{sec:xc}
 
 The Kohn-Sham scheme provides a neat solution to the problem of defining a kinetic energy functional, 
-and the mapping of the of interacting electrons onto non-interacting quasiparticles is exact in the limit of an exact $U_{\text{eff}}$.
-The remaining challenge is to provide a good approximation to $U_{\text{eff}}$, or rather to $U_{xc}$, in which all the difficulties are now collected.
+and the mapping of the of interacting electrons onto non-interacting quasielectrons is exact in the limit of an exact effective potential $V_{\text{KS}}(\vec{r})$.
+The remaining problem is to provide a good approximation to $V_{\text{KS}}(\vec{r})$, or rather to $V_{\text{xc}}(\vec{r})$, in which all the difficulties are collected,
+and this problem remains the top challenge for the DFT method.\cite[527]{Kantorovich:2004}\cite[153]{Parr:1994}
 
-The most common approach, as taken by Kohn and Sham themselves in their 1965 paper,\cite{KohnSham:1965} makes use of the exchange and correlation of a \emph{uniform} electron gas of the same density, $\varepsilon_{xc}[\rho]$. For a uniform electron gas, the exact exchange is known analytically, and the correlation has been parametrised to a very high level of accuracy from monte carlo simulations.
+While the exchange-correlation potential is inherently non-local, a popular starting point is a local approximation known as the local density approximation (LDA),
+as taken by Kohn and Sham themselves in their 1965 paper.\cite{KohnSham:1965}
+LDA utilizes the well-understood behaviour of the \emph{uniform} gas.\footnote{
+    The exact local exchange is given by the Dirac exchange functional $\varepsilon_{\text{x}}[\rho]=C_x \rho^{1/3}$, with $C_x=-3/4(3\rho/\pi)^{1/3}$,\cite{Dirac:1930}\cite[108]{Parr:1994} 
+while correlation has been tabulated with increasing levels of accuracy, with the currently most accurate results found from quantum monte carlo (QMC) calculations.\cite[p. 109 and references 297-299 within]{Martin:2004} \comment{inkluderer dette $T-T_0$ og selv-interaksjonskorreksjon?}}
+If $\varepsilon_{\text{xc}}^{\text{uni}}[\rho]$ is the exchange-correlation functional for a uniform electron gas of density $\rho$,
+LDA corresponds to evaluating this functional for each volume element $d\vec{r}$;
+\begin{equation}
+    E_{\text{xc}}^{\text{LDA}}[\rho] = \int \varepsilon_{\text{xc}}^{\text{uni}}[\rho] \rho(\vec{r}) \;d\vec{r}
+  \label{eq:lda}
+\end{equation}
+Such an approach is expected to work well only for sufficiently slowly varying densities (``uniform-like''), 
+but in addition it has turned out that in many cases there are fortunate cancellation of errors resulting in better-than-expected results.\cite{Gunnarson:1976}\cite[529]{Kantorovich:2004}\cite[180]{Parr:1994}
+LDA is the best ''ab initio'' local approximation,\comment{(Korrekt? Trenger sitering?)} so to improve on LDA the logical next step is to move to a gradient approximation, including some dependency on the density gradient $\nabla\rho$, but exactly how to do this is far from straightforward and different and many different functionals have evolved over the years. 
 
-In the simplest form, the local density approximation (LDA), only the local value of the density is taken into account. 
-While this is expected to work well only for sufficiently slowly varying densities, since the exchange-correlation potential of a \emph{non-uniform} electron gas is non-local,
-the approach has been tremendously successful, later shown to be due to the fact that each electron is surrounded by exactly one exchange-correlation hole, even though the shape may look very different from the experimental results, and therefore partly due to fortunate cancellation of errors.\cite{Gunnarson:1976}\cite[529]{Kantorovich:2004}
-
-A better approximation can be obtained if not only the local density $\rho(\vec{r})$, but also the gradient of the density $\nabla\rho(\vec{r})$ is taken into account, 
-as done in the generalized gradient approximation (GGA). 
-
-Many different functionals have evolved over the years, some implementing exact exchange from Hartree Fock, expansions of the density beyond the gradient, or empirical parametrization, 
-but good approxmiations to $U_{xc}$ remains the biggest challenge for the DFT method.\cite[527]{Kantorovich:2004} 
-In this work, a well-tested GGA functional by Perdew, Burke and Ernzerhof from 1996 will be used.\cite{PBE}
-
+In this work we will make use of the PBE-GGA functional introduced by Perdew, Beckge and Eizenhover in 1996,\cite{PBE} where GGA is short for generalized gradient approximation, Perdew and Yue's contrasting term to the earlier gradient expansion approximation (GEA).\cite{Perdew:1986}
+Compared to other functionals PBE-GGA has a relatively simple form, satisfying what the authors consider the most important conditions,
+and introduced as an alternative to what the authors called ``the Byzantine PW91'' functional in a paper titled ``GGA made simple''.
+The other defining feature of PBE-GGA is that is non-empirical, making it a \emph{general-purpose} functional in contrast to `semi-empirical' functionals like B3LYP or revPBE that provide better results for \emph{specific} problems.
+PBE-GGA can be sketched as
+\begin{equation}
+    E_{\text{xc}}^{\text{GGA}}[\rho] = \int  \varepsilon_{\text{xc}}^{\text{uni}}[\rho] \rho(\vec{r}) F_{\text{xc}}(s) \;d\vec{r},
+    \qquad\text{where}\qquad s= \frac{|\nabla\rho|}{2k_F\rho} 
+  \label{eq:pbegga}
+\end{equation}
+is the first-order reduced density gradient, $k_F=(3\pi^2\rho)^{1/3}$ is the Fermi vector, and $F_{\text{xc}}(s)$ is some dimensionless function called the enhancement factor chosen to fulfil a set of conditions. $F(0)=1$, so the functional reduces to LDA for $s=0$. See \cite{Perdew:1986}, \cite{PBE} and \cite[154]{Martin:2004} for details.
+%The PBE-GGA functional is among the most popular functionals in the solid state physics community, while functionals incorporting empirical constants, such as B3LYP are popular in the chemistry community.
+%Many different functionals have evolved over the years, some implementing exact exchange from Hartree Fock, expansions of the density beyond the gradient, or empirical parametrization, 
+%but
+%In this work, a well-tested GGA functional by Perdew, Burke and Ernzerhof from 1996 will be used.\cite{PBE}
 %One of the most successful approximations was suggested by Kohn and Sham themselves in their 1965 paper;\cite{KohnSham:1965} the local density approximation (LDA) based on 
 %\url{http://cmt.dur.ac.uk/sjc/thesis/thesis/node13.html}
 
-\section{Bloch waves and the plane wave basis}
+\section{Bloch waves and the plane wave basis}\label{sec:planewavebasis}
 
-Some words should be said about the orbitals $\varphi_n$ used in the Kohn-Sham equations \eqref{eq:KS}.
+A few words must be said about the orbitals $\varphi_n$ used in the Kohn-Sham equations \eqref{eq:KS}.
 In a periodic system, they should be Bloch states. In general for some reciprocal vector $\vec{k}$,
 \begin{equation}
-    \varphi_{n\vec{k}}(\vec{r}) = e^{i\vec{k}\cdot\vec{r}} u_{n\vec{k}}(\vec{r})
+    \varphi_{n\vec{k}}(\vec{r}) = \e^{\im\vec{k}\cdot\vec{r}} u_{n\vec{k}}(\vec{r})
   \label{eq:Blochwave}
 \end{equation}
 where $u_{n\vec{k}}(\vec{r})$ is a function that shares the periodicity of the lattice, $u_k(\vec{r}+\vec{G}) = u_k(\vec{r})$,
@@ -800,19 +837,38 @@ where $\vec{G} = h\vec{b}_1 + k\vec{b}_2 + l\vec{b}_3$ and $\vec{k}$ is any reci
 In the \vasp\ code used in this work, a plane wave basis is used.
 Such a basis make use of the fact that a periodic function can always be represented by a Fourier series, 
 \begin{equation}
-  u_{\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{\vec{G}} e^{i\,\vec{G}\cdot\vec{r}}
+    u_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im\,\vec{G}\cdot\vec{r}}
 \end{equation}
 making \eqref{eq:Blochwave}
 \begin{equation}
-  \varphi_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{\vec{k}\vec{G}} e^{i(\vec{k}+\vec{G})\cdot\vec{r}}
+    \varphi_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im(\vec{k}+\vec{G})\cdot\vec{r}}
   \label{eq:pwbasis}
 \end{equation}
+Refer to appendix \ref{app:pwbasis} for more details.
 This makes for a well-defined basis, exact in the limit of all $\vec{G}$, and just as important, 
 one that can be systematically truncated by including only components with 
 \begin{equation}
   \frac{|\vec{G}+\vec{k}|^2}{2} \leq E_{\text{cut}}
 \end{equation}
-for some scalar cutoff energy $E_{\text{cut}}$.
+for some scalar cutoff energy $E_{\text{cut}}$. 
+Note that leaving out long reciprocal space vectors $\vec{G}$ corresponds to leaving out short real space vectors $\vec{r}$. 
+Introducing the cutoff is therefore associated with discretising real space.
+
+Why plane waves?
+One advantage is how effectively they can be transformed between real and reciprocal space using Fast Fourier Transform (FFT),
+allowing each part of the Hamiltonian to be evaluated in the most appropriate space.
+In particular, the kinetic term of the Hamiltonian is diagonal in reciprocal space when using a PW basis.
+Another advantage of a PW basis is that the Hellman-Feynman force theorem can easily be applied since the basis functions don't depend on the nuclear coordinates (see section \ref{sec:forcetheorem}). 
+Third, the PWs (and their derivatives) are quite simple to evaluate analytically.\cite[187]{Kohanoff:2006}
+
+%While there is absolutely nothing requiring 
+%While we are free to choose the 
+%A plane wave basis have some advantages compared to other choices of basis functions. 
+%One is that 
+%Plane wave
+%One advantage of using a plane wave basis is th
+%Plane allows for simple force calculations using the Hellman-Feynmann theorem, .
+
 %A single Kohn-Sham orbital can then be expressed as a sum of Bloch states,
 %\begin{equation}
 %  |\psi_n\rangle = \sum_{\vec{k}} A_k |\phi_{\vec{k}}\rangle,\qquad \text{where} 
@@ -834,34 +890,125 @@ for some scalar cutoff energy $E_{\text{cut}}$.
 %total energy with respect to the energy cutoff should be tested for the 
 %problem at hand.
 
-\section{Defects}
+%\section{Defects}
 
-The Block scheme is well suited for for repeating units, but how do we make a
-model a repeating system with a few random defects.
-Making a completely realistic model for normal doping 
-concentrations ($~10^{-16}$ cm$^{-3}$) is impossible since we would need to 
-model a unit cell containing $10^{16}$ atoms, while a $10^4$ atom system is more or
-less the limit for what's practical today [CHECK]. In the emitter of the
-solar cell, the doping level is normally above $10^{18}$~cm$^{-3}$ and can be
-as high as $10^{21}$~cm$^{-3}$. The solubility limit of a solid solution of
-phosphorus in silicon is close to \SI{e21}{\per\centi\metre\cubed}\cite{Ghandhi:1994}.
+%The Block scheme is well suited for for repeating units, but how do we make a
+%model a repeating system with a few random defects.
+%Making a completely realistic model for normal doping 
+%concentrations ($~10^{-16}$ cm$^{-3}$) is impossible since we would need to 
+%model a unit cell containing $10^{16}$ atoms, while a $10^4$ atom system is more or
+%less the limit for what's practical today [CHECK]. In the emitter of the
+%solar cell, the doping level is normally above $10^{18}$~cm$^{-3}$ and can be
+%as high as $10^{21}$~cm$^{-3}$. The solubility limit of a solid solution of
+%phosphorus in silicon is close to \SI{e21}{\per\centi\metre\cubed}\cite{Ghandhi:1994}.
 
 \section{Pseudopotentials}\label{sec:pseudopot}
 
 So far, two important approximations have been introduced; the Born Oppenheimer approximation 
 and the approximate handling of exchange and correlation using the PBE-GGA functional. 
-Still, calculations using a plane-wave basis, except for very small systems, would not be feasible without one more important approximation.
+Still, calculations using a plane wave basis, except for very small systems, would not be feasible without one more important approximation.
 
 When expanding the one-particle orbitals in a plane wave basis, \eqref{eq:pwbasis}, 
 it is evident that a much larger amount of plane waves must be included to accurately describe the more localized core orbitals than the less localized valence orbitals. 
 Further, the core orbitals for a givent atom resemble each other when the atom is in different environments, since it's the valence orbitals that take part in chemical binding and most interesting material properties.
 
-The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential.
-For the element of silicon, for instance, only the four valence electrons are treated variationally in the Kohn-Sham method, while the remaining ten core electrons are part of the pseudopotential. 
-Of course all kinds of practical difficulties may arise, such as the question of which electrons to include in the core, and how to do the partitioning. 
-Several different methods have evolved over the years.
-Here, the projector augmented-wave (PAW) method is used, which has the elegant feature that the wavefunction in the core region can be reconstructed.
-The pseudopotentials were provided by Georg Kresse.
+The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential, and only threat the valence orbitals variationally.
+For the element of silicon for instance, the common pseudopotential approach is to threat only the four valence electrons variationally,
+leaving the remaining ten core electrons to some fixed pseudopotential.
+Of course all kinds of practical difficulties may arise, such as the question of which electrons to include in the core, and how to actually do the partitioning without introducing unphysical effects.
+Several different methods have therefore evolved over the years.
+Here, the projector augmented-wave (PAW) method\cite{Blochl:1994} is used, which has the elegant feature that the wavefunction in the core region can be fully reconstructed.
+For more information, see e.g. the chapter on pseudopotentials in Martin(2004)\cite[204-299]{Martin:2004}.
+
+The specific pseudopotentials usd in this work were provided by Georg Kresse and are referred to as ``very soft''\cite{verysoftpot} (not to be confused with ``ultrasoft'' potentials which are not based on the PAW method).
+They are `softer' than the potentials included in the standard {\vasp} distribution,\cite{Kresse:1999}
+since they have 26\% larger core radius.\footnote{The verysoft potentials have RCORE=2.4. Since no versioning is used, for identification, the SHA-1 of the Si and P potentials are cf786bc703f03a562aae3661fa6cc65f86bc3097 and 8058b1b1a564e2d79696e3c30bdac2d44ff524a0, respectively.}
+
+\subsection{Forces from the Hellman-Feynman force theorem}\label{sec:forcetheorem}
+
+
+%The set of the coordinates of all the nuclei $\{\vec{R}_1,\vec{R}_2,\cdots,\vec{R}_m\}$ defines a configuration. 
+%For any given configuration, we can calculate the \emph{energy} of the system (electron and nuclei) from [eqref].
+For the dynamics discussed in the next chapter, a method to calculate the \emph{force} acting on each atom is also needed. 
+If we take the nuclei to be classical point particles, 
+the force $\vec{F}_k$ acting on a nucleus $k$ at position $\vec{R}_k$ is determined from the potential energy 
+\begin{equation}
+  \vec{F}_k = -\frac{\partial E}{\partial\vec{R}_k}
+\end{equation}
+
+The energy $E$ here is the sum of the expectation value of the electronic Hamiltonian $\langle\Phi|\hat{H}_e|\Phi\rangle$ and the nuclear-nuclear interactions $E_{\text{NN}}$.
+In both cases we are interested in finding the derivative of $E$ with respect to some perturbation $\lambda$, for instance a component of $\vec{R}_k$,
+\begin{equation}
+    \frac{\partial E}{\partial\lambda} 
+  = \biggl\langle \frac{\partial\Phi}{\partial\lambda} \biggl| \hat{H} \biggr| \Phi \biggr\rangle
+  + \biggl\langle \Phi \biggl| \hat{H} \biggr| \frac{\partial\Phi}{\partial\lambda} \biggr\rangle
+  + \biggl\langle \Phi \biggl| \frac{\partial\hat{H}}{\partial\lambda} \biggr| \Phi \biggr\rangle
+  + \frac{\partial E_{\text{NN}}}{\partial\lambda}
+\end{equation}
+If $|\Phi\rangle$ is an eigenstate of $\hat{H}$ with energy $E_e$, the first two terms become
+\begin{align}
+  E_e \left (\biggl\langle \frac{\partial\Phi}{\partial\lambda} \biggl| \Phi \biggr. \biggr\rangle
+  + \biggl\langle\biggl. \Phi \biggr| \frac{\partial\Phi}{\partial\lambda} \biggr\rangle \right) 
+  &= E_e \frac{\partial}{\partial\lambda} \langle \Phi | \Phi \rangle 
+  = E_e \frac{\partial}{\partial\lambda} (1) = 0
+\end{align}
+using the normalization $\langle\Phi|\Phi\rangle=1$. Thus the force is
+\begin{equation}
+    \vec{F}_k = - \biggl\langle \Phi \biggl| \frac{\partial\hat{H}_e}{\partial\vec{R}_k} \biggr| \Phi \biggr\rangle - \frac{\partial E_{\text{NN}}}{\partial\vec{R}_k}
+  \label{eq:hellmann-feynman}
+\end{equation}
+This is often referred to as the Hellmann-Feynman theorem after Hellmann\cite{Hellmann:1937} 
+and Feynman\cite{Feynman:1939}, but also as the `force theorem'.\cite[56]{Martin:2004} 
+The theorem is also used when calculating the stress tensor, where $\lambda=\varepsilon_{\alpha\beta}$, a component of the strain tensor.
+
+We assumed above that $|\Phi\rangle$ is an exact eigenstate of $\hat{H}$, but when $|\Phi\rangle$ is expanded in a finite basis set, it is generally not so.
+However, it turns out that as far as the basis functions do not depend on the nuclei coordinates (plane waves do not), \eqref{eq:hellmann-feynman} is still valid.\cite[see e.g.][p. 557]{Kantorovich:2004}
+
+%If a strain in the form of a tensor $\varepsilon$ is applied to the unit cell, having volume $\Omega$, the 
+%stress tensor $\sigma$ is related by
+%\begin{equation}
+%  \sigma_{\alpha\beta} = \frac{1}{\Omega}\frac{\delta E}{\delta \varepsilon_{\alpha\beta}}
+%\end{equation}
+%Now, 
+%eqn
+
+%where the energy is the total energy per unit cell
+%\begin{equation}
+%    E(r,R) = T(r) + E_{\text{NN}} + E_{\text{Ne}} + E_{\text{H}} + E_{\text{KS}}
+%\end{equation}
+%where 
+%\begin{align}
+%    E_{\text{Ne}} &= \int \rho(\vec{r}) \sum_k V_k (\vec{r}-\vec{R}_k) \;d\vec{r} \\
+%    E_{\text{H}} &= \iint \frac{\rho(\vec{r})\rho(\vec{r}')}{|\vec{r}-\vec{r}'|} d\vec{r}\;d\vec{r}'
+%\end{align}
+%We only get contributions to the forces from the electron-ion (pseudo)potenial and the ion-ion Coulomb interaction (Ewald sum)
+
+%if using non-linear core corrections (hva er det?) we also get contributions from the exchange-correlation potential
+
+%for the stresses, we also get contribution from kinetic and hartree terms.
+
+A further simplification arises from the fact that the only term in the electronic Hamiltonian that depends on the nuclei coordinates is the term describing
+electron-ion interaction:
+\begin{equation}
+  \vec{F}_k =  - \int \frac{\partial V_{\text{ext}}(\vec{r})}{\partial\vec{R}_k} \rho(\vec{r}) \,d\vec{r} - \frac{\partial E_{\text{NN}}}{\partial\vec{R}_k}
+  \label{eq:hellmann-feynman-expl}
+\end{equation}
+where the first term is the attraction to the (unperturbed) electronic density $\rho(\vec{r})$, and the second term the repulsion to the other nuclei (which are kept fixed).
+
+Note that the final simplification assumes $V_{\text{ext}}(\vec{r})$ to be a local potential.
+In the case of non-local pseudopotenstials, \eqref{eq:hellmann-feynman-expl} can not be used, but more complicated expressions can be derived from \eqref{eq:hellmann-feynman}, which is still valid.\cite[57]{Martin:2004}
+
+%Pulay\cite{Pulay:1969} has generalized the theorem by adding terms known as Pulay forces to account
+%for basis set incompleteness and 
+
+%n addition, Pulay [4] and others [5–8] have shown that for methods that employ atom centered ba- sis sets additional terms must also be included in or
+%der to obtain forces that are properly tangent to the energy surface
+
+%\comment{Kantorovich, s.555-557}
+
+%\comment{Les Lev Kantorovich, s.568 ->}
+
+%\comment{Les 9.1.5.1 xc-hole, s.489-491 ->}
 
 %\comment{Les Lev Kantorovich, section 9.4.3 s 546 og 9.4.4 PAW, s. 551 ->}
 
@@ -875,7 +1022,7 @@ forces will have to be re-calculated in the order of once every femtosecond to p
 % 2 fs: \cite{Richie:2004}
 With the time step more or less fixed, the simulation length is then limited mainly by the time it takes to carry out each force-calculation.
 If each force-calculation takes about 1 CPU second to carry out, and we re-calculate the forces every 1~fs, simulating 1~ns takes $10^6$ CPU seconds or 278 CPU hours, or if parallelised over 8 CPU cores, 35 clock hours.\footnote{If we could just simulate 1~ns in ''less'' than 1~ns we could actually predict the future, but such simulation speeds are apparently far into the future themselves.}
-Clearly, it's therefore fundamentally important to optimize the force calculation as much as possible, which is the topic of most of this section on ``choice of parameters''.
+It's therefore fundamentally important to optimize the force calculation as much as possible, which is the topic of most of this section on ``choice of parameters''.
 Our system must be as simple as possible, yet behave as similarly as possible to the real physical system we are trying to describe. 
 The art of computer simulation is to simplify as much as possible, yet not too much.
 However, we will start discussing an important parameter that does not affect the calculation time; the lattice parameter of the simulation cell.
@@ -883,11 +1030,11 @@ However, we will start discussing an important parameter that does not affect th
 \subsection{Lattice constant}\label{sec:parameters:a}
 
 Choosing a too small lattice parameter will add an artificial positive external pressure on the simulation cell, while choosing it too large
-will add a negative external pressure (a vacuum).
+will add a negative external pressure (corresponding to an isotropic pull).
 This is illustrated in figure \ref{fig:si_bulk_conv_vol}, where the pressure and total energy of the system is plotted as a function of the lattice constant, varied in steps of 0.01~Å. 
-A realistic lattice parameter is one that zero out the external pressure, and following the variational principle, that minimizes the total energy. 
-\comment{Hva er egentlig null relativt til? Hva med atmosfaeretrykket?}
-The lattice parameter fulfilling such conditions is indicated by a horisontal line.
+The pressure is calculated as $P=\frac{1}{3}\sum_{\alpha} \sigma_{\alpha\alpha}$ where $\sigma$ is the stress tensor.
+A realistic lattice parameter is one that zero out the external pressure,\footnote{Ideally one that makes the pressure equal the standard atmosphere of one bar, but such a small pressure is not really distinguishable from zero bar within the precision we work with. The scale on fig \ref{fig:si_bulk_conv_vol} should make this clear.} and following the variational principle, that minimizes the total energy. 
+The lattice parameter fulfilling such conditions is indicated by a veritcal line.
 
 Since the lattice constant is not independent of other parameters, the procedure has been repeated for six different configurations in order to get a feeling for the influence those other parameters have. 
 Two configurations used a 64-atom cell, for which the lattice parameter plotted is halved for comparison with the 8-atom cell.
@@ -907,13 +1054,16 @@ Two configurations used a 64-atom cell, for which the lattice parameter plotted 
   \label{fig:si_bulk_conv_vol}
 \end{figure}
 
-As we see from figure \ref{fig:si_bulk_conv_vol}, the most important factor is the choice of the potential, or more precisely the choice of the exchange-correlation functional.
+As we see from figure \ref{fig:si_bulk_conv_vol}, the most important factor is the choice of the potential, or more specifically the choice of the exchange-correlation functional.
 The local density approximation (LDA) shows its well-known tendency to overbind, while the Perdew-Becke-Ernzerhof generalized gradient approximation (PBE-GGA) 
 functional shows the rather common tendency to underbind. 
 In the case of pure silicon, LDA actually comes closer to the experimental value of 5.43~Å (indicated with a thick, dashed line), in line with the results of Haas et al.\cite{Haas:2010}\footnote{Following Haas, some minor adjustments to the PBE functional actually make the functional calculate lattice parameters much closer to experimental values.
 On the other hand, these adjustments tended to produce worse atomization energies. Since neither property is the interest of this work, we will stick to the very well-tested and theoretically robust standard PBE GGA functional.}
-This is most likely due to a fortunate cancellation of errors that can sometimes produce surprisingly good results using the LDA functional,\cite[see e.g.][167]{Martin:2004} and since the purpose here is not to calculate accurate lattice constants, we will stay with the theoretically more solid PBE-GGA as it would be rather fortenous to expect the same level of error cancellation for every different configuration visited during a simulation at elevated temperatures. 
+This is most likely due to fortunate cancellation of errors,\cite[see e.g.][167]{Martin:2004} and since the purpose here is not to calculate accurate lattice constants, we will stay with the theoretically more solid PBE-GGA as it would be rather fortenous to expect the same level of error cancellation for every different configuration visited during a simulation at elevated temperatures. 
 Rather, we could expect the cancellation to work better for some configurations than others, and thus produce non-systematic errors.
+
+%Note that a separate series was carried out using the standard 
+%Note that the ``very soft'' potential used in this work (and introduced in section \ref{sec:pseudopot}) was compared with the standard potential, but no difference
 
 
 On the other hand, reducing the $k$ point density (represented by number of $k$~points $n_k$) and cutoff energy $E_{\text{cut}}$ seems to have a much smaller effect on the lattice parameter. For most cases, the minimum is near \SI{5.47}{\angstrom} and this is the value chosen in the simulations.
@@ -959,16 +1109,13 @@ Second, we have no simple way of actually finding the volume expansion. Or do we
 %    If the space group symmetry has been specified for the material, then it is pos- sible to determine the Patterson group, which is the equivalent of the space group in reciprocal space. Note that all systems have at least inversion symmetry (also known as time-reversal symmetry) in the Brillouin zone - a fact that is always used to accelerate the Ewald sum. By using the Patterson group, it is only necessary to sum over k-points that lie within the asymmetric wedge of the Brillouin zone, with appropriate weighting of points situated on the boundary (Ramirez:1988). This can lead to substantial computational savings for systems with small unit cells (and therefore high shrinking factors) and high symmetry.
 %\end{framed}
 
-Calculations of observables generally involves integrals over the Brillouin zone\cite[89]{Martin:2004}\footnote{The term `Brillouin zone' will be used throughout this work as
+For periodic systems, calculations of observables generally involves integrals over the Brillouin zone\cite[89]{Martin:2004}\footnote{The term `Brillouin zone' will be used throughout this work as
 a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. 
-For example, we may compute the total energy per unit cell as\cite[24]{slides:castep_06}
+For example, we may compute the total energy per unit cell as\cite[24]{slides:castep06}
 \begin{equation}
   E_{\text{tot}} = \frac{1}{\Omega} \int_{\text{BZ}} E(\vec{k}) \,d\vec{k}
 \end{equation}
-where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the 
-
-
-energy of a \comment{eigen?}state $|\vec{k}\rangle$
+where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the total energy found from solving the Kohn Sham equations for a given $\vec{k}$.
 For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
 In 1973 Baldereschi suggested a first approximation could be made by including only a single $k$-point,
 \begin{equation}
@@ -1366,10 +1513,10 @@ where motion occurs in a way as to preserve the Hamiltonian function.
 
 \subsection{Monitoring lattice integrity}
 
-A perfect lattice is described by $e^{i(\vec{g}\cdot\vec{r})}=1$ for a reciprocal lattice vector $\vec{g}$ and all positions $\vec{r}$. 
+A perfect lattice is described by $\e^{\im(\vec{g}\cdot\vec{r})}=1$ for a reciprocal lattice vector $\vec{g}$ and all positions $\vec{r}$. 
 Using Euler's formula,
 \begin{equation}
-    e^{i(\vec{g}\cdot\vec{r})} = \cos(\vec{g}\cdot\vec{r}) + i\sin(\vec{g}\cdot\vec{r}) = 1
+    \e^{\im(\vec{g}\cdot\vec{r})} = \cos(\vec{g}\cdot\vec{r}) + i\sin(\vec{g}\cdot\vec{r}) = 1
 \end{equation}
 Summing over all $\vec{r}$ vectors and ignoring the complex term,
 \begin{equation}
@@ -1459,7 +1606,7 @@ We imagine having a large number of copies of the \emph{same} system.
 The probability that a system will be in an energy eigenstate $i$ at temperature $T$ is 
 given by $P_i=\langle i | \hat{P} | i \rangle$, where
 \begin{equation}
-  \hat{P} = \frac{1}{Q} e^{-\beta\hat{H}}, \qquad Q = \sum_j \langle j | e^{-\beta\hat{H}} | j \rangle,
+  \hat{P} = \frac{1}{Q} \e^{-\beta\hat{H}}, \qquad Q = \sum_j \langle j | \e^{-\beta\hat{H}} | j \rangle,
 \end{equation}
 where the summation is to be carried out over all accessible states of the system, and
 $\beta$ is the `thermodynamical beta',
@@ -1479,7 +1626,7 @@ In the classical limit, this be shown to reduce to\footnote{See e.g. \cite[13-15
 \end{equation}
 where the integration is done over the complete phase space (configuration space), the $6N$-dimensional space created from the momenta and positions of all the $N$ particles in the system. $\rho(p,q)$ is the phase space density, the probability of finding the system with momenta $p$ and positions $r$. In the $N,V,T$ ensemble, the density is given by Gibbs probability distribution
 \begin{equation}
-  \rho(p,r) = \frac{1}{Q} e^{-\beta H(p,r)},\qquad Q = \int e^{-\beta H(p,r)} \,dp\,dq
+  \rho(p,r) = \frac{1}{Q} \e^{-\beta H(p,r)},\qquad Q = \int \e^{-\beta H(p,r)} \,dp\,dq
 \end{equation}
 
 \subsection{The ergodic hypothesis}
@@ -1554,12 +1701,12 @@ The Maxwell-Boltzmann particle velocity distribution is
 
 For a single direction is
 \begin{equation}
-  f_{\text{MB}}(v_x) = \left(\frac{\beta m}{2\pi }\right)^{1/2} e^{-\beta m v_x^2 / 2}
+  f_{\text{MB}}(v_x) = \left(\frac{\beta m}{2\pi }\right)^{1/2} \e^{-\beta m v_x^2 / 2}
   \label{eq:maxboltz-vdist-1D}
 \end{equation}
 
 \begin{equation}
-  f_{\text{MB}}(v) = 4\pi\left(\frac{\beta m}{2\pi }\right)^{3/2} v^2 e^{-\beta m v^2 / 2}
+  f_{\text{MB}}(v) = 4\pi\left(\frac{\beta m}{2\pi }\right)^{3/2} v^2 \e^{-\beta m v^2 / 2}
   \label{eq:maxboltz-vdist}
 \end{equation}
 where $v=\sqrt{v_x^2+v_y^2+v_z^2}$.
@@ -1724,7 +1871,7 @@ The positions are given in the form of a crystal structure, as further discussed
 The velocities should be sampled from a Maxwell-Boltzmann velocity distribution \eqref{eq:maxboltz-vdist-1D},
 that is, from a normal distribution
 \begin{equation}
-    f(v_x) = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} e^{-v_x^2/2\sigma^2}
+    f(v_x) = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \e^{-v_x^2/2\sigma^2}
   \label{eq:normal-dist}
 \end{equation}
 where $\sigma=1/\sqrt{\beta m}$ is the width of the Gaussian and $v_x$ is a single velocity component.
@@ -1732,7 +1879,7 @@ Now, a computer can easily generate a set of random (or pseudo-random) numbers $
 But how can the set of uniformly distributed numbers $\xi$ be transformed into a set of normally distribtued numbers $v_x$?
 The cumulative distribution function of $f(v_x)$ is
 \begin{equation}
-    F(X) = \int_{-\infty}^X f(v_x)\,dx = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \int_{-\infty}^X e^{-v_x^2/2\sigma^2} \,dv_x
+    F(X) = \int_{-\infty}^X f(v_x)\,dx = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \int_{-\infty}^X \e^{-v_x^2/2\sigma^2} \,dv_x
     \label{eq:CDF}
 \end{equation}
 and it turns out $\xi = F(X)$ is a uniformly distributed variable in the range $[0,1]$. 
@@ -1853,64 +2000,9 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 
 \section{Ab initio molecular dynamics}
 
-\subsection{Hellman-Feynman forces}
+%\subsection{Forces and stress}\label{sec:forcestress}
 
-The set of the coordinates of all the nuclei $\{\vec{R}_1,\vec{R}_2,\cdots,\vec{R}_m\}$ defines a configuration. 
-For any given configuration, we can calculate the \emph{energy} of the system (electron and nuclei) from [eqref].
-But in order to carry out dynamics, a way to calculate the \emph{force} acting on each atom is also needed. 
-In general we can always write
-\begin{equation}
-  \vec{F}_k = -\frac{\partial E}{\partial\vec{R}_k}
-\end{equation}
-Differentiating $E=\langle\Psi|\hat{H}|\Psi\rangle$ with respect to $\vec{R}_k$, we find
-\begin{equation}
-  \frac{\partial E}{\partial\lambda} 
-  = \biggl\langle \frac{\partial\Psi}{\partial\vec{R}_k} \biggl| \hat{H} \biggr| \Psi \biggr\rangle
-  + \biggl\langle \Psi \biggl| \hat{H} \biggr| \frac{\partial\Psi}{\partial\vec{R}_k} \biggr\rangle
-  + \biggl\langle \Psi \biggl| \frac{\partial\hat{H}}{\partial\vec{R}_k} \biggr| \Psi \biggr\rangle
-\end{equation}
-If $|\Psi\rangle$ is an eigenstate of $\hat{H}$ with energy $E$, the first two terms become
-\begin{align}
-  E \left (\biggl\langle \frac{\partial\Psi}{\partial\vec{R}_k} \biggl| \Psi \biggr. \biggr\rangle
-  + \biggl\langle\biggl. \Psi \biggr| \frac{\partial\Psi}{\partial\vec{R}_k} \biggr\rangle \right) 
-  &= E \frac{\partial}{\partial\vec{R}_k} \langle \Psi | \Psi \rangle 
-  = E \frac{\partial}{\partial\vec{R}_k} (1) = 0
-\end{align}
-using the normalization $\langle\Psi|\Psi\rangle=1$. Thus the force is
-\begin{equation}
-  \vec{F}_k = - \biggl\langle \Psi \biggl| \frac{\partial\hat{H}}{\partial\vec{R}_k} \biggr| \Psi \biggr\rangle
-  \label{eq:hellmann-feynman}
-\end{equation}
-This is often referred to as the Hellmann-Feynman theorem after Hellmann\cite{Hellmann:1937} 
-and Feynman\cite{Feynman:1939}, but also as the `force theorem'\cite[56]{Martin:2004}. 
-We assumed above that $|\Psi\rangle$ is an exact eigenstate of $\hat{H}$, but when $|\Psi\rangle$ is expanded in a finite basis set, it is generally not so.
-However, it turns out that as far as the basis functions do not depend on the nuclei coordinates, \eqref{eq:hellmann-feynman} is still valid.\footnote{See for example \cite[557]{Kantorovich:2004}.}
-
-The only terms in the Hamiltonian that depends on the nuclei coordinates are the terms describing
-electron-ion and ion-ion interaction:
-\begin{equation}
-  \vec{F}_k = - \frac{\partial E_{\text{ion}}}{\partial\vec{R}_k} - \int \frac{\partial V_{\text{ext}}(\vec{r})}{\partial\vec{R}_k} \rho(\vec{r}) \,d\vec{r}
-  \label{eq:hellmann-feynman-expl}
-\end{equation}
-In this epxression we see clearly that the force acting on any given atom $k$ arises from repulsion to all the other nuclei and attraction to the electronic density $\rho(\vec{r})$. Here $V_{\text{ext}}(\vec{r})$ is a local potential, such the `bare' Coulombic interaction. 
-In the case of non-local pseudopotenstials, \eqref{eq:hellmann-feynman-expl} can not be used, but more complicated expressions can be derived from \eqref{eq:hellmann-feynman}.
-
-
-
-Pulay\cite{Pulay:1969} has generalized the theorem by adding terms known as Pulay forces to account
-for basis set incompleteness and 
-
-n addition, Pulay [4] and others [5–8] have shown that for methods that employ atom centered ba- sis sets additional terms must also be included in or
-der to obtain forces that are properly tangent to the energy surface
-
-
-\comment{Kantorovich, s.555-557}
-
-\comment{Les Lev Kantorovich, s.568 ->}
-
-\comment{Les 9.1.5.1 xc-hole, s.489-491 ->}
-
-
+%The nuclei 
 
 
 
@@ -2532,7 +2624,7 @@ where $N(\varepsilon_i)$ is the integrated DOS
     $\Psi$  & Ground state many-body wavefunction \\
     $E_0$   & Ground state electronic energy (endre til $E_e$ ? ) \\
     $\ksorb_k(\vec{x})$  & Single-particle Kohn-Sham orbital \\
-    $\rho(\vec{r})$  & Ground state electron density (DFT), resistivity \\
+    $\rho(\vec{r})$  & Ground state electron density \\
 	$n$		& Conduction band electron density \\
 	$n_0$	& Equilibrium conduction band electron density \\
 	$p$		& Valence band hole density \\
@@ -2562,6 +2654,107 @@ where $N(\varepsilon_i)$ is the integrated DOS
     $p_i$   & Generalized momentum coordinate \\
     $\nvec{x}$ & Phase space vector with $6N$ components $x_i=\{q_i,p_i\}$
   \end{tabular}
+
+\chapter{The plane wave basis in $k$-space}\label{app:pwbasis}
+
+\begin{equation}
+    H_{\text{KS}} |n\vec{k}\rangle - \varepsilon_n|n\vec{k}\rangle = 0
+\end{equation}
+Expanding the orbitals,
+\begin{equation}
+    |n\vec{k}\rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} |\vec{k}+\vec{G}\rangle\qquad\text{where}\qquad c_{n\vec{k}\vec{G}} = \langle \vec{k}+\vec{G}|n\vec{k}\rangle
+\end{equation}
+%and in real space,
+%\begin{equation}
+%    \phi_{n\vec{k}}(\vec{r}) = \langle\vec{r}|n\vec{k}\rangle = \frac{1}{\sqrt{\omega}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im(\vec{k}+\vec{G})\cdot\vec{r}}.
+%\end{equation}
+makes K.s eqn
+\begin{equation}
+  \sum_{\vec{G}} \left(H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n |\vec{k}+\vec{G}\rangle \right) c_{n\vec{k}\vec{G}} = 0
+\end{equation}
+Left mltpl. by $\langle \vec{k}+\vec{G}'|$, we get
+\begin{align}
+    \sum_{\vec{G}} \left( \langle \vec{k}+\vec{G}'| H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n \langle \vec{k}+\vec{G}'|\vec{k}+\vec{G}\rangle \right)c_{n\vec{k}\vec{G}} &= 0 \\
+    \sum_{\vec{G}} \left( H_{\vec{G}\vec{G}'} - \varepsilon_n S_{\vec{G}\vec{G}'} \right)c_{n\vec{k}\vec{G}} &= 0
+\end{align}
+Since the PWs are orthonormal, the overlap elements $S_{\vec{G}\vec{G}'} = \delta_{\vec{G}\vec{G}'}$.
+Remembering that $H_{\text{KS}} = t + V_{\text{ext}} + V_{\text{int}} + V_{\text{xc}}$,
+we first notice that the kinetic term is diagonal in this basis,
+\begin{equation}
+    T_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'| -\frac12\nabla^2 |\vec{k}+\vec{G}\rangle = -\frac12|\vec{k}+\vec{G}|^2 \delta_{\vec{G}\vec{G}'},
+\end{equation}
+a great advantage of using a PW basis.
+
+---
+
+
+%The Hamiltonian elements $H_{\vec{G}\vec{G}'$ can be written as a sum of kinetic and potential terms
+
+
+
+
+
+A set of eigenfunctions $\varphi_n(\vec{r})$ with corresponding eigenvalues $\varepsilon_n$ is found from some one-particle Schrödinger equation
+\begin{equation}
+    \hat{H}\varphi_n(\vec{r}) = \varepsilon_n\varphi_n(\vec{r}),
+    \label{eq:ks1}
+\end{equation}
+with a Hamiltonian
+\begin{equation}
+    \hat{H} = -\frac12 \nabla^2 + V(\vec{r}) = -\frac12\nabla^2 + \sum_{\vec{G}} \mathcal{V}_{\vec{G}} \e^{\im\vec{G}\cdot\vec{r}},
+  \label{eq:hks1}
+\end{equation}
+where the potential $V(\vec{r})$, which may for instance be the Kohn-Sham potential $V_{\text{KS}}(\vec{r})$, is periodic in the lattice vectors $\vec{G}$, 
+having Fourier components
+\begin{equation}
+    \mathcal{V}_{\vec{G}} = \frac{1}{\Omega}\int_{\Omega} V(\vec{r}) \e^{\im \vec{G}\cdot\vec{r}} d\vec{r}
+\end{equation}
+with $\Omega$ being the Brillouin zone volume.
+Expanding the eigenfunctions in plane waves $|\vec{q}\rangle$,
+\begin{equation}
+    \varphi_n(\vec{r}) = \sum_{\vec{q}} c_{n\vec{q}}|\vec{q}\rangle,\qquad |\vec{q}\rangle = \frac{1}{\sqrt{\Omega}} \e^{\im\vec{q}\cdot\vec{r}},
+    \label{eq:1porb}
+\end{equation}
+inserting them into \eqref{eq:ks1}, left-multiplying by $\langle\vec{q}'|$, and making use of the orthonormality $\langle \vec{q}'|\vec{q}\rangle = \delta_{\vec{q}'\vec{q}}$, we find the Schrödinger equation in Fourier space;
+\begin{equation}
+    \sum_{\vec{q}} c_{n\vec{q}} \langle\vec{q}'|\hat{H}|\vec{q}\rangle = \varepsilon_n c_{n\vec{q}'}
+    \label{eq:schrf}
+\end{equation}
+Defining $\vec{q}=\vec{k}+\vec{G}$ and $\vec{q}'=\vec{k}+\vec{G}'$, eigenfunctions with a definite $\vec{k}$ can be written
+\begin{equation}
+    \varphi_{n\vec{k}}(\vec{r}) = \e^{\im \vec{k}\cdot\vec{r}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{G} \rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{k}+\vec{G}\rangle,
+  \label{eq:psik}
+\end{equation}
+which inserted into the Schrodinger equation \eqref{eq:schrf} gives
+\begin{equation}
+    \sum_{\vec{G}} H_{\vec{G}\vec{G}'} c_{n\vec{k}\vec{G}}  = \varepsilon_n c_{n\vec{k}\vec{G}'}, \qquad H_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'|H_{ks}|\vec{k}+\vec{G}\rangle
+\end{equation}
+where the matrix elements are
+\begin{align}
+    \langle\vec{k}+\vec{G}'|\hat{H}|\vec{k}+\vec{G}\rangle &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \sum_{\vec{G}''} \mathcal{V}_{\vec{G}''} \delta_{\vec{G}',\vec{G''}+\vec{G}}\\
+    &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \mathcal{V}_{\vec{G}'-\vec{G}}
+\end{align}
+
+The density of states is
+\begin{equation}
+    \text{DOS}(E) = \frac{1}{N_k}\sum_{n\vec{k}}\delta(\varepsilon_{n\vec{k}}-E) 
+\end{equation}
+and the electron density
+eqn
+
+The electron density is an average over $k$ points,
+\begin{equation}
+    \rho(\vec{r}) = \frac{1}{N_k}\sum_{n,\vec{k}} \omega_{\vec{k}} f(\varepsilon_{n\vec{k}}) \rho_{n\vec{k}}(\vec{r}),
+\end{equation}
+where $\omega_{\vec{k}}<1$ is the weight of a given $\vec{k}$ point,
+$f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} = \delta(\varepsilon-\varepsilon_{n\vec{k}})$ at $T=0$), and using \eqref{eq:psik},
+
+\begin{equation}
+    \rho_{n\vec{k}}(\vec{r}) = |\varphi_{n\vec{k}}(\vec{r})|^2 = \sum_{\vec{G},\vec{G}'} c_{n\vec{k}\vec{G}'}^* c_{n\vec{k}\vec{G}} \langle \vec{k}+\vec{G}' | \vec{k}+\vec{G} \rangle = \sum_{\vec{G}} |c_{n\vec{k}\vec{G}}|^2 
+\end{equation}
+\comment{Siste m{\aa} sjekkes! Sammenlign med 12.29 i Martin. Noe ser ut til {\aa} v\ae re galt!}
+
+
 
 \chapter{Code}
 
