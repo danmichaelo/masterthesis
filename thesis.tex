@@ -360,7 +360,20 @@ The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
 \section{The case of phosphorus diffusion in silicon}\label{sec:PinSi}
 
+\subsection{How much phosphorus go into silicon and where does it go?}
+
+According to the standard phosphorus-silicon binary phase diagram, more than 2\% P can be solved in silicon at temperatures between \SI{1350}{\kelvin} and \SI{1500}{\kelvin} without the formation of new phases, and even at 1000 K about half a percent can be solved.\cite{PSiPhaseDiagram} 
+
+Sheet resistivity and Hall effect measurements have shown that below about 2–\SI{3e20}{\per\centi\metre\cubed} (or 0.4-0.6\%), the density of electrically active dopants in properly annealed samples follow the chemical concentration of phosphorus closely, but above such a concentration, the density of electrically active dopants $n_e$ plateau.\cite{Tannenbaum:1961}
+A concentration of about half a percent therefore seems to be the maximum solubility of unclustered P,\cite{Solmi:1998} but higher concentrations
+%(reached above about \SI{750}{\celsius},\cite{Solmi:1996} and)
+are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b}
+The exact nature of the ``extra'', inactive phosphorus is not known, but a mix of SiP precipitates and mobile P defects have been suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
+%When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
+
 The atomic radii of silicon and phosphorus are 1.17 and 1.10~Å, respectively.
+Due to the similar size, it was early assumed that phosphorus occupy mainly substitutional lattice sites, and this was confirmed by some of the first 
+
 A solid solution of phosphorus in silicon is therefore expected to have a slightly smaller lattice parameter than pure silicon.
 That a small shrinkage takes place on in-diffusion of phosphorus into silicon was first described by Pearson and Bardeen in 1948, who reported a slight lattice constant shrinkage of some 0.02 \% when adding some 0.5 at\% phosphorus,\cite{Pearson:1949} 
 
@@ -376,14 +389,12 @@ however, the limit of solunlieven more phosphorus appears to be solv
 
 Newero\cite{Borisenko:1987} and \cite{Safarian:2011} 
 
-According to the standard phosphorus-silicon binary phase diagram, more than 2\% P can be solved in silicon at temperatures at temperatures between \SI{1350}{\kelvin} and \SI{1500}{\kelvin} without the formation of new phases, and even at 1000 K about half a percent can be solved.\cite{PSiPhaseDiagram} 
-Sheet resistivity and Hall effect measurements have shown that below about 2–\SI{3e20}{\per\centi\metre\cubed} (or 0.4-0.6\%), the density of electrically active dopants in properly annealed samples follow the chemical concentration of phosphorus closely, but above such a concentration, the density of electrically active dopants $n_e$ plateau.\cite{Tannenbaum:1961}
-A concentration of about half a percent therefore seems to be the maximum solubility of unclustered P,\cite{Solmi:1998} but higher concentrations
-%(reached above about \SI{750}{\celsius},\cite{Solmi:1996} and)
-are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b}
-The exact nature of the ``extra'', inactive phosphorus is not known, but a mix of SiP precipitates and mobile P defects have been suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
-%When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
+The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$.\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
+This makes possible many different interstitial configurations, and also interstitial diffusion
 
+In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
+They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
+Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2197,18 +2208,6 @@ As described in section \ref{sec:PinSi}, \ldots, several different configuration
 
 \section{Initial structures}\label{sec:structures}
 
-The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$.\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
-This makes possible many different interstitial configurations, and also interstitial diffusion
-
-
-
-
-
-
-
-In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
-They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
-Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
 
 % Sammenlign med perfekt 64Si
 % test_structures/perfect/stdrelax/OUTCAR.3
