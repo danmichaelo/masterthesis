@@ -79,7 +79,7 @@ Molecular dynamics with an \textit{ab initio} potential, such as one obtained fr
 Modeling at the \textit{ab initio}, while 
 
 
-I'm grateful to the developers of the VASP software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ldots 
+I'm grateful to the developers of the VASP software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ref{sec:pseudopot}
 
 This work was started without knowing \textit{a priori} if simulations at the \textit{ab initio} level could be carried out with simulation times long enough to obtain useful statistics, but with new potentials and \ldots we found it worthwhile to test.
 
@@ -384,12 +384,19 @@ are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b
 The exact nature of the ``extra'', inactive phosphorus is not known, but a mix of SiP precipitates and mobile P defects have been suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
 %When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
 
-\chapter{Density Functional Theory}
 
-This chapter consists of two parts. The short sections \ref{sec:materials}--\ref{sec:pseudopot} give a general presentation of density functional theory, 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\chapter{Density Functional Theory}\label{cha:dft}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This chapter consists of two parts. The short sections \ref{sec:materials}--\ref{sec:forcetheorem} give a general presentation of density functional theory (DFT), 
 while the lengthy section \ref{sec:parameters} is concerned with the practical choices made in the application of the theory in this specific work.
 
-The aim of the first part has not been to \emph{introduce} density functional theory,\footnote{
+The aim of the first part has not been to \emph{introduce} DFT,\footnote{
 A good practical introduction is given by Scholl(2009)\cite{Scholl:2009}, while a more theoretical and authoritative introduction is given by Parr(1994)\cite{Parr:1994}.
 Chapter 12 in Kantorovich(2004)\cite{Kantorovich:2004} is somewhere in the middle, and is a personal favourite of mine.
 The comprehensive book by Martin(2004)\cite{Martin:2004} and the more compact book by Kohanoff(2006)\cite{Kohanoff:2006} are good reference books that put DFT in context of other methods, 
@@ -397,9 +404,10 @@ but they may be a bit daunting on their own.
 Chemists may find chapter 8 in Cramer(2004)\cite{Cramer:2004} a good read.
 This chapter borrows from all the aforementioned books.
 }
-but rather to \emph{describe} or summarise important concepts in the theory (sec. \ref{sec:materials}--\ref{sec:kohnsham}) as implemented in \vasp\ (sec. \ref{sec:xc}--\ref{sec:pseudopot}) in a somewhat superficial way, 
-and since notation varies between different authors, to provide a consistent notation to be used when referring to the concepts later on. 
-Readers experienced with DFT may safely jump directly to the second part (section \ref{sec:parameters}). 
+but rather to \emph{describe} or summarise important concepts in the theory (sec. \ref{sec:materials}--\ref{sec:kohnsham}) as implemented in \vasp\ (sec. \ref{sec:xc}--\ref{sec:forcetheorem}) in a somewhat superficial way, 
+and since notation varies between different authors, to provide a consistent notation to be used when referring to concepts later on. 
+Readers experienced with DFT may safely jump directly to the second part (section \ref{sec:parameters}),
+or even directly to the summary subsection \ref{sec:parameters:summary} if in a rush. 
 
 %Note to self: In DFT, the electron density is usually denoted $n(\vec{r})$ or
 %$\rho(\vec{r})$. I think $n$ may be the more common choice, but that conflicts
@@ -410,7 +418,11 @@ Readers experienced with DFT may safely jump directly to the second part (sectio
 %Electrons Really Doing in Molecules? \textit{The Vortex}, Cal. Sec. of
 %Am. Chem. Soc., Spring, 1960.}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Describing materials}\label{sec:materials}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\lettrine[lines=3,slope=0pt,nindent=0pt]{M}{aterials} can be described and 
 
@@ -522,8 +534,11 @@ such as interaction with external electric or magnetic fields, spin coupling ter
 %not thought possible a few
 %decades ago. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{The many-particle problem and the Born Oppenheimer approximation}\label{sec:born-oppenheimer}
-%\comment{Skille mellom adiabatisk og BO eller ikke?}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Our systems of interest consist of large number of nuclei and electrons, particles whose motion are correlated by their Coulombic interactions. 
 While there is no known way to describe the mutual interaction of many particles in general, 
@@ -548,7 +563,6 @@ This is the central idea of the Born Oppenheimer approximation\cite{BO:1927}.
 
 %While the many-body problem prevents exact analytic solutions, solutions to any given accurancy can be found from iterative, numerical methods, only limited by numerical accuracy and computational power. Computational power is a severe practical limitation though, and even with quite drastical approximations involved, it limits us to study systems of roughly a few thousand atoms. Computational power increase rapidly, and in 10 years, we may study tens of thousands of atoms, but still we will be very far away from, say, the $10^{22}$ atoms in a gram of salt.
 
-%\section{The Born-Oppenheimer approximation}
 
 %Since the nuclei are so much heavier than the electrons, they will move much
 %slower. 
@@ -634,7 +648,11 @@ A phenomena such as Joule heating, for instance, utilised in everyday electrical
 %\end{equation}
 %for any $\vec{x}$. We may now define the exchange-correlation hole for an electron at $\vec{x}$ as $\rho_{\text{xc}}(\vec{x},\vec{x}') = \rho(\vec{x}')g(\vec{x},\vec{x}')$. It follows that the hole contains a charge of $-1$.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Electron density as the fundamental variable}\label{sec:dft}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In density functional theory (DFT), the (observable) electron density $\rho(\vec{r})$ rather than the (non-observable) quantum state $|\Phi\rangle$ is considered the fundamental entity for the electronic structure problem, and other observables are extracted from functionals of the electron density $\rho(\vec{r})$ rather than from operators acting on the state.
 This approach was first tried by Thomas\cite{Thomas:1927} and Fermi\cite{Fermi:1928} in the late 1920s, 
@@ -681,7 +699,11 @@ and better approximations are discussed in the next two sections below.
 But first, how is the kinetic energy to be found from an electron density ($T[\rho]$)?
 That's not a trivial problem, and the most successful solution involves the re-introduction of a one-particle formalism, in what is known as the Kohn-Sham method.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{The Kohn-Sham self-consistent field method}\label{sec:kohnsham}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The \emph{ansatz} in the Kohn-Sham (KS) method\cite{KohnSham:1965} is that a system of correlated electrons can be described by an auxillary system of independent electrons (or formally \emph{quasielectrons}) moving in a potential altered to make the density \emph{the same} for both systems. 
 Since the density determines all properties of the full many-body system according to the Hohenberg-Kohn (HK) theorems, an exact solution to the independent-particle problem should yield an exact solution to the correlated-particle problem.
@@ -783,7 +805,11 @@ These are self-consistent field problems requiring iterative solutions, since $V
 %  \label{eq:eff-pot}
 %\end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{The exchange-correlation potential}\label{sec:xc}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Kohn-Sham scheme provides a neat solution to the problem of defining a kinetic energy functional, 
 and the mapping of the of interacting electrons onto non-interacting quasielectrons is exact in the limit of an exact effective potential $V_{\text{KS}}(\vec{r})$.
@@ -803,7 +829,9 @@ LDA corresponds to evaluating this functional for each volume element $d\vec{r}$
 \end{equation}
 Such an approach is expected to work well only for sufficiently slowly varying densities (``uniform-like''), 
 but in addition it has turned out that in many cases there are fortunate cancellation of errors resulting in better-than-expected results.\cite{Gunnarson:1976}\cite[529]{Kantorovich:2004}\cite[180]{Parr:1994}
-LDA is the best ''ab initio'' local approximation,\comment{(Korrekt? Trenger sitering?)} so to improve on LDA the logical next step is to move to a gradient approximation, including some dependency on the density gradient $\nabla\rho$, but exactly how to do this is far from straightforward and different and many different functionals have evolved over the years. 
+It's hard to come up with a better local approximation than LDA, at least one that is somewhat intuitive 
+since the effects that are to be described are inherently non-local, so 
+to improve on LDA the logical next step is to move to a gradient approximation, including some dependency on the density gradient $\nabla\rho$, but exactly how to do this is far from straightforward and different and many different functionals have evolved over the years. 
 
 In this work we will make use of the PBE-GGA functional introduced by Perdew, Beckge and Eizenhover in 1996,\cite{PBE} where GGA is short for generalized gradient approximation, Perdew and Yue's contrasting term to the earlier gradient expansion approximation (GEA).\cite{Perdew:1986}
 Compared to other functionals PBE-GGA has a relatively simple form, satisfying what the authors consider the most important conditions,
@@ -823,7 +851,38 @@ is the first-order reduced density gradient, $k_F=(3\pi^2\rho)^{1/3}$ is the Fer
 %One of the most successful approximations was suggested by Kohn and Sham themselves in their 1965 paper;\cite{KohnSham:1965} the local density approximation (LDA) based on 
 %\url{http://cmt.dur.ac.uk/sjc/thesis/thesis/node13.html}
 
-\section{Bloch waves and the plane wave basis}\label{sec:planewavebasis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Pseudopotentials}\label{sec:pseudopot}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+So far, two important approximations have been introduced; the Born Oppenheimer approximation 
+and the approximate handling of exchange and correlation using the PBE-GGA functional. 
+Still, calculations using a plane wave basis, except for very small systems, would not be feasible without one more important approximation.
+
+When expanding the one-particle orbitals in a plane wave basis, \eqref{eq:pwbasis}, 
+it is evident that a much larger amount of plane waves must be included to accurately describe the more localized core orbitals than the less localized valence orbitals. 
+Further, the core orbitals for a givent atom resemble each other when the atom is in different environments, since it's the valence orbitals that take part in chemical binding and most interesting material properties.
+
+The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential, and only threat the valence orbitals variationally.
+For the element of silicon for instance, the common pseudopotential approach is to threat only the four valence electrons variationally,
+leaving the remaining ten core electrons to some fixed pseudopotential.
+Of course all kinds of practical difficulties may arise, such as the question of which electrons to include in the core, and how to actually do the partitioning without introducing unphysical effects.
+Several different methods have therefore evolved over the years.
+Here, the projector augmented-wave (PAW) method\cite{Blochl:1994} is used, which has the elegant feature that the wavefunction in the core region can be fully reconstructed.
+For more information, see e.g. the chapter on pseudopotentials in Martin(2004)\cite[204-299]{Martin:2004}.
+
+The specific pseudopotentials usd in this work were provided by Georg Kresse and are referred to as ``very soft''\cite{verysoftpot} (not to be confused with ``ultrasoft'' potentials which are not based on the PAW method).
+They are `softer' than the potentials included in the standard {\vasp} distribution,\cite{Kresse:1999}
+since they have 26\% larger core radius.\footnote{The verysoft potentials have RCORE=2.4. Since no versioning is used, for identification, the SHA-1 of the Si and P potentials are cf786bc703f03a562aae3661fa6cc65f86bc3097 and 8058b1b1a564e2d79696e3c30bdac2d44ff524a0, respectively.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Bloch states and the plane wave basis}\label{sec:planewavebasis}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 A few words must be said about the orbitals $\varphi_n$ used in the Kohn-Sham equations \eqref{eq:KS}.
 In a periodic system, they should be Bloch states. In general for some reciprocal vector $\vec{k}$,
@@ -890,7 +949,7 @@ Third, the PWs (and their derivatives) are quite simple to evaluate analytically
 %total energy with respect to the energy cutoff should be tested for the 
 %problem at hand.
 
-%\section{Defects}
+%section{Defects}
 
 %The Block scheme is well suited for for repeating units, but how do we make a
 %model a repeating system with a few random defects.
@@ -902,30 +961,66 @@ Third, the PWs (and their derivatives) are quite simple to evaluate analytically
 %as high as $10^{21}$~cm$^{-3}$. The solubility limit of a solid solution of
 %phosphorus in silicon is close to \SI{e21}{\per\centi\metre\cubed}\cite{Ghandhi:1994}.
 
-\section{Pseudopotentials}\label{sec:pseudopot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Brillouin zone integration and the $k$ point density}\label{sec:bzint}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-So far, two important approximations have been introduced; the Born Oppenheimer approximation 
-and the approximate handling of exchange and correlation using the PBE-GGA functional. 
-Still, calculations using a plane wave basis, except for very small systems, would not be feasible without one more important approximation.
+For periodic systems, calculations of observables generally involves integrals over the Brillouin zone\cite[89]{Martin:2004}\footnote{The term `Brillouin zone' will be used throughout this work as
+a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. 
+For example, we may compute the total energy per unit cell as\cite[24]{slides:castep06}
+\begin{equation}
+  E_{\text{tot}} = \frac{1}{\Omega} \int_{\text{BZ}} E(\vec{k}) \,d\vec{k}
+\end{equation}
+where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the total energy found from solving the Kohn Sham equations for a given $\vec{k}$.
+For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
+In 1973 Baldereschi suggested a first approximation could be made by including only a single $k$-point,
+\begin{equation}
+  E_{\text{tot}} = \frac{(2\pi)^3}{\Omega} \bar{E}, \qquad \bar{E}=E_{\vec{k}^*}
+\end{equation}
+for a `mean value point' $\vec{k}^*$ determined by crystal symmetry\cite{Baldereschi:1973}. 
+This idea has later been generalized into sets of optimal (so-called `special') $k$~points by Chadi and Cohen\cite{Chadi:1973},
+Monkhorst and Pack\cite{MonkhorstPack:1976} and others.
+Including only points in the irreducible Brillouin zone (IBZ) results in a sum over points with weights $w_{\vec{k}^*}$;
+\begin{equation}
+  E_{\text{tot}} = \frac{(2\pi)^3}{\Omega}\sum_{\vec{k}^*} w_{\vec{k}^*} E(\vec{k}^*)
+\end{equation}
+When supercells are used, as will be done here, the $k$ point density can be reduced, since a larger supercell (real space) corresponds to a smaller Brillouin zone (reciprocal space), but the benefit of fewer $k$ points is cancelled by the increased number of bands. 
+This is illustrated, for the sake of simplicity, for a one-dimensional 
+lithium chain with bond length 2.38~Å in figure \ref{fig:kpointdensities}.\footnote{I really wanted to see such an illustration myself, 
+but for some reason I didn't find one in any textbook I've seen, which is one reason why I include it here even though it's slightly off-topic.}
+Since the atoms are evenly spaced,
+the system is periodic, and we can define a unit cell with lattice parameter 
+$a=2.38$~Å containing a single atom. 
+The brillouin zone is then a line segment of length $2\pi/a$. 
+The left part of figure \ref{fig:kpointdensities} shows the energy bands sampled at 17 k points between $-\pi/a$ and $\pi/a$.\footnote{Of course there is some symmetry here. Really, we would only have to sample the irreducible brillouin zone of length $\pi/a$, but the whole Brillouin zone was sampled here for the purpose of illustration.}
 
-When expanding the one-particle orbitals in a plane wave basis, \eqref{eq:pwbasis}, 
-it is evident that a much larger amount of plane waves must be included to accurately describe the more localized core orbitals than the less localized valence orbitals. 
-Further, the core orbitals for a givent atom resemble each other when the atom is in different environments, since it's the valence orbitals that take part in chemical binding and most interesting material properties.
+\begin{figure}[htp]
+  \centering
+  \includegraphics{figs/kpointdensity.pdf}
+  \caption{Illustration of the effect of using supercells in one dimension. 
+  The left figure shows the band structure calculated from a `unit cell' with
+  lattice parameter 2.38~Å containing a single Li atom.
+  The right figure shows the band structure calculated from a `supercell' with
+  lattice parameter 4.76~Å containing two Li atoms.}
+  \label{fig:kpointdensities}
+\end{figure}
 
-The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential, and only threat the valence orbitals variationally.
-For the element of silicon for instance, the common pseudopotential approach is to threat only the four valence electrons variationally,
-leaving the remaining ten core electrons to some fixed pseudopotential.
-Of course all kinds of practical difficulties may arise, such as the question of which electrons to include in the core, and how to actually do the partitioning without introducing unphysical effects.
-Several different methods have therefore evolved over the years.
-Here, the projector augmented-wave (PAW) method\cite{Blochl:1994} is used, which has the elegant feature that the wavefunction in the core region can be fully reconstructed.
-For more information, see e.g. the chapter on pseudopotentials in Martin(2004)\cite[204-299]{Martin:2004}.
+Now, we could define a
+cell with lattice parameter $a'=2a=4.76$~Å containing two atoms. 
+The brillouin zone is then reduced to a line segment of length $2\pi/a'=\pi/a$,
+but should still contain the whole band structure, since the choice of unit cell size is arbritrary (as long as translational symmetry is retained).
+In the right part of the figure it is shown how the lowermost band ``wraps back'' into the first brillouin zone.
+Even though the number of $k$ points used for the `double cell' (right) is half the number used in the `single cell' (left), 
+the distance between $k$ points are the same; $\pi/(8a)\approx \SI{0.165}{\per\angstrom}$ in both cases.
 
-The specific pseudopotentials usd in this work were provided by Georg Kresse and are referred to as ``very soft''\cite{verysoftpot} (not to be confused with ``ultrasoft'' potentials which are not based on the PAW method).
-They are `softer' than the potentials included in the standard {\vasp} distribution,\cite{Kresse:1999}
-since they have 26\% larger core radius.\footnote{The verysoft potentials have RCORE=2.4. Since no versioning is used, for identification, the SHA-1 of the Si and P potentials are cf786bc703f03a562aae3661fa6cc65f86bc3097 and 8058b1b1a564e2d79696e3c30bdac2d44ff524a0, respectively.}
 
-\subsection{Forces from the Hellman-Feynman force theorem}\label{sec:forcetheorem}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Forces from the Hellman-Feynman force theorem}\label{sec:forcetheorem}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %The set of the coordinates of all the nuclei $\{\vec{R}_1,\vec{R}_2,\cdots,\vec{R}_m\}$ defines a configuration. 
 %For any given configuration, we can calculate the \emph{energy} of the system (electron and nuclei) from [eqref].
@@ -1012,7 +1107,11 @@ In the case of non-local pseudopotenstials, \eqref{eq:hellmann-feynman-expl} can
 
 %\comment{Les Lev Kantorovich, section 9.4.3 s 546 og 9.4.4 PAW, s. 551 ->}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Choice of parameters}\label{sec:parameters}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 As described in chapter \ref{cha:molecular-dynamics} on Born Oppenheimer molecular dynamics below, the purpose of using density functional theory is to accurately calculate the forces between atoms. 
 From a knowledge of the forces, the dynamics of the atoms can be simulated using simple newtonian dynamics.
@@ -1027,17 +1126,22 @@ Our system must be as simple as possible, yet behave as similarly as possible to
 The art of computer simulation is to simplify as much as possible, yet not too much.
 However, we will start discussing an important parameter that does not affect the calculation time; the lattice parameter of the simulation cell.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Lattice constant}\label{sec:parameters:a}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Choosing a too small lattice parameter will add an artificial positive external pressure on the simulation cell, while choosing it too large
+Choosing a too small lattice parameter $a$ will add an artificial positive external pressure on the simulation cell, while choosing it too large
 will add a negative external pressure (corresponding to an isotropic pull).
-This is illustrated in figure \ref{fig:si_bulk_conv_vol}, where the pressure and total energy of the system is plotted as a function of the lattice constant, varied in steps of 0.01~Å. 
+In figure \ref{fig:si_bulk_conv_vol}, the pressure and total energy of the system is plotted as a function of the lattice constant, varied in steps of 0.01~Å. 
 The pressure is calculated as $P=\frac{1}{3}\sum_{\alpha} \sigma_{\alpha\alpha}$ where $\sigma$ is the stress tensor.
 A realistic lattice parameter is one that zero out the external pressure,\footnote{Ideally one that makes the pressure equal the standard atmosphere of one bar, but such a small pressure is not really distinguishable from zero bar within the precision we work with. The scale on fig \ref{fig:si_bulk_conv_vol} should make this clear.} and following the variational principle, that minimizes the total energy. 
-The lattice parameter fulfilling such conditions is indicated by a veritcal line.
+The lattice parameter fulfilling such conditions is indicated by a vertical line for each set.
+The first two sets make use of fully converged parameters (`standard' potentials, 125 $k$ points in the Brillouin zone\footnote{although only 10 are actually used for calculation due to symmetry} and plain wave energy cutoff of 800~eV), while the last set is discussed below.
 
-Since the lattice constant is not independent of other parameters, the procedure has been repeated for six different configurations in order to get a feeling for the influence those other parameters have. 
-Two configurations used a 64-atom cell, for which the lattice parameter plotted is halved for comparison with the 8-atom cell.
+%Since the lattice constant is not independent of other parameters, the procedure has been repeated for six different configurations in order to get a feeling for the influence those other parameters have. 
+%Two configurations used a 64-atom cell, for which the lattice parameter plotted is halved for comparison with the 8-atom cell.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -1049,30 +1153,31 @@ Two configurations used a 64-atom cell, for which the lattice parameter plotted 
      For the 64-atom cell, the lattice parameter is $2a$, and the energy plotted is the cube root of the total energy, 
      for comparison with the 8-atom cell. 
      All energies are given relative to the minimum energy $E_0$ for each configuration.
-     The minimum energies of the different configurations are in general not the same.
+     The absolute minimum energies of the different configurations are not the same.
   }
   \label{fig:si_bulk_conv_vol}
 \end{figure}
 
-As we see from figure \ref{fig:si_bulk_conv_vol}, the most important factor is the choice of the potential, or more specifically the choice of the exchange-correlation functional.
-The local density approximation (LDA) shows its well-known tendency to overbind, while the Perdew-Becke-Ernzerhof generalized gradient approximation (PBE-GGA) 
-functional shows the rather common tendency to underbind. 
-In the case of pure silicon, LDA actually comes closer to the experimental value of 5.43~Å (indicated with a thick, dashed line), in line with the results of Haas et al.\cite{Haas:2010}\footnote{Following Haas, some minor adjustments to the PBE functional actually make the functional calculate lattice parameters much closer to experimental values.
+The first to notice about the figure is that even for fully converged parameters, using LDA results in a lattice parameter 0.46 \% (2.5~pm) shorter than the experimental value of 5.43~Å\footnote{The lattice parameter of silicon is lattice parameter of silicon is \SI{5.431}{\angstrom} at room temperature (\SI{293.15}{\kelvin}),\cite{CODATA:2006}, but we should really compare with the lattice parameter at zero kelvin since the ions are at rest.
+Using the linear thermal expansion coefficient of \SI{2.6e-6}{\per\kelvin} at room temperature,[CITATION NEEDED]
+we can extrapolate to find a lower bound of \SI{5.427}{\angstrom} for the lattice parameter at zero kelvin. This is a lower bound since the thermal expansion coefficient itself is a function of temperature, and has been shown to decrease to zero near \SI{120}{\kelvin} and even becoming slightly negative for even lower temperatures.\cite{Sugino:1990} Experimental data are scarce for temperatures below 100 K, but if we are content with two decimals, we can take the experimental lattice parameter of silicon at zero kelvin to be \SI{5.43}{\angstrom}.}
+(indicated with a thick, dashed line), while using PBE-GGA results in it being 0.75 \% (4.1~pm) too long.
+This is the well-known tendency of LDA to overbind, and the rather common tendency of PBE-GGA to underbind.
+Now, in this particular case of pure silicon, it turns out that the LDA-value comes closer to the experimental value than the PBE-GGA value, in line with the results of Haas et al.\cite{Haas:2010}\footnote{Following Haas, some minor adjustments to the PBE functional actually make the functional calculate lattice parameters much closer to experimental values.
 On the other hand, these adjustments tended to produce worse atomization energies. Since neither property is the interest of this work, we will stick to the very well-tested and theoretically robust standard PBE GGA functional.}
-This is most likely due to fortunate cancellation of errors,\cite[see e.g.][167]{Martin:2004} and since the purpose here is not to calculate accurate lattice constants, we will stay with the theoretically more solid PBE-GGA as it would be rather fortenous to expect the same level of error cancellation for every different configuration visited during a simulation at elevated temperatures. 
+This is most likely due to fortunate cancellation of errors,\cite[see e.g.][167]{Martin:2004} and since the purpose here is not to calculate accurate lattice constants, we will stay with the theoretically more robust PBE-GGA as it would be rather fortenous to expect the same level of error cancellation for every different configuration visited during a simulation at elevated temperatures. 
 Rather, we could expect the cancellation to work better for some configurations than others, and thus produce non-systematic errors.
 
-%Note that a separate series was carried out using the standard 
-%Note that the ``very soft'' potential used in this work (and introduced in section \ref{sec:pseudopot}) was compared with the standard potential, but no difference
 
+Now, foreseeing the results of the next sections, we will look quickly into the effects of the approximations decided upon in those sections. 
+First, replacing the `standard' potential with the `very soft' potential (see section \ref{sec:pseudopot}) lead to a 0.15 \% (0.8~pm) reduction in $a$.
+Then lowering the plane wave energy cutoff from 800~eV to 180~eV lead to a 0.09 \% (0.5~pm) increase, largely cancelling the previous effect.
+Finally, reducing the $k$ point density from $20.5$ to $1.3\times 10^3 / \text{Å}^{-3}$ lead to a 0.29 \% increase (1.6~pm). 
+The plot for this final configuration is included in \ref{fig:si_bulk_conv_vol} as the third curve.
 
-On the other hand, reducing the $k$ point density (represented by number of $k$~points $n_k$) and cutoff energy $E_{\text{cut}}$ seems to have a much smaller effect on the lattice parameter. For most cases, the minimum is near \SI{5.47}{\angstrom} and this is the value chosen in the simulations.
-Reducing the $k$ point density results in slightly longer bonds, and for $\Gamma$-only, the minimum of the parabolic fit is actually shifted past 5.48~Å.
-This was not realised at first, but the minimum is nevertheless very flat, so the energy difference is really quite negligible in the range between 5.46 and 5.49~Å.
-
-Experimentally, the lattice parameter of silicon is lattice parameter of silicon is \SI{5.431}{\angstrom} at room temperature (\SI{293.15}{\kelvin}),\cite{CODATA:2006}\footnote{In fact, the lattice parameter is known to an astonishing accuracy due to the highly perfected silicon crystal growth technology, having reached a relative uncertainty of about $10^{-8}$.\cite{Becker:2009}, with the meteorology community currently pursuing the most accurate measurement to increase the accuracy of the Avogadro constant.} but we should really compare with the lattice parameter at zero kelvin since the ions are at rest.
-Using the linear thermal expansion coefficient of \SI{2.6e-6}{\per\kelvin} at room temperature,[CITATION NEEDED]
-we can extrapolate to find a lower bound of \SI{5.427}{\angstrom} for the lattice parameter at zero kelvin. This is a lower bound since the thermal expansion coefficient itself is a function of temperature, and has been shown to decrease to zero near \SI{120}{\kelvin} and even becoming slightly negative for even lower temperatures.\cite{Sugino:1990} Experimental data are scarce for temperatures below 100 K, but if we are content with two decimals, we can take the experimental lattice parameter of silicon at zero kelvin to be \SI{5.43}{\angstrom}.
+%On the other hand, reducing the $k$ point density (represented by number of $k$~points $n_k$) and cutoff energy $E_{\text{cut}}$ seems to have a much smaller effect on the lattice parameter. For most cases, the minimum is near \SI{5.47}{\angstrom} and this is the value chosen in the simulations.
+%Reducing the $k$ point density results in slightly longer bonds, and for $\Gamma$-only, the minimum of the parabolic fit is actually shifted past 5.48~Å.
+%This was not realised at first, but the minimum is nevertheless very flat, so the energy difference is really quite negligible in the range between 5.46 and 5.49~Å.
 
 To sum up, a lattice constant of 5.47~Å  will be used in the simulations. 
 This is 0.74\% off the experimental lattice constant of 5.43~Å, and since the Si-Si bond length is $(\sqrt{3}/4)a$ and thus proportional to $a$, 
@@ -1102,67 +1207,24 @@ Second, we have no simple way of actually finding the volume expansion. Or do we
 %Diff:  -0.007710985360000144   -0.6912378501674539
 %Diff/V0:-0.14096312543885564 % -0.42229353833678746 %
 
-\subsection{k points}\label{sec:parameters:k}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{$k$ point density}\label{sec:parameters:k}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\begin{framed}
 %    \comment{Klippet og limt fra GULP-manualen!! SKRIV OM}
 %    If the space group symmetry has been specified for the material, then it is pos- sible to determine the Patterson group, which is the equivalent of the space group in reciprocal space. Note that all systems have at least inversion symmetry (also known as time-reversal symmetry) in the Brillouin zone - a fact that is always used to accelerate the Ewald sum. By using the Patterson group, it is only necessary to sum over k-points that lie within the asymmetric wedge of the Brillouin zone, with appropriate weighting of points situated on the boundary (Ramirez:1988). This can lead to substantial computational savings for systems with small unit cells (and therefore high shrinking factors) and high symmetry.
 %\end{framed}
 
-For periodic systems, calculations of observables generally involves integrals over the Brillouin zone\cite[89]{Martin:2004}\footnote{The term `Brillouin zone' will be used throughout this work as
-a shorthand for `first Brillouin zone' as no other Brillouin zones will be encountered.}. 
-For example, we may compute the total energy per unit cell as\cite[24]{slides:castep06}
-\begin{equation}
-  E_{\text{tot}} = \frac{1}{\Omega} \int_{\text{BZ}} E(\vec{k}) \,d\vec{k}
-\end{equation}
-where $\Omega$ is the Brillouin zone volume and $E(\vec{k})$ is the total energy found from solving the Kohn Sham equations for a given $\vec{k}$.
-For computational evaluation such integrals have to be turned into sums over a discrete set of $k$-points. 
-In 1973 Baldereschi suggested a first approximation could be made by including only a single $k$-point,
-\begin{equation}
-  E_{\text{tot}} = \frac{(2\pi)^3}{\Omega} \bar{E}, \qquad \bar{E}=E_{\vec{k}^*}
-\end{equation}
-for a `mean value point' $\vec{k}^*$ determined by crystal symmetry\cite{Baldereschi:1973}. 
-This idea has later been generalized into sets of optimal (so-called `special') $k$~points by Chadi and Cohen\cite{Chadi:1973},
-Monkhorst and Pack\cite{MonkhorstPack:1976} and others.
-Including only points in the irreducible Brillouin zone (IBZ) results in a sum over points with weights $w_{\vec{k}^*}$;
-\begin{equation}
-  E_{\text{tot}} = \frac{(2\pi)^3}{\Omega}\sum_{\vec{k}^*} w_{\vec{k}^*} E(\vec{k}^*)
-\end{equation}
-When supercells are used, as will be done here, the $k$ point density can be reduced, since a larger supercell (real space) corresponds to a smaller Brillouin zone (reciprocal space), but the benefit of fewer $k$ points is cancelled by the increased number of bands. 
-This is illustrated, for the sake of simplicity, for a one-dimensional 
-lithium chain with bond length 2.38~Å in figure \ref{fig:kpointdensities}.\footnote{I really wanted to see such an illustration myself, 
-but for some reason I didn't find one in any textbook I've seen, which is one reason why I include it here even though it's slightly off-topic.}
-Since the atoms are evenly spaced,
-the system is periodic, and we can define a unit cell with lattice parameter 
-$a=2.38$~Å containing a single atom. 
-The brillouin zone is then a line segment of length $2\pi/a$. 
-The left part of figure \ref{fig:kpointdensities} shows the energy bands sampled at 17 k points between $-\pi/a$ and $\pi/a$.\footnote{Of course there is some symmetry here. Really, we would only have to sample the irreducible brillouin zone of length $\pi/a$, but the whole Brillouin zone was sampled here for the purpose of illustration.}
+As illustrated in section \ref{sec:bzint}, the number of $k$ points needed is inversely proportional to the cell size.
+For large supercells only a single $k$ point, the $\Gamma$ point, is needed, but we
+may well ask if the $a=\SI{10.94}{\angstrom}$ cell ($2\times 2\times 2$) used in the simulations here is `large enough' to justify including only a single $k$ point, making the distance between $k$ points $2\pi/a = \SI{0.574}{\per\angstrom}$. \comment{Det blir vel $2\pi$?}
 
-\begin{figure}[htp]
-  \centering
-  \includegraphics{figs/kpointdensity.pdf}
-  \caption{Illustration of the effect of using supercells in one dimension. 
-  The left figure shows the band structure calculated from a `unit cell' with
-  lattice parameter 2.38~Å containing a single Li atom.
-  The right figure shows the band structure calculated from a `supercell' with
-  lattice parameter 4.76~Å containing two Li atoms.}
-  \label{fig:kpointdensities}
-\end{figure}
-
-Now, we could define a
-cell with lattice parameter $a'=2a=4.76$~Å containing two atoms. 
-The brillouin zone is then reduced to a line segment of length $2\pi/a'=\pi/a$,
-but should still contain the whole band structure, since the choice of unit cell size is arbritrary (as long as translational symmetry is retained).
-In the right part of the figure it is shown how the lowermost band ``wraps back'' into the first brillouin zone.
-Even though the number of $k$ points used for the `double cell' (right) is half the number used in the `single cell' (left), the $k$ point ''density'' is the same
-($\pi/8a\approx\SI{0.165}{\per\angstrom}$ in both cases).
-
-Now we will leave the 1D lithium chain and return to the 3D silicon crystal. For large supercells, it is common to sample just a single $k$ point, the $\Gamma$ point. 
-However, we may well ask if the $2\times 2\times 2$ supercell that will be used in the simulations here is `large enough' to justify including only a single $k$ point.
-%The lattice parameter of the cell is 10.94~Å, so the $k$ point density is …
-
-Since the purpose of the density functional calculations here is to provide forces to the dynamics, the effect of reducing the $k$ point density was studied on a simple dynamics model.
-The model is a $2\times 2\times 2$ cell with 62 Si atoms, one P atom and one vacancy, and we calculate the energy as the P atom moves from its lattice position into the adjacent vacancy while the remaining Si atoms are kept still. 
+Since the purpose of the density functional calculations here is to provide forces for \emph{dynamics},
+the effect of reducing the $k$ point density was studied on a simple dynamics model.
+The model is a cell with 62 Si atoms, one P atom and one vacancy, and we calculate the energy as the P atom moves from its lattice position into the adjacent vacancy while the remaining Si atoms are kept still. 
 Figure \ref{fig:tests/si-pv_k} shows the resulting force and total energy change as a function of the reaction coordinate of phosphorus, $r$. 
 In order to move from its original lattice site into the vacancy it has to pass a barrier, the height of which is the activation energy for this model process.
 The activation energy for the converged configuration (5x5x5 k points) is 1.55~eV, while the activation energy increases to 1.61~eV for the $\Gamma$-only configuration.
@@ -1171,7 +1233,7 @@ the low $k$ point density is expected to be a noticeable, but acceptably small s
 
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{../figures/tests/si-pv_trajectory_forcetest}
+    \includegraphics{figs/tests/si-pv_trajectory_forcetest}
   \end{center}
   \caption{Phosphorus atom moving in the [111] direction from its initial lattice site ($r=0$) into a neighbour vacancy ($r=1$),
     with all other atoms fixed.
@@ -1182,8 +1244,8 @@ the low $k$ point density is expected to be a noticeable, but acceptably small s
 \end{figure}
 
 Why the $\Gamma$ point and not some other $k$ point?
-\comment{Sjekk 
-Electronic structure: basic theory and practical methods By Richard M. Martin, p. 89 for mer om tidsreverseringssymmetri}
+%\comment{Sjekk 
+%Electronic structure: basic theory and practical methods By Richard M. Martin, p. 89 for mer om tidsreverseringssymmetri}
 From the computational cost perspective, the $\Gamma$ point is the best single $k$ point to include, since it shows time-reversal symmetry, 
 $\vec{k}=-\vec{k}$, allowing the computational cost to be halved. 
 From an accuracy point of view the $\Gamma$ point is generally not the optimum single $k$ point to include when describing a \emph{single} configuration, as the optimum point is dictated by the crystal symmetry of that configuration\cite{Baldereschi:1973}. 
@@ -1216,7 +1278,11 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
 %k3: 142.52 / ^¨-3
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Plane wave energy cutoff}\label{sec:parameters:e}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %In all cases, Blöchl's projector augmented wave (PAW) method\cite{Blochl:1994,Kresse:1999} has been used with the generalized gradient approximation (GGA) 
@@ -1259,16 +1325,16 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
 %  \label{fig:figs/si64_bulk_conv_vol}
 %\end{figure}
 
-While force-minimized high-symmetric configurations may be described well by a relatively low number of plane waves, 
-less symmetric and stressed configurations will require more plane waves for a good description. 
-During a MD simulation, the system will visit a large number of configurations of various symmetry and stress. 
+While force-minimized high-symmetric configurations may be described well by a relatively small basis set,
+less symmetric and stressed configurations will require a larger one for a good description. 
+During a MD simulation, the system will visit a large number of configurations of various symmetry and local stress.
 With a limited basis set, we expect some configurations to be better described than other. 
-A too limited number of planes waves may for example lead to large undulations in the electronic density being smoothed out, 
-effectively making stressful configurations where the atoms are very close more favorable than they should be. 
-This is just one imaginably basis set effect.
+A too limited plane wave basis set may for example lead to large undulations in the electronic density being smoothed out, 
+effectively making stressful configurations where the atoms are very close more favourable than they should be. 
+This is just one imaginable basis set effect.
 
 To get a slight feel for the above described basis set effect, we return to the model diffusion process described in section \ref{sec:parameters:k} on $k$ points above, in which a phosphorus atoms move into a adjacent vacancy. 
-With the number of $k$ points fixed ($n_k=1$), the effect of varying the energy cutoff $E_{\text{cut}}$ on the activation energy for the model process was studied. Two different GGA PBE potentials were tested; the standard potential shipped with \vasp 5.2 and a ``very soft'' version optimized by Georg Kresse to work better at low energy cutoff values. For comparison, the standard LDA potential was included in the test set as well.
+With the number of $k$ points fixed ($n_k=1$), the effect of varying the energy cutoff $E_{\text{cut}}$ on the activation energy for the model process was studied. 
 
 %convergence tests for the energy cutoff was carried out for 
 %three configurations in which one silicon atom was moved away from its relaxed position, as shown in fig. \ref{fig:figs/si64_bulk_conv_encut_stress}(b).
@@ -1300,11 +1366,12 @@ With the number of $k$ points fixed ($n_k=1$), the effect of varying the energy 
   \label{fig:tests/si-pv_encut}
 \end{figure}
 
-As a function of varying cutoff energy, the lower part of figure \ref{fig:tests/si-pv_encut} shows the difference in energy for each increment on a logarithmic scale. 
-As expected, the energy difference decreases towards zero as the converged value is reached, but it's interesting that the error from the ``very soft'' potential is almost one order of magnitude lower for cutoffs below 300~eV.
-The upper figure shows the percentage error in the energy barrier, compared to converged values $E_{\text{conv}}$ (1.622~eV for the normal GGA potential, 1.618~eV for the ``very soft'' GGA potential and 1.565~eV for the LDA potential).
-Here we see that the ``very soft'' potential works very well down to even 120~eV.
-This is very impressive, but since this is just a model reaction, we increase the cutoff value to 180~eV in the MD simulations to be on the safe side.
+As a function of varying cutoff, the lower part of figure \ref{fig:tests/si-pv_encut} shows the difference in energy for each increment on a logarithmic scale. 
+As expected, the energy difference decreases towards zero as the converged value is approached.
+More interesting, the error from the `very soft' potential is almost one order of magnitude lower than from the `standard' potential for cutoffs below 300~eV.
+The upper figure shows the percentage error in the energy barrier, compared to converged values $E_{\text{conv}}$ (1.622~eV for the normal GGA potential, 1.618~eV for the `very soft' GGA potential and 1.565~eV for the LDA potential).
+Here we see that the `very soft' potential works very well down to even 120~eV.
+This is very impressive, but since this is just a model reaction, we increase the cutoff value to 180~eV in the MD simulations to add a little more flexibility to the basis set.
 
 %we have not allowed the silicon atoms to relax, so the configuration is slightly more stressed than 
 %we are likely to find in 'real life', but our interest here is not to find the barrier height, but 
@@ -1332,7 +1399,7 @@ This is very impressive, but since this is just a model reaction, we increase th
 
 
 
-%\subsection{Not in use}
+%subsection{Not in use}
 
 %\begin{table}[htbp]
 %  \centering
@@ -1432,17 +1499,21 @@ This is very impressive, but since this is just a model reaction, we increase th
 %The number of plane waves 
 %After these initial tests, a feeling about the parameters involved have been obtained. 
 
-\subsection{Cell size}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Cell size}\label{sec:parameters:supercell}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A too small simulation cell will result in spurious self-interaction across the periodic boundaries, but it from 
+A too small simulation cell will result in spurious self-interaction across the periodic boundaries, but from 
 a computational cost perspective it was quickly found that a simulation cell larger than $2\times 2\times 2$ (64 atoms) would not be viable
 with MD simulations. 
 While we can give no authorative answer to whether this cell is ``large enough'', a small test was carried out to check the ``range'' of a P-Si defect (one of the configurations discussed in section \ref{sec:structures} below).
-The defect was introduced into very large cell, a $6\times 6\times 6$ cell with lattice parameter 32.8~Å containing 1728 atoms, and the whole cell was relaxed.
+The defect was introduced into a very large cell, a $6\times 6\times 6$ cell with lattice parameter 32.8~Å containing 1728 atoms, and the whole cell was relaxed.
 
 The right part of fig. \ref{fig:tests/cellsize} shows the distance each of the atoms in the cell relaxed as a function of the radial distance from the defect center. The two vertical lines indicate the length of 8-atom cell (5.47~Å) and a 64-atom cell (10.74~Å). 
 The left part of the figure shows a small part of the cell encompassing a 64-atom cell around the defect, with the size of the 64-atom cell indicated by a blue square.
-As we see, the defect causes some distortion even beyond the boundaries of the 64-atom cell, but the small error from self-interaction is likely to be no worse than the other small errors we've already introduced.
+As we see, the defect causes some distortion even beyond the boundaries of the 64-atom cell, but the error from self-interaction is most likely not any worse than the other small errors we've already introduced.
 
 \begin{figure}[htp]
   \centering
@@ -1461,32 +1532,99 @@ As we see, the defect causes some distortion even beyond the boundaries of the 6
   \label{fig:tests/cellsize}
 \end{figure}
 
-\subsection{Summary and parallelisation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Summary and parallelisation}\label{sec:parameters:summary}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized VASP build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
-For this setup, table \ref{tab:tests/parallelisation} shows the calculation times for a single calculation with different degrees of parallelisation, averaged over 100 calculations. As indicated, the calculation time is about 13 seconds, but the scaling is really poor, probably due to the low number of bands included, so parallelising beyond 8 cores is not beneficial here. 
 
-While the calculation time is small considered it's \textit{ab initio}, still simulating a nanosecond would take 31 days when parallelised over eight cores only ($10^6\times\SI{2.65}{\second} \div 86400 \si{\second}\text{/day}$)
+From the table in fig. \ref{fig:scaling}, it is seen that the calculation time per ionic step is about 13 seconds. 
+While I find this impressive for an \textit{ab initio} calculation, it still means it would take 150 days to simulate a nanosecond.
+Parallelisation can be used to speed up the calculations by distributing them over several CPU cores.
+However, as fig. \ref{fig:scaling} shows, the scaling is very inefficient for this setup, so although the time drops, a large amount of the allocated computer resoruces are left unused. 
+Surprisingly, even parallelisation over several cores at the same node is only 45\% efficient, so internode communication is not the bottleneck. 
+Neither is memory, so most likely the poor scaling behaviour is due to the low number of $k$ points and plane waves included. 
 
-\comment{Denne tabellen er gammel. Sjekk for korrekthet! F.eks. om parametre som NPAR var satt.}
 
-\comment{plott speedup vs number of CPU's, ala Vasp manual p. 31}
+%RUNS: 
+% Mesure code:
+%import numpy as np
+%from oppvasp.vasp.parsers import VasprunParser
+%vp = VasprunParser('vasprun_1.xml')
+%t=np.array([i.get_time_spent()[1] for i in vp.ionic_steps])
+%print("%.2f secs" % np.mean(t[1:]))
 
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{lrrrr}\toprule
-    Cores & NPAR & Wall time   & \multicolumn{2}{c}{CPU time per core} \\
-          &      &             & User time     & System time   \\ \midrule
-    1     &      & 12.79       & 12.63         & 0.14          \\
-    8     &      & 2.65        & 2.44          & 0.18          \\
-    16    &      & 2.56        & 2.13          & 0.37          \\
-    24    &      & 4.29        & 2.97          & 1.29          \\ \bottomrule
-  \end{tabular}
-  \caption{Time spent in seconds per MD step in a 100 step simulation. The wall time is the time you could read off your watch, and is the most important.}
-  \label{tab:tests/parallelisation}
-\end{table}
+%gamma, 8 cores:
+%  NPAR=1 : 3.73 secs
+%  NPAR=2 : 3.64 secs
+%  NPAR=4 : 3.92 secs
+%  NPAR=8 : 4.49 secs
 
+%gamma, 16 cores:
+%  NPAR=4 : 2.16 secs
+
+%gamma, 32 cores:
+%  NPAR=6 : 
+
+%gamma, 64 cores:
+%  NPAR=8 : 1.42 secs
+
+
+\begin{figure}[htp]
+  \begin{minipage}[c]{7.5cm}
+      \includegraphics[width=7.5cm]{figs/tests/parallelisation} % 8x8 cm
+  \end{minipage}
+  %\hspace{0.1cm}
+  \begin{minipage}[c]{5cm}
+    \begin{tabular}[b]{ccccc}\toprule
+        Cores  & Time & Speedup & Efficiency \\
+        $n$    & $t_n$ [s] & $t_1/t_n$ & $t_1/(nt_n)$ \\\midrule
+        1      & 13.04     & –         & –            \\
+        8      & 3.64      & 3.6       & 45\%         \\
+        16     & 2.11      & 6.2       & 39\%         \\
+        64     & 1.40      & 9.3       & 15\%         \\\bottomrule
+    \end{tabular}
+  \end{minipage}
+  \caption{Scaling on the Stallo cluster with 2 $\times$ 2.66 GHz Intel Xeon X5355 Quad Core per node (8 cores per node) and Infiniband interconnect.
+      For a short molecular dynamics simulation parallelised over $n$ cores, $t_n$ is the mean clock time per step in seconds (100 steps, with the two first left out from the mean).
+      Ideal scaling corresponds to the total CPU time $nt_n$ being constant, and the clock time decreasing as $1/n$. 
+      The actual speedup $t_1/t_n$ as a percentage of the ideal speedup is shown in the last column of the table.
+      This can be considered the efficiency of computer resource utilisation.
+  }
+  \label{fig:scaling}
+\end{figure}
+
+
+%\begin{figure}[htp]
+%  \centering
+%  \caption{Scaling on the Stallo cluster with 2 $\times$ 2.66 GHz Intel Xeon X5355 Quad Core per node (8 cores per node) and Infiniband interconnect.}
+%  \label{fig:scaling}
+%\end{figure}
+
+%\begin{table}[htbp]
+%  \centering
+%  \begin{tabular}{lrrrr}\toprule
+%    Cores & NPAR & Wall time   & \multicolumn{2}{c}{CPU time per core} \\
+%          &      &             & User time     & System time   \\ \midrule
+%    1     &      &        &          & ?          \\
+%    8     &      &         &          & 3.64 \\
+%    16    &      &         &          & 2.16          \\
+%    32    &      &         &          &           \\
+%    64    &      &         &          & 1.42          \\ \bottomrule
+%  \end{tabular}
+%  \caption{Time spent in seconds per MD step in a 100 step simulation. The wall time is the time you could read off your watch, and is the most important.}
+%  \label{tab:tests/parallelisation}
+%\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \chapter{Molecular dynamics simulations}\label{cha:molecular-dynamics}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In section \ref{sec:born-oppenheimer} we used the Born Oppenheimer approximation to separate the total Hamiltonian $\hat{H}$ into a nuclei part $\hat{H}_N$ and an electronic part $\hat{H}_e$. 
 So far we have only looked at the electronic Hamiltonian, and we will now proceed to the nuclei Hamiltonian
@@ -1511,7 +1649,11 @@ or the first-order formulation of Hamilton,
 where motion occurs in a way as to preserve the Hamiltonian function.
 \comment{[Se Haile, p. 40-42]}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Monitoring lattice integrity}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 A perfect lattice is described by $\e^{\im(\vec{g}\cdot\vec{r})}=1$ for a reciprocal lattice vector $\vec{g}$ and all positions $\vec{r}$. 
 Using Euler's formula,
@@ -1581,7 +1723,12 @@ See fig. \ref{fig:md_test_displacement}.
   \label{fig:md_test_displacement}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Statistical mechanics}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We are interested in calculating the diffusion coefficient or diffusivity of phosphorus in a specified material -- 
 a material parameter that can be measured experimentally.
@@ -1629,7 +1776,11 @@ where the integration is done over the complete phase space (configuration space
   \rho(p,r) = \frac{1}{Q} \e^{-\beta H(p,r)},\qquad Q = \int \e^{-\beta H(p,r)} \,dp\,dq
 \end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{The ergodic hypothesis}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The basic idea of molecular dynamics is that the average over \emph{all systems} in the ensemble at a single time \eqref{eq:configuration-int} can be replaced by an average over a single system in the ensemble at \emph{all times}, that is over the time evolution of that system,
 \begin{equation}
@@ -1650,7 +1801,11 @@ For the diffusion of a dopant atom in a crystal, it is plausible that the system
 simulation times out of reeach may be required
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Ensembles}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Hamiltonian \eqref{eq:nucleiHamiltonian}, or its classical counterpart, describes a system completely isolated from its surroundings.
 For such a system, the number of particles $N$, the total energy $E$ and the volume $V$ are all conserved, since there is no mechanism for exchange of particles, energy or volume with the surroundings in the model.
@@ -1669,7 +1824,11 @@ Since simulations will be carried out even at temperatures very close to the mel
 
 For a molecular dynamics simulation, the microcanonical ensemble is a practical ensemble, but  
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{The virial and the equipartition theorems}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The virial theorem is one of those beautiful theorems connecting microscopic phase space functions with macroscopic thermodynamic observables. 
 If $x_i$ and $x_j$ are components of the $6N$ dimensional phase space vector $\nvec{x}$, 
@@ -1694,7 +1853,11 @@ Summing both sides over all $3N$ components,
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Maxwell-Boltzmann distribution for kinetic energies}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 The Maxwell-Boltzmann particle velocity distribution is
@@ -1759,7 +1922,11 @@ where $E_k$ is the total kinetic energy of the ions.
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{The Einstein-Smoluchowski diffusion relation}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -1899,7 +2066,11 @@ From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and
 
 \section{Thermostats}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{No thermostat}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Hamiltonian \eqref{eq:nucleiHamiltonian} describes an isolated system, in which the total energy $E$ must necessarily be a constant of motion.
 Upon the start of the simulation, a temperature $T(0)$ is defined by giving the system a total kinetic energy $E_k$, corresponding to that temperature. The potential energy is found by solving the electronic Hamiltonian, and adding the coulombic interactions between the nuclei\footnote{The Madelung energy found from an Ewald summation?}.
@@ -1908,7 +2079,11 @@ While the total energy $E=E_k+E_v$ is a constant of motion, the kinetic energy $
 And if they do, so does the temperature, according to \eqref{eq:kinetictemp}. 
 To illustrate this, figure \ref{fig:md_test_temperature_micro} shows the energy evolution in a 5~ps simulation of an isolated system of 63 atoms (Si$_{62}$P$_1$) at 1400~K for 5~ps.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Ad-hoc velocity-scaling `thermostat'}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In thermodynamics, constant temperature is achieved by putting the system in contact with an infinite heat bath, or with a \emph{thermostat}.
 How can this be simulated?
@@ -1937,7 +2112,11 @@ To see the influence of this, the results from a 5~ps simulation of the same sys
 The temperature distribution is quite gaussian, but it is peaked at the thermodynamic temperature.
 The standard deviation of 110~K is acceptably close to, but still lower than 144~K, the standard deviation for perfect canonical distribution, from \eqref{eq:canostd}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Nose-Hoover thermostat}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 While velocity-scaling is a simple and straightforward approach to keeping the thermodynamic temperature constant, it does not sample a canonical ensemble, but rather some canonical-like ensemble. 
 More advanced themostat models have therefore evolved that accurately sample a canonical ensemble, of which the most popular approaches are those of Andersen\cite{Andersen:1980} or Nose\cite{Nose:1984,Nose:1991,Bylander:1992}.
@@ -2016,13 +2195,16 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 As described in section \ref{sec:PinSi}, \ldots, several different configurations.
 
 
-\section{Choice of initial structures}\label{sec:structures}
+\section{Initial structures}\label{sec:structures}
 
-The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$. \footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
+The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$.\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
+This makes possible many different interstitial configurations, and also interstitial diffusion
 
-And as such many interstitial configurations have been reported.
 
-\comment{SITERINGER}
+
+
+
+
 
 In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
 They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
@@ -2166,6 +2348,7 @@ Pichler also noted a similar ``antibond-centered $\langle 111 \rangle$'' interst
 %-339.349832 eV
 
 \subsubsection{Preparation of the split 110 cell}
+
 An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
 The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
 The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site.
