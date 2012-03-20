@@ -38,10 +38,6 @@
 \usepackage{siunitx} 					% For consistent units. Includes upright mu.
 										% Must be loaded after amssymb
 
-\renewcommand{\vec}[1]{\boldsymbol{\mathrm{#1}}} 	% Use bold vectors
-\newcommand{\nvec}[1]{\mathrm{#1}} 	                % matrices, etc.. 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FONT:
 
@@ -98,6 +94,19 @@
 \usepackage{pdfpages}                   % to include title page
 
 \usepackage{listings}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM MACROS:
+
+\renewcommand{\vec}[1]{\boldsymbol{\mathrm{#1}}} 	% Use bold vectors
+\newcommand{\nvec}[1]{\mathrm{#1}} 	                % matrices, etc.. 
+
+% Numerical constants such as e (base of natural log), i (imaginary unit) should be set in roman
+% TUGboat vol. 18 (1997), no. 1, p. 39 <http://www.tug.org/TUGboat/Articles/tb18-1/tb54becc.pdf>
+\newcommand{\e}{\mathrm{e}} 
+\newcommand{\im}{\mathrm{i}} 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY :
