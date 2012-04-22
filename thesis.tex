@@ -358,43 +358,166 @@ while in solids its magnitudes smaller, typically of the order of $10^{-11}$ cm2
 
 The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{The case of phosphorus diffusion in silicon}\label{sec:PinSi}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{How much phosphorus go into silicon and where does it go?}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-According to the standard phosphorus-silicon binary phase diagram, more than 2\% P can be solved in silicon at temperatures between \SI{1350}{\kelvin} and \SI{1500}{\kelvin} without the formation of new phases, and even at 1000 K about half a percent can be solved.\cite{PSiPhaseDiagram} 
+According to the standard phosphorus-silicon binary phase diagram,\cite{PSiPhaseDiagram} more than 2\% P can be solved in silicon at temperatures between \SI{1350}{\kelvin} and \SI{1500}{\kelvin} without the formation of new phases, and even at 1000 K more than half a percent can be solved.\footnote{Solubility limits are not easy to measure to high precision. A recent compilation by Safarian and Tangstad shows the variation between different studies, and suggests lower solubilities at elevated temperatures.\cite{Safarian:2011}}
 
 Sheet resistivity and Hall effect measurements have shown that below about 2–\SI{3e20}{\per\centi\metre\cubed} (or 0.4-0.6\%), the density of electrically active dopants in properly annealed samples follow the chemical concentration of phosphorus closely, but above such a concentration, the density of electrically active dopants $n_e$ plateau.\cite{Tannenbaum:1961}
 A concentration of about half a percent therefore seems to be the maximum solubility of unclustered P,\cite{Solmi:1998} but higher concentrations
 %(reached above about \SI{750}{\celsius},\cite{Solmi:1996} and)
 are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b}
-The exact nature of the ``extra'', inactive phosphorus is not known, but a mix of SiP precipitates and mobile P defects have been suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
+The nature of the electrically inactive phosphorus has not been fully established yet, but a mix of SiP precipitates and mobile P defects is suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
+Very recently, high resolution transmission electron microscopy have been used successfully to picture SiP microcrystallites.\comment{Var ikke det et arbeid gjort paa NTNU OM snakket om?}
+
+%The nature of the SiP precipitates is 
 %When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
 
 The atomic radii of silicon and phosphorus are 1.17 and 1.10~Å, respectively.
-Due to the similar size, it was early assumed that phosphorus occupy mainly substitutional lattice sites, and this was confirmed by some of the first 
+Through the observation of a very slight lattice contraction following the addition of phosphorus,
+it was demonstrated in the 1940s that phosphorus enters mainly substitutional sites.\cite{Pearson:1949}
 
-A solid solution of phosphorus in silicon is therefore expected to have a slightly smaller lattice parameter than pure silicon.
-That a small shrinkage takes place on in-diffusion of phosphorus into silicon was first described by Pearson and Bardeen in 1948, who reported a slight lattice constant shrinkage of some 0.02 \% when adding some 0.5 at\% phosphorus,\cite{Pearson:1949} 
+%The solid solubility of phosphorus is in the order of 1\%. After in-diffusion of phosphorus into silicon , an annealing step 
+%After proper annealing, the density of electrically active dopants can reach about 2–\SI{3e20}{\per\centi\metre\cubed}, or 0.4--0.6\%,
+%or even \SI{4e20}{\per\centi\metre\cubed} for annealing temperatures higher than those used in normal solar cell processing.
 
-Comparing Pauling's tetrahedral covalent atomic radii (Kittel, p. 105), $(V_{\text{Si}}-V_{\text{P}})/V_{\text{Si}} = -0.17$.
-Using effective-mass theory, Pajot and Stoneham found a volume contraction, $\Delta V/V_{\text{Si}} = -0.08$.
+%but at temperatures above \SI{750}{\celsius}, 
+%however, the limit of solunlieven more phosphorus appears to be solv
 
-The solid solubility of phosphorus is in the order of 1\%. After in-diffusion of phosphorus into silicon , an annealing step 
-After proper annealing, the density of electrically active dopants can reach about 2–\SI{3e20}{\per\centi\metre\cubed}, or 0.4--0.6\%,
-or even \SI{4e20}{\per\centi\metre\cubed} for annealing temperatures higher than those used in normal solar cell processing.
+% Solubility : 
+%Newero\cite{Borisenko:1987} and \cite{Safarian:2011} 
 
-but at temperatures above \SI{750}{\celsius}, 
-however, the limit of solunlieven more phosphorus appears to be solv
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Phosphorus interstitials}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Newero\cite{Borisenko:1987} and \cite{Safarian:2011} 
+While phosphorus prefers substitutional positions, it will, at elevated temperatures and/or in imperfect (real) materials also occupy intersitial positions, just as silicon will.
+Direct experimental evidence for phosphorus interstitials is probably missing, so their binding energy have formerly been taken from fitting diffusion models to experimental data, and later also from purely theoretical investigations.\cite[391]{Pichler:2004}
 
-The tetrahedral structure of the silicon atoms is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$.\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}
-This makes possible many different interstitial configurations, and also interstitial diffusion
+The tetrahedral structure of silicon is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$,\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}.
+The eight-atom cubic unit cell shown in fig. \ref{fig:sipure} contains eight equivalent tetrahedral voids ($T_d$ symmetry), all potentially large enough to hold an atom without distorting the surrounding structure considerably.
+Interstitials at two tetrahedral sites are shown in fig. \ref{fig:tetsite1} and \ref{fig:tetsite2}.\footnote{Tetrahedral sites are found at
+$(\frac{1}{4},\frac{1}{4},\frac{3}{4})$, 
+$(\frac{1}{4},\frac{3}{4},\frac{1}{4})$, 
+$(\frac{3}{4},\frac{1}{4},\frac{1}{4})$, 
+$(\frac{3}{4},\frac{3}{4},\frac{3}{4})$, 
+at the edges
+$(0,0,\frac{1}{2})$,
+$(0,\frac{1}{2},0)$,
+$(\frac{1}{2},0,0)$,
+and at the centre
+$(\frac{1}{2},\frac{1}{2},\frac{1}{2})$}
+
+The tetrahedral site can be distorted into a ``hexagonal'' site with $D_{3d}$ symmetry, 
+at the centre of a slightly distorted hexagon with normal in the $\langle 111 \rangle$ direction. 
+Fig. \ref{fig:hexsite1} shows a hexagonal interstitial at $(\frac{3}{8},\frac{5}{8},\frac{3}{8})$, 
+distorted from the tetrahedral position $(\frac{4}{8},\frac{4}{8},\frac{4}{8})$ in fig. \ref{fig:tetsite1}.
+
+%and one hexagonal one,\footnote{Symmetry $D_{3d}$. In fact there are four:
+%$(\frac{5}{8},\frac{3}{8},\frac{3}{8})$, 
+%$(\frac{3}{8},\frac{3}{8},\frac{5}{8})$, 
+%$(\frac{5}{8},\frac{5}{8},\frac{5}{8})$,
+%}
+%all potentially large enough to hold an atom without distorting the remaining lattice considerably.
+
+\begin{figure}[htp]
+  % All figures generated at /si-pi/si64/test_structures/tetrahedral/stdrelax-short
+  \centering
+  \subfloat[Clean cell]{
+    \label{fig:sipure}
+    \includegraphics[width=4.0cm]{figs/structures/persp.png}
+  }
+  %\subfloat[Hexagonal site]{
+  %  \label{fig:hexsite2}
+  %  \includegraphics[width=4.0cm]{figs/structures/hexsite_sideview.png}
+  %}\\
+  \subfloat[Tetrahedral site]{
+    \label{fig:tetsite1}
+    \includegraphics[width=4.0cm]{figs/structures/tetsite_center.png}
+  }
+  \subfloat[Tetrahedral site]{
+    \label{fig:tetsite2}
+    \includegraphics[width=4.0cm]{figs/structures/tetsite_persp.png}
+  }\\
+  \subfloat[Hexagonal site]{
+    \label{fig:hexsite1}
+    \includegraphics[width=4.0cm]{figs/structures/hexsite_persp.png}
+  }
+  \subfloat[Split 110]{
+    \label{fig:split110site}
+    \includegraphics[width=4.0cm]{figs/structures/split110relaxed.png}
+  }
+  \subfloat[Split 001]{
+    \label{fig:split001site}
+    \includegraphics[width=4.0cm]{figs/structures/split001_2.png}
+  }
+  \caption{Cubic Si unit cell with edge atoms from neighbouring cells shown.
+  split001 involves bond lengths of 2.0 Å,
+  while the split110 is able to relax upwards so the final bond lengths are not shortened.
+  }
+  \label{fig:interstitials}
+\end{figure}
+
+An alternative to the ``pure'' tetrahedral and hexagonal interstitials are the ``interstitialcies'', consisting of $N+1$ atoms sharing $N$ lattice sites, of which the simplest are the ``split interstitials'' consisting of two atoms sharing one site.
+Two symmetrically inequivalent such configurations exists, the ``\spl{110}'' and the ``\spl{001}'' configurations depicted in fig. \ref{fig:split110site} and \ref{fig:split001site}.
+For equivalent atoms, the \spl{001} site has $D_{2d}$ symmetry, reducing to $C_{2v}$ for inequivalent atoms,
+while the \spl{110} site has $C_{2v}$ symmetry for equivalent atoms, reducing to $C_{1h}$ (just a mirror plane) for inequivalent atoms.
+An advantage of the lower symmetry of the \spl{110} site compared to the \spl{001} site is that there is freedom for relaxing the bond lengths. 
+While the \spl{001} site is quite strained, the atoms in the \spl{110} position can relax freely in the $\langle 001 \rangle$ direction. 
+In figure \ref{fig:split110site} normal bond lengths have been obtained without relaxing the neighbour atoms.\footnote{
+/Users/danmichael/Documents/Studier/Master/notur/hipersol/templates/si64/movie2.avi }
+
+
+
+Early theoretical investigations by Car\cite{Car:1985} suggested the energetical stability of P at the hexagonal site over the tetrahedral site or P-Si interstitialcies. (FLERE KILDER)
+
+Chelyadinskii and Burenkov found from X-ray diffraction studies that phosphorus and silicon do not form stable complexes, and that they form split interstitial pairs bound solely by grid relaxation.[5.560 i Pichler]
 
 In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
 They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
 Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
+
+
+%sisting of a substitutional impurity and a Si atom at a nearby tetrahedral (T) or hexagonal (H) intersitial
+%site; "interstitialcies" consisting of an impurity atom and N Si atoms sharing N atomic sites [e.g., the self- interstitial may be at the bond-center (B) site next to the impurity, which is displaced in the opposite direc- tion, or vice versa]; and interstitial impurities at chan- nel sites (e.g., Tor H) no longer bound to any of the N Si atoms occupying the N atomic sites.
+%Some of the first theoretical investigations by Car et al.\cite{Car:1985} suggested 
+
+
+%More complex configurations can be imagined where an interstitial phosphorus atom (P$^\mathrm{I}$) forms a pair with a silicon self interstitial (Si$^{\mathrm{I}}$). The question of whether stable P$^\mathrm{I}$-Si$^\mathrm{I}$ pairs are formed have not been fully resolved. 
+
+
+%With phosphorus being slightly smaller than silicon, the addition of phosphorus to silicon should contract the lattice slightly, 
+%and this was
+%Due to the similar size, it was early assumed that phosphorus occupy mainly substitutional lattice sites, and this was confirmed by early studies showing a slight reduction in the lattice parameter as phosphorus is added.
+
+%A solid solution of phosphorus in silicon is therefore expected to have a slightly smaller lattice parameter than pure silicon.
+%That a small shrinkage takes place on in-diffusion of phosphorus into silicon was first described by Pearson and Bardeen in 1948, who reported a slight lattice constant shrinkage of some 0.02 \% when adding some 0.5 at\% phosphorus,\cite{Pearson:1949} 
+
+%Comparing Pauling's tetrahedral covalent atomic radii (Kittel, p. 105), $(V_{\text{Si}}-V_{\text{P}})/V_{\text{Si}} = -0.17$.
+%Using effective-mass theory, Pajot and Stoneham found a volume contraction, $\Delta V/V_{\text{Si}} = -0.08$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{What about diffusion?}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Diffusion of substitutional impurities as interstitials or impurity-self-interstitial pairs.
+
+This makes possible many different interstitial configurations, and also interstitial diffusion
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
