@@ -22,7 +22,7 @@
 %\usepackage{layouts}
 
 % Bibliography:
-\bibliography{bibliography/master}
+\bibliography{master}
 
 % Title page (koma-script options):
 %\titlehead{Titlehead}
@@ -72,12 +72,25 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 
 %I was driven into this discipline by my interest in materials for 
 
-utilisation of some of the \SI{120000}{\tera\watt}
-of net power we receive from the Sun -- most of which is `spilled' today. 
+%utilisation of some of the \SI{120000}{\tera\watt}
+%of net power we receive from the Sun -- most of which is `spilled' today. 
 
-Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very tempting from a theoretical point of view (finne kilder), but has generally been considered unfeasable from a practical point of view due to the great computational cost involved.
-Modeling at the \textit{ab initio}, while 
+Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very tempting from a theoretical point of view. 
+The alternative to an \textit{ab initio} potential is an empirical potential. 
+Two well-tested empirical potentials for silicon are the Stillinger-Weber (SW) potential\cite{Stillinger:1985} and the Tersoff (T3) potential.\cite{Tersoff} 
+A difficulty with empirical potentials is that may not work well outside the range of problems they were designed for.
+A given potential may capture elastic and cohesive properties of a material with the same accuracy as an \textit{ab initio} potential, but may fail for other properties.\cite{Powell:2007}
+For instance, Posselt et al. found for diffusion of intrinsic defects in silicon that activation energies differed by about 1~eV between the SW potential and the T3 potential in a non-systematic way, and that the self-interstitial migration was dominated by a dumbbell mechanism when using the SW potential, but by a interstitialcy mechanism when using the T3 potential.\cite{Posselt:2008}
+Transferability between different bonding environments is also low, so rather than a phosphorus potential, we would need a potential for phosphorus in silicon.
 
+Over the years, many groups have developed parameters for more systems that can be used with the original form of the Tersoff potential, for instance for all III-V semiconductors.\cite{Powell:2007}
+Yet, to my knowledge no potential for phosphorus in silicon has been published.
+\comment{MEN SKULLE IKKE KEITH LAGE ETT?}
+
+%(Trenger referanse?) so to study phosphorus in silicon, a potential for phosphorus in silicon rather than a general phosphorus potential would be needed,
+%Tersoff also introduced a multicomponent potential for Si, Ge and C\ref{Tersoff:1989}
+
+But while using \textit{ab initio} potential is very enticing, it is often unfeasable from a practical point of view due to the great computational cost involved.
 
 I'm grateful to the developers of the VASP software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ref{sec:pseudopot}
 
@@ -469,7 +482,7 @@ distorted from the tetrahedral position $(\frac{4}{8},\frac{4}{8},\frac{4}{8})$ 
   \label{fig:interstitials}
 \end{figure}
 
-An alternative to the ``pure'' tetrahedral and hexagonal interstitials are the ``interstitialcies'', consisting of $N+1$ atoms sharing $N$ lattice sites, of which the simplest are the ``split interstitials'' consisting of two atoms sharing one site.
+An alternative to the ``pure'' tetrahedral and hexagonal interstitials are the ``interstitialcies'', consisting of $N+1$ atoms sharing $N$ lattice sites, of which the simplest, consisting of two atoms sharing one site, are called ``split interstitials'' or ``dumb-bell interstitials''\cite[6]{Pichler:2004}
 Two symmetrically inequivalent such configurations exists, the ``\spl{110}'' and the ``\spl{001}'' configurations depicted in fig. \ref{fig:split110site} and \ref{fig:split001site}.
 For equivalent atoms, the \spl{001} site has $D_{2d}$ symmetry, reducing to $C_{2v}$ for inequivalent atoms,
 while the \spl{110} site has $C_{2v}$ symmetry for equivalent atoms, reducing to $C_{1h}$ (just a mirror plane) for inequivalent atoms.
