@@ -45,6 +45,9 @@ Abstract
 
 Sammendrag på norsk
 
+
+%Og det er alt sammen som det bør være, for i et slikt problem som dette kan man bare finne sannheten ved å sammenholde mange ulike feiltagelser. Virginia Woolf. Et eget room, s. 124
+
 % pdflatex -v | head -n1
 Set with the help of {\LaTeXe} and {\KOMAScript}.
 
@@ -61,9 +64,19 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 
 \part{Background, theory and preparations}
 
-\chapter{Background} % Prolegomena
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\chapter{Background}\label{cha:Background} % Prolegomena
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Introduction}\label{sec:Intro}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\lettrine[lines=3, findent=.2em, slope=-0.5em, nindent=0pt]{W}{hile}
 %I personally have no preference for materials over any other matter,
@@ -124,8 +137,12 @@ As an introduction, table \ref{tb:si} presents some key properties of silicon,
   \label{tb:si}
 \end{table} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{The power of the sun}\label{sec:Sun}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{The power of the sun}
 \lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
 stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
 8 light minutes away, our small, blue planet receives about 100 petawatts ($10^{17}$
@@ -171,14 +188,22 @@ solar constant $1353\pm 45$ W/m$^2$ (Marstein forelesningsnotater)
 About $5.8\times 10^{17}$ photons/sec/cm$^2$ reach the outer atmosphere, while
 some $10^{17}$ survive through the atmosphere.\footnote{Solar Cells (Backus)}
 
-\section{The silicon solar cell}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{The silicon solar cell}\label{sec:SiliconSolarCell}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Silicon doped with a donor, like phosphorus, is called n-Si. Highly-doped areas in the proximity of the metal contacts are often referred to as n+ or n++.
 
 The contact resistivity $\rho_c$ depends strongly on the doping concentration $N_D$, as reviewed by Schröder\cite{Schroder:1984}. 
 If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$,but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Short solar cell history (kan kanskje sløyfes)}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The ``Effect of Light on Selenium during the passage of an Electric Current''
 was described by W. Smith in 1873\cite{Smith:1873}.
@@ -225,7 +250,11 @@ development of silicon p/n junction cells that reached efficiencies above
 %be?
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Diffusion and diffusivity}\label{sec:Diffusion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria} due to their thermal motion. 
 Such redistribution occurs in all materials, but at a negligible rate at temperatures considerably below the melting point of the material.
@@ -242,7 +271,11 @@ But a description involving every single atom becomes highly impractical on a ma
 The two pictures can be connected through parameters known as diffusion coefficients in order to produce integral diffusion models,
 but the diffusion coefficients are also commonly obtained empirically.
 
-\subsection{The continuum picture}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{The continuum picture}\label{sec:ContinuumPicture}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Following Joseph Fourier's 1822 treatise on heat diffusion\cite{Fourier:1822} and Georg Ohm's 1827 work on `electricity diffusion' (Ohm's law),\cite{Ohm:1827} Adolf Fick presented his phenomenological description of `mass diffusion' in 
 1855.\cite{Fick:1855}
@@ -277,6 +310,7 @@ From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, h
 The diffusivity depends strongly on the temperature, and the temperature dependence found from experiments often takes the simple Arrhenius form,
 \begin{equation}
   D(T) = D_0 \e^{-E_a/kT}
+  \label{eq:arrhenius-dif}
 \end{equation}
 defined by a prefactor $D_0$ and an activation energy $E_a$. 
 Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and interceipt $\ln D_0$. 
@@ -292,7 +326,11 @@ The parameters $D_0$ and $E_a$ can thus easily be extracted if a good fit can be
 
 As mentioned, the diffusivity may also depend on other factors, such as crystal defects, pressure, et cetera, that will not be touched upon in this work, but these are discussed by e.g. Pichler.\cite{Pichler:2004}
 
-\subsection{The atomistic picture}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{The atomistic picture}\label{sec:AtomisticPicture}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In the continuum picture, the diffusion coefficients are just empirical parameters, and we have to invoke a model involving atoms to explain them.
 
@@ -373,13 +411,13 @@ The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{The case of phosphorus diffusion in silicon}\label{sec:PinSi}
+\section{The case of phosphorus diffusion in silicon}\label{sec:P}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{How much phosphorus go into silicon and where does it go?}
+\subsection{Solubility limit and preferred site}\label{sec:PSolubility}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -411,11 +449,12 @@ it was demonstrated in the 1940s that phosphorus enters mainly substitutional si
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Phosphorus interstitials}
+\subsection{Interstitials}\label{sec:PInterstitials}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 While phosphorus prefers substitutional positions, it will, at elevated temperatures and/or in imperfect (real) materials also occupy intersitial positions, just as silicon will.
+Phosphorus interstitials are of interest for their role in diffusion processes, as discussed in the next section.
 Direct experimental evidence for phosphorus interstitials is probably missing, so their binding energy have formerly been taken from fitting diffusion models to experimental data, and later also from purely theoretical investigations.\cite[391]{Pichler:2004}
 
 The tetrahedral structure of silicon is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$,\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}.
@@ -497,9 +536,21 @@ Early theoretical investigations by Car\cite{Car:1985} suggested the energetical
 
 Chelyadinskii and Burenkov found from X-ray diffraction studies that phosphorus and silicon do not form stable complexes, and that they form split interstitial pairs bound solely by grid relaxation.[5.560 i Pichler]
 
-In a 2003 nudged elastic band study, Liu et al identified several insterstitial configurations for phosphorus in silicon.
-They found the most stable one to be a [110] dumbbell configuration, $P_i^X$, in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
-Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
+In a 2003 nudged elastic band study, Liu et al identified four lowest energy configurations for insterstitial phosphorus in silicon.
+\begin{itemize}
+  \item $P_i^X$, a \spl{110} configuration (fig. \ref{fig:split110site}) distorted in the 110 direction so that symmetry is reduced from $C_{1h}$ to $C_1$.
+  \item $P_i^{X_2}$, a configuration with approximate $C_2$ symmetry, that the authors suggest can be viewed as a $P_i^X$ configuration with local structural distortion.
+  \item $P_i^H$, a hexagonal configuration with $D_{3d}$ symmetry, as in fig. \ref{fig:hexsite1}
+  \item $P_i^S$, a \spl{001}-like configuration, with symmetry reduced from $C_{2v}$ to $C_{1h}$.
+\end{itemize}
+Of these, the $P_i^X$ and $P_i^{X_2}$ were the lowest energy structures for the neutral charge state, while $P_i^H$ and $P_i^S$ were the lowest energy structures for the +1 charge state.\cite{Liu:2003}
+%Second, they
+
+
+%The most stable one was 
+
+%in which a Si-P pair shares a single lattice site, oriented in the [110] direction. The centre of the pair is not located directly on the lattice site, but is translated a short distance in the [001] direction. This gives rise to the `dumbbell' name and the low $C_1$ symmetry.
+%Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-like configuration, $P_i^s$.
 
 
 %sisting of a substitutional impurity and a Si atom at a nearby tetrahedral (T) or hexagonal (H) intersitial
@@ -523,7 +574,7 @@ Further they identified a hexagonal configuration, $P_i^H$, and a [100] dumbell-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{What about diffusion?}
+\subsection{Diffusion}\label{sec:PDiffusion}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -531,11 +582,52 @@ Diffusion of substitutional impurities as interstitials or impurity-self-interst
 
 This makes possible many different interstitial configurations, and also interstitial diffusion
 
+In the interstitialcy mechanism, a self-interstitial  replaces an impurity atom, making it an interstitial.
+
+Liu \textit{et al.} identified a migration path from a \spl{110}-like dumb-bell configuration ($P_i^X$) to another, via a hexagonal ($P_i^H$) configuration as the saddle point, having a migration barrier of 0.6~eV.\cite{Liu:2003}
+Another path involving a \spl{001}-like dumb-bell configuration ($P_i^S$) was found to have a migration energy of 0.7~eV. Overall activation energy (including formation energy) 3.1 eV.
+
+Experimental activation energies at intrinsic conditions: 2.81 eV (low T), 3.61 eV (hight T, sjekk!) (Haddara:2000), 3.55 eV (Ural:1999), 3.30 eV (Chohtagore:1971), 3.69 eV (Makris:1973)
+
+2.74 eV (Christensen:2003)
+
+As mentioned in section \ref{sec:Diffusion}, diffusion often takes the simple Arrhenius form, \eqref{eq:arrhenius-dif},
+\begin{equation*}
+    D = D_0 e^{-E_a/k_BT},
+\end{equation*}
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}[htbp]
+  \begin{tabular}{llll}
+      \toprule
+        $D_0$ & $E_a$ [eV] & Conditions & Ref. \\
+      \midrule
+      $1.71\times 10^{-3}$ & 2.81 & low $T$\tnote{a} & Haddara(2000)\cite{Haddara:2000} \\
+      $8\pm5\times 10^{-4}$ & $2.74\pm 0.07$ & low $T$\tnote{b} & Christensen(2003)\cite{Christensen:2003} \\
+      ? & 3.51 & - & Hill(1981) (bestilt kopi) \\
+      1.03 & 3.507 & regression curve 900-1200 C from 16 studies & Pichler(2004)\cite{Pichler:2004} \\
+      \bottomrule
+    \end{tabular}
+    {\footnotesize
+        \begin{tablenotes}
+          \item[a] 850, 900 and 1000 C.
+            low implant dose (\SI{4e13}{\per\centi\metre\squared}, about \SI{10e18}{\per\centi\metre\cubed}) to 
+            avoid concentration-dependent or transient effects
+          \item[b] 810 – 1100 C. concentration \SI{10e18}{\per\centi\metre\cubed}
+        \end{tablenotes}
+    }
+  \end{threeparttable}
+  \caption{Diffusivities}
+  \label{tab:Label}
+\end{table}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\chapter{Density Functional Theory}\label{cha:dft}
+\chapter{Density Functional Theory}\label{cha:DFT}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -728,7 +820,7 @@ The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear re
 a parametric function of the nuclear coordinates called the potential energy surface.
 This parametric dependence on the nuclear coordinates amounts to the electrons adjusting their positions $\vec{x}$ \emph{instantaneously} to a given \emph{nuclei structure}.
 The Born-Oppenheimer approximation is fundamental in most electronic structure methods, including DFT, and further references to the Hamiltonian in this chapter will implicitly be to the \emph{electronic} Hamiltonian unless otherwise stated. 
-We will return to the nuclei structure in chapter \ref{cha:molecular-dynamics}.
+We will return to the nuclei structure in chapter \ref{cha:MD}.
 
 While the Born-Oppenheimer approximation is justified in most cases,\cite[p. 111]{Cramer:2004} it's important to keep in mind the limitations it impose.
 A phenomena such as Joule heating, for instance, utilised in everyday electrical heating appliances, can not be described using the approximation, since it involves electrons dissipating energy into ionic vibrations, coupling the motion of the electrons and the nuclei.\cite{Horsfield:2004b}
@@ -1260,7 +1352,7 @@ In the case of non-local pseudopotenstials, \eqref{eq:hellmann-feynman-expl} can
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As described in chapter \ref{cha:molecular-dynamics} on Born Oppenheimer molecular dynamics below, the purpose of using density functional theory is to accurately calculate the forces between atoms. 
+As described in chapter \ref{cha:MD} on Born Oppenheimer molecular dynamics below, the purpose of using density functional theory is to accurately calculate the forces between atoms. 
 From a knowledge of the forces, the dynamics of the atoms can be simulated using simple newtonian dynamics.
 Since atoms vibrate at frequencies in the order of $10^{12}$~Hz (see fig. \ref{fig:simple-vibration}), 
 forces will have to be re-calculated in the order of once every femtosecond to produce trajectories that are smooth and hopefully, realistic simulations of Nature.
@@ -1768,7 +1860,7 @@ Neither is memory, so most likely the poor scaling behaviour is due to the low n
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\chapter{Molecular dynamics simulations}\label{cha:molecular-dynamics}
+\chapter{Molecular dynamics simulations}\label{cha:MD}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2165,6 +2257,7 @@ More advanced algorithms exist that allows for longer time steps, such as the cl
 Predictor-corrector algorithms will not be used in this work, but the interested reader will find more on these in many introductory books on molecular dynamics, such as the one by Haile\cite[158]{Haile:1992}.
 are popular in simulation, but these are generally less stable, which means that they have a tendency to drift over long runs, not conserving energy.
 
+
 \comment{More?}
 \begin{itemize}
   \item 
@@ -2339,7 +2432,7 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 
 \section{Introduction}\label{sec:resultsIntro}
 
-As described in section \ref{sec:PinSi}, \ldots, several different configurations.
+As described in section \ref{sec:P}, \ldots, several different configurations.
 
 
 \section{Initial structures}\label{sec:structures}
@@ -2514,6 +2607,12 @@ More surprisingly the distance between the Si and P atoms sharing a lattice site
   \caption{Relaxation of the split 110 Si-P pair}
   \label{fig:relaxedSIPsplit}
 \end{figure}
+
+\subsection{Stability of the \spl{110} configuration}
+
+One rather 
+
+
 
 
 \section{Trajectories}
