@@ -62,7 +62,7 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 \mainmatter
 \pagestyle{scrheadings}
 
-\part{Background, theory and preparations}
+%\part{Background, theory and preparations}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,50 +143,51 @@ As an introduction, table \ref{tb:si} presents some key properties of silicon,
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
-stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
-8 light minutes away, our small, blue planet receives about 100 petawatts ($10^{17}$
-) of radiative power [CHECK].
-In thermodynamic terms, the radiation is an
-energy flux of relatively low entropy, meaning that it's easier to utilize
-than lower-entropy energy fluxes such as heat. It is a `high-quality' energy
-flux, an energy flux that is the starting point for all processes on earth
-but those utilising geothermal energy. From a logical point of view, it makes
-perfect sense to utilise solar energy directly instead of one of its
-`derivates', like wind, hydro, etc. Yet, there is one issue with solar
-energy: it's diluted, at least compared with the energy content of fossil
-fuels that we are so spoiled with. One litre of gasoline contains about 9.5 kWh of
-energy\footnote{\url{http://www.ocean.washington.edu/courses/envir215/energynumbers.pdf}}.
+%\lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
+%Quite
+%stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
+%8 light minutes away, and we receive about 100 petawatts ($10^{17}$
+%) of radiative power [CHECK].
+%In thermodynamic terms, the radiation is an energy flux of relatively low entropy, making it easy to utilize
+%relative to lower-entropy energy fluxes such as heat. 
+%It is a `high-quality' energy flux, an energy flux that is 
 
+The starting point for all processes on earth, but those utilising geothermal energy, is a relatively constant 100 petawatt low-entropy energy flux we receive from a star 8 light minutes away.
+From a logical point of view, it makes perfect sense to utilise this energy flux directly instead of one of its derivates, like wind or hydro, or the energy stored in the fossil fuels. 
+
+But then, the energy is quite diluted, at least compared to some other fuels Nature has concentrated over time.
+The energy content of a litre of gasoline, for instance, is about 9.5 kWh,\footnote{\url{http://www.ocean.washington.edu/courses/envir215/energynumbers.pdf}} of which about 40 \% may be turned into electricity if we like.\footnote{Efficiency in electricity generation. Union of the Electricity Industry EURELECTRIC and VGB Powertech (2003)}
 To get a feeling for this number, remember that one kilowatt-hour of electric power 
 is roughly one and a half hour of horse-power. Man, not being as strong as a
 horse, can only sustain about one tenth of a horsepower over time, meaning that a 
-full working day amounts to less than one kilowatt-hour, further meaning that 
-roughly 10 hard working days can be replaced by a single litre of gasoline in terms
-of energy content. 
+full working day amounts to less than one kilowatt-hour, so in pure energy content
+about five to ten hard working days can be replaced by a single litre of gasoline.
 
-How about solar power? In a solar-rich area, we receive the same amount of energy 
-over 9.5 square metres in one hour. That's why we say that solar power is rather
-\emph{area-intensive}.
+When it comes to solar power, we receive about 1 kW per square metre at midday in sunny regions, 
+which means 1 kWh in one hour\footnote{of which 10–20 \% can be turned into electricity using a standard solar panel. 
+Conversion losses would of course also appear on the conversion of gasoline to electricity.}
+On one hand, the number is impressive in itself, but on the other hand, 
+it means large areas are needed to collect and concentrate or convert enough solar energy for the energy usage we have grown used with,
+which is why solar power utilization is termed ``area-intensive''.
+And when large areas are needed, the materials used have to be cheap and abundant. 
+Since there is no fundamental limit of the ``thickness'' of the materials, one way to cut material costs is to cut the thickness of the materials.
 
-Blabla. solceller må derfor være tynnest mulig og mest mulig effektiv.
+%solar constant: 
 
-solar constant: 
+%$1366\pm 40$ W/m$^2$. The yearly variation of about $\pm 3\%$ 
+%due to the variation of Earth's distance to the Sun during the year, is much
+%larger than the known variations in the radiation itself.\footnote{
+%Phillips, Kenneth J. H. (1995). Guide to the Sun. Cambridge University Press. 
+%pp. 14–15, 34–38. ISBN 9780521397889.
+%\url{http://www.pmodwrc.ch/pmod.php?topic=tsi/composite/SolarConstant}
+%\url{http://books.google.com/books?id=YEN9fC9tbEgC}
+%}
 
-$1366\pm 40$ W/m$^2$. The yearly variation of about $\pm 3\%$ 
-due to the variation of Earth's distance to the Sun during the year, is much
-larger than the known variations in the radiation itself.\footnote{
-Phillips, Kenneth J. H. (1995). Guide to the Sun. Cambridge University Press. 
-pp. 14–15, 34–38. ISBN 9780521397889.
-\url{http://www.pmodwrc.ch/pmod.php?topic=tsi/composite/SolarConstant}
-\url{http://books.google.com/books?id=YEN9fC9tbEgC}
-}
+%solar constant $1353\pm 45$ W/m$^2$ (Marstein forelesningsnotater)
+%. de Vos, s. 19: 1353, pm 3.5\%.
 
-solar constant $1353\pm 45$ W/m$^2$ (Marstein forelesningsnotater)
-. de Vos, s. 19: 1353, pm 3.5\%.
-
-About $5.8\times 10^{17}$ photons/sec/cm$^2$ reach the outer atmosphere, while
-some $10^{17}$ survive through the atmosphere.\footnote{Solar Cells (Backus)}
+%About $5.8\times 10^{17}$ photons/sec/cm$^2$ reach the outer atmosphere, while
+%some $10^{17}$ survive through the atmosphere.\footnote{Solar Cells (Backus)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -199,30 +200,30 @@ Silicon doped with a donor, like phosphorus, is called n-Si. Highly-doped areas 
 The contact resistivity $\rho_c$ depends strongly on the doping concentration $N_D$, as reviewed by Schröder\cite{Schroder:1984}. 
 If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$,but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Short solar cell history (kan kanskje sløyfes)}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%\subsection{Short solar cell history (kan kanskje sløyfes)}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The ``Effect of Light on Selenium during the passage of an Electric Current''
-was described by W. Smith in 1873\cite{Smith:1873}.
+%The ``Effect of Light on Selenium during the passage of an Electric Current''
+%was described by W. Smith in 1873\cite{Smith:1873}.
 
-1876 eller 1877 (?) - W.G. Adams and R.E. Day observed the photovoltaic effect in solidified 
-selenium, and published a paper on the selenium cell. 'The action of light 
-on selenium,'\cite{Adams:1876}
+%1876 eller 1877 (?) - W.G. Adams and R.E. Day observed the photovoltaic effect in solidified 
+%selenium, and published a paper on the selenium cell. 'The action of light 
+%on selenium,'\cite{Adams:1876}
 
-The first known solar cell was built in 1883 by Charles Fritts who coated the
-semiconductor selenium with a thin layer of gold to form a junction.
+%The first known solar cell was built in 1883 by Charles Fritts who coated the
+%semiconductor selenium with a thin layer of gold to form a junction.
 
-Russell Ohl, in 1939, discovered the PN barrier (or as it became known, 
-the “P–N junction”). He is generally recognized for patenting the modern solar 
-cell (US Patent 2402662, "Light sensitive device"). Ohl was a notable 
-semiconductor researcher prior to the invention of the transistor. 
+%Russell Ohl, in 1939, discovered the PN barrier (or as it became known, 
+%the “P–N junction”). He is generally recognized for patenting the modern solar 
+%cell (US Patent 2402662, "Light sensitive device"). Ohl was a notable 
+%semiconductor researcher prior to the invention of the transistor. 
 
-Solar cells later became practical for power uses after Russell Ohl's 1941 
-development of silicon p/n junction cells that reached efficiencies above 
-5\% by the 1950s/1960s.
+%Solar cells later became practical for power uses after Russell Ohl's 1941 
+%development of silicon p/n junction cells that reached efficiencies above 
+%5\% by the 1950s/1960s.
 
 %Multicrystalline silicon (mc-Si) wafers are widely used for man- 
 %ufacturing of solar cells due to their relatively low price and high 
@@ -1779,54 +1780,87 @@ As we see, the defect causes some distortion even beyond the boundaries of the 6
 
 After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized VASP build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
 
-From the table in fig. \ref{fig:scaling}, it is seen that the calculation time per ionic step is about 13 seconds. 
-While I find this impressive for an \textit{ab initio} calculation, it still means it would take 150 days to simulate a nanosecond.
-Parallelisation can be used to speed up the calculations by distributing them over several CPU cores.
-However, as fig. \ref{fig:scaling} shows, the scaling is very inefficient for this setup, so although the time drops, a large amount of the allocated computer resoruces are left unused. 
-Surprisingly, even parallelisation over several cores at the same node is only 45\% efficient, so internode communication is not the bottleneck. 
-Neither is memory, so most likely the poor scaling behaviour is due to the low number of $k$ points and plane waves included. 
+Test calculations were carried out at two different Norwegian computing clusters; the Titan cluster at University of Oslo, 
+and the Stallo cluster at University of Tromsø, for which the results are shown in fig. \ref{fig:scaling}.
+The calculations included 46656 plane waves and about 165 bands (163-168 depending on the number of cores).
 
 
-%RUNS: 
 % Mesure code:
-%import numpy as np
-%from oppvasp.vasp.parsers import VasprunParser
-%vp = VasprunParser('vasprun_1.xml')
-%t=np.array([i.get_time_spent()[1] for i in vp.ionic_steps])
-%print("%.2f secs" % np.mean(t[1:]))
-
-%gamma, 8 cores:
-%  NPAR=1 : 3.73 secs
-%  NPAR=2 : 3.64 secs
-%  NPAR=4 : 3.92 secs
-%  NPAR=8 : 4.49 secs
-
-%gamma, 16 cores:
-%  NPAR=4 : 2.16 secs
-
-%gamma, 32 cores:
-%  NPAR=6 : 
-
-%gamma, 64 cores:
-%  NPAR=8 : 1.42 secs
-
+%
+% import numpy as np
+% from oppvasp.vasp.parsers import VasprunParser
+% vp = VasprunParser('vasprun.xml')
+% t = np.array([i.get_time_spent()[1] for i in vp.ionic_steps]) 
+% print("%.2f secs" % np.mean(t[1:])) # skip first step
+%
+% Data dir: notur/hipersol/si-pi/si64/tests/parallelisation
+%
+% /cores1: stallo: -lnodes=1:ppn=1:ib,  NPAR=1 NBANDS = 163
+%    13.09 secs
+%
+% /cores8_npar1: stallo: -lnodes=1:ppn=8:ib,  NPAR=1 NBANDS = 163
+%    3.72 secs
+% /cores8_npar2: stallo: -lnodes=1:ppn=8:ib,  NPAR=2 NBANDS = 164
+%    3.71 secs
+% /cores8_npar4: stallo: -lnodes=1:ppn=8:ib,  NPAR=4 NBANDS = 164
+%    3.93 secs
+%
+% /cores16: stallo: -lnodes=1:ppn=8:ib,  NPAR=4 NBANDS = 164
+%    2.17 secs
+%
+% /cores32: stallo: -lnodes=4:ppn=8:ib,  NPAR=8 NBANDS = 168
+%    1.42 secs
+%
+% /cores64: stallo: -lnodes=8:ppn=8:ib,  NPAR=8 NBANDS = 168
+%    1.42 secs (akkurat samme, ikke klipp-og-lim-feil)
+%
+%
+%
+% /cores1: titan: 
+%    16.33 secs
+%
+% /cores8: titan: 
+%    3.81 secs
+%
+% /cores16: titan: 
+%    2.74 secs
+%
+% /cores32: titan: 
+%    1.97 secs
+%
+% /cores64: titan: 
+%    1.75 secs
 
 \begin{figure}[htp]
-  \begin{minipage}[c]{7.5cm}
-      \includegraphics[width=7.5cm]{figs/tests/parallelisation} % 8x8 cm
+  \begin{minipage}[c]{6.5cm}
+      \includegraphics[width=6.5cm]{figs/tests/parallelisation} % 8x8 cm
   \end{minipage}
   %\hspace{0.1cm}
-  \begin{minipage}[c]{5cm}
-    \begin{tabular}[b]{ccccc}\toprule
-        Cores  & Time & Speedup & Efficiency \\
-        $n$    & $t_n$ [s] & $t_1/t_n$ & $t_1/(nt_n)$ \\\midrule
-        1      & 13.04     & –         & –            \\
-        8      & 3.64      & 3.6       & 45\%         \\
-        16     & 2.11      & 6.2       & 39\%         \\
-        64     & 1.40      & 9.3       & 15\%         \\\bottomrule
+  \begin{minipage}[c]{5.0cm}{\small
+    \begin{threeparttable}[H]
+    \begin{tabular}[b]{cccccc}\toprule
+        Cluster & Cores & Time      & Speedup   & Efficiency   \\
+                & $n$   & $t_n$ [s] & $t_1/t_n$ & $t_1/(nt_n)$ \\\midrule
+                Stallo\tnote{a}  & 1     & 13.09     & –         & –            \\
+                & 8     &  3.71     & 3.6       & 44\%         \\
+                & 16    &  2.17     & 6.2       & 38\%         \\
+                & 32    &  1.42     & 9.3       & 29\%         \\
+                & 64    &  1.42     & 9.3       & 14\%         \\\midrule
+                Titan\tnote{b}   & 1     & 16.33     & –         & –            \\
+                & 8     &  3.81     & 4.3       & 54\%         \\
+                & 16    &  2.74     & 6.0       & 37\%         \\
+                & 32    &  1.97     & 8.3       & 26\%         \\
+                & 64    &  1.75     & 9.3       & 15\%         \\\bottomrule
     \end{tabular}
-  \end{minipage}
-  \caption{Scaling on the Stallo cluster with 2 $\times$ 2.66 GHz Intel Xeon X5355 Quad Core per node (8 cores per node) and Infiniband interconnect.
+    {\footnotesize
+		\begin{tablenotes}
+            \item[a] 2 $\times$ 2.66 GHz Intel Xeon quad core nodes.
+			\item[b] 2 $\times$ 2.3 GHz AMD Opteron quad core nodes.
+		\end{tablenotes}
+    }
+    \end{threeparttable}
+   }\end{minipage}
+  \caption{Scaling on two different clusters, Titan and Stallo, both with Infiniband connect.
       For a short molecular dynamics simulation parallelised over $n$ cores, $t_n$ is the mean clock time per step in seconds (100 steps, with the two first left out from the mean).
       Ideal scaling corresponds to the total CPU time $nt_n$ being constant, and the clock time decreasing as $1/n$. 
       The actual speedup $t_1/t_n$ as a percentage of the ideal speedup is shown in the last column of the table.
@@ -1835,27 +1869,24 @@ Neither is memory, so most likely the poor scaling behaviour is due to the low n
   \label{fig:scaling}
 \end{figure}
 
+The serial calculation time per ionic step is about 13 seconds on Stallo, and a few seconds longer on Titan. This includes on average three electronic steps per ionic step.
+While I find this number impressive for an \textit{ab initio} calculation, it still means simulating a nanosecond would take 150 days.
+The clock time needed can be reduced by distributing the work over several CPU cores, working in parallel, but as the results shows, the calculation scales poorly. 
+While the clock time is reduced by a factor of ten by using 64 cores, the efficiency is only about 15 \%, meaning that a large amount of computational resources are wasted.
+Surprisingly, even parallelisation over several cores at the same node is only 45\% efficient, indicating that inter-node communication is not a bottleneck. 
 
-%\begin{figure}[htp]
-%  \centering
-%  \caption{Scaling on the Stallo cluster with 2 $\times$ 2.66 GHz Intel Xeon X5355 Quad Core per node (8 cores per node) and Infiniband interconnect.}
-%  \label{fig:scaling}
-%\end{figure}
+Of course, good scaling requires a task that actually can be parallelised. 
+A molecular dynamics simulation is not very well suited in that respect; Two ionic steps can logically not be carried out parallelly, as one depends on the other, and neither can two electronic steps. 
+We are left parallelising the calculation for each electronic step, and with only one $k$ point, what remains is the options to parallelise over bands ($n$) and plane waves ($G$) in \eqref{eq:pwbasis}.
 
-%\begin{table}[htbp]
-%  \centering
-%  \begin{tabular}{lrrrr}\toprule
-%    Cores & NPAR & Wall time   & \multicolumn{2}{c}{CPU time per core} \\
-%          &      &             & User time     & System time   \\ \midrule
-%    1     &      &        &          & ?          \\
-%    8     &      &         &          & 3.64 \\
-%    16    &      &         &          & 2.16          \\
-%    32    &      &         &          &           \\
-%    64    &      &         &          & 1.42          \\ \bottomrule
-%  \end{tabular}
-%  \caption{Time spent in seconds per MD step in a 100 step simulation. The wall time is the time you could read off your watch, and is the most important.}
-%  \label{tab:tests/parallelisation}
-%\end{table}
+The {\vasp} code can handle parallelisation over bands and plane waves efficient up to at least 32 cores in typical cases.\cite{vasp-manual} 
+But with electronic steps calculated in less than one clock-second, it is possible that initialisation steps and other parts of the code that can not be parallelised, starts to dominate over the parallelised parts of the code. 
+Investigating this further could be an interesting study on its own, 
+but here we will just accept the current scaling situation and parallelise only over eight cores. 
+
+%Determining the bottleneck and perhaps optimising the code could be an interesting topic of a master thesis on its own.
+%Especially since it is quite uncommon to do DFT calculations with such short calculation times per electronic step (< 1 s),
+%it is possible that there are some bottlenecks that are not normally important, that becomes important for such calculations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1890,82 +1921,195 @@ where motion occurs in a way as to preserve the Hamiltonian function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Monitoring lattice integrity}
+\section{Monitoring translational order}\label{sec:translation-order}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A perfect lattice is described by $\e^{\im(\vec{g}\cdot\vec{r})}=1$ for a reciprocal lattice vector $\vec{g}$ and all positions $\vec{r}$. 
-Using Euler's formula,
+%In a perfect crystal, atoms are located at positions $\vec{R}^{0} = u\vec{a}_1 + v\vec{a}_2 + w\vec{a}_3$, 
+%where $\vec{a}_1$, $\vec{a}_2$ and $\vec{a}_3$ are the direct lattice vectors of the unit cell related to the 
+%reciprocal lattice vectors 
+
+ %by $\vec{a}_i\cdot\vec{b}_j=2\pi\delta_{ij}$.
+%so $e^{i\vec{G}\cdot\vec{R}^{\circ}} = 1$.
+%\begin{equation}
+%    \e^{\im(\vec{G}\cdot\vec{R}_0)} = \cos(\vec{G}\cdot\vec{R}_0) + \im\sin(\vec{G}\cdot\vec{R}_0) = 1
+%    \label{eq:euler}
+%\end{equation}
+%At elevated temperatures 
+%During a simulation it is convenient to have a parameter that 
+Crystals are characterised by the presence of short- and long-range translational order,
+and the melting of a crystal is characterized by the loss of long-range translational order.
+During a molecular dynamics simulation it can therefore be useful to monitor to what degree translational order is preserved with a simple parameter.
+
+For the current purpose we can assume all $M$ atoms are equal, 
+and we can then write the structure factor as\cite[241]{Martin:2004} a Fourier Transform
 \begin{equation}
-    \e^{\im(\vec{g}\cdot\vec{r})} = \cos(\vec{g}\cdot\vec{r}) + i\sin(\vec{g}\cdot\vec{r}) = 1
+    F_{\vec{G}}(\vec{R}^0) = \sum_{j=1}^M \e^{-\im\vec{G}\cdot\vec{R}_j^0},
+    \label{eq:structurefactor}
 \end{equation}
-Summing over all $\vec{r}$ vectors and ignoring the complex term,
+where $\vec{G}=h\vec{b}_1 + k\vec{b}_2 + l\vec{b}_3$ is a vector in the reciprocal lattice, related to a 
+vector in the direct lattice, $\vec{R}^{0} = u\vec{a}_1 + v\vec{a}_2 + w\vec{a}_3$, by $\vec{a}_i\cdot\vec{b}_j = 2\pi \delta_{ij}$.
+
+Since the structure factor is in general a complex number, it's practical to work with the modulus, which I denote $F_{\vec{G}}^0 = |F_{\vec{G}}(\vec{R}^0)|$.
+Now, for a real structure with atoms at positions $\vec{R}$, in general different from the ideal lattice sites $\vec{R}^0$ at any given time, 
+a simple translational order parameter can be devised from the ratio of moduluses $F_{\vec{G}} / F_{\vec{G}}^0$;\footnote{From microfiche F.25, available online at
+    \url{http://www.ccl.net/cca/software/SOURCES/FORTRAN/allen-tildesley-book/f.25.shtml} 
+    See \cite[171]{Allen:1987} for discussion.}
 \begin{equation}
-    \frac{1}{M}\sum_{\vec{r}} \cos(\vec{g}\cdot\vec{r}) = 1
-\end{equation}
-Taking the reciprocal vector to be $\vec{g}=[2\pi/x_m,0,0]$ where $x_m$ is the smallest interatomic distance along the x axis, we find a simple parameter to monitor the integrity of the lattice that should be unity for the perfect lattice and fluctuate about zero for a disordered system, as first introduced by Verlet;
-\begin{equation}
-  \lambda = \frac{1}{N} \sum_{j=1}^M  \left[ \cos\left( \frac{2\pi}{x_m} x_j \right)\right]
-  \label{eq:simple_lattice_order_parameter}
-\end{equation}
-For a diamond lattice with a 8-atom cubic unitcell, $x_m=1/4$. For a 64-atom cubic cell, $x_m=1/8$, and so on.
-An unfortunate feature of this simple parameter is that it depends on the choice of origin. 
-If the whole crystal (all the atoms) are translated $x_m/4$ (in the same direction), say, the parameter is zero, even though the crystal is still perfect.
-To cope with this, we may instead calculate\footnote{\url{http://www.ccl.net/cca/software/SOURCES/FORTRAN/allen-tildesley-book/f.25.shtml}}
-\begin{equation}
-  \lambda = \frac{1}{M}\sqrt{\left[\sum_{\vec{r}}\cos(\vec{g}\cdot\vec{r})\right]^2 + \left[\sum_{\vec{r}}\sin(\vec{g}\cdot\vec{r})\right]^2}
+    \lambda_{\vec{G}} = \frac{1}{F_{\vec{G}}^0}\left|\sum_{j=1}^M\e^{-i\vec{G}\cdot\vec{R}_j}\right| 
+    = \frac{1}{F_{\vec{G}}^0}\sqrt{\left[\sum_{j=1}^M\cos(\vec{G}\cdot\vec{R}_j)\right]^2 + \left[\sum_{j=1}^M\sin(\vec{G}\cdot\vec{R}_j)\right]^2},
   \label{eq:lattice_order_parameter}
 \end{equation}
+using any $\vec{G}$ vector that gives rise to a non-zero structure factor $F_{\vec{G}}^0$.
+This parameter is unity for a perfect crystal, and positive but small, of order $\sqrt{M}$, for a completely disordered system. 
+The exact value will depend on the choice of $\vec{G}$ vector(s).
 
-Figure \ref{fig:tlotest} shows how the two translational lattice order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, as a function of random displacements of atoms from their lattice sites. Each point is averaged over 1000 random positions. 
-As we see, the origin-independent order parameter converges towards roughly $1/\sqrt(N)$ for a disordered system,\footnote{$1/\sqrt{8}=1.35$, $1/\sqrt{64}=0.125$, $1/\sqrt{512}=0.044$.}
-and by this parameter a system is described as disordered when the mean random displacements of atoms from their lattice sites increase above about 0.12~Å.
-Also, while the origin-independent parameter depends on the number of atoms, the effect is quite small.
-A disordered system here is a system 
+For the diamond structure, we have a conventional (cubic) unit cell with unit cell vectors of length $a$ aligned to the cartesian unit vectors 
+and a basis of eight atoms.
+The smallest $\vec{G}$ vectors that give rise to a non-zero $F_{\vec{G}}^0$ are the $[111]$, $[220]$, $[311]$ and $[400]$ vectors, with 
+$h^2+k+^2+l^2=3$, 8, 11 and 16, respectively. 
+For $h+k+l$ even and divisable by four, $F_{\vec{G}}^0 = 8$ (the number of atoms), while for $h+k+l$ odd, $F_{\vec{G}}^0=8/\sqrt{2}$.
 
-Another estimate of the lattice integrity is the Lindemann index.\cite{Lindemann:1910}
-\begin{equation}
-  \delta = \frac{2}{N(N-1)} \sum_{i<j} \frac{\sqrt{\langle r_{ij}^2\rangle_t - \langle r_{ij} \rangle^2_t }}{ \langle r_{ij} \rangle_t }
-  \label{eq:lindemannindex}
-\end{equation}
+%If all atoms are translated by some vector $\tau$ to new positions $\vec{R} = \vec{R}_0 + \tau$, 
+%the sum will give a complex number in the unit plane with a modulus generally less than unity.
+%If the vector $\tau$ is zero or the same for all the atoms, that is, if all the atoms move in-phase, 
+%the sum will give a number on the unit circle with unit modulus.
+%These observations may be used to devise various functions to monitor the translational order. 
+
+%and possibly averaging over a set of $\vec{G}$ vectors;
+%This parameter is unity for a perfect crystal, and positive but small, of order $\sqrt{M}$, for a completely disordered system. 
+%While a single $\vec{G}$ vector should suffice for a simple test, we choose to average over one $\vec{G}$ vector in each direction for a more robust test; including $\vec{G}_{100}= 2\pi/d(1,0,0)$, $\vec{G}_{010}$ and $\vec{G}_{001}$, where $d$ is the axis-projected interatomic distance.
+%For a diamond lattice with 8 atoms, $d_x=1/4$, with 64 atoms, $d=1/8$, and so on.
+
+To illustrate some aspects of the order parameter \ref{eq:lattice_order_parameter}, we start with a perfect silicon crystal, 
+for which the order parameter is unity. 
+We then randomly displace all atoms so that the mean radial distance between an atom and its associated lattice site $\langle |\vec{R}-\vec{R}_0|\rangle$ is a fixed value. 
+The order parameter is calculated and averaged over a large number of different random configurations with the same $\langle |\vec{R}-\vec{R}_0|\rangle$.
+The left part of fig. \ref{fig:tlotest} shows the result on the translational order parameter \eqref{eq:lattice_order_parameter} using different $\vec{G}$ vectors.
+As we see, the shorter $\vec{G}$ vectors are less sensitive to small displacements, such as vibrations.
+The right part of the figure shows the effect of the system size. The shaded part is the standard deviation.
+In each case, the parameter approaches a value of about $\sqrt{M}$ for a disordered system.
 
 \begin{figure}[htbp]
   \begin{center}
-    \includegraphics{../figures/test_lattice_integrity_plot}
+    \includegraphics{figs/test_lattice_integrity_plot}
   \end{center}
-  \caption{Translational lattice order parameters $\lambda_0$ (dashed lines) and $\lambda$ (solid lines) as a function of mean random displacement from lattice sites.}
+  \caption{Translational order parameters $\lambda$ as a function of mean random displacement from lattice sites.}
   \label{fig:tlotest}
 \end{figure}
 
-Figure \ref{fig:md_test_lattice_integrity} shows a plot of $\lambda(t)$ for a simulation at a few different temperatures. 
-After the simulation start at a perfect lattice ($\lambda=1$), the systems spends a few cycles to equilibrate before a quite constant trend follows.
+Fig. \ref{fig:melting1600} shows an example of melting from an actual MD run with 64 Si atoms and one P atom at 1600 K, where the system melted after being in a semistable, crystalline state for almost 29~ps,
+with \ref{fig:translationalorder1600} showing the translational order parameter using three different $\vec{G}$ vectors,
+and \ref{fig:poten1600} showing the change in potential energy that also accompanies a melting (there is no change in kinetic energy); about 0.3 eV per atom.
+In macroscopic units, this corresponds to \SI{1030}{\kilo\joule\per\kilogram}, which is about half the experimental heat of fusion (difference of enthalphy between crystal and melt),\footnote{Taking the average atom weight to be 28~u, we find $\frac{\SI{0.3}{\electronvolt}}{28\si{\amu}}\times \frac{\SI{1.60e-22}{\kilo\joule\per\electronvolt}}{\SI{1.66e-27}{\kilogram\per\amu}} \approx \SI{1030}{\kilo\joule\per\kilo\gram}$. The experimental heat of fusion is about 1925 kJ/kG according to \url{http://www.engineeringtoolbox.com/fusion-heat-metals-d_1266.html}.} although I'm not sure to what degree it makes sense to compare the values at all.
 
-A second indicator is the mean-square displacement $\Delta r^2$,
+\begin{figure}[htp]
+  \centering
+    \subfloat[Translational order parameter $\lambda$ from \eqref{eq:lattice_order_parameter}.]{
+      \label{fig:translationalorder1600}
+      \includegraphics[height=3.8cm]{figs/tetrahedral_1600_translational_order.pdf}
+    }
+    \subfloat[Potential energy per atom]{
+      \label{fig:poten1600}
+      \includegraphics[height=3.8cm]{figs/tetrahedral_1600_poten}
+    }
+  \caption{Translational order and potential energy per atom for a system with 65 atoms at 64 lattice sites (one interstitial) at 1600 K which
+  melts after slightly less than 29~ps.}
+  \label{fig:melting1600}
+\end{figure}
+
+An even simpler test than \eqref{eq:lattice_order_parameter}, introduced by Verlet in 1968, just ignores the imaginary part of \eqref{eq:lattice_order_parameter}.\cite{Verlet:1968a}\cite[117]{Haile:1992} 
+This works best with $\vec{G}$ vectors that give completely real structure factors for the ideal structure $\vec{R}^0$, such as $[400]$, which Verlet used;
 \begin{equation}
-  \Delta r(t)^2 = \frac{1}{M}\sum_{j=1}^M [\vec{r}_i(t)-\vec{r}_i(0)]^2
+    \lambda' = \frac{1}{F_{\vec{G}}^0} \sum_{j=1}^M \cos\left( \vec{G}_{400}\cdot\vec{R}_j \right) = \frac{1}{M}\sum_{j=1}^M \cos\left(4\pi u\right)
+  \label{eq:simple_lattice_order_parameter}
 \end{equation}
-See fig. \ref{fig:md_test_displacement}.
+This parameter is unity for the perfect lattice, and fluctuate about zero for a completely disordered system.
+In 1968 the computationally simpler form of \eqref{eq:simple_lattice_order_parameter} over \eqref{eq:lattice_order_parameter} may have been important, but today it is generally not so. 
+However, there is another interesting distinction between the two tests. While \eqref{eq:lattice_order_parameter} is origin-independent, \eqref{eq:simple_lattice_order_parameter} is origin-dependent.
+If all atoms are translated $d/4$ in each direction, the parameter drops to zero, even though the translational order is still perfect.
+Therefore a comparison of the two tests can act as a quick test to determine if the whole system is drifting or not.
 
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics{../figures/md_test_lattice_integrity}
-  \end{center}
-  \caption{Simple lattice integrity test for different temperatures (see discussion in the main text).}
-  \label{fig:md_test_lattice_integrity}
+A comparison between the two order parameters is shown in figure \ref{fig:translationalorder1400} for a system
+with 64 silicon atoms and one phosphorus atom at 1400 K (the experimental melting point of pure silicon is 1685 K).
+Note that the extra phosphorus atom introduces a local distortion into the crystal, but this is quite short-ranged,
+so the overall translational order of the crystal is still largely preserved, as reflected in the order parameters.
+
+\begin{figure}[htp]
+  \centering
+    \subfloat[Time evolution of translational order parameters $\lambda '$ from \eqref{eq:lattice_order_parameter}
+    and $\lambda$ from \eqref{eq:simple_lattice_order_parameter}]{
+      \label{fig:translationalorder1400}
+      \includegraphics[width=7cm]{figs/split110_1400_translational_order.pdf}
+    }
+    \subfloat[Lattice drift in each direction]{
+      \label{fig:latticedrift1400}
+      \includegraphics[width=7cm]{figs/split110_1400_lattice_drift.pdf}
+    }
+  \caption{Translational order and lattice drift for a system with 65 atoms at 64 lattice sites (one interstitial) at 1400 K.}
+  \label{fig:translationalorder}
 \end{figure}
 
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics{../figures/md_test_displacement}
-  \end{center}
-  \caption{Mean-square displacement, $\Delta r(t)^2$ (see discussion in the main text).}
-  \label{fig:md_test_displacement}
-\end{figure}
+\subsubsection{Handling drift of the reference frame}
+
+Comparing the two translational order parameter functions, it's seen that the whole system drifts over time in this particular run, although the shift is not easily quantified from this information alone. 
+There is nothing inherently unphysical about the drift, as the total momentum is conserved and there is no drift in the mass centre.
+If an atom moves 10~Å to the right in a cell with 101 equal atoms, momentum may be conserved in different ways: by another atom moving 10~Å to the left, by two atoms moving 5~Å to the left, or by all the other 100 atoms moving 0.1~Å to the left.
+Thus the effect is to some extent an effect of the small cell, as a small cell will have a small inertia, making it more vulnerable for concerted movement of all the atoms than a larger cell.
+
+Whether the drift causes a problem for analysis and needs to be subtracted depends on whether a fixed reference frame is expected. 
+Having a fixed reference frame becomes important when comparing the system to another one. 
+In our case we're interested in comparing the system to a reference lattice – the perfect diamond structure, so a method to quantisise the drift was devised:
+For any given timestep we first assign each atom to its nearest lattice site and then calculate the drift as the directional median distance between an atom and its lattice site.\footnote{Note that since we have added an extra atom, there will in general be two atoms assigned to the same site, but if there is no lattice drift the atoms will still be centred about lattice sites.}
+The result is a vector $\vec{\delta}(t)$ that can be subtracted from the trajectory or added to the reference lattice after appropriate smoothing over lattice vibrations and minor wiggles; a symmetric running mean over 4~ps was found to work well.
+Fig. \ref{fig:latticedrift1400} shows the components of the drift vectors before (semitransparent lines) and after (solid lines) applying such a smoothing.
+
+
+%At this temperature, many diffusive jumps occur, and comparing the two lattice order parameters, we see
+%that at some point the whole lattice starts to drift slowly.
+%In total, the lattice shifts only about 0.2 Å, which may go unnoticed by visual inspection.
+
+
+%Figure \ref{fig:tlotest} shows how the two translational translational order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, as a function of random displacements of atoms from their lattice sites. Each point is averaged over 1000 random positions. 
+%As we see, the origin-independent order parameter converges towards roughly $1/\sqrt{N}$ for a disordered system,\footnote{$1/\sqrt{8}=0.35$, $1/\sqrt{64}=0.125$, $1/\sqrt{512}=0.044$.}
+%and by this parameter a system is described as disordered when the mean random displacements of atoms from their lattice sites increase above about 0.12~Å.
+%Also, while the origin-independent parameter depends on the number of atoms, the effect is quite small.
+
+%Another estimate of the lattice integrity is the Lindemann index.\cite{Lindemann:1910}
+%\begin{equation}
+%  \delta = \frac{2}{N(N-1)} \sum_{i<j} \frac{\sqrt{\langle r_{ij}^2\rangle_t - \langle r_{ij} \rangle^2_t }}{ \langle r_{ij} \rangle_t }
+%  \label{eq:lindemannindex}
+%\end{equation}
+
+
+%Figure \ref{fig:simelt} shows a plot of $\lambda(t)$ for a simulation at a few different temperatures. 
+%After the simulation start at a perfect lattice ($\lambda=1$), the systems spends a few cycles to equilibrate before a quite constant trend follows.
+
+
+%A second indicator is the mean-square displacement $\Delta r^2$,
+%\begin{equation}
+%  \Delta r(t)^2 = \frac{1}{M}\sum_{j=1}^M [\vec{r}_i(t)-\vec{r}_i(0)]^2
+%\end{equation}
+%See fig. \ref{fig:md_test_displacement}.
+
+%\begin{figure}[htp]
+%  \centering
+%    \subfloat[Translational order parameter]{
+%      \label{fig:simelttr}
+%      \includegraphics[width=6cm]{../figures/md_test_lattice_integrity}
+%    }
+%    \subfloat[Mean square displacement, $\langle \sqrt{(\vec{r}_i(t) - \vec{r}_i(0)])^2} \rangle $]{
+%      \label{fig:simeltmsd}
+%      \includegraphics[width=6cm]{../figures/md_test_displacement}
+%    }
+%  \caption{Short melting test for different temperatures (see discussion in the main text}
+%  \label{fig:simelt}
+%\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Statistical mechanics}
+\section{Statistical mechanics}\label{sec:statistical-mechanics}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2017,7 +2161,7 @@ where the integration is done over the complete phase space (configuration space
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{The ergodic hypothesis}
+\subsection{The ergodic hypothesis}\label{sec:ergodic-hypothesis}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2042,7 +2186,7 @@ simulation times out of reeach may be required
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Ensembles}
+\subsection{Ensembles}\label{sec:ensembles}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2202,10 +2346,11 @@ since $\nabla\vec{r} = d$, the dimensionality. In our casual world, $d=3$. We al
 \end{equation}
 
 
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{The Verlet algorithm}\label{sec:verlet-algo}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The trajectory $\vec{r}(t)$ of a classical particle can in principle be found by integrating Newton's law of motion
 \begin{equation}
@@ -2225,7 +2370,7 @@ The `prototype method' is the Euler method, which makes use of a Taylor expansio
 \end{equation}
 where $\dot{\vec{r}}(t)$ is the velocity at time $t$. Thus, the velocity the particle has at time $t$ remains constant until $t+\Delta t$,and really short timesteps have to be used to avoid serious truncation errors.
 
-To improve upon the Euler method, the Taylor expansion can be carried out to higher order. In the Verlet algorithm,
+To improve upon the Euler method, the Taylor expansion can be carried out to higher order. In the Verlet algorithm,\cite{Verlet:1968b}
 the expansion is carried out to third order, but without the need for time derivatives higher than second order
 (the acceleration or force). First,
 \begin{equation}
@@ -2424,11 +2569,9 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 %The nuclei 
 
 
+%\part{Results and discussion}
 
-
-\part{Results and discussion}
-
-\chapter{Diffusion of phosphorus in silicon}
+\chapter{Results and discussion}\label{cha:results} % Diffusion of phosphorus in silicon}
 
 \section{Introduction}\label{sec:resultsIntro}
 
@@ -2719,6 +2862,10 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 
 \subsection{Example 2}
 
+Here the hexagonal position is seen as a transition state(?). 
+The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
+with femtosecond resolution.
+
 \begin{figure}[H]
   \centering
   \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom.]{
@@ -2768,10 +2915,16 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 
 \section{Jump frequencies}
 
-Aware that the simulations times were probably too short, an attempt was still made to estimate jump frequencies as a function of temperature, in order to see if some pattern emerged and if the numbers made sense.
-To count jumps, we first have to define what constitutes a ''jump''. 
-We assume that there exists well-defined, static lattice sites throughout each simulation, creating a reference point of frame.
-To be sure, this is actually monitored using the translational order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, which together tells us both if the system remains crystalline, and if the lattice is static or drifts. 
+From a quick look on the data, it is apparent that the number of jumps is too low for good statistics to emerge from them.
+An attempt was still made to estimate jump frequencies as a function of temperature, to see if some trends emerged or just randomness.\footnote{
+Life at the microscopic level? Heisenberg}
+
+From textbook solid state physics, and from monte carlo simulations alike, we are accustomed with the picture of a single atom jumping from one lattice site to another. 
+While such idealisations is what makes physics possible and useful, molecular dynamics provides us with a continuous picture to which the discrete jump does not fit in naturally. 
+We have to define it.
+
+First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
+To be sure, we monitor the stability of the lattice using the translational order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, which together tells us both if the system remains crystalline, and 
 
 Figure \ref{fig:danceb} shows how atoms vibrate around well-defined lattice sites in a metastable system at 1700~K (lattice order parameter 0.6), and figure \ref{fig:dancec} how no such sites can be defined in a melted system at 1600~K (lattice order parameter 0.1).\footnote{At 1700 K, the simulation is above the melting point, but if the starting structure is crystalline, the structure may be preserved for at least tens of picoseconds, and probably even longer, before melting takes place, even with the interstitial defect present.}
 
@@ -2880,153 +3033,8 @@ Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
 \section{Discussion}
 
 
-\chapter{Phosphorus near the silicon-silicon nitride interface}
 
-\section{Introduction}
-
-\subsection{Silicon nitride as a passivation and anti-reflection coating}
-\comment{move section into  Background-chapter?}
-
-The grey, metallic appearance of polished, pure silicon is an indication of the material's undesirable high reflectivity.
-When light moves from a medium with refractive index $n_1$ to a medium with refractive index $n_2$ at normal incidence, 
-the reflectivity is found from the Fresnel equations as
-\begin{equation}
-    R = \left(\frac{\tilde{n}_0-\tilde{n}}{\tilde{n}_0+\tilde{n}}\right)^2 \approx
-    \frac{(1 - n)^2 + \kappa^2}{(1 + n)^2 + \kappa^2}
-  \label{eq:reflectivity}
-\end{equation}
-taking $\tilde{n}_0\approx 1$ to be the refractive index of air.
-This gives a reflectivity of 35~\% for light moving from air into silicon ($n=3.96$, $\kappa=0.021$ at 590 nm\cite{www:refractiveindex-Si}).
-More accurately, a weighted averaged over the whole AM1.5G spectrum gives a reflectivity of about 34~\%, still at normal incidence\cite{Macdonald:2004}
-A reflectivity of over 30~\% is much too high for a solar cell material, and
-two well-established techniques are used in combination to lower it.
-
-The first technique is \emph{texturing} the silicon surface, so that multiple scattering can take place.
-For single crystal silicon with (001) surface, (111) face V-grooves are readily made using anisotropic alkaline wet etching.
-Texturing for multi-crystalline silicon is more difficult, but can be carried out successfully using for instance
-isotropic acidic etching or reactive ion etching\cite{Macdonald:2004,Panek:2005,Koynov:2006} or laser surface texturing\cite{Iyengar:2010}.
-
-The second well-established technique to lower reflection is to add one or more layers of anti-reflection coating (ARC). 
-An ARC should have a refractive index $n$ in-between that of silicon ($n_{\text{Si}}=3.96$) and that of air ($n_{\text{air}}=1.0$).
-If we take the total reflection from two interfaces to be just the sum of the reflectivities from each interface, we find that
-the total reflectivity
-\begin{equation}
-    \left(\frac{n_{\text{air}}-n}{n_{\text{air}}+n}\right)^2 + \left(\frac{n-n_{\text{Si}}}{n+n_{\text{air}}}\right)^2 
-\end{equation}
-has a minima at the geometric mean $n=\sqrt{n_{\text{air}}n_{\text{Si}}} \approx \sqrt{n_{\text{Si}}}$.
-Furthermore, the wave reflected from the ARC-Si interface can be made to interfere destructively with an incoming wave if
-the thickness of the film is made so that the optical path length $nd$ equals a quarter of the wavelength of the wave in air, $\lambda_0$.
-Thus, the optical thickness is
-\begin{equation}
-  d = \frac{\lambda_0}{4n}
-\end{equation}
-Since sunlight is far from monochromatic, the ARC has to be optimized for a single wavelength.
-While multiple ARC layers can be used to minimize reflection over a larger range of wavelengths, 
-the additional cost and complexity often outweighs the improved transmission.
-
-\subsection{The silicon - silicon nitride interface}
-
-For a dielectric of thickness $d$ and refractive index $n$, the reflection from the back side 
-With an optical path length $nd$ e
-An ARC is a thin dielectric whose optical path length $nd$ is one quarter the wavelength $\lambda_0$ of the original wave in air.
-is the quarter-wavelength of the incoming wave, in order to create 
-destructive interference between the wave reflected at the front and back side of the ARC.
-
-with a thickness chosen so that the wavelength of the incoming wave in the ARC is one quarter the wavelength of the wave in air (or free space). 
-
-Plasma enhanced chemical vapour deposition (PECVD)\cite{Hoex:2005}
-
-anti-reflection coatings are therefore added. 
-The de facto standard material today is silicon nitride, which in addition to being an excellent anti-reflection layer, also acts as an excellent surface passivation. 
-
-
-
-
-Pure silicon reflects over 30~\% of the incoming light
-Silicon by itself 
-As thin films 
-During the last decade, silicon nitride has become the standard front surface
-
-In silicon solar cell technology, silicon nitride is 
-Silicon nitride as a passivating and anti
-
-Silicon nitride has 3:4 stoichiometry with each silicon atom bound to four nitrogen atoms,
-and each nitrogen atom bound to three silicon atoms. It can be pictured as consisting of 
-corner-sharing tetrahedra with a silicon at the centre of each SiN$_4$ tetrahedron, see fig. XXX.
-
-\cite{Riley:2000}
-
-Two crystallographic polymorphs are found under ambient pressure conditions:
-a trigonal structure with P31c symmetry known as $\alpha$-Si$_3$Ni$_4$, and a hexagonal structure with P63 symmetry
-known as $\beta$-Si$_3$Ni$_4$.
-The $\beta$ form is the thermodynamically more stable than the $\alpha$ form, and under heating the $\alpha$ form will transform into the $\beta$ form.
-\cite{Riley:2000}
-
-\cite{Morita:1999}
-
-The unit cell of the $\alpha$-form contains two Si$_3$N$_4$ units, while the unit cell of the $\beta$-form contains four.
-The unit cell of the $\alpha$-form can be seen as two unit cells of the $\beta$ form stacked on top of each other in the $c$ direction, with one of the two layers shifted relative to the other, introducing a glide plane.
-The unit cell of the $\alpha$-form differ from the unit cell of the $\beta$-form in that the $c$ axis is double as long in the 
-
-Both are built up by corner-sharing tetrahedra, and the slightly more symmetric $\beta$-form is the most stable.
-
-is commonly grown on silicon using plasma enhanced chemical vapour deposition (PECVD), 
-in which an amorphous, hydrogen-rich and not necessarily stoichiometric Si$_3$N$_4$ layers is formed. 
-This is often referred to as SiN$_x$:H. Since the clean silicon surface oxidises slightly during the loading into the 
-deposition chamber, there will also be a thin (< 2nm) oxygen-rich film in-between, referred to as SiN$_x$O$_y$.
-\cite{Aberle:2001}
-
-But silicon nitride can also be grown epitaxially on the 111 surface of silicon due to the very small lattice mismatch
-between the Si 111 plane and the $\beta$-Si$_3$N$_4$ 0001 plane.
-The side length of the hexagonal two-dimensional unit cell of the 111 surface is $\sqrt{2}a/2=\SI{3.83}{\angstrom}$, half the face diagonal of the conventional (cubic) unit cell with side length $a=\SI{5.416}{\angstrom}$. The side length of the $2\times 2$ cell is therefore \SI{7.660}{\angstrom}, only XXX percent bigger than the side length of the $\beta$-Si$_3$N$_4$ 0001 surface (\SI{7.595}{\angstrom}).
-
-
-
-
-Si-Si 2.37 Å in both bulk and the slab model
-
-Si-N 1.73 Å i Si3N4, men varierende (opptil 1.76)
-1.75-1.76 Å i slab
-forces acting on the atoms were smaller than 10 meV/Å = 0.01 eV/Å
-
-
-In order to study the energetics of phosphorus near the silicon-silicon nitride interface,
-a slab model was invoked in which a 48-atom silicon phase contacted a silicon nitride phase containing 
-8 Si$_3$N$_4$ units.
-
-
-\section{Results}
-
-In a pure silicon system, a full geometry relaxation including the cell volume, results in a bond length is \SI{2.367}{\angstrom}. %Si64
-In the interface system, a full relaxation resulted in bond lengths of $2.36\pm0.08\si{\angstrom}$ in silicon, and $1.76\pm 0.05\si{angstrom}$ in silicon nitride.
-
-
-\subsection{Energetics}
-
-From a start volume of \SI{1576.8}{\angstrom\cubed}, the cell relaxed to \SI{1571.8}{\angstrom\cubed}, mainly by a contraction of 0,3\% in the z-direction. No significant changes to the cell shape occured.
-% ../notur/hipersol/si-sin/p_ladder_relax/volumeplot.py
-
-\begin{figure}[htp]
-  \centering
-  \includegraphics[width=12cm]{../notur/hipersol/si-sin/p_ladder_relax_fixvolume/makeplot.pdf}
-  \caption{}
-  \label{fig:nome}
-\end{figure}
-
-
-\subsection{Effect on the density of states}
-
-The density of states (DOS) is calculated as
-\begin{equation}
-    \bar{n}(\varepsilon_i) = \frac{N(\varepsilon_i) - N(\varepsilon_{i-1})}{\varepsilon_i - \varepsilon_{i-1}},
-\end{equation}
-where $N(\varepsilon_i)$ is the integrated DOS
-\begin{equation}
-    N(\varepsilon_i) = \int_{-\inf}^{\varepsilon_i} n(\varepsilon) d\varepsilon
-\end{equation}
-
-
-\chapter{Final discussion}
+\section{Final discussion}
 
 
 \printbibliography
@@ -3180,8 +3188,8 @@ $f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} 
 For visualisation purposes, the two programs {\vesta} (Visualization for Electronic and STructural Analysis) and {\vmd} (Visual Molecular Dynamics) have been used, both free for non-commercial use.
 As the name suggest, \vmd was developed for visualising trajectories, while \vesta only supports still structures.
 But there are other major differences between the programs. While \vmd originates from the biophysics community, \vesta comes from the crystallographic community.
-\vesta therefore is better suited for viewing crystals, and I found that I especially missed a visualization of and alignment to crystal vectors in \vmd.
-\vmd comes with embedded Tcl (and Python if you build it yourself), so I wrote a plugin first mimicking \vesta's Orientation dialogue, and then adding 
+{\vesta} is therefore better suited for viewing crystals, and I found that I especially missed a visualization of and alignment to crystal vectors in \vmd.
+\vmd comes with embedded Tcl, so I wrote a plugin first mimicking \vesta's Orientation dialogue, and then adding 
 display of crystal vectors, view vectors and some extras.
 
 \url{https://github.com/danmichaelo/crystallography}
@@ -3193,6 +3201,47 @@ git clone git://github.com/danmichaelo/crystallography.git
 \end{lstlisting}
 
 \section{Python packages}
+
+How are we to monitor the bonding situation over time?
+
+An atom at a lattice site will in general have four nearest neighbours, each at a distance 2.37 Å.
+In fig. \ref{fig:nneighboursex}, the nearest neighbour distances for a given atom is plotted over time 
+at 1500 K.
+The left figure depicts the diffusing P-atom, while the right figure depicts a Si atom originally 4.05 Å 
+away from the P atom. 
+For a long time it remains on its site, but after 43 ps it is kicked away from its lattice site, 
+and at 49 ps it falls to rest at a new site.
+
+\begin{lstlisting}
+from read_trajectory import read_trajectory
+from ?? import NearestNeighbours
+traj = read_trajectory(unwrap_pbcs = True)
+for i in range(65):
+    nn = NearestNeighbours(traj, atom=i)
+    nn.plot_to_file('neighboursdst_atom%02d.pdf' % i)
+\end{lstlisting}
+
+\begin{figure}[htp]
+  \centering
+    \subfloat[Phosphorus]{
+      \label{fig:p}
+      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom00.pdf}
+      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom00.pdf}
+    }
+    \subfloat[A Si atom]{
+      \label{fig:si10}
+      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom08.pdf}
+      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom08.pdf}
+    }
+  \caption{Distance to four nearest neighbours for the P atom (left) and a non-diffusing 
+      Si atom (right) atom at 1500 K. 
+      The relaxed Si-Si bond length, 2.37 Å is shown by a red line. 
+      Areas where all four nearest neighbour distances are less than 0.15 Å 
+  from 2.37 Å are shaded, indicating where the atom is tetrahedrally bonded.}
+  \label{fig:nneighboursex}
+\end{figure}
+
+
 
 \url{https://github.com/danmichaelo/oppvasp}
 \begin{lstlisting}
