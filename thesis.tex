@@ -130,7 +130,7 @@ As an introduction, table \ref{tb:si} presents some key properties of silicon,
      Lattice constant / Å  & 5.43086 \cite{Ghandhi:1994}, 5.43072 $\pm$ 0.00004 Å at \SI{25}{\celsius} \cite{Smakula:1955} \\
      Distance between neighboring atoms / Å & 2.35163 \\
      Atomic density & \SI{4.99441e22}{\per\centi\metre\cubed} \\
-     Melting point & \SI{1685}{\kelvin} / \SI{1412}{\kelvin} \\
+     Melting point & \SI{1685}{\kelvin} / \SI{1412}{\celsius} \\
      Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\\bottomrule
   \end{tabular}
   \caption{Some key properties of silicon (Har ikke helt bestemt hvilke som bør være med her)}
@@ -484,7 +484,7 @@ distorted from the tetrahedral position $(\frac{4}{8},\frac{4}{8},\frac{4}{8})$ 
 %}
 %all potentially large enough to hold an atom without distorting the remaining lattice considerably.
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   % All figures generated at /si-pi/si64/test_structures/tetrahedral/stdrelax-short
   \centering
   \subfloat[Clean cell]{
@@ -1236,7 +1236,7 @@ $a=2.38$~Å containing a single atom.
 The brillouin zone is then a line segment of length $2\pi/a$. 
 The left part of figure \ref{fig:kpointdensities} shows the energy bands sampled at 17 k points between $-\pi/a$ and $\pi/a$.\footnote{Of course there is some symmetry here. Really, we would only have to sample the irreducible brillouin zone of length $\pi/a$, but the whole Brillouin zone was sampled here for the purpose of illustration.}
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
   \includegraphics{figs/kpointdensity.pdf}
   \caption{Illustration of the effect of using supercells in one dimension. 
@@ -1755,7 +1755,7 @@ The right part of fig. \ref{fig:tests/cellsize} shows the distance each of the a
 The left part of the figure shows a small part of the cell encompassing a 64-atom cell around the defect, with the size of the 64-atom cell indicated by a blue square.
 As we see, the defect causes some distortion even beyond the boundaries of the 64-atom cell, but the error from self-interaction is most likely not any worse than the other small errors we've already introduced.
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
     \subfloat[]{
       \label{fig:cellsize_pic}
@@ -1831,7 +1831,7 @@ The calculations included 46656 plane waves and about 165 bands (163-168 dependi
 % /cores64: titan: 
 %    1.75 secs
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \begin{minipage}[c]{6.5cm}
       \includegraphics[width=6.5cm]{figs/tests/parallelisation} % 8x8 cm
   \end{minipage}
@@ -1879,7 +1879,7 @@ Of course, good scaling requires a task that actually can be parallelised.
 A molecular dynamics simulation is not very well suited in that respect; Two ionic steps can logically not be carried out parallelly, as one depends on the other, and neither can two electronic steps. 
 We are left parallelising the calculation for each electronic step, and with only one $k$ point, what remains is the options to parallelise over bands ($n$) and plane waves ($G$) in \eqref{eq:pwbasis}.
 
-The {\vasp} code can handle parallelisation over bands and plane waves efficient up to at least 32 cores in typical cases.\cite{vasp-manual} 
+The {\vasp} code can handle parallelisation over bands and plane waves efficient up to at least 32 cores in typical cases.\cite{VASP-guide} 
 But with electronic steps calculated in less than one clock-second, it is possible that initialisation steps and other parts of the code that can not be parallelised, starts to dominate over the parallelised parts of the code. 
 Investigating this further could be an interesting study on its own, 
 but here we will just accept the current scaling situation and parallelise only over eight cores. 
@@ -2001,9 +2001,17 @@ In each case, the parameter approaches a value of about $\sqrt{M}$ for a disorde
 Fig. \ref{fig:melting1600} shows an example of melting from an actual MD run with 64 Si atoms and one P atom at 1600 K, where the system melted after being in a semistable, crystalline state for almost 29~ps,
 with \ref{fig:translationalorder1600} showing the translational order parameter using three different $\vec{G}$ vectors,
 and \ref{fig:poten1600} showing the change in potential energy that also accompanies a melting (there is no change in kinetic energy); about 0.3 eV per atom.
-In macroscopic units, this corresponds to \SI{1030}{\kilo\joule\per\kilogram}, which is about half the experimental heat of fusion (difference of enthalphy between crystal and melt),\footnote{Taking the average atom weight to be 28~u, we find $\frac{\SI{0.3}{\electronvolt}}{28\si{\amu}}\times \frac{\SI{1.60e-22}{\kilo\joule\per\electronvolt}}{\SI{1.66e-27}{\kilogram\per\amu}} \approx \SI{1030}{\kilo\joule\per\kilo\gram}$. The experimental heat of fusion is about 1925 kJ/kG according to \url{http://www.engineeringtoolbox.com/fusion-heat-metals-d_1266.html}.} although I'm not sure to what degree it makes sense to compare the values at all.
+In macroscopic units, this corresponds to a change in internal energy $\Delta U = \SI{29}{\kilo\joule\per\mole}$, about half the experimental enthalpy of fusion $\Delta_{\text{fus}}H$ of pure silicon,\footnote{To convert to macroscopic units, we multiply by the Avogradro constant, and convert electronvolts to kilograms:
+$\SI{0.3}{\electronvolt}\times\SI{6.022e23}{\per\mole}\times\SI{1.60e-22}{\kilogram\per\electronvolt} = \SI{29}{\kilo\joule\per\mole}$. 
+Enthalpy change $\Delta H = \Delta U + p\Delta V$, but $\Delta U$ is normally the dominant term.
+Experimentally, $\Delta_{\text{fus}} H = \SI{50.2}{\kilo\joule\per\mole}$.\cite[6.130]{CRC:85}.}
+ 
+%    The experimental
+%Or using the average atom weight 28~u, we find $\frac{\SI{0.3}{\electronvolt}}{28\si{\amu}}\times \frac{\SI{1.60e-22}{\kilo\joule\per\electronvolt}}{\SI{1.66e-27}{\kilogram\per\amu}} \approx \SI{1030}{\kilo\joule\per\kilo\gram}$.
 
-\begin{figure}[htp]
+%The experimental heat of fusion is about 1925 kJ/kG according to \url{http://www.engineeringtoolbox.com/fusion-heat-metals-d_1266.html}.} although I'm not sure to what degree it makes sense to compare the values at all.
+
+\begin{figure}[htbp]
   \centering
     \subfloat[Translational order parameter $\lambda$ from \eqref{eq:lattice_order_parameter}.]{
       \label{fig:translationalorder1600}
@@ -2035,21 +2043,6 @@ with 64 silicon atoms and one phosphorus atom at 1400 K (the experimental meltin
 Note that the extra phosphorus atom introduces a local distortion into the crystal, but this is quite short-ranged,
 so the overall translational order of the crystal is still largely preserved, as reflected in the order parameters.
 
-\begin{figure}[htp]
-  \centering
-    \subfloat[Time evolution of translational order parameters $\lambda '$ from \eqref{eq:lattice_order_parameter}
-    and $\lambda$ from \eqref{eq:simple_lattice_order_parameter}]{
-      \label{fig:translationalorder1400}
-      \includegraphics[width=7cm]{figs/split110_1400_translational_order.pdf}
-    }
-    \subfloat[Lattice drift in each direction]{
-      \label{fig:latticedrift1400}
-      \includegraphics[width=7cm]{figs/split110_1400_lattice_drift.pdf}
-    }
-  \caption{Translational order and lattice drift for a system with 65 atoms at 64 lattice sites (one interstitial) at 1400 K.}
-  \label{fig:translationalorder}
-\end{figure}
-
 \subsubsection{Handling drift of the reference frame}
 
 Comparing the two translational order parameter functions, it's seen that the whole system drifts over time in this particular run, although the shift is not easily quantified from this information alone. 
@@ -2063,6 +2056,21 @@ In our case we're interested in comparing the system to a reference lattice – 
 For any given timestep we first assign each atom to its nearest lattice site and then calculate the drift as the directional median distance between an atom and its lattice site.\footnote{Note that since we have added an extra atom, there will in general be two atoms assigned to the same site, but if there is no lattice drift the atoms will still be centred about lattice sites.}
 The result is a vector $\vec{\delta}(t)$ that can be subtracted from the trajectory or added to the reference lattice after appropriate smoothing over lattice vibrations and minor wiggles; a symmetric running mean over 4~ps was found to work well.
 Fig. \ref{fig:latticedrift1400} shows the components of the drift vectors before (semitransparent lines) and after (solid lines) applying such a smoothing.
+
+\begin{figure}[htbp]
+  \centering
+    \subfloat[Time evolution of translational order parameters $\lambda '$ from \eqref{eq:lattice_order_parameter}
+    and $\lambda$ from \eqref{eq:simple_lattice_order_parameter}]{
+      \label{fig:translationalorder1400}
+      \includegraphics[width=7cm]{figs/split110_1400_translational_order.pdf}
+    }
+    \subfloat[Lattice drift in each direction]{
+      \label{fig:latticedrift1400}
+      \includegraphics[width=7cm]{figs/split110_1400_lattice_drift.pdf}
+    }
+  \caption{Translational order and lattice drift for a system with 65 atoms at 64 lattice sites (one interstitial) at 1400 K.}
+  \label{fig:translationalorder}
+\end{figure}
 
 
 %At this temperature, many diffusive jumps occur, and comparing the two lattice order parameters, we see
@@ -2092,7 +2100,7 @@ Fig. \ref{fig:latticedrift1400} shows the components of the drift vectors before
 %\end{equation}
 %See fig. \ref{fig:md_test_displacement}.
 
-%\begin{figure}[htp]
+%\begin{figure}[htbp]
 %  \centering
 %    \subfloat[Translational order parameter]{
 %      \label{fig:simelttr}
@@ -2575,11 +2583,13 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 
 \section{Introduction}\label{sec:resultsIntro}
 
-As described in section \ref{sec:P}, \ldots, several different configurations.
-
+Simulations will be carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
+The system will be referred to as Si$_{64}$P, lending notation from chemistry, but hopefully not giving associations to a giant molecule.
+The extra phosphorus enters an interstitial position, but as described in section \ref{sec:P}, \ldots, several different configurations are known.
+While the choice of initial configuration is not expected to have a big impact on the simulation, \comment{WHY NOT? MD books often talks about equlibration, but can we say that a solid equlibrates? velocity autocorrelation}
+it is still worth investigating the different configurations, to start from the most stable one.
 
 \section{Initial structures}\label{sec:structures}
-
 
 % Sammenlign med perfekt 64Si
 % test_structures/perfect/stdrelax/OUTCAR.3
@@ -2726,14 +2736,14 @@ The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 directio
 More surprisingly the distance between the Si and P atoms sharing a lattice site increased to \SI{2.44}{\angstrom}, slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, making the description of them as a pair questionable. 
 
 
-%\begin{figure}[htp]
+%\begin{figure}[htbp]
 %  \centering
 %  \includegraphics[width=6cm]{../figures/split110_initial.png}
 %  \caption{Relaxed Si-P split ``pair''.}
 %  \label{fig:relaxedSIPsplit}
 %\end{figure}
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
     \subfloat[First -340.827613 eV]{
       \label{fig:split110a}
@@ -2911,7 +2921,184 @@ with femtosecond resolution.
 
 \section{Melting}
 
-\ldots
+%Since j trajectories $\vec{r}(t)$ are the 
+%Since trajectories are not so often depicted, even in books on molecular dynamics, I've chosen to include two pictures showing what the atomic motion looks like.
+
+The lowest temperature for which the Si$_{64}$P system melted in our simulations was \SI{1600}{\kelvin} (\SI{1330}{\celsius}), making this an upper limit for the melting point of the system. 
+It is likely that the melting point is lower though, since a system near its melting point can remain in a metastable state for a long time, even on a macroscopic timescale.
+That no melting was seen at \SI{1550}{\kelvin} may be due to the temperature being below the melting point, or due to metastability.
+
+Figure \ref{fig:dancea} shows an example of a melted system at 1600 K; the lines are 20 ps trajectories of the 65 atoms in the system, starting after the system melted from its original crystalline state. 
+It is evident that no long scale order is present, and to be sure the lattice order parameter \eqref{eq:lattice_order_parameter} is $\sim 0.1$. If we were to follow a single atom on its journey, however, we would find some local order that can be revealed from e.g. the radial pair distribution function, discussed below.
+
+The difference to the crystalline state, exemplified with 20 ps trajectories in \ref{fig:danceb}, is of course striking. 
+The example is from a simulation at 1700 K, the highest temperature for which the system remained in a crystalline state for a considerable time.
+Yet, while the system depicted here could melt at any moment, the trajectories are not qualitatively different from the trajectories obtained at a temperature below the melting point. The ``nests'' are larger due to the higher kinetic energy, but they are still centred about points, and the points are part of a lattice, indicated by the grid for which the lattice order parameter \eqref{eq:lattice_order_parameter} is > 0.8, using $\vec{G}_{111}$. 
+
+\begin{figure}[htbp]
+    \begin{center}
+      %\subfigure[700~K. Kinetic energy 89 meV/atom]{
+      %  \label{fig:dancea}
+      %  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_700/dance6.png}
+      %}
+      \subfloat[Liquid state at \SI{1600}{\kelvin} (kinetic energy 204 meV/atom)]{
+        \label{fig:dancea}
+        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1600/dance_1200x1200.png}
+      }
+        \subfloat[Crystalline state at \SI{1700}{\kelvin} (kinetic energy 216 meV/atom)]{
+        \label{fig:danceb}
+        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/hexagonal_1700/dance5.png}
+      }
+    \end{center}
+    \caption{Two 20 ps trajectories of the Si$_{64}$P system, viewing along the 001 direction, at the same scale; the scale bar in the lower left is 1~Å.}
+    \label{fig:dance}
+\end{figure}
+
+%Figure \ref{fig:danceb} shows an example of how the crystalline state may look like in a molecular dynamics simulation at elevated temperature.
+%This is actually a metastable state well above the melting point of the system, 
+%but while the microscopic motion is chaotic, the lattice, as indicated in the figure by the grid, is still well defined (the translational order parameter \eqref{eq:lattice_order_parameter} is > 0.8 using $\vec{G}_{111}$).
+%Compare with figure \ref{fig:dancec}, showing the same system at a temperature 100 K lower, but here no lattice can be defined, and the system is clearly melted (lattice order parameter $\sim$ 0.1).
+Techniques for determining the melting point from a molecular dynamics simulation is discussed e.g. by Yoo.\cite{Yoo:2009} 
+A direct approach involves starting from a system where half the cell is crystalline, and the other half is liquid. 
+Using a NPH ensemble, the two parts may even start at different temperatures, and then equilibrate. 
+Using this approach, Yoo found a melting point for pure silicon $T_m = 1540 \pm 50$ K, and also noted that other DFT-based studies have 
+underestimated the melting point as well.\cite{Yoo:2009}
+
+With pure silicon experimentally melting at \SI{1687}{\kelvin}, and with only a very modest reduction when phosphorus at doping concentrations is added,\cite{Safarian:2011} our upper limit of \SI{1600}{\kelvin} indicates that the melting point is underestimated in this work as well.
+
+\subsection{Short-scale order in the melt}
+
+Upon melting, long-scale order is lost, while some short-scale order remains. 
+This can be seen in the radial pair distribution function $g(r)$, defined as the ratio of the average local atomic (or molecular) density $\rho(r)$ at a distace $r$ from an arbitrary atom (or molecule), to the bulk density $\rho$ of the liquid;\cite{Kirkwood:1968}
+\begin{equation}
+  \rho(r) = g(r) \rho
+  \label{eq:gofr}
+\end{equation}
+For any given atom, the number of atoms $N(r,r+\Delta r)$ within a shell of thickness $\Delta r$ can be counted, and average the number over the timespan of a simulation. 
+The thickness of the shell must be chosen thin enough to capture the structure of the function, while thick enough to include enough counts, typically in the order of 0.1~Å.\cite[263]{Haile:1992}
+With the volume of the shell being $V(r,\Delta r) = \frac{4}{3}\pi [(r+\Delta r)^3 - r^3)]$, we can write
+\begin{equation}
+    g(r) = \frac{\langle N(r,r+\Delta r) \rangle}{\rho V(r,\Delta r)}
+  \label{eq:gofr}
+\end{equation}
+The function falls to zero for $r\to 0$ due to repulsive forces between atoms, and approaches unity for $r\to\infty$ since there is no long range order in liquids.
+
+% Trajectories shown:
+% Solid: split110_700: 10 ps extracted
+% Solid: hexagonal_1700: 10 ps extracted
+% Liquid: hexagonal_1700_2: 10 ps extracted
+% 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=12cm]{figs/rdfmelt}
+  \caption{Si-Si radial pair distribution function for two simulations of a solid system at different temperatures (upper), and
+  comparison of the Si-Si and P-Si radial pair distribution functions for the same liquid system (lower), 
+  time-averaged over 10 ps in both cases. 
+  The annotated peaks in the lower figure refers to the Si-Si function.
+  Note also the different scales on the ordinate axes in the upper and lower figure.}
+  \label{fig:pcf}
+\end{figure}
+
+The upper part of fig. \ref{fig:pcf} shows $g(r)$ for the crystalline Si$_{64}$P system at the lowest and highest temperatures simulated.
+At 700 K, the nearest neighbour peak is centred at \SI{2.36}{\angstrom}, 
+the second nearest neighbour peak at \SI{3.86}{\angstrom} and the 
+third-nearest neighbour peak at \SI{4.55}{\angstrom}.\footnote{
+For simplicity, the function was only plotted to a radius \SI{5.94}{\angstrom}, half the side length of the unit cell.
+Methods for extending the function above such a radius is discussed in e.g. Alder 1968.}
+%Alder, B. J  and W. G Hoover, ``Numerical Statistical Mechanics'' in ''Physics of Simple Liquids, H. N. V. Temperley, J. S. Rowlinson,
+%and G. S. Rushbrooke, Eds., North-Holland, Amsterdam, 1968, Chapter 4
+At 1700 K, the distribution is more smoothed out due to larger vibrations, but otherwise the same structure can be seen.
+
+The lower part of the figure compares the P-Si and Si-Si radial pair distribution functions for a system in the liquid state at 1700 K.
+The data available to compute the P-Si pair function is of course only 1/64 the data available to compute the Si-Si pair function, which is why the P-Si function is more jagged. 
+Apart from that, the functions are similar, with the P-Si function shifted slightly to the left to the Si-Si function. 
+
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[htbp]
+     \begin{tabular}{lllll}
+        \toprule
+          Source & Temp. [K] & 1. peak [Å] & 2. peak [Å] & Coordination no. \\
+        \midrule
+          This work 
+            & 1700                  & 2.43 & 4.00       & 5.8 or 6.1 ???  \\
+          Waseda (1975)\cite{Waseda:1975}\tnote{a}
+            & 1733                  & 2.50 & 3.78       & 6.4   \\
+          Stich (1991)\cite{Stich:1991}\tnote{b}    
+            & 1800                  & 2.46 & 3.70       & 6.5   \\
+          Stich (1996)\cite{Stich:1996}\tnote{c}    
+            & 1700                  & 2.47 & 3.64       & 6.2   \\
+          Ansell (1998)\cite{Ansell:1998}\tnote{a,d}
+            & 1603                  & 2.42 & 3.27 3.95  & $5.6\pm 0.5$   \\
+          Ansell (1998)\cite{Ansell:1998}\tnote{a}      
+            & 1829                  & 2.46 & 3.45       & $6.4\pm 0.5$   \\
+       \bottomrule
+     \end{tabular}
+     {\footnotesize
+       \begin{tablenotes}
+         \item[a] X-ray diffraction study
+         \item[b] Ab initio Car-Parinello MD at LDA-level
+         \item[c] Ab initio Car-Parinello MD at spin-polarized GGA-level
+         \item[d] supercooled
+       \end{tablenotes}
+     }
+   \end{threeparttable}
+   \caption{Comparison of radial pair correlation function positions (units are Å)}
+   \label{tab:pcf}
+\end{table}
+
+Table \ref{tab:pcf} compares the peaks in the Si-Si pair correlation function found here with values found in the literature for pure silicon. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=8cm]{figs/rdf_first_coord}
+  \caption{Coordination numbers $n(r')$ from integrating $4\pi\rho g(r) r^2 $ for a Si$_64$P system
+      at 1600 K in solid (above) and liquid (below) phase.
+      Note that minima and maxima, indicated by vertical lines, are evaluated from $g(r)$, not $g(r) r^2$,
+     which is why they appear to be shifted.  
+     The parabolic function $4\pi r^2 \rho$ is shown by dashed lines.
+    }
+  \label{fig:rdffirstcoord}
+\end{figure}
+
+Only the first two peaks are included, since the third peak is not fully resolved in this work.
+While the first peak compares quite well with literature values, the discrepancy in the second peak is considerable, much
+larger than what should be expected just from the addition of a phosphorus atom.
+One possible reason for the discrepancy is that the current work was carried out using the canonical (NVT) ensemble, 
+not allowing for volume change. 
+Experimentally, melting of silicon is associated with a density increase of about 10~\%.\cite{Waseda:1980}
+In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\centi\metre\cubed}, about 10~\% denser than the density of our system; \SI{2.32}{\gram\per\centi\metre\cubed}.
+
+Coordination numbers are found from $g(r)$ by 
+\begin{equation}
+    n(r') = 4\pi\rho \int_0^{r'} g(r) r^2 \,dr
+    \label{eq:coordno}
+\end{equation}
+where the integration is carried out until the first minimum to find the ``nearest neighbours''. 
+The process is illustrated in fig. \ref{fig:rdffirstcoord}.
+As expected, this yields a coordination number of approximately four when evaluated at the deep minimum found for a system in the crystalline state.
+For the shallow minimum found in a liquid state, however, there is considerable disambiguity in how to evaluate the integral.
+In fig. \ref{fig:rdffirstcoord}, it was evaluated to the first minimum in $g(r)$, for which $n(3.18) = 6.1$. 
+Evaluated to the first minimum in $g(r)r^2$ instead, we obtain instead $n(3.04)=5.5$.
+Instead of the abrupt cutoff, other methods have been, such as evaluating the peak as symmetric, integrating to the top of the peak only, and multiplying the value by two, (VAR DET i Alder:1968?)
+but I'm not sure if there is really a physical motivation for such an approach.
+
+An interesting aspect of molecular dynamics is that it also provides the dynamic data underlying the static pair distribution function. 
+In fig. \ref{fig:nn_melting}, the distance between a silicon atom and its 16 nearest neighbours (4 in first `shell', 12 in `second') is plotted for each of the 64 silicon atoms, with each distance plotted as a small point.
+The data is from a 50~ps simulation at 1600~K, for which the system remained crystalline for about 30~ps.
+It can be seen that the first `band', arising from the four nearest neighbours, is somewhat preserved upon melting. 
+This is of course the first peak in the radial pair distribution function.
+The disambuigity in defining the integration limit in \eqref{eq:coordno} is perhaps even clearer here. 
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=10cm]{figs/tetrahedral_1600_neighboursdst_atom_all_nosmooth.png}
+  \caption{Nearest neighbour distance for the 16 nearest neighbours, for each of the 64 silicon atoms.
+      From a simulation at $T=\SI{1600}{\kelvin}$ which melted at $\sim$ 30~ps.
+      Average distances are drawn as lines at the edges only.
+  }
+  \label{fig:nn_melting}
+\end{figure}
 
 \section{Jump frequencies}
 
@@ -2924,28 +3111,7 @@ While such idealisations is what makes physics possible and useful, molecular dy
 We have to define it.
 
 First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
-To be sure, we monitor the stability of the lattice using the translational order parameters \eqref{eq:simple_lattice_order_parameter} and \eqref{eq:lattice_order_parameter}, which together tells us both if the system remains crystalline, and 
-
-Figure \ref{fig:danceb} shows how atoms vibrate around well-defined lattice sites in a metastable system at 1700~K (lattice order parameter 0.6), and figure \ref{fig:dancec} how no such sites can be defined in a melted system at 1600~K (lattice order parameter 0.1).\footnote{At 1700 K, the simulation is above the melting point, but if the starting structure is crystalline, the structure may be preserved for at least tens of picoseconds, and probably even longer, before melting takes place, even with the interstitial defect present.}
-
-  \begin{figure}[htp]
-    \begin{center}
-      %\subfigure[700~K. Kinetic energy 89 meV/atom]{
-      %  \label{fig:dancea}
-      %  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_700/dance6.png}
-      %}
-      \subfloat[1700~K. Kinetic energy 216 meV/atom]{
-        \label{fig:danceb}
-        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/hexagonal_1700/dance5.png}
-      }
-      \subfloat[1600~K. Kinetic energy 204 meV/atom]{
-        \label{fig:dancec}
-        \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1600/dance_1200x1200.png}
-      }
-    \end{center}
-    \caption{20 ps trajectories of 64 Si + 1 P. Viewing along the 001 direction, at the same scale. The scale bar in the lower left is 1~Å.}
-    \label{fig:dance}
-  \end{figure}
+To be sure, we monitor the stability of the lattice using the translational lattice order parameter \eqref{eq:lattice_order_parameter}. From the discussion in the accompanying section \ref{sec:translational order}, we also have a means to remove lattice drift.
 
 An atom A is defined to \emph{sit} on a lattice site X when (a) X has been the nearest lattice site to A for more than $t_{\text{min}}$ ps, and (b) the distance between X and A has been less than $x_{\text{max}}$ (not necessarily for any long time). Having defined what it means to \emph{sit} on a lattice site, an atom \emph{jumps} simply when it changes from sitting at one site to another.
 
@@ -3007,7 +3173,7 @@ Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
   \label{tab:jumps}
 \end{table}
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=12cm]{../notur/hipersol/si-pi/si64/find_jump_frequencies.pdf}
   \caption{Jump frequencies as a function of temperature}
@@ -3221,7 +3387,7 @@ for i in range(65):
     nn.plot_to_file('neighboursdst_atom%02d.pdf' % i)
 \end{lstlisting}
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
     \subfloat[Phosphorus]{
       \label{fig:p}
@@ -3250,7 +3416,7 @@ git clone git://github.com/danmichaelo/oppvasp.git
 
 The vtf writer writes both positions and forces, and the latter can be read by newer versions of VMD's vtfplugin.
 
-\begin{figure}[htp]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/vmdscene4.png}
   \caption{Force visualization}
