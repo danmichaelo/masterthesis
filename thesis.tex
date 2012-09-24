@@ -345,23 +345,33 @@ Einstein related the displacement along the $x$ axis, $\lambda_x$, to the diffus
     \lambda_x = \sqrt{x^2} = \sqrt{2Dt}
   \label{eq:einsteinRelationSimple}
 \end{equation}
-Na\"{\i}vely, the diffusion coefficient of a species can thus be found from a knowledge of the displacement of all atoms of that species,
-and this is actually the approach followed in molecular dynamics simulations.
-While it's a tempting approach, and also the one followed in this work, it should not come to a surprise that simulating a large number of atoms over a sufficient amount of time is a computationally demanding task, and for many systems it's just not feasible. 
-A short discussion of other approaches is therefore in place, especially since these to a large degree have formed the way we understand and describe diffusion.
+The diffusivity of a species can thus be found from a knowledge of the time-resolved displacement of all atoms of that species.
+Such a na\"{\i}ve approach is often hindered, both in experimental and theoretical methods, by difficulties in obtaining this information, but from a molecular dynamics simulation it's readily available.
+The major problem with obtaining diffusivities from a molecular dynamics simulation, is that diffusion can be a quite slow process.
+For any given system, the simulation of a large number of atoms over a long enough amount of time, may not be computationally feasible.
 
-In the solid phase, very little diffusion occurs compared to the liquid or gas phase. 
-In a crystal, the atoms remain at given lattice sites most of the time.
-At a finite temperature $T$, the atoms will have kinetic energies according to a Boltzmann distribution for that temperature,
-and since the atoms are `trapped' by the neighbouring atoms this energy goes into vibrations. 
-If, however, an atom obtain a kinetic energy larger than a given treshold energy, it can migrate (`jump') into another site.
-This is an example of what is called an \emph{activated process}, and the treshold energy is called an activation energy, $E_a$.
-In general there is not just one diffusion mechanism involved, and the value for the activation energy obtained by experiment or simulation is a weighted average over all possible mechanisms.
-One mechanism may, however, be the dominating one. In the case of phosphorus in silicon, there is a general consensus that interstial-mediated diffusion is the dominating mechanism. \comment{KILDER!}
+%For solids, and especially crystals, the dynamic atomic motions is often described in terms of discrete jumps, a concept that will now be introduced, since it will be referred to later on.
+%An approach often taken in other theoretical models than molecular dynamics, when studying solids
+%the dynamic atomic motion is therefore replaced by discrete jumps, a concept that will now be discussed, since it will be referred to later on, and since it's so prevalent.
+%A short discussion of other approaches is therefore justified, especially since these to a large degree have formed the way we understand and describe diffusion.
 
-Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $\e^{-E_a/KT}$, and so the probability for a jump to happen is just $\e^{-E_a/kT}$. 
+In the solid phase, diffusion is very slow compared to diffusion in the liquid or gas phase. 
+In a crystal, atoms remain at given lattice sites most of the time.
+At a finite temperature $T$, the atoms will have kinetic energies according to a Boltzmann distribution for 
+that temperature (see section \ref{sec:maxwell-boltzmann}),
+but since the atoms are `trapped' by neighbouring atoms, the energy goes into vibrations. 
+If, however, an atom obtain a kinetic energy larger than a given treshold energy, 
+it can migrate (`jump') into another site.
+This is an example of what is called an \emph{activated process}, and the treshold energy for a well-defined process is called an activation energy, $E_a$.
 
-In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by the attempt frequency $\nu$,
+Diffusion is an activated process, as seen from \eqref{eq:arrhenius-dif}, 
+but in general there is not just one diffusion mechanism (or process) involved, 
+and the value for the activation energy obtained by experiment or simulation is a weighted average over all possible mechanisms.
+One mechanism may, however, be the dominating one. In the case of phosphorus in silicon, 
+there is now, and has been for some time, a consensus that interstial-mediated diffusion is the dominating mechanism. \comment{KILDER!}
+
+Back to the concept of `jumps'. Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $\e^{-E_a/KT}$, and so the probability for a jump to happen is just $\e^{-E_a/kT}$. 
+In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by an `attempt frequency' $\nu$,
 \begin{equation}
   \Gamma = \nu \e^{-E_a/kT}
   \label{eq:jumpfreq-est}
@@ -1921,7 +1931,7 @@ where motion occurs in a way as to preserve the Hamiltonian function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Monitoring translational order}\label{sec:translation-order}
+\section{Monitoring translational order}\label{sec:translational-order}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2151,7 +2161,7 @@ $\beta$ is the `thermodynamical beta',
 \begin{equation}
   \beta \equiv \frac{d\ln\Omega}{dE} = \frac{1}{k}\frac{dS}{dE} = \frac{1}{kT}
 \end{equation}
-where $\Omega$ is the multiplicity, $S$ the entropy, $k$ Boltzmann's constant and $T$ is the (termodynamic) temperature. 
+where $\Omega$ is the multiplicity, $S$ the entropy, $k$ Boltzmann's constant and $T$ is the (thermodynamic) temperature. 
 The ensemble average of some observable $A$ represented by the operator $\hat{A}$ is
 \begin{equation}
   \langle A \rangle = \sum_i P_i \langle i | \hat{A} | i\rangle = \sum_i \langle i | \hat{P} \hat{A} | i \rangle,
@@ -2238,15 +2248,14 @@ where $m_i$ is the mass of the particle having the momentum component $p_i$.
 Summing both sides over all $3N$ components, 
 \begin{align}
   \sum_{i=1}^{3N} \left\langle\frac{p_i^2}{2m_i} \right\rangle &= \sum_{i=1}^{3N} \frac12 kT \\
-  \langle E_k \langle = \frac32 NkT
+  \langle E_k \rangle = \frac32 NkT
 \end{align}
-
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Maxwell-Boltzmann distribution for kinetic energies}
+\subsection{Maxwell-Boltzmann distribution for kinetic energies}\label{sec:maxwell-boltzmann}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2424,8 +2433,11 @@ Illustration? Something like the first figure on
 \url{http://en.wikipedia.org/wiki/Euler_integration} ?
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Initial state}
-
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 For the first step, the positions and velocities (or momenta) of all the atoms have to be specified manually. 
 The positions are given in the form of a crystal structure, as further discussed in section \ref{sec:structures}.
 The velocities should be sampled from a Maxwell-Boltzmann velocity distribution \eqref{eq:maxboltz-vdist-1D},
@@ -2457,7 +2469,11 @@ From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Thermostats}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -2554,7 +2570,11 @@ This is not unlikely to be an effect of non-ergodicity, with the distribution no
   \label{fig:md_test_temperature}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Ensembles}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In thermal equilibrium, the following relation should hold
 \begin{equation}
@@ -2569,8 +2589,11 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Ab initio molecular dynamics}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\subsection{Forces and stress}\label{sec:forcestress}
 
@@ -2579,9 +2602,19 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 
 %\part{Results and discussion}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \chapter{Results and discussion}\label{cha:results} % Diffusion of phosphorus in silicon}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Introduction}\label{sec:resultsIntro}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Simulations will be carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
 The system will be referred to as Si$_{64}$P, lending notation from chemistry, but hopefully not giving associations to a giant molecule.
@@ -2589,7 +2622,11 @@ The extra phosphorus enters an interstitial position, but as described in sectio
 While the choice of initial configuration is not expected to have a big impact on the simulation, \comment{WHY NOT? MD books often talks about equlibration, but can we say that a solid equlibrates? velocity autocorrelation}
 it is still worth investigating the different configurations, to start from the most stable one.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Initial structures}\label{sec:structures}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Sammenlign med perfekt 64Si
 % test_structures/perfect/stdrelax/OUTCAR.3
@@ -2728,7 +2765,11 @@ Pichler also noted a similar ``antibond-centered $\langle 111 \rangle$'' interst
 %Tetrahedral
 %-339.349832 eV
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsubsection{Preparation of the split 110 cell}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
 The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
@@ -2761,14 +2802,23 @@ More surprisingly the distance between the Si and P atoms sharing a lattice site
   \label{fig:relaxedSIPsplit}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Stability of the \spl{110} configuration}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 One rather 
 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Trajectories}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %It should be noted that Sahli (2005) reported the distance from silicon atoms to a split site as 1.45 Å. 
 %This was for a Si-Si self interstitial.
 
@@ -2782,7 +2832,11 @@ The first one is a 30 ps simulation at 1000 K, in which a single diffusion jump 
 The trajectory shows many features that are quite typical of most simulations.
 The second example is one of extraordinary diffusion, in which phosphorus diffuses about 10 Å in 90 ps at 1300 K.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Example 1}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
 where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
@@ -2794,7 +2848,7 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   The dashed lines indicates the distances at the beginning of the simulation. 1.32 and 2.05 Å are thus the distance to the nearest
   and second nearest lattice position when in a split site.
 
-  \clearpage
+  %\clearpage
 %\begin{figure}[H]
 %  \centering
 %  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
@@ -2870,7 +2924,11 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 %\subtitle{Jump figure}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{Example 2}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Here the hexagonal position is seen as a transition state(?). 
 The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
@@ -2919,7 +2977,11 @@ with femtosecond resolution.
   %(slightly rotated from [$\bar{1}01$] to provide a perspective.
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Melting}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Since j trajectories $\vec{r}(t)$ are the 
 %Since trajectories are not so often depicted, even in books on molecular dynamics, I've chosen to include two pictures showing what the atomic motion looks like.
@@ -2929,10 +2991,10 @@ It is likely that the melting point is lower though, since a system near its mel
 That no melting was seen at \SI{1550}{\kelvin} may be due to the temperature being below the melting point, or due to metastability.
 
 Figure \ref{fig:dancea} shows an example of a melted system at 1600 K; the lines are 20 ps trajectories of the 65 atoms in the system, starting after the system melted from its original crystalline state. 
-It is evident that no long scale order is present, and to be sure the lattice order parameter \eqref{eq:lattice_order_parameter} is $\sim 0.1$. If we were to follow a single atom on its journey, however, we would find some local order that can be revealed from e.g. the radial pair distribution function, discussed below.
+It is evident that no long scale order is present, and to be sure the lattice order parameter \eqref{eq:lattice_order_parameter} is $\sim 0.1$. If we were to follow a single atom on its journey, however, we would find some local order that can be revealed from e.g. the radial pair distribution function, discussed in section \ref{sec:pair-distribution} below.
 
 The difference to the crystalline state, exemplified with 20 ps trajectories in \ref{fig:danceb}, is of course striking. 
-The example is from a simulation at 1700 K, the highest temperature for which the system remained in a crystalline state for a considerable time.
+The example is from a simulation at 1700 K, the highest temperature for which the system remained in a crystalline state over a considerable time.
 Yet, while the system depicted here could melt at any moment, the trajectories are not qualitatively different from the trajectories obtained at a temperature below the melting point. The ``nests'' are larger due to the higher kinetic energy, but they are still centred about points, and the points are part of a lattice, indicated by the grid for which the lattice order parameter \eqref{eq:lattice_order_parameter} is > 0.8, using $\vec{G}_{111}$. 
 
 \begin{figure}[htbp]
@@ -2966,22 +3028,28 @@ underestimated the melting point as well.\cite{Yoo:2009}
 
 With pure silicon experimentally melting at \SI{1687}{\kelvin}, and with only a very modest reduction when phosphorus at doping concentrations is added,\cite{Safarian:2011} our upper limit of \SI{1600}{\kelvin} indicates that the melting point is underestimated in this work as well.
 
-\subsection{Short-scale order in the melt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Short-scale order in the melt}\label{sec:pair-distribution}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Upon melting, long-scale order is lost, while some short-scale order remains. 
 This can be seen in the radial pair distribution function $g(r)$, defined as the ratio of the average local atomic (or molecular) density $\rho(r)$ at a distace $r$ from an arbitrary atom (or molecule), to the bulk density $\rho$ of the liquid;\cite{Kirkwood:1968}
 \begin{equation}
   \rho(r) = g(r) \rho
-  \label{eq:gofr}
 \end{equation}
-For any given atom, the number of atoms $N(r,r+\Delta r)$ within a shell of thickness $\Delta r$ can be counted, and average the number over the timespan of a simulation. 
-The thickness of the shell must be chosen thin enough to capture the structure of the function, while thick enough to include enough counts, typically in the order of 0.1~Å.\cite[263]{Haile:1992}
-With the volume of the shell being $V(r,\Delta r) = \frac{4}{3}\pi [(r+\Delta r)^3 - r^3)]$, we can write
+For any given atom in a simulation, the function can be found from counting the number of atoms $N(r,r+\Delta r)$ within surrounding shells of thickness $\Delta r$, and the numbers averaged over the timespan of the simulation. 
+The shell thickness $\Delta r$ must be chosen thin enough to capture the structure of the function, 
+while large enough to provide sufficiently large sampling populations for statistically reliable results. 
+A value near 1/40 the average inter-atomic distance is often a satisfactory.\cite[263]{Haile:1992} 
+We can write
 \begin{equation}
     g(r) = \frac{\langle N(r,r+\Delta r) \rangle}{\rho V(r,\Delta r)}
   \label{eq:gofr}
 \end{equation}
-The function falls to zero for $r\to 0$ due to repulsive forces between atoms, and approaches unity for $r\to\infty$ since there is no long range order in liquids.
+where $V(r,\Delta r) = \frac{4}{3}\pi [(r+\Delta r)^3 - r^3)]$ is the volume of a shell with radius $r$ and thickness $\Delta r$.
+The function falls to zero for $r\to 0$ due to repulsive forces between atoms, and approaches unity for $r\to\infty$ quite quickly, since there is no long range order in liquids.
 
 % Trajectories shown:
 % Solid: split110_700: 10 ps extracted
@@ -3000,6 +3068,8 @@ The function falls to zero for $r\to 0$ due to repulsive forces between atoms, a
 \end{figure}
 
 The upper part of fig. \ref{fig:pcf} shows $g(r)$ for the crystalline Si$_{64}$P system at the lowest and highest temperatures simulated.
+In an ideal, homogeneous liquid, the radial pair distribution function would be independent of the choice of atom atom, but the addition of phosphorus gives rise to a slight inhomogeneity and dependence of selection.
+To avoid selection bias, and improve statistics at the same time, the function was therefore averaged over all the 64 silicon atoms.
 At 700 K, the nearest neighbour peak is centred at \SI{2.36}{\angstrom}, 
 the second nearest neighbour peak at \SI{3.86}{\angstrom} and the 
 third-nearest neighbour peak at \SI{4.55}{\angstrom}.\footnote{
@@ -3010,8 +3080,18 @@ Methods for extending the function above such a radius is discussed in e.g. Alde
 At 1700 K, the distribution is more smoothed out due to larger vibrations, but otherwise the same structure can be seen.
 
 The lower part of the figure compares the P-Si and Si-Si radial pair distribution functions for a system in the liquid state at 1700 K.
-The data available to compute the P-Si pair function is of course only 1/64 the data available to compute the Si-Si pair function, which is why the P-Si function is more jagged. 
+The P-Si function is more jagged than the Si-Si function, since the sampling population for the P-Si function is only 1/64 the sampling population of the Si-Si-function.
 Apart from that, the functions are similar, with the P-Si function shifted slightly to the left to the Si-Si function. 
+
+Table \ref{tab:pcf} compares the peaks in the Si-Si pair correlation function found here with values found in the literature for pure silicon. 
+
+Only the first two peaks are included, since the third peak is not fully resolved in this work.
+While the first peak compares quite well with literature values, the discrepancy in the second peak is considerable, much
+larger than what should be expected just from the addition of a phosphorus atom.
+One possible reason for the discrepancy is that the current work was carried out using the canonical (NVT) ensemble, 
+not allowing for volume change. 
+Experimentally, melting of silicon is associated with a density increase of about 10~\%.\cite{Waseda:1980}
+In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\centi\metre\cubed}, about 10~\% denser than the density of our system; \SI{2.32}{\gram\per\centi\metre\cubed}.
 
 \begin{table}[htbp]
    \centering
@@ -3021,7 +3101,7 @@ Apart from that, the functions are similar, with the P-Si function shifted sligh
           Source & Temp. [K] & 1. peak [Å] & 2. peak [Å] & Coordination no. \\
         \midrule
           This work 
-            & 1700                  & 2.43 & 4.00       & 5.8 or 6.1 ???  \\
+            & 1700                  & 2.43 & 4.00       & 5.5 or 6.1 ???  \\
           Waseda (1975)\cite{Waseda:1975}\tnote{a}
             & 1733                  & 2.50 & 3.78       & 6.4   \\
           Stich (1991)\cite{Stich:1991}\tnote{b}    
@@ -3047,48 +3127,53 @@ Apart from that, the functions are similar, with the P-Si function shifted sligh
    \label{tab:pcf}
 \end{table}
 
-Table \ref{tab:pcf} compares the peaks in the Si-Si pair correlation function found here with values found in the literature for pure silicon. 
+Coordination numbers are found from $g(r)$ by
+\begin{equation}
+    n(r_1,r_2) = 4\pi\rho \int_{r_1}^{r_2} g(r) r^2 \,dr,
+    \label{eq:coordno}
+\end{equation}
+In particular, the integration carried out from zero to the first minimum, 
+gives what is known as the number of nearest neighbours $n_1(r') = n(0,r')$.\cite[7]{Waseda:1980}
+The process is illustrated in fig. \ref{fig:rdffirstcoord}.
+As expected, this yields approximately four nearest neighbours when integrating until the deep minimum found for a system in the crystalline state.
+For the shallow minimum found in a liquid state, however, there is considerable disambiguity in how to evaluate the integral.
+In fig. \ref{fig:rdffirstcoord}, it was evaluated to 
+the first minimum in $g(r)r^2$, for which $n_1(3.04)=5.5$.
+Evaluated to the first minimum in $g(r)$ instead, we obtain $n_1(3.18) = 6.1$. 
+With this kind of sensitivity, its hard to make much sense about the absolute numbers,
+but relatively, the numbers are lower than other values found in the literature, 
+table \ref{tab:pcf}, which may again be due to the differing density.
+
+%Instead of an abrupt cutoff, other methods have been, such as evaluating the peak as symmetric, integrating to the top of the peak only, and multiplying the value by two, (VAR DET i Alder:1968?)
+%but I'm not sure if there is really a physical motivation for such an approach.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=8cm]{figs/rdf_first_coord}
   \caption{Coordination numbers $n(r')$ from integrating $4\pi\rho g(r) r^2 $ for a Si$_64$P system
       at 1600 K in solid (above) and liquid (below) phase.
-      Note that minima and maxima, indicated by vertical lines, are evaluated from $g(r)$, not $g(r) r^2$,
-     which is why they appear to be shifted.  
+     % Note that minima and maxima, indicated by vertical lines, are evaluated from $g(r)$, not $g(r) r^2$,
+     %which is why they appear to be shifted.  
      The parabolic function $4\pi r^2 \rho$ is shown by dashed lines.
     }
   \label{fig:rdffirstcoord}
 \end{figure}
 
-Only the first two peaks are included, since the third peak is not fully resolved in this work.
-While the first peak compares quite well with literature values, the discrepancy in the second peak is considerable, much
-larger than what should be expected just from the addition of a phosphorus atom.
-One possible reason for the discrepancy is that the current work was carried out using the canonical (NVT) ensemble, 
-not allowing for volume change. 
-Experimentally, melting of silicon is associated with a density increase of about 10~\%.\cite{Waseda:1980}
-In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\centi\metre\cubed}, about 10~\% denser than the density of our system; \SI{2.32}{\gram\per\centi\metre\cubed}.
-
-Coordination numbers are found from $g(r)$ by 
-\begin{equation}
-    n(r') = 4\pi\rho \int_0^{r'} g(r) r^2 \,dr
-    \label{eq:coordno}
-\end{equation}
-where the integration is carried out until the first minimum to find the ``nearest neighbours''. 
-The process is illustrated in fig. \ref{fig:rdffirstcoord}.
-As expected, this yields a coordination number of approximately four when evaluated at the deep minimum found for a system in the crystalline state.
-For the shallow minimum found in a liquid state, however, there is considerable disambiguity in how to evaluate the integral.
-In fig. \ref{fig:rdffirstcoord}, it was evaluated to the first minimum in $g(r)$, for which $n(3.18) = 6.1$. 
-Evaluated to the first minimum in $g(r)r^2$ instead, we obtain instead $n(3.04)=5.5$.
-Instead of the abrupt cutoff, other methods have been, such as evaluating the peak as symmetric, integrating to the top of the peak only, and multiplying the value by two, (VAR DET i Alder:1968?)
-but I'm not sure if there is really a physical motivation for such an approach.
-
-An interesting aspect of molecular dynamics is that it also provides the dynamic data underlying the static pair distribution function. 
-In fig. \ref{fig:nn_melting}, the distance between a silicon atom and its 16 nearest neighbours (4 in first `shell', 12 in `second') is plotted for each of the 64 silicon atoms, with each distance plotted as a small point.
+The radial pair distribution function is interesting in part because it's readily obtainable from experiment, using x-ray diffraction.
+A molecular dynamics simulation provides, in addition, the microscopic data that makes up the function.
+%making for the calculation of partial distribution functions and 
+%An interesting aspect of using molecular dynamics data, is that the 
+%The radial pair distribution function can be obtained from experiment using x-ray diffraction, 
+%but with molecular dynamics data we have 
+%but 
+%but an interesting aspect of molecular dynamics is that 
+%it also provides the dynamic data underlying the function.
+In fig. \ref{fig:nn_melting}, the distance between a silicon atom and its 16 nearest neighbours (4 in `first shell', 12 in `second shell') is plotted for each of the 64 silicon atoms, with each distance plotted as a small point.
 The data is from a 50~ps simulation at 1600~K, for which the system remained crystalline for about 30~ps.
 It can be seen that the first `band', arising from the four nearest neighbours, is somewhat preserved upon melting. 
 This is of course the first peak in the radial pair distribution function.
-The disambuigity in defining the integration limit in \eqref{eq:coordno} is perhaps even clearer here. 
+The disambuigity in defining the integration limit in \eqref{eq:coordno}, discussed above, is also clear. 
+The 12 second nearest neighbours in the crystalline state are distributed quite evenly in the liquid state.
 
 \begin{figure}[htbp]
   \centering
@@ -3100,9 +3185,111 @@ The disambuigity in defining the integration limit in \eqref{eq:coordno} is perh
   \label{fig:nn_melting}
 \end{figure}
 
-\section{Jump frequencies}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Diffusion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-From a quick look on the data, it is apparent that the number of jumps is too low for good statistics to emerge from them.
+Excluding the melted parts of the simulations, the total simulated time was 1036~ps, distributed over 25 simulations at 14 temperatures ranging from 700~K to 1700~K. In addition, an attempt was made running a simulation at 1750~K, but this system melted almost immediately.
+
+Table \ref{tab:displacements} lists, for the simulations carried out, phosphorus and silicon displacements $\Delta r = \sqrt{r^2}$
+and diffusivities $D = r^2 / 6t$, with $r^2 = [\vec{r}(t) - \vec{r}(0)]^2$,
+and $t$ being the end of the simulation or the point at which the system melted.
+For silicon, the values were averaged over the 64 atoms in the cell. 
+
+To calcul
+
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{rrrrrr}
+    \toprule
+    Temp [K] & $t$ [ps] & $\Delta r_{\text{P}}$ [Å] & $\\Delta r_{\text{Si}}$ [Å] & $D_{\text{P}}$ [cm$^2$/s] & $D_{\text{Si}}$ [cm$^2$/s] \\
+    \midrule
+         %700 & 29.0 & 1.9 & 0.3 & 2.01e-06 & 5.56e-08 \\
+         %800 & 29.0 & 2.2 & 0.3 & 2.90e-06 & 7.68e-08 \\
+         %900 & 27.5 & 1.1 & 0.3 & 7.71e-07 & 9.04e-08 \\
+         %1000 & 29.0 & 4.2 & 0.4 & 1.02e-05 & 1.58e-07 \\
+         %1100 & 29.0 & 1.9 & 0.4 & 2.18e-06 & 1.25e-07 \\
+         %1200 & 29.0 & 2.5 & 0.5 & 3.65e-06 & 2.74e-07 \\
+         %1300 & 29.0 & 1.2 & 0.5 & 7.90e-07 & 2.11e-07 \\
+         %1300 & 89.0 & 10.8 & 0.5 & 2.17e-05 & 9.37e-08 \\
+         %1400 & 59.0 & 3.8 & 1.2 & 4.17e-06 & 9.22e-07 \\
+         %1400 & 50.6 & 2.2 & 0.8 & 1.64e-06 & 5.52e-07 \\
+         %1400 & 79.0 & 2.2 & 1.4 & 1.03e-06 & 8.19e-07 \\
+         %1400 & 89.0 & 0.8 & 1.5 & 1.12e-07 & 9.05e-07 \\
+         %1450 & 59.0 & 2.8 & 1.4 & 2.16e-06 & 1.33e-06 \\
+         %1500 & 59.0 & 8.9 & 1.1 & 2.22e-05 & 9.19e-07 \\
+         %1500 & 79.0 & 4.5 & 1.5 & 4.35e-06 & 1.10e-06 \\
+         %1500 & 59.0 & 5.3 & 1.0 & 7.91e-06 & 6.94e-07 \\
+         %1550 & 14.0 & 3.3 & 0.8 & 1.29e-05 & 1.72e-06 \\
+         %1550 & 59.0 & 3.7 & 1.2 & 3.79e-06 & 9.36e-07 \\
+         %1600 & 8.1 (melted) & 5.3 & 1.9 & 5.75e-05 & 8.71e-06 \\
+         %1600 & 27.9 (melted) & 4.2 & 2.5 & 1.07e-05 & 5.59e-06 \\
+         %1600 & 19.0 & 1.2 & 0.5 & 1.34e-06 & 4.26e-07 \\
+         %1600 & 27.4 (melted) & 3.8 & 2.3 & 8.68e-06 & 4.46e-06 \\
+         %1650 & 7.5 (melted) & 4.5 & 2.0 & 4.50e-05 & 1.12e-05 \\
+         %1700 & 5.2 (melted) & 2.6 & 1.8 & 2.21e-05 & 1.39e-05 \\
+         %1700 & 18.8 & 2.1 & 0.9 & 3.89e-06 & 1.27e-06 \\
+          700 & 29.0  &  1.9 &  0.2 & 2.10e-06 & 2.70e-08 \\
+          800 & 29.0  &  2.2 &  0.2 & 2.85e-06 & 5.35e-08 \\
+          900 & 27.5  &  1.0 &  0.3 & 6.01e-07 & 5.29e-08 \\
+         1000 & 29.0  &  4.2 &  0.3 & 9.94e-06 & 1.12e-07 \\
+         1100 & 29.0  &  1.7 &  0.3 & 1.58e-06 & 7.57e-08 \\
+         1200 & 29.0  &  2.3 &  0.4 & 2.94e-06 & 1.64e-07 \\
+         1300 & 29.0  &  1.3 &  0.4 & 9.83e-07 & 1.49e-07 \\
+         1300 & 89.0  & 10.6 &  0.4 & 2.10e-05 & 7.13e-08 \\
+         1400 & 59.0  &  3.3 &  1.1 & 3.12e-06 & 9.25e-07 \\
+         1400 & 50.6  &  2.0 &  0.7 & 1.28e-06 & 5.15e-07 \\
+         1400 & 79.0  &  2.5 &  1.4 & 1.27e-06 & 7.68e-07 \\
+         1400 & 89.0  &  0.7 &  1.4 & 1.02e-07 & 8.53e-07 \\
+         1450 & 59.0  &  2.9 &  1.3 & 2.33e-06 & 1.30e-06 \\
+         1500 & 59.0  &  8.8 &  1.0 & 2.20e-05 & 8.72e-07 \\
+         1500 & 79.0  &  4.4 &  1.4 & 4.12e-06 & 1.07e-06 \\
+         1500 & 59.0  &  5.4 &  0.9 & 8.27e-06 & 6.60e-07 \\
+         1550 & 14.0  &  3.6 &  0.7 & 1.54e-05 & 1.49e-06 \\
+         1550 & 59.0  &  3.4 &  1.1 & 3.31e-06 & 8.81e-07 \\
+         1600 &  8.1* &  5.4 &  1.8 & 5.90e-05 & 8.10e-06 \\
+         1600 & 27.9* &  4.8 &  2.5 & 1.40e-05 & 5.63e-06 \\
+         1600 & 19.0  &  1.2 &  0.5 & 1.32e-06 & 3.66e-07 \\
+         1600 & 27.4* &  3.9 &  2.2 & 9.32e-06 & 4.18e-06 \\
+         1650 &  7.5* &  4.7 &  2.0 & 4.88e-05 & 1.07e-05 \\
+         1700 &  5.2* &  3.3 &  1.8 & 3.58e-05 & 1.35e-05 \\
+         1700 & 18.8  &  2.2 &  0.8 & 4.33e-06 & 1.14e-06 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Total displacements (in Ångstrøm) and diffusion coefficients (in \si{\centi\metre\squared\per\second}) 
+    for the simulations carried out. 
+    The times $t$ are the total times of each simulation, or the time until the system melted (indicated by *).
+    The first picosecond has been removed from all simulations as equilibration time.}
+  \label{tab:displacements}
+\end{table}
+
+%\clearpage
+
+%\begin{figure}[htbp]
+%  \begin{center}
+%    \includegraphics{../figures/md_arrhenius_plot}
+%  \end{center}
+%  \caption{
+%    Die Wunderwelt der Physik!
+%  }
+%  \label{fig:md_arrhenius_plot}
+%\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Jump frequencies}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The concept of jumps was introduced in section \ref{sec:AtomisticPicture}. 
+With the phosphorus displacements listed in the previous section, it could also be interesting to extract the number of jumps from the data.
+
+The jump from one lattice site to another being an activated process, 
+
+From a quick look on the simulated trajectories, it is apparent that the number of jumps is too low for good statistics to emerge from them.
 An attempt was still made to estimate jump frequencies as a function of temperature, to see if some trends emerged or just randomness.\footnote{
 Life at the microscopic level? Heisenberg}
 
@@ -3111,7 +3298,7 @@ While such idealisations is what makes physics possible and useful, molecular dy
 We have to define it.
 
 First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
-To be sure, we monitor the stability of the lattice using the translational lattice order parameter \eqref{eq:lattice_order_parameter}. From the discussion in the accompanying section \ref{sec:translational order}, we also have a means to remove lattice drift.
+To be sure, we monitor the stability of the lattice using the translational lattice order parameter \eqref{eq:lattice_order_parameter}. From the discussion in the accompanying section \ref{sec:translational-order}, we also have a means to remove lattice drift.
 
 An atom A is defined to \emph{sit} on a lattice site X when (a) X has been the nearest lattice site to A for more than $t_{\text{min}}$ ps, and (b) the distance between X and A has been less than $x_{\text{max}}$ (not necessarily for any long time). Having defined what it means to \emph{sit} on a lattice site, an atom \emph{jumps} simply when it changes from sitting at one site to another.
 
@@ -3123,6 +3310,14 @@ In the second ``conservative'' attempt, a distance criterion of 0.3~Å is impose
 Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs, plotted in figure \ref{fig:jumpfreq}. \comment{Logplott og 1/T}
 
 Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=10cm]{figs/split110_1400_dist_from_lattice.pdf}
+  \caption{distsite1400}
+  \label{fig:distsite1400}
+\end{figure}
+
 
 \begin{table}[htbp]
   \centering
@@ -3180,27 +3375,77 @@ Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
   \label{fig:jumpfreq}
 \end{figure}
 
-\section{Occupancies, etc.}
+Another interesting question is how long phosphorus remains in the interstitial position before moving to a substitutional site and kicking out a silicon atom.
+This has been tabulated in table \ref{tab:interstitial-to-substitutional}.
+At low temperatures, phosphorus remain in interstitial positions for the whole simulation, but at temperatures of 900 K and higher, 
+phosphorus almost always enters a lattice site during the simulation, kicking out a silicon atom.
+This is an activated process, so an attempt was made to determine the activation energy from the slope of $1/t$ as a function of $1/kT$, 
+shown in fig. \ref{fig:interstitial-to-substitutional}, leaving out the simulations in which no such process took place.
+The slope of the fitted line corresponds to an activation energy of 0.3~eV, but the fit is much too poor to be reliable (The Pearson correlation coefficient is $-0.58$).
+If a reliable fit could be obtained, using data from more simulations, an interesting next question would be how the value compares to the time for a silicon atom. Is phosphorus more or less stable in an interstitial position than is a silicon self-interstitial?
 
+\clearpage
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{llllllll}\toprule
+      $T$ [K] & $t$ [ps] &
+      $T$ [K] & $t$ [ps] &
+      $T$ [K] & $t$ [ps] &
+      $T$ [K] & $t$ [ps] \\\midrule
+        700 & > 30 & 1300 & > 30 & 1500 & 13.25 & 1600 & 6.35\\
+        800 & > 30 & 1400 & 3.75 & 1500 & 4.60 & 1600 & 6.70\\
+        900 & 22.65 & 1400 & 37.90 & 1500 & 7.90 & 1650 & 4.35\\
+        1000 & 19.35 & 1400 & 4.50 & 1550 & 6.00 & 1700 & 1.15\\
+        1100 & > 30 & 1400 & 6.10 & 1550 & 6.85 & 1700 & 10.30\\
+        1200 & 14.35 & 1400 & 9.60 & 1600 & 2.45 &  & \\
+        1300 & 12.75 & 1450 & 2.30 & 1600 & 5.80 &  & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Time $t$ in ps before the P atom enters a lattice site, for the simulations carried out.}
+  \label{tab:interstitial-to-substitutional}
+\end{table}
 
-
-\section{Arrhenius diffusion plot}
 
 \begin{figure}[htbp]
-  \begin{center}
-    \includegraphics{../figures/md_arrhenius_plot}
-  \end{center}
-  \caption{
-    Die Wunderwelt der Physik!
-  }
-  \label{fig:md_arrhenius_plot}
+  \centering
+  \includegraphics[width=8cm]{figs/firstsite_log.pdf}
+  \caption{Arrhenius plot for interstitial to lattice site jump}
+  \label{fig:interstitial-to-substitutional}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Occupancies, etc.}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=12cm]{figs/time_at_lattice_sites.pdf}
+  \caption{Time at lattice site (need to stop at melting)}
+  \label{fig:timelattsite}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Discussion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Final discussion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Further work:
+- Liquid silicion metallic\cite{Glazov:1969}, yet with coordination numbers much lower than simple metallic liquids.
+ studies on semiconductor-metal transition?
+- longer runs, more atoms
 
 
 \printbibliography
@@ -3237,7 +3482,7 @@ Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
   Mainly used in sections on statistical mechanics:
   
   \begin{tabular}{ll}
-    $T$     & Termodynamic temperature \\
+    $T$     & Thermodynamic temperature \\
     $T(t)$  & Instantaneous temperature \\
     $\langle A \rangle$ & Ensemble average or expectation value of $A$\\
     $\bar{A}$ & Time average of $A$ \\
