@@ -8,7 +8,7 @@
 % designed for European and German typography (komascript.de):
 \documentclass[11pt,bibliography=totoc,index=totoc]{scrbook}   % paper=a4 is default, 11pt is actually also default
 
-\include{preamble}
+\include{includes/preamble}
 
 \usepackage{makeidx}
 \makeindex
@@ -22,7 +22,7 @@
 %\usepackage{layouts}
 
 % Bibliography:
-\bibliography{master}
+\bibliography{thesis}
 
 % Title page (koma-script options):
 %\titlehead{Titlehead}
@@ -105,7 +105,7 @@ Yet, to my knowledge no potential for phosphorus in silicon has been published.
 
 But while using \textit{ab initio} potential is very enticing, it is often unfeasable from a practical point of view due to the great computational cost involved.
 
-I'm grateful to the developers of the VASP software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ref{sec:pseudopot}
+I'm grateful to the developers of the {\vasp} software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ref{sec:pseudopot}
 
 This work was started without knowing \textit{a priori} if simulations at the \textit{ab initio} level could be carried out with simulation times long enough to obtain useful statistics, but with new potentials and \ldots we found it worthwhile to test.
 
@@ -118,7 +118,7 @@ than 60 years\footnote{
   phosphorus is mentioned as a donor. But I'm not sure just when phosphorus was first introduced.
 } of studies on this system. 
 , data that can be used to test our models. 
-For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by (Fahey:198) and (Hu:1994). And the PhD thesis of (Bentzen:2006) provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
+For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by (Fahey:1989) and (Hu:1994). And the PhD thesis of (Bentzen:2006) provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
 
 As an introduction, table \ref{tb:si} presents some key properties of silicon,
 
@@ -314,7 +314,7 @@ The diffusivity depends strongly on the temperature, and the temperature depende
   \label{eq:arrhenius-dif}
 \end{equation}
 defined by a prefactor $D_0$ and an activation energy $E_a$. 
-Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and interceipt $\ln D_0$. 
+Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and intercept $\ln D_0$. 
 \begin{equation}
   \ln D = \ln D_0 - E_a (kT)^{-1}
 \end{equation}
@@ -376,7 +376,7 @@ In a simple model, we can estimate the number of jumps per second \comment{PER A
   \Gamma = \nu \e^{-E_a/kT}
   \label{eq:jumpfreq-est}
 \end{equation}
-For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, a typical textbook value for the vibration of atoms in a crystal at room temperature.
+For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, a typical textbook value for the vibration of atoms in a crystal at room temperature.\cite[212]{Tilley:2004}
 As seen in fig. \ref{fig:simple-vibration}, the atoms may be described roughly as vibrating at frequencies of this order of magnitude, although the motion is of course much more complicated than a simple harmonic motion. Otherwise we would not need \emph{simulation}.
 
 \begin{figure}[htbp]
@@ -464,7 +464,9 @@ it was demonstrated in the 1940s that phosphorus enters mainly substitutional si
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-While phosphorus prefers substitutional positions, it will, at elevated temperatures and/or in imperfect (real) materials also occupy intersitial positions, just as silicon will.
+While phosphorus prefers substitutional sites, interstitial sites are of 
+
+it will, at elevated temperatures and/or in imperfect (real) materials also occupy intersitial positions, just as silicon will.
 Phosphorus interstitials are of interest for their role in diffusion processes, as discussed in the next section.
 Direct experimental evidence for phosphorus interstitials is probably missing, so their binding energy have formerly been taken from fitting diffusion models to experimental data, and later also from purely theoretical investigations.\cite[391]{Pichler:2004}
 
@@ -589,16 +591,77 @@ Of these, the $P_i^X$ and $P_i^{X_2}$ were the lowest energy structures for the 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Diffusion of substitutional impurities as interstitials or impurity-self-interstitial pairs.
+Substitutional phosphorus, like other substitutional defects, is considered immobile, but can enter a mobile state through a (random) encounter with mobile defects such as interstitials or vacancies, or by concerted exchange (direct interchange of a pair of atoms).
+Many different mechanisms come into play, but it is commonly accepted today that the dominant mechanism for phosphorus diffusion in silicon is mediated by self-interstitials (or -interstitialcies), not by vacancies or concerted exchange, except at very high doping concentrations, for which it has been suggested that vacancy-mediated diffusion becomes the dominant mechanism.\cite{Ural:1999,Bentzen:2006}
 
-This makes possible many different interstitial configurations, and also interstitial diffusion
+In the classic interstitial mechanism, a self-interstitial, which migrates through the interstices of the lattice, approaches the substituional defect and ``kicks'' it out into an interstitial position, itself taking over the lattice site. The process is often called ``kick out reaction'';\cite{Fahey:1989}
+\begin{align*}
+    \text{I} + \text{P} &\rightleftarrows \text{P}_{\text{i}},
+\end{align*}
+where I is the self-interstitial, P the substitutional phosphorus, and P$_{\text{i}}$ the interstitial phosphorus,\footnote{For an introduction to defect nomenclature, see e.g. Fahey\cite{Fahey:1989}.} which can migrate and eventually kick out a silicon atom to return to a lattice site.
 
-In the interstitialcy mechanism, a self-interstitial  replaces an impurity atom, making it an interstitial.
+< FIGUR ála fig. 17 i Fahey >
+
+In the classic interstitial mechanism, the mobile defect is considered to be a single atom, either a host-interstitial or a dopant-interstitial. 
+An alternative is to consider instead a ``interstitialcy, a term coined by Frederick Seitz, better known for the Wigner–Seitz cell, to describe an entity that ``has the same type of phase-like existence as a vacancy or a dislocation, since the pattern can move without having a fixed atom move with it'',\cite{Seitz:1950} 
+and commonly associated with a pair of atoms.
+Following Fahey,\cite[322]{Fahey:1989} the migration of an interstitialcy with a pair of atoms centred around a lattice site A, takes place when the pair is shifted along its principal axis towards another (occupied) lattice site B to such an extent that one of the two atoms ends up forming a new pair with the atom at site B, while the other atom relaxes at site A. 
+If the atom at site B happens to be a P atom, it becomes part of a P-Si pair (PI using defect nomenclature), 
+that can then migrate in the same manner.
+The process is written (self-interstitials and -interstitialcies are both denoted I)
+\begin{align*}
+    \text{I} + \text{P} &\rightleftarrows \text{PI}.
+\end{align*}
+It's important to note that it is not the same pair of atoms that migrate over time.
+Each time the interstitialcy makes a jump, one of the atoms moves along, while the other is left behind,
+and each jump is considered independent of the previous one.\cite[323]{Fahey:1989}
+
+< FIGUR ála fig. 15 i Fahey >
+
+%The mobile state can be either a pure interstitial P$_{\text{i}}$, or an interstitialcy -- a phosphorus-silicon pair (PI) -- sharing a site. 
+%This process of creating a mobile defect is often called a ``kick out'' reaction;\footnote{
+%    In the first reaction, the silicon self-interstitial (I) becomes a lattice atom.
+%    It may, at last to me it does, seem like it disappears, but the reason for it's removal from the equation is that it's no longer a defect.
+%    For an introduction to defect nomenclature, see e.g. \cite{Fahey:1989}. 
+%    %I'm using upright letters according to ISO regulations.\cite{Beccari:1997}
+%}
+%Correspondingly, the diffusion mechanism may be referred to as either the interstitial mechanism or the interstitialcy mechanism.
+%The interstitialcy mechanism has also been referred to as the `dumbbell mechanism' when the PI pair forms a dumbbell configuration.\cite{Posselt:2008} 
+% interstitialcy introduced by Seitz, F. On the theory of diffusion in metals. Acta Cryst. 3, 355–363 (1950).
+In practice, distinguishing between interstitial and interstitialcy mechanisms is often not needed, and it's also very hard to distinguish the two experimentally.\cite[295]{Fahey:1989}
+
+The diffusion mechanism of phosphorus in silicon is considered to be similar to that of boron in silicon, 
+albeit with a lower activation energy, arguably due to P-I bonding being stronger than B-I bonding.\cite{Christensen:2003}
+
+< SETT INN FIGUR INSPIRERT AV Martin-Bragado 2005 > ?
+
+%Despite a similar diffusion mechanism mediated by Si self-interstitials, P exhibits a lower activation energy than B because of stronger bonding to the Si self-interstitial.
+
+%Diffusion of substitutional impurities as interstitials or impurity-self-interstitial pairs.
+
+%The intersititialcy mechanism involves a silicon self-interstitial (I) meeting 
+%a phosphorus atom (P), making a mobile phosphorus-silicon self-interstitial (PI) complex, 
+%that diffuses for some (short) distance, possibly swapping the silicon atom, before phosphorus 
+%returns to a lattice site.
+
+%This makes possible many different interstitial configurations, and also interstitial diffusion
+%In the interstitialcy mechanism, a self-interstitial  replaces an impurity atom, making it an interstitial.
 
 Liu \textit{et al.} identified a migration path from a \spl{110}-like dumb-bell configuration ($P_i^X$) to another, via a hexagonal ($P_i^H$) configuration as the saddle point, having a migration barrier of 0.6~eV.\cite{Liu:2003}
 Another path involving a \spl{001}-like dumb-bell configuration ($P_i^S$) was found to have a migration energy of 0.7~eV. Overall activation energy (including formation energy) 3.1 eV.
 
+In a 1989 review on point defects and diffusivities in silicon, Fahey wrote that ``determination of $Q_{\text{P}}$ by different studies using a variety of techniques agree to within 0.2~eV and are considered accurate.''\cite{Fahey:1989}
+Yet this view has been challenged by studies in the early 2000s suggesting lower values: 
+Recently, the values have been challenged by studies suggesting quite lower values
+
+2.65 eV \cite{Wittel:1995}
+
+2.88 eV \cite{Naganawa:2008}
+
+3.43 eV \cite{Harrison:2006}
+
 Experimental activation energies at intrinsic conditions: 2.81 eV (low T), 3.61 eV (hight T, sjekk!) (Haddara:2000), 3.55 eV (Ural:1999), 3.30 eV (Chohtagore:1971), 3.69 eV (Makris:1973)
+
 
 2.74 eV (Christensen:2003)
 
@@ -617,7 +680,8 @@ As mentioned in section \ref{sec:Diffusion}, diffusion often takes the simple Ar
       \midrule
       $1.71\times 10^{-3}$ & 2.81 & low $T$\tnote{a} & Haddara(2000)\cite{Haddara:2000} \\
       $8\pm5\times 10^{-4}$ & $2.74\pm 0.07$ & low $T$\tnote{b} & Christensen(2003)\cite{Christensen:2003} \\
-      ? & 3.51 & - & Hill(1981) (bestilt kopi) \\
+      %? & 3.51 & - & Hill(1981) (bestilt kopi) \\
+      & 3.51–3.67 & selective listing of earlier work in review by Fahey.\cite[320]{Fahey:1989} \\
       1.03 & 3.507 & regression curve 900-1200 C from 16 studies & Pichler(2004)\cite{Pichler:2004} \\
       \bottomrule
     \end{tabular}
@@ -634,6 +698,51 @@ As mentioned in section \ref{sec:Diffusion}, diffusion often takes the simple Ar
   \label{tab:Label}
 \end{table}
 
+An interstitial position was chosen since phosphorus is known to diffuse largely by 
+the interstitialcy mechanism discussed in section \ref{sec:PDiffusion},\comment{[REF]}
+involving a silicon self-interstitial (I) meeting 
+a phosphorus atom (P), making a mobile phosphorus-silicon self-interstitial (PI) complex, 
+that diffuses for some (short) distance, possibly swapping the silicon atom, before phosphorus 
+returns to a lattice site.
+
+The activation energy for diffusion of phosphorus by the interstitialcy mechanism is known from experiments to be rather high, with values between 2.8 and 3.5~eV reported in the literature (section \ref{sec:PDiffusion}). 
+For such a high activation energy, we could in general expect no diffusion at all within timespans that could be practically simulated (10-100~ps), at least according to the simple model in fig. \ref{fig:jumpfreq-est}.
+But the activation energy for the interstitialcy process, $E_{\text{PI}}$,
+can be partitioned into a formation enthalpy of the PI complex, $H_{\text{PI}}^{\text{f}}$, and a migration enthalpy of 
+the complex, $H_{\text{PI}}^{\text{m}}$;\cite[323]{Fahey:1989}
+\begin{align}
+    E_{\text{PI}} = H_{\text{PI}}^{\text{f}} + H_{\text{PI}}^{\text{m}} \\
+    %&= H_{\text{PI}}^{\text{m}} + H_{\text{I}}^{\text{f}} - E_{\text{PI}}^{\text{b}}
+\end{align}
+The formation enthalpy $H_{\text{PI}}^{\text{f}}$ is the larger term of the two, but
+by starting the simulation with a phosphorus interstitial, we have effectively already 
+supplied the enthalpy to create the PI complex, 
+and we can expect diffusion measured from this starting point to correspond more or less to the migration enthalpy $H_{\text{PI}}^{\text{m}}$.
+More or less because in molecular dynamics, just like in experiment, different diffusion mechanisms are usually at the play at the same time.
+It may also happen during any given simulation that the complete activation energy $E_{\text{PI}}$ is supplied, so that phosphorus, after having returned to a lattice site, forms a new complex and diffuses further.
+This may complicate the process of describing the diffusivity using a simple Arrhenius form \eqref{eq:arrhenius-dif}.
+
+To my knowledge, there are not many reported values for the migration energy of phosphorus in silicon.
+Liu \textit{et al}. (2003) found a migration energy of 0.6-0.7 eV from \textit{ab initio} calculations using the nudged elastic band method,\cite{Liu:2003}
+while Christensen \textit{et al}. (2003) estimated it at 0.2~eV, but considered the value unrealistic.\cite{Christensen:2003}
+
+%where $H_{\text{PI}}^{\text{m}}$ is the migration enthalpy of the PI complex, 
+%%$H_{\text{PI}}^{\text{f}}$ the formation enthalpy of the complex -- 
+%%$H_{\text{I}}^{\text{f}}$ the formation enthalpy of the self-interstitial
+%%and $E_{\text{PI}}^{\text{b}}$ the binding energy of the PI complex.\cite[323]{Fahey:1989}
+%With our initial configuration, we are effectively starting with a PI complex, 
+%meaning we have already 
+
+%we may be able to calculate the migration enthalpy of the PI complex,
+
+%that is the activation energy of diffusion minus the creation of the phosphorus interstitial.
+%The phosphorus interstitial can be created from a collision with a silicon self interstitial, 
+%but the activation energy for this process is expected to be too large to simulate at the \textit{ab initio} level.
+
+
+%While the exact choice of interstitial configuration is not expected to have 
+%While the choice of initial configuration is not expected to have a big impact on the simulation, \comment{WHY NOT? MD books often talks about equlibration, but can we say that a solid equlibrates? velocity autocorrelation}
+%it is still worth investigating the different configurations, to start from the most stable one.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -654,7 +763,7 @@ but they may be a bit daunting on their own.
 Chemists may find chapter 8 in Cramer(2004)\cite{Cramer:2004} a good read.
 This chapter borrows from all the aforementioned books.
 }
-but rather to \emph{describe} or summarise important concepts in the theory (sec. \ref{sec:materials}--\ref{sec:kohnsham}) as implemented in \vasp\ (sec. \ref{sec:xc}--\ref{sec:forcetheorem}) in a somewhat superficial way, 
+but rather to \emph{describe} or summarise important concepts in the theory (sec. \ref{sec:materials}--\ref{sec:kohnsham}) as implemented in {\vasp} (sec. \ref{sec:xc}--\ref{sec:forcetheorem}) in a somewhat superficial way, 
 and since notation varies between different authors, to provide a consistent notation to be used when referring to concepts later on. 
 Readers experienced with DFT may safely jump directly to the second part (section \ref{sec:parameters}),
 or even directly to the summary subsection \ref{sec:parameters:summary} if in a rush. 
@@ -1143,7 +1252,7 @@ In a periodic system, they should be Bloch states. In general for some reciproca
 where $u_{n\vec{k}}(\vec{r})$ is a function that shares the periodicity of the lattice, $u_k(\vec{r}+\vec{G}) = u_k(\vec{r})$,
 where $\vec{G} = h\vec{b}_1 + k\vec{b}_2 + l\vec{b}_3$ and $\vec{k}$ is any reciprocal space vector.
 
-In the \vasp\ code used in this work, a plane wave basis is used.
+In the {\vasp} code used in this work, a plane wave basis is used.
 Such a basis make use of the fact that a periodic function can always be represented by a Fourier series, 
 \begin{equation}
     u_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im\,\vec{G}\cdot\vec{r}}
@@ -1788,7 +1897,7 @@ As we see, the defect causes some distortion even beyond the boundaries of the 6
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized VASP build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
+After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized {\vasp} build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
 
 Test calculations were carried out at two different Norwegian computing clusters; the Titan cluster at University of Oslo, 
 and the Stallo cluster at University of Tromsø, for which the results are shown in fig. \ref{fig:scaling}.
@@ -2365,7 +2474,7 @@ since $\nabla\vec{r} = d$, the dimensionality. In our casual world, $d=3$. We al
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{The Verlet algorithm}\label{sec:verlet-algo}
+\section{The velocity Verlet algorithm}\label{sec:verlet-algo}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2383,61 +2492,63 @@ Apart from truncation errors, which will depend on the specific finite-differenc
 
 The `prototype method' is the Euler method, which makes use of a Taylor expansion to first order around time $t$,
 \begin{equation}
-  \vec{r}(t+\Delta t) = \vec{r}(t) + \dot{\vec{r}}(t)\Delta t + \mathcal{O}^2,
+    \vec{r}(t+\Delta t) \approx \vec{r}(t) + \vec{v}(t) \Delta t,
 \end{equation}
-where $\dot{\vec{r}}(t)$ is the velocity at time $t$. Thus, the velocity the particle has at time $t$ remains constant until $t+\Delta t$,and really short timesteps have to be used to avoid serious truncation errors.
+where $\vec{v}_k(t) = \dot{\vec{r}}_k(t)$ is the velocity for particle $k$ at time $t$. 
+%The method generally suffers from severe drift, and is not recommended for MD.\cite[65]{Frenkel:1996}
 
-To improve upon the Euler method, the Taylor expansion can be carried out to higher order. In the Verlet algorithm,\cite{Verlet:1968b}
-the expansion is carried out to third order, but without the need for time derivatives higher than second order
-(the acceleration or force). First,
+In the Verlet method,\cite{Verlet:1968b}, here shown in the ``velocity Verlet'' variant by Swope,\cite{Swope:1982}
+we expand to second order about $t$,
 \begin{equation}
-  \vec{r}(t+\Delta t) = \vec{r}(t) + \dot{\vec{r}}(t)\Delta t + \frac12 \ddot{\vec{r}}(t)(\Delta t)^2
-  + \frac{1}{3!} \dddot{\vec{r}}(t)(\Delta t)^3 + \mathcal{O}^4,
+    \vec{r}(t+\Delta t) \approx \vec{r}(t) + \vec{v}(t)\Delta t + \frac{1}{2m}\vec{F}(t)(\Delta t)^2,
+  \label{eq:vverlet1}
 \end{equation}
-and similarly
+and about $t+\Delta t$, evolving backwards in time,
 \begin{equation}
-  \vec{r}(t-\Delta t) = \vec{r}(t) - \dot{\vec{r}}(t)\Delta t + \frac12 \ddot{\vec{r}}(t)(\Delta t)^2
-   - \frac{1}{3!} \dddot{\vec{r}}(t)(\Delta t)^3 + \mathcal{O}^4.
+  \vec{r}(t) \approx \vec{r}(t+\Delta t) - \vec{v}(t+\Delta t)\Delta t + \frac{1}{2m}\vec{F}(t+\Delta t)^2.
+  \label{eq:vverlet2}
 \end{equation}
-Adding these two equations together, the first and third-order time derivatives cancel out,
+Substituting \ref{eq:vverlet1} for $\vec{r}(t+\Delta t$ in \ref{eq:vverlet2}, and solving for $\vec{v}(t+\Delta t)$,
 \begin{equation}
- \vec{r}(t+\Delta t) + \vec{r}(t-\Delta t) = 2\vec{r}(t) + \ddot{\vec{r}}(t)(\Delta t)^2 + \mathcal{O}^4.
+    \vec{v}(t+\Delta t) = \vec{v}(t) + \frac{\Delta t}{2m} \left[ \vec{F}(t) + \vec{F}(t+\Delta t) \right]
+  \label{eq:vverlet3}
 \end{equation}
-Rearranging and using Newton's law of motion, $\vec{F}=m\ddot{\vec{r}}$, we get
-\begin{equation}
-  \vec{r}(t+\Delta t) \approx 2\vec{r}(t) - \vec{r}(t-\Delta t) + \vec{F}(t)(\Delta t)^2,
-\end{equation}
-which is the Verlet algorithm, also known as the Verlet method or just Verlet integration. 
+In the velocity Verlet algorithm, \eqref{eq:vverlet1} and \eqref{eq:vverlet3} are used in combination to 
+evolve the positions and velocities simultaneously.
+
 While the Euler method is a one-step algorithm, we see that the Verlet algorithm is a two-step algorithm, requiring information both from the current and the previous step.
-On the first step, the previous step therefore has to be estimated by some other mean, for example the Euler method in reverse.
+In the initial step, there is no previous step, so positions and velocities have to be supplied. 
+The initial positions will be discussed in section \ref{sec:structures}, and the initial velocities in section \ref{sec:initial-velocities} below.
 
-The advantages of the Verlet algorithm is that it is simple and stable for moderate time steps.
-It is time-symmetric and sympletic (it preserves phase-space volume), unlike the Euler method and most of the more advanced methods.
-The disadvantage is that fairly short time steps have to be used. 
+The Verlet method requires relatively short time steps compared to more advanced methods, such as the class
+of predictor-corrector algorithms,
+but a major advantage of the Verlet method is that it exhibits little long-term drift.
+This is related to the method being time-symmetric and sympletic (it preserves phase-space volume), 
+unlike the Euler method and most of the more advanced methods.\cite[61-63]{Frenkel:1996}
 
-More advanced algorithms exist that allows for longer time steps, such as the class of predictor-corrector algorithms.
-Predictor-corrector algorithms will not be used in this work, but the interested reader will find more on these in many introductory books on molecular dynamics, such as the one by Haile\cite[158]{Haile:1992}.
-are popular in simulation, but these are generally less stable, which means that they have a tendency to drift over long runs, not conserving energy.
+%More advanced algorithms exist that allows for longer time steps, such as the class of predictor-corrector algorithms.
+%Predictor-corrector algorithms will not be used in this work, but the interested reader will find more on these in many introductory books on molecular dynamics, such as the one by Haile\cite[158]{Haile:1992}.
+%are popular in simulation, but these are generally less stable, which means that they have a tendency to drift over long runs, not conserving energy.
 
-
-\comment{More?}
-\begin{itemize}
-  \item 
-Verlet integration
-\url{http://en.wikipedia.org/wiki/Verlet_integration}
-\item
-Symplectic integrator
-\url{http://en.wikipedia.org/wiki/Symplectic_integrator}
-\item 
-Illustration? Something like the first figure on
-\url{http://en.wikipedia.org/wiki/Euler_integration} ?
-\end{itemize}
+%\comment{More?}
+%\begin{itemize}
+%  \item 
+%Verlet integration
+%\url{http://en.wikipedia.org/wiki/Verlet_integration}
+%\item
+%Symplectic integrator
+%\url{http://en.wikipedia.org/wiki/Symplectic_integrator}
+%\item 
+%Illustration? Something like the first figure on
+%\url{http://en.wikipedia.org/wiki/Euler_integration} ?
+%\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Initial state}
+\section{Initial velocities}\label{sec:initial-velocities}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 For the first step, the positions and velocities (or momenta) of all the atoms have to be specified manually. 
 The positions are given in the form of a crystal structure, as further discussed in section \ref{sec:structures}.
 The velocities should be sampled from a Maxwell-Boltzmann velocity distribution \eqref{eq:maxboltz-vdist-1D},
@@ -2458,15 +2569,15 @@ and it turns out $\xi = F(X)$ is a uniformly distributed variable in the range $
 The problem of sampling $f(v_x)$ then consists of solving the equation $F(X)=\xi$ for $X$.
 In the most naïve approach, known as \emph{inverse transform sampling}, we just find $X=F^{-1}(\xi)$.
 But since we don't have a closed form expression for $F(X)$, a computationally more efficient method is preferred. 
-A common approach, which is also used in \vasp, is the \emph{Box-Muller transform sampling} method, which is
+A common approach, which is also used in {\vasp}, % function RANG in random.f90, called by subroutine INITIO in dyna.f90
+is the \emph{Box-Muller transform sampling} method, which is
 described very well in \cite[101]{Tuckerman:2010}. 
-From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and $Y$ are generated:
+From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and $Y$ are generated by
 \begin{align}
-    X &= \sigma \sqrt{-2\ln\xi_2} \cos(2\pi\xi_1) \\
-    Y &= \sigma \sqrt{-2\ln\xi_1} \sin(2\pi\xi_2)
+    X &= \sigma \sqrt{-2\ln\xi_2} \cos(2\pi\xi_1), \\
+    Y &= \sigma \sqrt{-2\ln\xi_1} \sin(2\pi\xi_2).
   \label{eq:box-muller-sampling}
 \end{align}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2477,64 +2588,74 @@ From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{No thermostat}
+\subsection{No thermostat}\label{sec:nothermo}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Hamiltonian \eqref{eq:nucleiHamiltonian} describes an isolated system, in which the total energy $E$ must necessarily be a constant of motion.
-Upon the start of the simulation, a temperature $T(0)$ is defined by giving the system a total kinetic energy $E_k$, corresponding to that temperature. The potential energy is found by solving the electronic Hamiltonian, and adding the coulombic interactions between the nuclei\footnote{The Madelung energy found from an Ewald summation?}.
+Upon the start of the simulation, a temperature $T(t=0)$ is defined by giving the system a total kinetic energy $E_k$, corresponding to that temperature. The potential energy is found by solving the electronic Hamiltonian, and adding the coulombic interactions between the nuclei.\footnote{\comment{The Madelung energy found from an Ewald summation?}}
+
 By following the time evolution of such a hamiltonian, we will sample a microcanonical ensemble. 
-While the total energy $E=E_k+E_v$ is a constant of motion, the kinetic energy $E_k$ and potential energy $E_v$ themselves will fluctuate as energy is exchanged in particle collisions, and over time the kinetic and potential energy may very well each drift away from their initial values. 
+While the total energy $E=E_k+E_v$ is a constant of motion, the kinetic energy $E_k$ and potential energy $E_v$ themselves will fluctuate as energy is exchanged in particle collisions, and over time the kinetic and potential energy may very well each drift away from their initial values.
 And if they do, so does the temperature, according to \eqref{eq:kinetictemp}. 
-To illustrate this, figure \ref{fig:md_test_temperature_micro} shows the energy evolution in a 5~ps simulation of an isolated system of 63 atoms (Si$_{62}$P$_1$) at 1400~K for 5~ps.
+%To illustrate this, figure \ref{fig:md_test_temperature_micro} shows the energy evolution in a 5~ps simulation of an isolated system of 63 atoms (Si$_{62}$P$_1$) at 1400~K for 5~ps. 
+A most dramatic example of this can be seen in fig. \ref{fig:md_test_temperature_micro} below, showing the temperature and total energy variation for the first 0.5~ps of a 5.0~ps simulation of a system of 62 silicon atoms and a phosphorus atom in a 64-atom cell. 
+The system starts with an initial temperature of 1400~K, but rapidly drops to a mean temperature of 690~K.
+Interestingly, the system remains very stable at this temperature for the remaining 4.5~ps.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../figures/tests/thermostats/nothermo_simple}
+  \caption{
+    Instantaneous temperature variation for a system with no thermostat, starting at 1400~K.
+    To be able to see the rapid temperature drop, only the first 0.5~ps of the 5.0~ps simulation is shown.
+    In the remaining 4.5~ps, the system remained very stable at the same temperature.
+  }
+  \label{fig:md_test_temperature_micro}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Ad-hoc velocity-scaling `thermostat'}
+\subsection{Ad-hoc velocity-scaling `thermostat'}\label{sec:velocity-scaling}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In thermodynamics, constant temperature is achieved by putting the system in contact with an infinite heat bath, or with a \emph{thermostat}.
-How can this be simulated?
-The simplest approach to simulating a thermostat is to know and then rescale the velocities of all the particles so that the instantaneous temperature $T(t)$ matches the thermodynamic temperature $T$. In the velocity Verlet algorithm this can be done by replacing
+The simplest approach to simulating a thermostat is to just rescale the particle velocities so that the instantaneous temperature $T_k$ matches the temperature $T$ of the thermostat. 
+From \eqref{eq:kinetictemp}, we see that rescaled velocities can be introduced as
 \begin{equation}
-  \vec{v}\left(t+\Delta t/2\right) = \vec{v}(t) + 1/2 \vec{a}(t) \Delta t
+    v_j' = \sqrt{\frac{T}{T_k}} v_j.
 \end{equation}
-with
-\begin{equation}
-  \vec{v}(t+\Delta t/2) = \sqrt{\frac{T}{T(t)}} \vec{v}(t) + \frac12 \vec{a}(t)\Delta t
-\end{equation}
-whenever rescaling is necessary.
-The rescaling is then a model of a process in which energy is instantaneosly transferred between the heat bath and all the particles. 
+Physically, such a rescaling corresponds to a process where energy is instantaneously transferred between the heat bath and all the particles. 
 As such, it is not the most realistic model. 
-Perhaps the worst, it gives no clue on how often the re-scaling should be carried out. 
+Also, there is no inherent clue on how often the re-scaling should be carried out. 
 Re-scaling the temperature every single step is clearly not a good idea, since that would result in a delta function distribution instead of the gaussian distribution with relative variance given by \eqref{eq:tempvar} that we expect in a canoncal ensemble.
+The number of steps between rescaling is therefore a parameter that has to be selected such as to obtain a temperature distribution similar to the temperature distribution for a canonical ensemble.\footnote{In \vasp\ this is the NBLOCK parameter}
 
-The number of steps between rescaling is therefore a parameter that has to be selected such as to obtain a temperature distribution similar to the temperature distribution for a canonical ensemble\footnote{In \vasp\ this is the NBLOCK parameter}. 
 From \eqref{eq:tempvar}, the expected temperature standard deviation for a canonical ensemble of $M$ particles of equal mass is
 \begin{equation}
   \sigma = \langle T_k \rangle \sqrt{\frac{2}{3M}}.
   \label{eq:canostd}
 \end{equation}
-In this work, the number of steps between rescaling has been set to 50. 
-To see the influence of this, the results from a 5~ps simulation of the same system (Si$_{62}$P$_1$) simulated above with no thermostat, is shown in figure \ref{fig:md_test_temperature_scaled}.
-The temperature distribution is quite gaussian, but it is peaked at the thermodynamic temperature.
-The standard deviation of 110~K is acceptably close to, but still lower than 144~K, the standard deviation for perfect canonical distribution, from \eqref{eq:canostd}.
+In this work, the number of steps between rescaling has been set to 50.
+Fig. \ref{fig:md_test_temperature_scaled} shows the resulting instantaneous temperature and total energy variations for a 5~ps simulation of the same system simulated in section \ref{sec:nothermo} above.
+The temperature distribution is quite gaussian, but the rescaling results in a too strong peak at the thermodynamic temperature.
+The standard deviation of 110~K is acceptably close to, but still lower than 144~K, the standard deviation for the perfect canonical distribution, \eqref{eq:canostd}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Nose-Hoover thermostat}
+\subsection{Nose-Hoover thermostat}\label{sec:nose-hoover}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 While velocity-scaling is a simple and straightforward approach to keeping the thermodynamic temperature constant, it does not sample a canonical ensemble, but rather some canonical-like ensemble. 
-More advanced themostat models have therefore evolved that accurately sample a canonical ensemble, of which the most popular approaches are those of Andersen\cite{Andersen:1980} or Nose\cite{Nose:1984,Nose:1991,Bylander:1992}.
+More advanced thermostat models have therefore evolved, that accurately sample a canonical ensemble, of which the most popular approaches are those of Andersen\cite{Andersen:1980} and Nose\cite{Nose:1984,Nose:1991,Bylander:1992}.
 
 In Andersen-type thermostats, the temperature is controlled by stochastic collisions with the heat bath.\footnote{
 A simple pseudo-code is given in \cite[129]{Frenkel:1996}.}
 This makes the simulation non-deterministic and the interpretation of the trajectories somewhat difficult.
 
-In Nose-type thermostats\ldots
+In Nose-type thermostats\comment{\ldots}
 
 The simulation carried out above with no thermostat (fig. \ref{fig:md_test_temperature_micro}) and with
 velocity-scaling (fig. \ref{fig:md_test_temperature_scaled}), was repeated using a Nose-Hoover thermostat.
@@ -2545,62 +2666,53 @@ This is not unlikely to be an effect of non-ergodicity, with the distribution no
 
 \begin{figure}[htbp]
   \centering
-  \subfloat[No thermostat (Microcanonical)]{
-    \rule{7cm}{7cm}
-    %\includegraphics{../figures/md_test_temperature_micro}
-    \label{fig:md_test_temperature_micro}
-  }
   \subfloat[Velocity-scaling]{
-    \includegraphics{../figures/md_test_temperature_scaled}
+    \includegraphics{../figures/tests/thermostats/velocity-scaling}
     \label{fig:md_test_temperature_scaled}
   }
   \subfloat[Nose-Hoover thermostat]{
     %\includegraphics[width=5cm]{../figures/silicon_with_p_interstitial_octahedral}
-    \includegraphics{../figures/md_test_temperature_nose}
+    \includegraphics{../figures/tests/thermostats/nose-0-25}
     %\crossbox{7cm}
     \label{fig:md_test_temperature_nose}
   }
   \caption{
     Instantaneous temperature distribution (above) and total energy fluctuation (below) 
-    for velocity-scaling (left) and Nose-Hoover thermostat (right). A 0.5 ps symmetric running mean 
-    is plotted with black color on top of the raw data in gray color, and the standard deviation $\sigma$ 
-    is indicated with a green overlay. In the upper right, the temperature distribution and its 
-    standard deviation is shown, together with a gaussian with the same standard deviation for comparison.
+    in a simulation using velocity-scaling (left) and Nose-Hoover thermostat (right). 
+    A 0.5 ps symmetric running mean is drawn (black) on top of the raw data (gray). 
+    The standard deviation $\sigma$ is indicated by a solid, green overlay. 
+    In the upper right, the temperature distribution and its standard deviation is shown, 
+    together with a gaussian (thick black line) with the same standard deviation and normalization.
    }
   \label{fig:md_test_temperature}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Ensembles}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%\section{Ensembles}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In thermal equilibrium, the following relation should hold
-\begin{equation}
-  \langle v_{\alpha}^2 \rangle = \frac{k_B}{m} T, \qquad{or in atomic units??}
-\end{equation}
-where $v_{\alpha}$ is the $\alpha$ component of the velocity of a given particle.
-This can be used to define an instantaneous temperature $\mathcal{T}$ at time $t$,
-\begin{equation}
-  \mathcal{T}(t) = \sum_{i=1}^N \frac{m}{k_B N_f} v_{\alpha,i}^2(t)
-\end{equation}
-The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match the desired temperature $T$.
+%In thermal equilibrium, the following relation should hold
+%\begin{equation}
+%  \langle v_{\alpha}^2 \rangle = \frac{k_B}{m} T, 
+%\end{equation}
+%where $v_{\alpha}$ is the $\alpha$ component of the velocity of a given particle.
+%This can be used to define an instantaneous temperature $\mathcal{T}$ at time $t$,
+%\begin{equation}
+%  \mathcal{T}(t) = \sum_{i=1}^N \frac{m}{k_B N_f} v_{\alpha,i}^2(t)
+%\end{equation}
+%The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match the desired temperature $T$.
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Ab initio molecular dynamics}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%\section{Ab initio molecular dynamics}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\subsection{Forces and stress}\label{sec:forcestress}
 
 %The nuclei 
-
-
-%\part{Results and discussion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2616,17 +2728,24 @@ The velocities can be scaled with a factor $\sqrt{T/\mathcal{T}(t)}$ to match th
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Simulations will be carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
-The system will be referred to as Si$_{64}$P, lending notation from chemistry, but hopefully not giving associations to a giant molecule.
-The extra phosphorus enters an interstitial position, but as described in section \ref{sec:P}, \ldots, several different configurations are known.
-While the choice of initial configuration is not expected to have a big impact on the simulation, \comment{WHY NOT? MD books often talks about equlibration, but can we say that a solid equlibrates? velocity autocorrelation}
-it is still worth investigating the different configurations, to start from the most stable one.
+All simulations were carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
+When a name is necessary, the system will be referred to as Si$_{64}$P, lending notation from chemistry, while hopefully not giving associations to a giant molecule.
+
+The extra phosphorus atom was inserted into an interstitial position, and relaxed together with the silicon atoms.
+The rationale for the choice of an interstitial position as the initial position is given in \ref{sec:PDiffusion}.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \section{Initial structures}\label{sec:structures}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As discussed in section \ref{sec:P}, several different interstitial positions are known to be stable.
+While it is expected that the differences between different interstitial initial configurations
+will only have a minor effect on the simulation outcome once the system has equilibrated,
+it is still worth investigating which initial configuration is the most stable one to start from.
 
 % Sammenlign med perfekt 64Si
 % test_structures/perfect/stdrelax/OUTCAR.3
@@ -2826,38 +2945,18 @@ One rather
 
 %The integrity of the lattice remains high during the entire simulation, so the lattice sites are well defined,
 
-A total of X trajectories was obtained at temperatures varying from X K to X K. 
-In this section I will discuss two specific trajectories in some detail before the more statistically oriented discussions that follow in the next sections.
+In total, 25 trajectories was simulated at 14 temperatures ranging from \SI{700}{\kelvin} to \SI{1700}{\kelvin}.
+In addition, an attempt was made running a simulation at 1750~K, but this system melted almost immediately.
+At temperatures in the range 1600 to \SI{1700}{\kelvin}, the system could easily melt, 
+but could also remain in a crystalline state for tens of picoseconds.
+Excluding the melted parts of the trajectories, the total simulated time was 1036~ps.
+
+In this section, I will discuss two specific trajectories in some detail before the more statistically oriented discussions that follow in the next sections.
 The first one is a 30 ps simulation at 1000 K, in which a single diffusion jump takes place. 
 The trajectory shows many features that are quite typical of most simulations.
 The second example is one of extraordinary diffusion, in which phosphorus diffuses about 10 Å in 90 ps at 1300 K.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Example 1}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
-where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
-
-At low temperatures, the P atom is more or less trapped between the neighbour lattice site 28 (0.250,0.250,0.500) and lattice site 60 (0.375,0.375,0.625)
-
-  The lower figure shows the distance from the phosphorus atom $r(t)$ to the nearest three lattice sites $R$.
-  and are taken to be positions of the silicon atom in a perfect structure with the same volume, but without the extra phosphorus atom.
-  The dashed lines indicates the distances at the beginning of the simulation. 1.32 and 2.05 Å are thus the distance to the nearest
-  and second nearest lattice position when in a split site.
-
-  %\clearpage
-%\begin{figure}[H]
-%  \centering
-%  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
-%  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
-%  \label{fig:split110_1000_occ}
-%\end{figure}
-
-
-\begin{figure}[H]
+\begin{figure}[htbp]
   % Making of:
   % Picture -> Layout
   %     Target -> Bitmap
@@ -2916,25 +3015,7 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
   Interstitial silicon atoms are drawn with a darker shade than silicon atoms at lattice sites.}
 \end{figure}
 
-  %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
-  %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
-  %  \label{fig:cartoon1.6}
-  %}
-
-%\subtitle{Jump figure}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Example 2}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Here the hexagonal position is seen as a transition state(?). 
-The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
-with femtosecond resolution.
-
-\begin{figure}[H]
+\begin{figure}[htbp]
   \centering
   \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom.]{
     \includegraphics[width=9cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/plot_dist_from_lattice.pdf} %
@@ -2979,6 +3060,51 @@ with femtosecond resolution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+\subsection{Example 1}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
+where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
+
+At low temperatures, the P atom is more or less trapped between the neighbour lattice site 28 (0.250,0.250,0.500) and lattice site 60 (0.375,0.375,0.625)
+
+  The lower figure shows the distance from the phosphorus atom $r(t)$ to the nearest three lattice sites $R$.
+  and are taken to be positions of the silicon atom in a perfect structure with the same volume, but without the extra phosphorus atom.
+  The dashed lines indicates the distances at the beginning of the simulation. 1.32 and 2.05 Å are thus the distance to the nearest
+  and second nearest lattice position when in a split site.
+
+  %\clearpage
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=10cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf}
+%  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
+%  \label{fig:split110_1000_occ}
+%\end{figure}
+
+
+
+  %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
+  %  \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
+  %  \label{fig:cartoon1.6}
+  %}
+
+%\subtitle{Jump figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Example 2}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Here the hexagonal position is seen as a transition state(?). 
+The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
+with femtosecond resolution.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \section{Melting}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3020,11 +3146,11 @@ Yet, while the system depicted here could melt at any moment, the trajectories a
 %This is actually a metastable state well above the melting point of the system, 
 %but while the microscopic motion is chaotic, the lattice, as indicated in the figure by the grid, is still well defined (the translational order parameter \eqref{eq:lattice_order_parameter} is > 0.8 using $\vec{G}_{111}$).
 %Compare with figure \ref{fig:dancec}, showing the same system at a temperature 100 K lower, but here no lattice can be defined, and the system is clearly melted (lattice order parameter $\sim$ 0.1).
-Techniques for determining the melting point from a molecular dynamics simulation is discussed e.g. by Yoo.\cite{Yoo:2009} 
+Techniques for determining the melting point from a molecular dynamics simulation are discussed e.g. by Yoo.\cite{Yoo:2009} 
 A direct approach involves starting from a system where half the cell is crystalline, and the other half is liquid. 
 Using a NPH ensemble, the two parts may even start at different temperatures, and then equilibrate. 
 Using this approach, Yoo found a melting point for pure silicon $T_m = 1540 \pm 50$ K, and also noted that other DFT-based studies have 
-underestimated the melting point as well.\cite{Yoo:2009}
+underestimated the melting point.\cite{Yoo:2009}
 
 With pure silicon experimentally melting at \SI{1687}{\kelvin}, and with only a very modest reduction when phosphorus at doping concentrations is added,\cite{Safarian:2011} our upper limit of \SI{1600}{\kelvin} indicates that the melting point is underestimated in this work as well.
 
@@ -3035,14 +3161,14 @@ With pure silicon experimentally melting at \SI{1687}{\kelvin}, and with only a 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Upon melting, long-scale order is lost, while some short-scale order remains. 
-This can be seen in the radial pair distribution function $g(r)$, defined as the ratio of the average local atomic (or molecular) density $\rho(r)$ at a distace $r$ from an arbitrary atom (or molecule), to the bulk density $\rho$ of the liquid;\cite{Kirkwood:1968}
+This can be seen in the radial pair distribution function $g(r)$, defined as the ratio of the average local atomic (or molecular) density $\rho(r)$ at a distance $r$ from an arbitrary atom (or molecule), to the bulk density $\rho$ of the liquid;\cite{Kirkwood:1968}
 \begin{equation}
   \rho(r) = g(r) \rho
 \end{equation}
 For any given atom in a simulation, the function can be found from counting the number of atoms $N(r,r+\Delta r)$ within surrounding shells of thickness $\Delta r$, and the numbers averaged over the timespan of the simulation. 
 The shell thickness $\Delta r$ must be chosen thin enough to capture the structure of the function, 
 while large enough to provide sufficiently large sampling populations for statistically reliable results. 
-A value near 1/40 the average inter-atomic distance is often a satisfactory.\cite[263]{Haile:1992} 
+A value near 1/40 the average interatomic distance is often satisfactory.\cite[263]{Haile:1992} 
 We can write
 \begin{equation}
     g(r) = \frac{\langle N(r,r+\Delta r) \rangle}{\rho V(r,\Delta r)}
@@ -3062,7 +3188,7 @@ The function falls to zero for $r\to 0$ due to repulsive forces between atoms, a
   \caption{Si-Si radial pair distribution function for two simulations of a solid system at different temperatures (upper), and
   comparison of the Si-Si and P-Si radial pair distribution functions for the same liquid system (lower), 
   time-averaged over 10 ps in both cases. 
-  The annotated peaks in the lower figure refers to the Si-Si function.
+  The annotated peaks in the lower figure refer to the Si-Si function.
   Note also the different scales on the ordinate axes in the upper and lower figure.}
   \label{fig:pcf}
 \end{figure}
@@ -3101,25 +3227,26 @@ In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\ce
           Source & Temp. [K] & 1. peak [Å] & 2. peak [Å] & Coordination no. \\
         \midrule
           This work 
-            & 1700                  & 2.43 & 4.00       & 5.5 or 6.1 ???  \\
-          Waseda (1975)\cite{Waseda:1975}\tnote{a}
+          & 1700                  & 2.43 & 4.00       & 5.5 or 6.1\tnote{a}  \\
+          Waseda (1975)\cite{Waseda:1975}\tnote{b}
             & 1733                  & 2.50 & 3.78       & 6.4   \\
-          Stich (1991)\cite{Stich:1991}\tnote{b}    
+          Stich (1991)\cite{Stich:1991}\tnote{c}    
             & 1800                  & 2.46 & 3.70       & 6.5   \\
-          Stich (1996)\cite{Stich:1996}\tnote{c}    
+          Stich (1996)\cite{Stich:1996}\tnote{d}    
             & 1700                  & 2.47 & 3.64       & 6.2   \\
-          Ansell (1998)\cite{Ansell:1998}\tnote{a,d}
+          Ansell (1998)\cite{Ansell:1998}\tnote{b,e}
             & 1603                  & 2.42 & 3.27 3.95  & $5.6\pm 0.5$   \\
-          Ansell (1998)\cite{Ansell:1998}\tnote{a}      
+          Ansell (1998)\cite{Ansell:1998}\tnote{b}      
             & 1829                  & 2.46 & 3.45       & $6.4\pm 0.5$   \\
        \bottomrule
      \end{tabular}
      {\footnotesize
        \begin{tablenotes}
-         \item[a] X-ray diffraction study
-         \item[b] Ab initio Car-Parinello MD at LDA-level
-         \item[c] Ab initio Car-Parinello MD at spin-polarized GGA-level
-         \item[d] supercooled
+         \item[a] See discussion in text
+         \item[b] X-ray diffraction study
+         \item[c] Ab initio Car-Parinello MD at LDA-level
+         \item[d] Ab initio Car-Parinello MD at spin-polarized GGA-level
+         \item[e] supercooled
        \end{tablenotes}
      }
    \end{threeparttable}
@@ -3140,7 +3267,7 @@ For the shallow minimum found in a liquid state, however, there is considerable 
 In fig. \ref{fig:rdffirstcoord}, it was evaluated to 
 the first minimum in $g(r)r^2$, for which $n_1(3.04)=5.5$.
 Evaluated to the first minimum in $g(r)$ instead, we obtain $n_1(3.18) = 6.1$. 
-With this kind of sensitivity, its hard to make much sense about the absolute numbers,
+With this kind of sensitivity, it's hard to make much sense about the absolute numbers,
 but relatively, the numbers are lower than other values found in the literature, 
 table \ref{tab:pcf}, which may again be due to the differing density.
 
@@ -3187,25 +3314,23 @@ The 12 second nearest neighbours in the crystalline state are distributed quite 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Diffusion}
+\section{Diffusion}\label{sec:diffusion-results}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Excluding the melted parts of the simulations, the total simulated time was 1036~ps, distributed over 25 simulations at 14 temperatures ranging from 700~K to 1700~K. In addition, an attempt was made running a simulation at 1750~K, but this system melted almost immediately.
-
-Table \ref{tab:displacements} lists, for the simulations carried out, phosphorus and silicon displacements $\Delta r = \sqrt{r^2}$
-and diffusivities $D = r^2 / 6t$, with $r^2 = [\vec{r}(t) - \vec{r}(0)]^2$,
-and $t$ being the end of the simulation or the point at which the system melted.
-For silicon, the values were averaged over the 64 atoms in the cell. 
-
-To calcul
-
+Table \ref{tab:displacements} lists phosphorus and silicon mean displacements 
+$\langle\Delta r\rangle = \left\langle\sqrt{\Delta r^2}\right\rangle$ and diffusivities $D = \left\langle\Delta r^2\right\rangle / 6t$, 
+for all the simulations carried out.
+The angle brackets indicate averages over atoms of the same type (1 for phoshorus, 64 for silicon), 
+$\Delta r^2 = [\vec{r}(t) - \vec{r}(0)]^2$ are mean square displacements,
+and $t$ is either the end of the simulation, or the point at which the system melted, whichever came first, 
+since only diffusion in the solid state is considered here.
 
 \begin{table}[htbp]
   \centering
   \begin{tabular}{rrrrrr}
     \toprule
-    Temp [K] & $t$ [ps] & $\Delta r_{\text{P}}$ [Å] & $\\Delta r_{\text{Si}}$ [Å] & $D_{\text{P}}$ [cm$^2$/s] & $D_{\text{Si}}$ [cm$^2$/s] \\
+Temp (K) & $t$ (ps) & $\Delta r_{\text{P}}$ (Å) & $\langle\Delta r_{\text{Si}}\rangle$ (Å) & $D_{\text{P}}$ ($10^{-6}$~cm$^2$/s) & $D_{\text{Si}}$ ($10^{-6}$~cm$^2$/s) \\
     \midrule
          %700 & 29.0 & 1.9 & 0.3 & 2.01e-06 & 5.56e-08 \\
          %800 & 29.0 & 2.2 & 0.3 & 2.90e-06 & 7.68e-08 \\
@@ -3232,39 +3357,138 @@ To calcul
          %1650 & 7.5 (melted) & 4.5 & 2.0 & 4.50e-05 & 1.12e-05 \\
          %1700 & 5.2 (melted) & 2.6 & 1.8 & 2.21e-05 & 1.39e-05 \\
          %1700 & 18.8 & 2.1 & 0.9 & 3.89e-06 & 1.27e-06 \\
-          700 & 29.0  &  1.9 &  0.2 & 2.10e-06 & 2.70e-08 \\
-          800 & 29.0  &  2.2 &  0.2 & 2.85e-06 & 5.35e-08 \\
-          900 & 27.5  &  1.0 &  0.3 & 6.01e-07 & 5.29e-08 \\
-         1000 & 29.0  &  4.2 &  0.3 & 9.94e-06 & 1.12e-07 \\
-         1100 & 29.0  &  1.7 &  0.3 & 1.58e-06 & 7.57e-08 \\
-         1200 & 29.0  &  2.3 &  0.4 & 2.94e-06 & 1.64e-07 \\
-         1300 & 29.0  &  1.3 &  0.4 & 9.83e-07 & 1.49e-07 \\
-         1300 & 89.0  & 10.6 &  0.4 & 2.10e-05 & 7.13e-08 \\
-         1400 & 59.0  &  3.3 &  1.1 & 3.12e-06 & 9.25e-07 \\
-         1400 & 50.6  &  2.0 &  0.7 & 1.28e-06 & 5.15e-07 \\
-         1400 & 79.0  &  2.5 &  1.4 & 1.27e-06 & 7.68e-07 \\
-         1400 & 89.0  &  0.7 &  1.4 & 1.02e-07 & 8.53e-07 \\
-         1450 & 59.0  &  2.9 &  1.3 & 2.33e-06 & 1.30e-06 \\
-         1500 & 59.0  &  8.8 &  1.0 & 2.20e-05 & 8.72e-07 \\
-         1500 & 79.0  &  4.4 &  1.4 & 4.12e-06 & 1.07e-06 \\
-         1500 & 59.0  &  5.4 &  0.9 & 8.27e-06 & 6.60e-07 \\
-         1550 & 14.0  &  3.6 &  0.7 & 1.54e-05 & 1.49e-06 \\
-         1550 & 59.0  &  3.4 &  1.1 & 3.31e-06 & 8.81e-07 \\
-         1600 &  8.1* &  5.4 &  1.8 & 5.90e-05 & 8.10e-06 \\
-         1600 & 27.9* &  4.8 &  2.5 & 1.40e-05 & 5.63e-06 \\
-         1600 & 19.0  &  1.2 &  0.5 & 1.32e-06 & 3.66e-07 \\
-         1600 & 27.4* &  3.9 &  2.2 & 9.32e-06 & 4.18e-06 \\
-         1650 &  7.5* &  4.7 &  2.0 & 4.88e-05 & 1.07e-05 \\
-         1700 &  5.2* &  3.3 &  1.8 & 3.58e-05 & 1.35e-05 \\
-         1700 & 18.8  &  2.2 &  0.8 & 4.33e-06 & 1.14e-06 \\
+         % 700 & 29.0  &  1.9 &  0.2 & 2.10e-06 & 2.70e-08 \\
+         % 800 & 29.0  &  2.2 &  0.2 & 2.85e-06 & 5.35e-08 \\
+         % 900 & 27.5  &  1.0 &  0.3 & 6.01e-07 & 5.29e-08 \\
+         %1000 & 29.0  &  4.2 &  0.3 & 9.94e-06 & 1.12e-07 \\
+         %1100 & 29.0  &  1.7 &  0.3 & 1.58e-06 & 7.57e-08 \\
+         %1200 & 29.0  &  2.3 &  0.4 & 2.94e-06 & 1.64e-07 \\
+         %1300 & 29.0  &  1.3 &  0.4 & 9.83e-07 & 1.49e-07 \\
+         %1300 & 89.0  & 10.6 &  0.4 & 2.10e-05 & 7.13e-08 \\
+         %1400 & 59.0  &  3.3 &  1.1 & 3.12e-06 & 9.25e-07 \\
+         %1400 & 50.6  &  2.0 &  0.7 & 1.28e-06 & 5.15e-07 \\
+         %1400 & 79.0  &  2.5 &  1.4 & 1.27e-06 & 7.68e-07 \\
+         %1400 & 89.0  &  0.7 &  1.4 & 1.02e-07 & 8.53e-07 \\
+         %1450 & 59.0  &  2.9 &  1.3 & 2.33e-06 & 1.30e-06 \\
+         %1500 & 59.0  &  8.8 &  1.0 & 2.20e-05 & 8.72e-07 \\
+         %1500 & 79.0  &  4.4 &  1.4 & 4.12e-06 & 1.07e-06 \\
+         %1500 & 59.0  &  5.4 &  0.9 & 8.27e-06 & 6.60e-07 \\
+         %1550 & 14.0  &  3.6 &  0.7 & 1.54e-05 & 1.49e-06 \\
+         %1550 & 59.0  &  3.4 &  1.1 & 3.31e-06 & 8.81e-07 \\
+         %1600 &  8.1* &  5.4 &  1.8 & 5.90e-05 & 8.10e-06 \\
+         %1600 & 27.9* &  4.8 &  2.5 & 1.40e-05 & 5.63e-06 \\
+         %1600 & 19.0  &  1.2 &  0.5 & 1.32e-06 & 3.66e-07 \\
+         %1600 & 27.4* &  3.9 &  2.2 & 9.32e-06 & 4.18e-06 \\
+         %1650 &  7.5* &  4.7 &  2.0 & 4.88e-05 & 1.07e-05 \\
+         %1700 &  5.2* &  3.3 &  1.8 & 3.58e-05 & 1.35e-05 \\
+         %1700 & 18.8  &  2.2 &  0.8 & 4.33e-06 & 1.14e-06 \\
+         % 700 & 30.0  &  2.4 &  0.1 & 3.32e-06 & 2.19e-08 \\
+         % 800 & 30.0  &  2.1 &  0.1 & 2.56e-06 & 4.70e-08 \\
+         % 900 & 28.5  &  1.2 &  0.1 & 7.75e-07 & 1.94e-08 \\
+         %1000 & 30.0  &  4.6 &  0.2 & 1.15e-05 & 7.12e-08 \\
+         %1100 & 30.0  &  1.0 &  0.1 & 5.61e-07 & 3.16e-08 \\
+         %1200 & 30.0  &  1.3 &  0.1 & 9.46e-07 & 4.84e-08 \\
+         %1300 & 30.0  &  1.8 &  0.2 & 1.78e-06 & 8.77e-08 \\
+         %1300 & 90.0  & 10.5 &  0.3 & 2.04e-05 & 3.63e-08 \\
+         %1400 & 60.0  &  2.9 &  1.1 & 2.34e-06 & 8.95e-07 \\
+         %1400 & 51.6  &  3.4 &  0.5 & 3.78e-06 & 4.61e-07 \\
+         %1400 & 80.0  &  3.6 &  1.3 & 2.71e-06 & 7.21e-07 \\
+         %1400 & 90.0  &  1.9 &  1.3 & 6.98e-07 & 8.10e-07 \\
+         %1450 & 60.0  &  4.3 &  1.2 & 5.20e-06 & 1.21e-06 \\
+         %1500 & 60.0  &  8.3 &  0.8 & 1.91e-05 & 7.91e-07 \\
+         %1500 & 80.0  &  5.1 &  1.3 & 5.38e-06 & 1.03e-06 \\
+         %1500 & 60.0  &  6.6 &  0.8 & 1.19e-05 & 6.27e-07 \\
+         %1550 & 15.0  &  2.3 &  0.4 & 5.64e-06 & 1.06e-06 \\
+         %1550 & 60.0  &  4.3 &  1.0 & 5.23e-06 & 7.73e-07 \\
+         %1600 &  9.1* &  5.1 &  1.4 & 4.66e-05 & 5.15e-06 \\
+         %1600 & 28.9* &  7.1 &  1.9 & 2.94e-05 & 3.63e-06 \\
+         %1600 & 20.0  &  2.2 &  0.2 & 3.93e-06 & 2.42e-07 \\
+         %1600 & 28.4* &  4.6 &  1.8 & 1.26e-05 & 3.02e-06 \\
+         %1650 &  8.5* &  3.3 &  1.4 & 2.16e-05 & 5.50e-06 \\
+         %1700 &  6.2* &  1.7 &  1.2 & 7.61e-06 & 6.27e-06 \\
+         %1700 & 19.8  &  1.3 &  0.6 & 1.32e-06 & 1.03e-06 \\
+         700 & 30.0  &  2.4 &  0.1 &  3.32 &  0.02 \\
+         800 & 30.0  &  2.1 &  0.1 &  2.56 &  0.05 \\
+         900 & 28.5  &  1.2 &  0.1 &  0.78 &  0.02 \\
+        1000 & 30.0  &  4.6 &  0.2 & 11.55 &  0.07 \\
+        1100 & 30.0  &  1.0 &  0.1 &  0.56 &  0.03 \\
+        1200 & 30.0  &  1.3 &  0.1 &  0.95 &  0.05 \\
+        1300 & 30.0  &  1.8 &  0.2 &  1.78 &  0.09 \\
+        1300 & 90.0  & 10.5 &  0.3 & 20.38 &  0.04 \\
+        1400 & 60.0  &  2.9 &  1.1 &  2.34 &  0.90 \\
+        1400 & 51.6  &  3.4 &  0.5 &  3.78 &  0.46 \\
+        1400 & 80.0  &  3.6 &  1.3 &  2.71 &  0.72 \\
+        1400 & 90.0  &  1.9 &  1.3 &  0.70 &  0.81 \\
+        1450 & 60.0  &  4.3 &  1.2 &  5.20 &  1.21 \\
+        1500 & 60.0  &  8.3 &  0.8 & 19.15 &  0.79 \\
+        1500 & 80.0  &  5.1 &  1.3 &  5.38 &  1.03 \\
+        1500 & 60.0  &  6.6 &  0.8 & 11.92 &  0.63 \\
+        1550 & 15.0  &  2.3 &  0.4 &  5.64 &  1.06 \\
+        1550 & 60.0  &  4.3 &  1.0 &  5.23 &  0.77 \\
+        1600 &  9.1* &  5.1 &  1.4 & 46.64 &  5.15 \\
+        1600 & 28.9* &  7.1 &  1.9 & 29.36 &  3.63 \\
+        1600 & 20.0  &  2.2 &  0.2 &  3.93 &  0.24 \\
+        1600 & 28.4* &  4.6 &  1.8 & 12.56 &  3.02 \\
+        1650 &  8.5* &  3.3 &  1.4 & 21.62 &  5.50 \\
+        1700 &  6.2* &  1.7 &  1.2 &  7.61 &  6.27 \\
+        1700 & 19.8  &  1.3 &  0.6 &  1.32 &  1.03 \\
     \bottomrule
   \end{tabular}
-  \caption{Total displacements (in Ångstrøm) and diffusion coefficients (in \si{\centi\metre\squared\per\second}) 
-    for the simulations carried out. 
+  \caption{Mean displacements (in Ångstrøm) and diffusion coefficients (in \si{\centi\metre\squared\per\second}) 
+    for phosphorus (P) and silicon (Si) in the simulations carried out. 
     The times $t$ are the total times of each simulation, or the time until the system melted (indicated by *).
-    The first picosecond has been removed from all simulations as equilibration time.}
+    %The first picosecond has been removed from all simulations as equilibration time.
+    }
   \label{tab:displacements}
 \end{table}
+
+There are several issues with calculating diffusivities from the simulation data.
+One is the small magnitudes of the displacements. 
+With phosphorus starting in a interstitial site, a displacement of $\sim \SI{2.3}{\angstrom}$ 
+constitutes only a movement from the interstitial site to the neighbouring lattice site 
+(see fig. \ref{fig:interstitial_positions}). 
+Such a displacement, which was the largest displacement that took place in many of the simulations, 
+cannot by itself be related to macroscopic diffusion.
+Related to this issue, is the issue that the relation $D = \Delta r^2 / 6t$ requires $r^2(t)$ to be linear,
+but with few jumps taking place, $r^2(t)$ is generally not very linear.
+Fig. \ref{fig:r2p} illustrates this, showing a quite representative simulation, where phosphorus 
+first jumps from the initial interstitial site to the neighbouring lattice site, and then later to another lattice site.
+While a linear fit can be made, the slope will depend quite strongly on the (random) choice of endpoint. 
+If the simulation for instance had ended after 50~ps, not after 60~ps, the slope would have been steeper.
+Several more jumps would be needed to reliably assign $D$ from $\langle r^2 (t) \rangle$.
+
+The statistics for silicon are better, since the jump count accumulate over all the 64 atoms, see fig. \ref{fig:r2si}.
+This is why calculating the self-diffusion coefficient of silicon is a more tractable problem than calculating the diffusion coefficient of a dopant.
+As seen in the Arrhenius plot in fig. \ref{fig:arrhenius}, the least square fit for the silicon diffusivities is better than for phosphorus diffusivities.
+Yet, neither fit is close to acceptable, so to reliably extract diffusion parameters, 
+it is clear that longer simulations, or more simulations at each temperature, would be needed.
+
+\begin{figure}[htbp]
+  \centering
+    \subfloat[Phosphorus (Pearson's correlation coefficient is 0.71)]{
+      \label{fig:r2p}
+      \includegraphics[width=6cm]{figs/hexagonal_1450_r2_p}
+    }
+    \subfloat[Silicon (Pearson's correlation coefficient is 0.97)]{
+      \label{fig:r2si}
+      \includegraphics[width=6cm]{figs/hexagonal_1450_r2_si}
+    }
+    \caption{Mean square displacement $\langle \Delta r^2 \rangle$ of phosphorus and silicon from a simulation at \SI{1450}{\kelvin}. 
+        Please note the different scales of the ordinate axes.}
+  \label{fig:r2examples}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=8cm]{figs/arrhenius}
+  \caption{Arrhenius plot of diffusivities of phosphorus and silicon, with attempted least square fits. 
+      Pearson's correlation coefficient is -0.36 for phosphorus and -0.79 for silicon.
+      From the slopes of the fitted lines, the activation energy is 0.17~eV for phosphorus and 0.58~eV for silicon.
+  }
+  \label{fig:arrhenius}
+\end{figure}
+
+
 
 %\clearpage
 
@@ -3294,7 +3518,7 @@ An attempt was still made to estimate jump frequencies as a function of temperat
 Life at the microscopic level? Heisenberg}
 
 From textbook solid state physics, and from monte carlo simulations alike, we are accustomed with the picture of a single atom jumping from one lattice site to another. 
-While such idealisations is what makes physics possible and useful, molecular dynamics provides us with a continuous picture to which the discrete jump does not fit in naturally. 
+While such idealisations are what makes physics possible and useful, molecular dynamics provides us with a continuous picture to which the discrete jump does not fit in naturally. 
 We have to define it.
 
 First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
@@ -3597,10 +3821,10 @@ $f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} 
 \section{VMD plugins}
 
 For visualisation purposes, the two programs {\vesta} (Visualization for Electronic and STructural Analysis) and {\vmd} (Visual Molecular Dynamics) have been used, both free for non-commercial use.
-As the name suggest, \vmd was developed for visualising trajectories, while \vesta only supports still structures.
-But there are other major differences between the programs. While \vmd originates from the biophysics community, \vesta comes from the crystallographic community.
+As the name suggest, \vmd was developed for visualising trajectories, while {\vesta} only supports still structures.
+But there are other major differences between the programs. While {\vmd} originates from the biophysics community, {\vesta} comes from the crystallographic community.
 {\vesta} is therefore better suited for viewing crystals, and I found that I especially missed a visualization of and alignment to crystal vectors in \vmd.
-\vmd comes with embedded Tcl, so I wrote a plugin first mimicking \vesta's Orientation dialogue, and then adding 
+{\vmd} comes with embedded Tcl, so I wrote a plugin first mimicking {\vesta}'s Orientation dialogue, and then adding 
 display of crystal vectors, view vectors and some extras.
 
 \url{https://github.com/danmichaelo/crystallography}
@@ -3659,7 +3883,7 @@ for i in range(65):
 git clone git://github.com/danmichaelo/oppvasp.git
 \end{lstlisting}
 
-The vtf writer writes both positions and forces, and the latter can be read by newer versions of VMD's vtfplugin.
+The vtf writer writes both positions and forces, and the latter can be read by newer versions of {\vmd}'s vtfplugin.
 
 \begin{figure}[htbp]
   \centering
