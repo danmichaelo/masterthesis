@@ -88,89 +88,105 @@ Set with the help of {\LaTeXe} and {\KOMAScript}.
 %utilisation of some of the \SI{120000}{\tera\watt}
 %of net power we receive from the Sun -- most of which is `spilled' today. 
 
-Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very tempting from a theoretical point of view. 
-The alternative to an \textit{ab initio} potential is an empirical potential. 
-Two well-tested empirical potentials for silicon are the Stillinger-Weber (SW) potential\cite{Stillinger:1985} and the Tersoff (T3) potential.\cite{Tersoff} 
-A difficulty with empirical potentials is that may not work well outside the range of problems they were designed for.
-A given potential may capture elastic and cohesive properties of a material with the same accuracy as an \textit{ab initio} potential, but may fail for other properties.\cite{Powell:2007}
-For instance, Posselt et al. found for diffusion of intrinsic defects in silicon that activation energies differed by about 1~eV between the SW potential and the T3 potential in a non-systematic way, and that the self-interstitial migration was dominated by a dumbbell mechanism when using the SW potential, but by a interstitialcy mechanism when using the T3 potential.\cite{Posselt:2008}
-Transferability between different bonding environments is also low, so rather than a phosphorus potential, we would need a potential for phosphorus in silicon.
+Molecular dynamics with an \textit{ab initio} potential, such as one obtained from DFT calculations, is very enticing from a theoretical point of view,
+but is often practically unfeasable due to the great computational cost involved.
+This work was started without knowing \textit{a priori} if simulations could be carried out with simulation times long enough to obtain useful statistics,
+but some hope came from the successful simulations of the silicon self-interstitial by Sahli,\cite{Sahli:2005}
+and from the recent development of `very soft' PAW-potentials, that is potentials working accurately even with a very low energy cutoff (see section \ref{sec:pseudopot}).
 
+The alternative to using an \textit{ab initio} potential is to use an empirical potential. 
+Two well-tested empirical potentials for silicon are the Stillinger-Weber (SW) potential\cite{Stillinger:1985} and the Tersoff (T3) potential.\cite{Tersoff} 
+A drawback with empirical potentials is that they are defined for a limited range of conditions and problems, 
+and it is generally not known how well they perform outside that range.
+A given potential may for instance capture elastic and cohesive properties of a material with the same accuracy as an \textit{ab initio} potential, 
+but may fail for other properties.\cite{Powell:2007}
+For silicon self-diffusion, Posselt et al. found that the activation energies differed by about 1~eV between the SW potential and the T3 potential in a non-systematic way, and that the migration mechanism also depended on the choice of potential.\cite{Posselt:2008}
+
+With empirical potentials, transferability between different bonding environments can also not be expected, so rather than a general phosphorus potential, a specific potential for phosphorus in silicon would be needed.
 Over the years, many groups have developed parameters for more systems that can be used with the original form of the Tersoff potential, for instance for all III-V semiconductors.\cite{Powell:2007}
-Yet, to my knowledge no potential for phosphorus in silicon has been published.
-\comment{MEN SKULLE IKKE KEITH LAGE ETT?}
+Yet, at least to my knowledge, no such potential for phosphorus in silicon has been published.
+%\comment{MEN SKULLE IKKE KEITH LAGE ETT?}
+
+A motivation for studying phosphorus diffusion in silicon has been the use of phosphorus-doped silicon in the emitter layer in classical silicon solar cells.
+This front layer of the solar cell is contacted with metal fingers, and 
+the contact resistivity $\rho_c$ depends strongly on the phosphorus doping concentration $N_D$.
+If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. 
+This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$, but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.\cite{Schroder:1984}
+Concentrations may reach \SI{1e21}{\per\centi\metre\cubed} can be found in the outermost part of a typical emitter layer,\cite[40]{Bentzen:2006}
+corresponding to about one phosphorus atom for every 50 silicon atoms,
+while the limit of electrically active phosphorus is somewhat lower, about \SI{2e20}{\per\centi\metre\cubed}.\cite[40]{Bentzen:2006}
+In this work, a unit cell is simulated with one phosphorus atom to 64 silicon atoms,
+the concentration thus being close to the concentration in the outermost part of the emitter layer, 
+but this unit cell approach does not allow for any phosphorus clustering, 
+although phosphorus precipitation in reality can be expected at this concentration.
 
 %(Trenger referanse?) so to study phosphorus in silicon, a potential for phosphorus in silicon rather than a general phosphorus potential would be needed,
 %Tersoff also introduced a multicomponent potential for Si, Ge and C\ref{Tersoff:1989}
 
-But while using \textit{ab initio} potential is very enticing, it is often unfeasable from a practical point of view due to the great computational cost involved.
-
-I'm grateful to the developers of the {\vasp} software, who provided me with new potentials that decreased the computing time considerably. These are described further in section \ref{sec:pseudopot}
-
-This work was started without knowing \textit{a priori} if simulations at the \textit{ab initio} level could be carried out with simulation times long enough to obtain useful statistics, but with new potentials and \ldots we found it worthwhile to test.
-
 A privilege with studying phosphorus in silicon is that there exists a wealth of experimental and theoretical results from more 
-than 60 years\footnote{
+than 60 years of studies on this system,\footnote{
   Silicon semiconductor technology took it first infant steps right before world war II, with for instance
   the discovery of the p-n junction (then called `PN barrier') often attribtued to R.S Ohl (U.S. patent 2402662, 1939),
   and the understanding and development gained speed in the early 50s. In a 1953 patent by P. Robsin, the process of 
   diffusion to form a junction is described (U.S. patent 2823149, 1953), and in a 1955 patent by Ross (2862160), 
-  phosphorus is mentioned as a donor. But I'm not sure just when phosphorus was first introduced.
-} of studies on this system. 
-, data that can be used to test our models. 
-For example, there are the classic, often-cited reviews on diffusion of dopants in silicon by (Fahey:1989) and (Hu:1994). And the PhD thesis of (Bentzen:2006) provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
-
-As an introduction, table \ref{tb:si} presents some key properties of silicon,
+  phosphorus is mentioned as a donor, but I'm not sure just when phosphorus was first introduced.
+} results that can be used to test new simulation results.
+Diffusion of dopants in silicon is discussed in e.g. the reviews by Fahey (1989)\cite{Fahey:1989}, Hu (1994)\cite{Hu:1994}, and Pichler (2004)\cite{Pichler:2004}.
+Some key properties of pure silicon are listed in table \ref{tb:si}, while diffusion of phosphorus in silicon is discussed in section \ref{sec:P}.
+%And the PhD thesis of (Bentzen:2006) provides an up-to-date account of the diffusion behaviour of phosphorus in the specific case of the very highly doped emitter layer.
 
 \begin{table}[htb]
   \centering
-  \begin{tabular}{lll}\toprule
-     & 300~K & 1100~K\\
-     Crystal structure & Diamond  \\ 
-     Lattice constant / Å  & 5.43086 \cite{Ghandhi:1994}, 5.43072 $\pm$ 0.00004 Å at \SI{25}{\celsius} \cite{Smakula:1955} \\
-     Distance between neighboring atoms / Å & 2.35163 \\
-     Atomic density & \SI{4.99441e22}{\per\centi\metre\cubed} \\
-     Melting point & \SI{1685}{\kelvin} / \SI{1412}{\celsius} \\
-     Thermal coefficient of expansion & \SI{2.33e-6}{\per\kelvin} & \SI{4.5e-6}{\per\kelvin} \\\bottomrule
+  \begin{tabular}{lll}
+      \toprule
+         Crystal structure          & Diamond  \\ 
+         Lattice constant $a$ / Å   & 5.43072 $\pm$ 0.00004 Å at \SI{25}{\celsius} \cite{Smakula:1955} \\
+         Si-Si distance / Å         & $\sqrt{3}a/4$ = 2.35~Å \\
+         Atomic density             & $8/a^3 = \SI{4.9948e22}{\per\centi\metre\cubed}$ \\
+         Melting point              & \SI{1685}{\kelvin} / \SI{1412}{\celsius} \\
+         Thermal expansion coefficient & \SI{2.6e-6}{\per\kelvin}\cite{Okada:1984} \\
+     \bottomrule
   \end{tabular}
-  \caption{Some key properties of silicon (Har ikke helt bestemt hvilke som bør være med her)}
+  \caption{Some key properties of silicon at room temperature.}
   \label{tb:si}
 \end{table} 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{The power of the sun}\label{sec:Sun}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
-%Quite
-%stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
-%8 light minutes away, and we receive about 100 petawatts ($10^{17}$
-%) of radiative power [CHECK].
-%In thermodynamic terms, the radiation is an energy flux of relatively low entropy, making it easy to utilize
-%relative to lower-entropy energy fluxes such as heat. 
-%It is a `high-quality' energy flux, an energy flux that is 
+%5.43086 \cite{Ghandhi:1994}, 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%\section{The power of the sun}\label{sec:Sun}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The starting point for all processes on earth, but those utilising geothermal energy, is a relatively constant 100 petawatt low-entropy energy flux we receive from a star 8 light minutes away.
-From a logical point of view, it makes perfect sense to utilise this energy flux directly instead of one of its derivates, like wind or hydro, or the energy stored in the fossil fuels. 
+%%\lettrine[lines=3,slope=0pt,nindent=0pt,lraise=0.12]{Q}uite
+%%Quite
+%%stabily, our Sun emits about 383 yottawatts of radiative power [SOURCE]. 
+%%8 light minutes away, and we receive about 100 petawatts ($10^{17}$
+%%) of radiative power [CHECK].
+%%In thermodynamic terms, the radiation is an energy flux of relatively low entropy, making it easy to utilize
+%%relative to lower-entropy energy fluxes such as heat. 
+%%It is a `high-quality' energy flux, an energy flux that is 
 
-But then, the energy is quite diluted, at least compared to some other fuels Nature has concentrated over time.
-The energy content of a litre of gasoline, for instance, is about 9.5 kWh,\footnote{\url{http://www.ocean.washington.edu/courses/envir215/energynumbers.pdf}} of which about 40 \% may be turned into electricity if we like.\footnote{Efficiency in electricity generation. Union of the Electricity Industry EURELECTRIC and VGB Powertech (2003)}
-To get a feeling for this number, remember that one kilowatt-hour of electric power 
-is roughly one and a half hour of horse-power. Man, not being as strong as a
-horse, can only sustain about one tenth of a horsepower over time, meaning that a 
-full working day amounts to less than one kilowatt-hour, so in pure energy content
-about five to ten hard working days can be replaced by a single litre of gasoline.
+%The starting point for all processes on earth, but those utilising geothermal energy, is a relatively constant 100 petawatt low-entropy energy flux we receive from a star 8 light minutes away.
+%From a logical point of view, it makes perfect sense to utilise this energy flux directly instead of one of its derivates, like wind or hydro, or the energy stored in the fossil fuels. 
 
-When it comes to solar power, we receive about 1 kW per square metre at midday in sunny regions, 
-which means 1 kWh in one hour\footnote{of which 10–20 \% can be turned into electricity using a standard solar panel. 
-Conversion losses would of course also appear on the conversion of gasoline to electricity.}
-On one hand, the number is impressive in itself, but on the other hand, 
-it means large areas are needed to collect and concentrate or convert enough solar energy for the energy usage we have grown used with,
-which is why solar power utilization is termed ``area-intensive''.
-And when large areas are needed, the materials used have to be cheap and abundant. 
-Since there is no fundamental limit of the ``thickness'' of the materials, one way to cut material costs is to cut the thickness of the materials.
+%But then, the energy is quite diluted, at least compared to some other fuels Nature has concentrated over time.
+%The energy content of a litre of gasoline, for instance, is about 9.5 kWh,\footnote{\url{http://www.ocean.washington.edu/courses/envir215/energynumbers.pdf}} of which about 40 \% may be turned into electricity if we like.\footnote{Efficiency in electricity generation. Union of the Electricity Industry EURELECTRIC and VGB Powertech (2003)}
+%To get a feeling for this number, remember that one kilowatt-hour of electric power 
+%is roughly one and a half hour of horse-power. Man, not being as strong as a
+%horse, can only sustain about one tenth of a horsepower over time, meaning that a 
+%full working day amounts to less than one kilowatt-hour, so in pure energy content
+%about five to ten hard working days can be replaced by a single litre of gasoline.
+
+%When it comes to solar power, we receive about 1 kW per square metre at midday in sunny regions, 
+%which means 1 kWh in one hour\footnote{of which 10–20 \% can be turned into electricity using a standard solar panel. 
+%Conversion losses would of course also appear on the conversion of gasoline to electricity.}
+%On one hand, the number is impressive in itself, but on the other hand, 
+%it means large areas are needed to collect and concentrate or convert enough solar energy for the energy usage we have grown used with,
+%which is why solar power utilization is termed ``area-intensive''.
+%And when large areas are needed, the materials used have to be cheap and abundant. 
+%Since there is no fundamental limit of the ``thickness'' of the materials, one way to cut material costs is to cut the thickness of the materials.
 
 %solar constant: 
 
@@ -189,16 +205,14 @@ Since there is no fundamental limit of the ``thickness'' of the materials, one w
 %About $5.8\times 10^{17}$ photons/sec/cm$^2$ reach the outer atmosphere, while
 %some $10^{17}$ survive through the atmosphere.\footnote{Solar Cells (Backus)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{The silicon solar cell}\label{sec:SiliconSolarCell}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%\section{The silicon solar cell}\label{sec:SiliconSolarCell}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Silicon doped with a donor, like phosphorus, is called n-Si. Highly-doped areas in the proximity of the metal contacts are often referred to as n+ or n++.
+%Silicon doped with a donor, like phosphorus, is called n-Si. Highly-doped areas in the proximity of the metal contacts are often referred to as n+ or n++.
 
-The contact resistivity $\rho_c$ depends strongly on the doping concentration $N_D$, as reviewed by Schröder\cite{Schroder:1984}. 
-If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$,but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -257,7 +271,7 @@ If the metal contacts take up 5\% of the cell surface, a contact resistance $\rh
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria} due to their thermal motion. 
+Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria.} due to their thermal motion. 
 Such redistribution occurs in all materials, but at a negligible rate at temperatures considerably below the melting point of the material.
 For silicon, with a melting point of \SI{1414}{\celsius}, diffusion is negligible at room temperature, 
 but significant at elevated temperatures, and controlled diffusion is commonly carried out at temperatures 
@@ -267,8 +281,9 @@ How do we describe and model diffusion?
 As is not uncommon in physics, different pictures exist for different scales of interest. 
 When it comes to describing diffusion, two main pictures exists: the continuum picture and the atomistic picture. 
 Since materials consists of atoms, it is clear that the most fundamental picture of diffusion should be an atomistic one.
-But a description involving every single atom becomes highly impractical on a macroscopic scale\footnote{\comment{Clarify macroscopic / microscopic?}
-}, in which it becomes more practical to invoke a viscous fluid model in which the atoms are smoothed out into a continuum.
+But a description involving every single atom becomes highly impractical on a macroscopic scale,
+%\footnote{\comment{Clarify macroscopic / microscopic?}}
+in which it becomes more practical to invoke a viscous fluid model in which the atoms are smoothed out into a continuum.
 The two pictures can be connected through parameters known as diffusion coefficients in order to produce integral diffusion models,
 but the diffusion coefficients are also commonly obtained empirically.
 
@@ -305,18 +320,18 @@ The picture is slightly complicated by the fact that the diffusivity $D$ itself 
 \index{diffusivity!dependence on concentration}
 For the diffusivity of species at very low concentrations, such as dopants, this concentration dependence is generally negligible, but at high concentrations, such as the typical phosphorus concentrations in the solar cell emitter layer, the effect may be quite significant.
 As an example, A. Bentzen has obtained the concentration dependence of the phosphorus diffusion coefficient over a large range of concentrations using Boltzmann-Matano analysis of experimental data at \SI{890}{\celsius}. 
-From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, his diffusivity increases slowly up to a maximum of \SI{1e-13}{\centi\metre\squared\per\second} at a phosphorus concentration of \SI{e19}{\per\centi\metre\cubed}, before it dips down to \SI{1e-14}{\centi\metre\squared\per\second} at \SI{e20}{\per\centi\metre\cubed}, before it increases again.\cite{Bentzen:2006} Concentration gradients will nevertheless not be considered in this work.\comment{upresist?}
+From the intrinsic value of about \SI{4e-14}{\centi\metre\squared\per\second}, his diffusivity increases slowly up to a maximum of \SI{1e-13}{\centi\metre\squared\per\second} at a phosphorus concentration of \SI{e19}{\per\centi\metre\cubed}, before it dips down to \SI{1e-14}{\centi\metre\squared\per\second} at \SI{e20}{\per\centi\metre\cubed}, before it increases again.\cite{Bentzen:2006} Concentration gradients will nevertheless not be considered in this work.
 
 \index{diffusivity!dependence on temperature}
 The diffusivity depends strongly on the temperature, and the temperature dependence found from experiments often takes the simple Arrhenius form,
 \begin{equation}
-  D(T) = D_0 \e^{-E_a/kT}
+  D(T) = D_0 \e^{-E_a/k_BT}
   \label{eq:arrhenius-dif}
 \end{equation}
 defined by a prefactor $D_0$ and an activation energy $E_a$. 
-Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/kT$ forms a straight line with slope $-E_a$ and intercept $\ln D_0$. 
+Taking the logarithm on both sides, we see that $\ln D$ as a function of $1/k_BT$ forms a straight line with slope $-E_a$ and intercept $\ln D_0$. 
 \begin{equation}
-  \ln D = \ln D_0 - E_a (kT)^{-1}
+  \ln D = \ln D_0 - E_a (k_BT)^{-1}
 \end{equation}
 The parameters $D_0$ and $E_a$ can thus easily be extracted if a good fit can be made to a straight line.
 
@@ -333,20 +348,23 @@ As mentioned, the diffusivity may also depend on other factors, such as crystal 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In the continuum picture, the diffusion coefficients are just empirical parameters, and we have to invoke a model involving atoms to explain them.
-
-From the Gaussian diffusion outwards from a point,
+In the continuum picture, the diffusion coefficients are just empirical parameters, and we have to invoke a model involving atoms to explain them. 
+Such a model was found independently by Einstein in 1905,\cite{Einstein:1905} and Smoluchowski in 1906.\cite{Smoluchowski:1906}
+Studying the Gaussian diffusion outwards from a point,
 \begin{equation}
     c(x,t) = \frac{n}{\sqrt{4\pi D}} \e^{-x^2/4Dt} / \sqrt{t},
 \end{equation}
-\comment{SJEKK OPP}
-Einstein related the displacement along the $x$ axis, $\lambda_x$, to the diffusivity\cite{Einstein:1905},
+Einstein related the mean square displacement of a particle in one dimension, $\langle x^2 \rangle$, to the diffusivity\cite{Einstein:1905},
 \begin{equation}
-    \lambda_x = \sqrt{x^2} = \sqrt{2Dt}
-  \label{eq:einsteinRelationSimple}
+    \langle x^2\rangle = 2Dt,
+    \label{eq:einsteinRelationSimple}
 \end{equation}
+a relation that will be discussed further in section \ref{sec:einstein-relation}.
+
 The diffusivity of a species can thus be found from a knowledge of the time-resolved displacement of all atoms of that species.
-Such a na\"{\i}ve approach is often hindered, both in experimental and theoretical methods, by difficulties in obtaining this information, but from a molecular dynamics simulation it's readily available.
+Such a na\"{\i}ve approach to finding the diffusivity is often hindered, both in experimental and theoretical methods, 
+by difficulties in obtaining this detailed microscopic information, but from a molecular dynamics simulation it's readily available.
+
 The major problem with obtaining diffusivities from a molecular dynamics simulation, is that diffusion can be a quite slow process.
 For any given system, the simulation of a large number of atoms over a long enough amount of time, may not be computationally feasible.
 
@@ -355,29 +373,49 @@ For any given system, the simulation of a large number of atoms over a long enou
 %the dynamic atomic motion is therefore replaced by discrete jumps, a concept that will now be discussed, since it will be referred to later on, and since it's so prevalent.
 %A short discussion of other approaches is therefore justified, especially since these to a large degree have formed the way we understand and describe diffusion.
 
-In the solid phase, diffusion is very slow compared to diffusion in the liquid or gas phase. 
-In a crystal, atoms remain at given lattice sites most of the time.
-At a finite temperature $T$, the atoms will have kinetic energies according to a Boltzmann distribution for 
-that temperature (see section \ref{sec:maxwell-boltzmann}),
-but since the atoms are `trapped' by neighbouring atoms, the energy goes into vibrations. 
-If, however, an atom obtain a kinetic energy larger than a given treshold energy, 
-it can migrate (`jump') into another site.
-This is an example of what is called an \emph{activated process}, and the treshold energy for a well-defined process is called an activation energy, $E_a$.
+%At the microscopic scale, an atom in a crystal will not move freely, but vibrate in a unharmonic and complicated way in the potential well of the other atoms. 
+In the solid phase, diffusion is several orders of magnitude slower than diffusion in the liquid or gas phase. 
+At a finite temperature $T$, the atoms will have kinetic energies according to a Boltzmann distribution for that temperature (see section \ref{sec:maxwell-boltzmann}),
+but since the atoms are `trapped' by the neighbouring atoms in the crystal, the kinetic energy goes into vibrations most of the time,
+and averaged over the timescale of the vibrations, the atoms will appear to be more or less fixed in space.
 
-Diffusion is an activated process, as seen from \eqref{eq:arrhenius-dif}, 
-but in general there is not just one diffusion mechanism (or process) involved, 
+Every now or then, however, an atom will obtain enough energy to `jump' to a different position.
+A clear example of such a jump is illustrated in fig. \ref{fig:../figures/md_test_diffusion_jump}, 
+where a phosphorus atom is seen making a jump from its lattice site into a neighbouring vacant site at 1400~K,
+illustrating the vacancy mechanism of diffusion, at least one part of it. 
+For this to really constitute diffusion, the vacant site left behind by the P atom 
+must also diffuse away from the P atom before the P atom happens to jump back into it.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics{../figures/md_test_diffusion_jump}
+  \end{center}
+  \caption{A `jump' from one lattice site to another. The red line is a symmetric running mean over 0.5 ps followed by a symmetric running median over 2.0 ps.}
+  \label{fig:../figures/md_test_diffusion_jump}
+\end{figure}
+
+Due to the energy barrier that must be passed for the jump to take place, 
+this is an example of what is called an \emph{activated process}, 
+and the threshold energy is called an activation energy $E_a$.
+In general there is not just one mechanism involved in diffusion, 
 and the value for the activation energy obtained by experiment or simulation is a weighted average over all possible mechanisms.
-One mechanism may, however, be the dominating one. In the case of phosphorus in silicon, 
-there is now, and has been for some time, a consensus that interstial-mediated diffusion is the dominating mechanism. \comment{KILDER!}
+One mechanism may however be dominating to such an extent that other mechanisms can be ignored.
 
-Back to the concept of `jumps'. Now, from the Boltzmann distribution (see \ldots), the fraction of atoms having a kinetic energy greater than a given energy $E_a$ is $\e^{-E_a/KT}$, and so the probability for a jump to happen is just $\e^{-E_a/kT}$. 
-In a simple model, we can estimate the number of jumps per second \comment{PER ATOM?} by multiplying this probability by an `attempt frequency' $\nu$,
+Back to the concept of `jumps', we can find the fraction of atoms having kinetic energy greater than a given energy $E_a$ 
+as $\e^{-E_a/KT}$ from the Boltzmann distribution, 
+and so the probability for a jump to happen is just $\e^{-E_a/k_BT}$. 
+In a simple model, we can then estimate the number of jumps per second by multiplying this probability by an `attempt frequency' $\nu$,
 \begin{equation}
-  \Gamma = \nu \e^{-E_a/kT}
+  \Gamma = \nu \e^{-E_a/k_BT}
   \label{eq:jumpfreq-est}
 \end{equation}
-For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, a typical textbook value for the vibration of atoms in a crystal at room temperature.\cite[212]{Tilley:2004}
-As seen in fig. \ref{fig:simple-vibration}, the atoms may be described roughly as vibrating at frequencies of this order of magnitude, although the motion is of course much more complicated than a simple harmonic motion. Otherwise we would not need \emph{simulation}.
+For a rough estimate, we may take the frequency to be \SI{e13}{\hertz}, 
+a typical textbook value for the vibration of atoms in a crystal at room temperature.\cite[212]{Tilley:2004}
+As seen in fig. \ref{fig:simple-vibration}, the atoms do vibrate at frequencies of roughly this order of magnitude, 
+but the motion is neither simple nor harmonic.
+If it was, we would not need \emph{simulation} anyway.
+
+Estimated jump frequency using \eqref{eq:jumpfreq-est} is plotted in fig. \ref{fig:jumpfreq-est} for three different activation energies.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -395,30 +433,14 @@ As seen in fig. \ref{fig:simple-vibration}, the atoms may be described roughly a
   \begin{center}
     \includegraphics{../figures/jump_frequency}
   \end{center}
-  \caption{Estimated jump frequency from \eqref{eq:jumpfreq-est} with $\nu=\SI{e13}{\hertz}$.}
+  \caption{Estimated jump frequencies from \eqref{eq:jumpfreq-est} with $\nu=\SI{e13}{\hertz}$.}
   \label{fig:jumpfreq-est}
 \end{figure}
 
+%Diffusion coefficients in liquids are typically of the order of $10^{-7}$ cm2/s,
+%while in solids their magnitude are much smaller, typically of the order of $10^{-11}$ cm2/s. \comment{[kilder!]}
 
-
-
-At the microscopic scale, an atom in a crystal will not move freely, but vibrate in a unharmonic and complicated way in the potential well of the other atoms. 
-If its motion is averaged over the timescale of the vibrations, which are in the order of pico-seconds, it will appear more or less fixed in space. 
-Every now or then, it will, however, obtain enough energy to `jump' to a different position.
-
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics{../figures/md_test_diffusion_jump}
-  \end{center}
-  \caption{A `jump' from one lattice site to another. The red line is a symmetric running mean over 0.5 ps followed by a symmetric running median over 2.0 ps.}
-  \label{fig:../figures/md_test_diffusion_jump}
-\end{figure}
-
-The diffusion coefficient in liquids is typically of the order of $10^{-7}$ cm2/s,
-while in solids its magnitudes smaller, typically of the order of $10^{-11}$ cm2/s. \comment{[kilder!]}
-
-
-The diffusion coefficient in crystals with a cubic lattice should be isotropic.
+%The diffusion coefficient in crystals with a cubic lattice should be isotropic.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -439,7 +461,7 @@ A concentration of about half a percent therefore seems to be the maximum solubi
 %(reached above about \SI{750}{\celsius},\cite{Solmi:1996} and)
 are common in the heavily doped emitter layer in solar cells.\cite{Bentzen:2006b}
 The nature of the electrically inactive phosphorus has not been fully established yet, but a mix of SiP precipitates and mobile P defects is suggested.\cite{Armigliato:1976}\cite{Solmi:1996} 
-Very recently, high resolution transmission electron microscopy have been used successfully to picture SiP microcrystallites.\comment{Var ikke det et arbeid gjort paa NTNU OM snakket om?}
+%Very recently, high resolution transmission electron microscopy have been used successfully to picture SiP microcrystallites.\comment{Var ikke det et arbeid gjort paa NTNU OM snakket om?}
 
 %The nature of the SiP precipitates is 
 %When the concentration of phosphorus exceeds the solid solubility,  orthorhombic crystallites of silicon monophosphide (SiP) will start to precipitate within the silicon matrix,\cite{Arimgliato:1976} 
@@ -667,7 +689,7 @@ Experimental activation energies at intrinsic conditions: 2.81 eV (low T), 3.61 
 
 As mentioned in section \ref{sec:Diffusion}, diffusion often takes the simple Arrhenius form, \eqref{eq:arrhenius-dif},
 \begin{equation*}
-    D = D_0 e^{-E_a/k_BT},
+    D = D_0 \e^{-E_a/k_BT},
 \end{equation*}
 
 
@@ -842,7 +864,7 @@ where the electron mass $m_e$, the elementary charge $e$, the reduced Planck con
 }, is
 %\comment{foreløpig IKKE i atomære enheter, har ikke helt bestemt meg}
 \begin{align}
-  \hat{H} &= \hat{T}_N + \hat{V}_{NN} + \hat{T} + \hat{V}_{ee} + \hat{V}_{Ne}\\
+  \hat{H} &= \hat{K}_N + \hat{V}_{NN} + \hat{K} + \hat{V}_{ee} + \hat{V}_{Ne}\\
     &= \underbrace{
         - \frac{1}{2}\sum_{k=1}^{N_N} \frac{1}{m_k}\nabla_k^2 
         + \sum_{k<l}\frac{Z_kZ_l}{r_{kl}}
@@ -854,7 +876,7 @@ where the electron mass $m_e$, the elementary charge $e$, the reduced Planck con
     + \sum_{i=1}^{N_e}\sum_{k=1}^{N_N} \frac{Z_k}{r_{ik}}
   \label{eq:mol-hamiltonian}
 \end{align}
-with the five terms representing nucleus kinetic energy $\hat{T}_N$, nucleus-nucleus interactions $\hat{V}_{NN}$, electron kinetic energy $\hat{T}$, electron-electron interactions $\hat{V}_{ee}$ and electron-nucleus interactions $\hat{V}_{Ne}$, respectively.
+with the five terms representing nucleus kinetic energy $\hat{K}_N$, nucleus-nucleus interactions $\hat{V}_{NN}$, electron kinetic energy $\hat{K}$, electron-electron interactions $\hat{V}_{ee}$ and electron-nucleus interactions $\hat{V}_{Ne}$, respectively.
 The indices $i$ and $j$ run over all electrons, while $k$ and $l$ run over all nuclei. 
 
 As seen, only electromagnetic (Coulombic) interaction is included. 
@@ -933,7 +955,7 @@ a nuclei wavefunction $\Theta_n(\vec{R},t)$ and an electronic wavefunction $\Phi
 \end{equation}
 and the \emph{electronic structure problem} is now to find solutions $\Phi$ to the Hamiltonian,
 \begin{equation}
-    \hat{H}_{\text{e}} = \hat{T} + \hat{V}_{\text{ee}} + \hat{V}_{\text{Ne}}
+    \hat{H}_{\text{e}} = \hat{K} + \hat{V}_{\text{ee}} + \hat{V}_{\text{Ne}}
   \label{eq:el-hamiltonian}
 \end{equation}
 The expectation value of this Hamiltonian plus the (constant) nuclear-nuclear repulsion energy $V_{\text{NN}}$ is the \emph{electronic energy},\cite[110]{Cramer:2004}
@@ -1017,7 +1039,7 @@ In density functional theory (DFT), the (observable) electron density $\rho(\vec
 This approach was first tried by Thomas\cite{Thomas:1927} and Fermi\cite{Fermi:1928} in the late 1920s, 
 and formally justified in 1964 by Hohenberg and Kohn (HK), who proved that a degenerate ground state density determines the external potential and thus the Hamiltonian (first HK theorem),
 and also that the energy functional $E[\rho(\vec{r})]$ is variational with respect to the density (second HK theorem).\cite{HohenbergKohn:1964}
-Later, Levy generalized their proofs to also include degenerate ground states, and to allow a larger set of trial densities.\footnote{by only requiring densities to be $N_e$-representable, not necessarily $V$-representable}\cite{Levy:1979,Levy:1982}
+Later, Levy generalised their proofs to also include degenerate ground states, and to allow a larger set of trial densities.\footnote{by only requiring densities to be $N_e$-representable, not necessarily $V$-representable}\cite{Levy:1979,Levy:1982}
 
 The energy functional consists of the same three contributions as the Hamiltonian \eqref{eq:el-hamiltonian}; with $\hat{V}_{\text{ee}}(\{\vec{r}\}) \leftrightarrow E_{\text{int}}[\rho(\vec{r})]$, the potential energy arising from the `internal' electronic field, and $V_{\text{Ne}}(\{\vec{r}\}) \leftrightarrow E_{\text{ext}}[\rho(\vec{r})]$, the potential energy arising from the `external field' set up by the nuclei (and in general other external fields).
 
@@ -1029,7 +1051,7 @@ The energy functional can then be written
 %\end{align}
 %where $T$ is the kinetic energy (called $T_e$ in \eqref{eq:el-hamiltonian} above) and $V_{ee}$ is the electron-electron repulsion.
 \begin{equation}
-    E[\rho(\vec{r})] = T[\rho(\vec{r})] + E_{\text{int}}[\rho(\vec{r})] + E_{\text{ext}}[\rho(\vec{r})].
+    E[\rho(\vec{r})] = K[\rho(\vec{r})] + E_{\text{int}}[\rho(\vec{r})] + E_{\text{ext}}[\rho(\vec{r})].
     \label{eq:energy_functional}
 \end{equation}
 
@@ -1055,7 +1077,7 @@ but the main problem is that the potential does not take account of quantum mech
 For these reasons, approximating $E_{\text{int}}[\rho]\approx E_{\text{H}}[\rho]$ is considered a very poor approximation,\cite[208]{Sutton:1993}
 and better approximations are discussed in the next two sections below.
 
-But first, how is the kinetic energy to be found from an electron density ($T[\rho]$)?
+But first, how is the kinetic energy to be found from an electron density ($K[\rho]$)?
 That's not a trivial problem, and the most successful solution involves the re-introduction of a one-particle formalism, in what is known as the Kohn-Sham method.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1088,7 +1110,7 @@ If $\{\varphi_i\}$ is the set of the lowest $N_e$ quasielectron orbitals, the gr
 %$\rho(\vec{r}) = \sum_n f_n\langle \varphi_n | \varphi_n \rangle$
 Now, the kinetic energy of these quasielectrons is just
 \begin{equation}
-    T_0[\rho] = \sum_{i=1}^{N_e} \langle \varphi_i | \hat{t} | \varphi_i \rangle,\qquad\text{where}\qquad \hat{t} = -\frac12\nabla^2
+    K_0[\rho] = \sum_{i=1}^{N_e} \langle \varphi_i | \hat{t} | \varphi_i \rangle,\qquad\text{where}\qquad \hat{t} = -\frac12\nabla^2
   \label{eq:T0}
 \end{equation}
 is the single-particle kinetic energy operator.
@@ -1100,19 +1122,19 @@ is the single-particle kinetic energy operator.
 
 Algebraically we can rewrite the energy functional \eqref{eq:energy_functional},
 \begin{align}
-    E[\rho] &= T[\rho] + E_{\text{int}}[\rho] + E_{\text{ext}}[\rho] \\
-    &= T_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + (T[\rho] - T_0[\rho]) + (E_{\text{int}}[\rho]-E_{\text{H}}[\rho])  \\
-    &= T_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + E_{\text{xc}}[\rho],\label{eq:efunctional}
+    E[\rho] &= K[\rho] + E_{\text{int}}[\rho] + E_{\text{ext}}[\rho] \\
+    &= K_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + (K[\rho] - K_0[\rho]) + (E_{\text{int}}[\rho]-E_{\text{H}}[\rho])  \\
+    &= K_0[\rho] + E_{\text{H}}[\rho] + E_{\text{ext}}[\rho] + E_{\text{xc}}[\rho],\label{eq:efunctional}
 \end{align}
 where all the `difficulties' are now collected in the exchange-correlation (xc) functional,
 \begin{equation}
-    E_{\text{xc}}[\rho] = (E_{\text{int}}[\rho] - E_{\text{H}}[\rho]) + (T[\rho]-T_0[\rho]),
+    E_{\text{xc}}[\rho] = (E_{\text{int}}[\rho] - E_{\text{H}}[\rho]) + (K[\rho]-K_0[\rho]),
   \label{eq:E_eeKS}
 \end{equation}
 to which we will return in the next section. 
 Note that the exchange-correlation functional includes not only quantum mechanical exchange and correlation, 
 but also corrections for the classical self-interaction in the Hartree potential,
-and for the difference in kinetic energy between the non-interacting system and the real one; $T-T_0$.
+and for the difference in kinetic energy between the non-interacting system and the real one; $K-K_0$.
 The name is therefore really a misnomer.\cite[256]{Cramer:2004}
 
 The quasielectrons\footnote{At some point I may forget to include `quasi-' and just write `electrons'.
@@ -1179,7 +1201,9 @@ While the exchange-correlation potential is inherently non-local, a popular star
 as taken by Kohn and Sham themselves in their 1965 paper.\cite{KohnSham:1965}
 LDA utilizes the well-understood behaviour of the \emph{uniform} gas.\footnote{
     The exact local exchange is given by the Dirac exchange functional $\varepsilon_{\text{x}}[\rho]=C_x \rho^{1/3}$, with $C_x=-3/4(3\rho/\pi)^{1/3}$,\cite{Dirac:1930}\cite[108]{Parr:1994} 
-while correlation has been tabulated with increasing levels of accuracy, with the currently most accurate results found from quantum monte carlo (QMC) calculations.\cite[p. 109 and references 297-299 within]{Martin:2004} \comment{inkluderer dette $T-T_0$ og selv-interaksjonskorreksjon?}}
+while correlation has been tabulated with increasing levels of accuracy, with the currently most accurate results found from quantum monte carlo (QMC) calculations.\cite[p. 109 and references 297-299 within]{Martin:2004} 
+%\comment{inkluderer dette $T-T_0$ og selv-interaksjonskorreksjon?}
+}
 If $\varepsilon_{\text{xc}}^{\text{uni}}[\rho]$ is the exchange-correlation functional for a uniform electron gas of density $\rho$,
 LDA corresponds to evaluating this functional for each volume element $d\vec{r}$;
 \begin{equation}
@@ -1192,7 +1216,7 @@ It's hard to come up with a better local approximation than LDA, at least one th
 since the effects that are to be described are inherently non-local, so 
 to improve on LDA the logical next step is to move to a gradient approximation, including some dependency on the density gradient $\nabla\rho$, but exactly how to do this is far from straightforward and different and many different functionals have evolved over the years. 
 
-In this work we will make use of the PBE-GGA functional introduced by Perdew, Beckge and Eizenhover in 1996,\cite{PBE} where GGA is short for generalized gradient approximation, Perdew and Yue's contrasting term to the earlier gradient expansion approximation (GEA).\cite{Perdew:1986}
+In this work we will make use of the PBE-GGA functional introduced by Perdew, Beckge and Eizenhover in 1996,\cite{PBE} where GGA is short for generalised gradient approximation, Perdew and Yue's contrasting term to the earlier gradient expansion approximation (GEA).\cite{Perdew:1986}
 Compared to other functionals PBE-GGA has a relatively simple form, satisfying what the authors consider the most important conditions,
 and introduced as an alternative to what the authors called ``the Byzantine PW91'' functional in a paper titled ``GGA made simple''.
 The other defining feature of PBE-GGA is that is non-empirical, making it a \emph{general-purpose} functional in contrast to `semi-empirical' functionals like B3LYP or revPBE that provide better results for \emph{specific} problems.
@@ -1222,7 +1246,7 @@ and the approximate handling of exchange and correlation using the PBE-GGA funct
 Still, calculations using a plane wave basis, except for very small systems, would not be feasible without one more important approximation.
 
 When expanding the one-particle orbitals in a plane wave basis, \eqref{eq:pwbasis}, 
-it is evident that a much larger amount of plane waves must be included to accurately describe the more localized core orbitals than the less localized valence orbitals. 
+it is evident that a much larger amount of plane waves must be included to accurately describe the more localised core orbitals than the less localised valence orbitals. 
 Further, the core orbitals for a givent atom resemble each other when the atom is in different environments, since it's the valence orbitals that take part in chemical binding and most interesting material properties.
 
 The basic idea of the pseudopotential approach is to replace the inner orbitals with a fixed potential, and only threat the valence orbitals variationally.
@@ -1339,7 +1363,7 @@ In 1973 Baldereschi suggested a first approximation could be made by including o
   E_{\text{tot}} = \frac{(2\pi)^3}{\Omega} \bar{E}, \qquad \bar{E}=E_{\vec{k}^*}
 \end{equation}
 for a `mean value point' $\vec{k}^*$ determined by crystal symmetry\cite{Baldereschi:1973}. 
-This idea has later been generalized into sets of optimal (so-called `special') $k$~points by Chadi and Cohen\cite{Chadi:1973},
+This idea has later been generalised into sets of optimal (so-called `special') $k$~points by Chadi and Cohen\cite{Chadi:1973},
 Monkhorst and Pack\cite{MonkhorstPack:1976} and others.
 Including only points in the irreducible Brillouin zone (IBZ) results in a sum over points with weights $w_{\vec{k}^*}$;
 \begin{equation}
@@ -1452,7 +1476,7 @@ where the first term is the attraction to the (unperturbed) electronic density $
 Note that the final simplification assumes $V_{\text{ext}}(\vec{r})$ to be a local potential.
 In the case of non-local pseudopotenstials, \eqref{eq:hellmann-feynman-expl} can not be used, but more complicated expressions can be derived from \eqref{eq:hellmann-feynman}, which is still valid.\cite[57]{Martin:2004}
 
-%Pulay\cite{Pulay:1969} has generalized the theorem by adding terms known as Pulay forces to account
+%Pulay\cite{Pulay:1969} has generalised the theorem by adding terms known as Pulay forces to account
 %for basis set incompleteness and 
 
 %n addition, Pulay [4] and others [5–8] have shown that for methods that employ atom centered ba- sis sets additional terms must also be included in or
@@ -1547,7 +1571,7 @@ This should be kept in mind when bond lengths are discussed in the results secti
 Now, we may ask what happens when we add temperature in the form of ionic motion.
 Should the lattice parameter then be increased? 
 This question is not as easy to answer as it may seem.
-First, a solid heated to diffusion temperatures will usually require very long times to actually expand to it's equilibrium volume, much longer than the timescale of the experiment itself, so it is not very realistic to expect the solid to be at it's equilibrium volume.
+First, a solid heated to diffusion temperatures will usually require very long times to actually expand to its equilibrium volume, much longer than the timescale of the experiment itself, so it is not very realistic to expect the solid to be at its equilibrium volume.
 Second, we have no simple way of actually finding the volume expansion. Or do we?
 
 %Replacing one Si atom in a 64-atom cell by a P atom led to a volume reduction of 0.42\%.
@@ -1579,7 +1603,7 @@ Second, we have no simple way of actually finding the volume expansion. Or do we
 
 As illustrated in section \ref{sec:bzint}, the number of $k$ points needed is inversely proportional to the cell size.
 For large supercells only a single $k$ point, the $\Gamma$ point, is needed, but we
-may well ask if the $a=\SI{10.94}{\angstrom}$ cell ($2\times 2\times 2$) used in the simulations here is `large enough' to justify including only a single $k$ point, making the distance between $k$ points $2\pi/a = \SI{0.574}{\per\angstrom}$. \comment{Det blir vel $2\pi$?}
+may well ask if the $a=\SI{10.94}{\angstrom}$ cell ($2\times 2\times 2$) used in the simulations here is `large enough' to justify including only a single $k$ point, making the distance between $k$ points $2\pi/a = \SI{0.574}{\per\angstrom}$.% \comment{Det blir vel $2\pi$?}
 
 Since the purpose of the density functional calculations here is to provide forces for \emph{dynamics},
 the effect of reducing the $k$ point density was studied on a simple dynamics model.
@@ -1684,7 +1708,7 @@ As a consequence, they recommend using either fully converged $k$-point sets or 
 %  \label{fig:figs/si64_bulk_conv_vol}
 %\end{figure}
 
-While force-minimized high-symmetric configurations may be described well by a relatively small basis set,
+While force-minimised high-symmetric configurations may be described well by a relatively small basis set,
 less symmetric and stressed configurations will require a larger one for a good description. 
 During a MD simulation, the system will visit a large number of configurations of various symmetry and local stress.
 With a limited basis set, we expect some configurations to be better described than other. 
@@ -1897,7 +1921,7 @@ As we see, the defect causes some distortion even beyond the boundaries of the 6
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimized {\vasp} build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
+After a somewhat lengthy discussion, the standard setup to be used to calculate the forces at each step in the molecular dynamics runs is now defined; using a $2\times 2\times 2$ cell with lattice parameter 10.94 Å, the ``very soft'' PAW PBE potential with energy cutoff of 180 eV, and a single $k$ point (the $\Gamma$ point) with a optimised {\vasp} build for $\Gamma$-only calculations.\footnote{Thanks to Espen Flage-Larsen for the build!} 
 
 Test calculations were carried out at two different Norwegian computing clusters; the Titan cluster at University of Oslo, 
 and the Stallo cluster at University of Tromsø, for which the results are shown in fig. \ref{fig:scaling}.
@@ -2015,28 +2039,639 @@ but here we will just accept the current scaling situation and parallelise only 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In section \ref{sec:born-oppenheimer} we used the Born Oppenheimer approximation to separate the total Hamiltonian $\hat{H}$ into a nuclei part $\hat{H}_N$ and an electronic part $\hat{H}_e$. 
-So far we have only looked at the electronic Hamiltonian, and we will now proceed to the nuclei Hamiltonian
+In section \ref{sec:born-oppenheimer} we used the Born Oppenheimer approximation to separate the total Hamiltonian $\hat{H}$ into a nuclei part $\hat{H}_N$ and an electronic part $\hat{H}_e$, and in the remainder of chapter \ref{cha:DFT} we only looked at the electronic one.
+In this chapter we will be concerned with the Hamiltonian for the $N$ nuclei, which in the absence of any constraints can be written
+as a sum of the kinetic energy and the potential energy,
 \begin{equation}
-  H_n = T_n + V_n = \sum_{k=1}^M \frac{1}{m_k}\nabla_k^2 + V_k = \sum_{k=1}^M \frac{\vec{p}_k^2}{2m_k} + V_k
+    \hat{H}_N = \hat{K}_N + \hat{V}_N = \sum_{k=1}^N \frac{1}{m_k}\nabla_k^2 + V_N,
+  %\label{eq:nucleiHamiltonian}
+\end{equation}
+Since we will only be concerned with the nuclei Hamiltonian, I will skip the subscripts $N$ from now on.
+
+In contrast to the electrons, we assume that the nuclei can be treated as classical entities, following trajectories $\vec{r}_k(t)$ 
+described by classical equations of motion, be it in the first-order formulation of Hamilton,
+\begin{equation}
+    \frac{d\vec{r}_k}{dt} = \frac{\partial H}{\partial \vec{p}_k}, \qquad
+    \frac{\partial H}{\partial \vec{r}_k} = -\frac{d\vec{p}_k}{dt},
+\end{equation}
+where motion occurs in a way as to preserve the Hamiltonian function,
+\footnote{
+    $r,p$ is shorthand for $\{\vec{r}_k, \vec{p}_k\} = \{r_{kx}, p_{kx}\}$, the set of all positions and momenta.
+    For $N$ atoms, we have $6N$ Cartesian coordinates, but excluding movement relative to the frame,
+    we are left with $6(N-1)$ degrees of freedom, which means we only need that many generalised coordinates.
+    Generalised coordinates is used in statistical mechanics, but since the topic is only touched upon here, 
+    I'm not distinguishing notation between the two, although I'm not sure if that was a good idea or not.
+    %The Hamiltonian here is thus a function of $6N$ coordinates: $3N$ positions $r = \{\vec{r}_k\}=\{r_{kx}\}$, and $3N$ momenta $p = \{\vec{p}_k\}=\{p_{kx}\}$,
+    %but there is only $6(N-1)$ degrees of freedom when excluding the fixed frame, 
+    %so phase space is really only $6(N-1)$-dimensional -- with $6(N-1)$ generalised coordinates.
+}
+\begin{equation}
+    H(r,p,t) = K(p,t) + V(r,t) = \sum_{k=1}^N \frac{\vec{p}_k(t)^2}{2m_k} + V(r,t),
   \label{eq:nucleiHamiltonian}
 \end{equation}
-where $V_n$ is now the potential energy surface (PES) set up by the electrons.
+or the second-order formulation of Newton,
+\begin{equation}
+  \frac{d^2}{d t^2} \vec{r}_k = \frac{1}{m}\vec{F}_k,
+  \label{eq:newton2nd}
+\end{equation}
+where motion is a response to an applied force.
 
-In contrast to the electrons, we assume that the nuclei can be treated as classical entities, following trajectories described by 
-classical equations of motion, be it in the
-second-order formulation of Newton,
+Using the formulation of Newton, trajectories was evolved by integrating \eqref{eq:newton2nd} 
+using the velocity Verlet algorithm (section \ref{sec:verlet}) and forces from the Hellmann-Feynman force theorem 
+(section \ref{sec:forcetheorem}), as implemented in {\vasp}.
+Temperature was maintained by the `velocity scaling thermostat' (section \ref{sec:velocity-scaling}).
+
+%\comment{[Se Haile, p. 40-42]}
+%Here, the 
+%Here, we will follow Newton, using an integration 
+%Numerical integration of Newton's second law 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Statistical mechanics}\label{sec:statistical-mechanics}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%We are interested in calculating the diffusion coefficient or diffusivity of phosphorus in a specified material -- 
+%a material parameter that can be measured experimentally.
+What is obtained from a molecular dynamics simulation, is the configuration or microstate of the system (the positions and momenta of every single atom) at any given time included in the simulation -- a quantity that can not be measured experimentally. 
+How to relate the \emph{microscopic} configuration to \emph{macroscopic} quantities that can be 
+measured experimentally (\emph{observables}), 
+such as temperature \eqref{eq:temp} or diffusivities \eqref{eq:einstein-relation} is the subject of statistical mechanics.
+%The branch of physics that deals with such questions is statistical mechanics. 
+%To answer the question already, the relation we are looking for is the so-called Einstein-relation \eqref{eq:einstein-relation}, given in the end of this section, but it rests on a number of quite serious assumptions. 
+%And to discuss the plausability of these assumptions, some concepts from statistical mechanics will be introduced first.
+
+Statistical mechanics is concerned with statistical \emph{ensembles}, 
+an ensemble being a theoretical construct holding a large number of copies (sometimes infinitely many) of essentially the same system, that is; 
+a collection of systems described by the same set of microscopic interactions, and sharing a 
+common set of macroscopic control variables like internal energy $E$, volume $V$ and number of atoms (or moles) $N$.\cite[63]{Tuckerman:2010}
+
+Each system in an ensemble has a different \emph{microstate}, but all systems share the same \emph{macrostate}.
+A microstate is specified by specifying the state of each individual particle in the system,
+while a macrostate specifies only how many particles are in each state.
+%The number of microstates corresponding to a given macrostate $n$ is called its multiplicity $\Omega(n)$.
+
+In statistical mechanics, (macroscopic) observables are found from averages over microstates.
+For some observable $A$, represented by the operator $\hat{A}$, such an ensemble average can be written
 \begin{equation}
-  \frac{d^2}{d t^2} \vec{r} = \frac{1}{m}\vec{F},
+  \langle A \rangle = \sum_i P_i \langle i | \hat{A} | i\rangle = \sum_i \langle i | \hat{P} \hat{A} | i \rangle,
+  \label{eq:ensemble-average}
 \end{equation}
-where motion is a response to an applied force,
-or the first-order formulation of Hamilton,
+where angle brackets $\langle \cdots \rangle$ indicate an ensemble average, or expectation value,
+and $P_i = \langle i | \hat{P} | i \rangle$ is the probability that any given system in the ensemble will be in a microstate $i$,
+depending on what kind of ensemble we are simulating.
+We are not concerned with discrete states, however, but rather continuous states of coordinates $q$ and momenta $p$ in the $6N-6$-dimensional classical phase space for $N$ particles.
+The probability operator is then replaced by a distribution function $\rho(p,q)$, 
+and \eqref{eq:ensemble-average} can be shown to reduce to\footnote{See e.g. \cite[13-15]{Frenkel:1996}.
+    Again, generalised coordinates could be used instead.
+}
 \begin{equation}
-  \frac{\partial}{\partial p} H_n = \frac{dq}{dt} \qquad
-  \frac{\partial}{\partial q} H_n = \frac{dp}{dt},
+  \langle A \rangle = \int \rho(r,p) A(r,p)\,dr\,dp 
+  \label{eq:configuration-int}
 \end{equation}
-where motion occurs in a way as to preserve the Hamiltonian function.
-\comment{[Se Haile, p. 40-42]}
+As with the probability operator, the phase space density function will depend on what kind of ensemble we study.
+Two types of ensembles will be introduced in section \ref{sec:ensembles}.
+
+%eq:ensemble-average
+%The 
+
+%with
+%\begin{equation}
+%  \hat{P} = \frac{1}{Q} \e^{-\beta\hat{H}}, \qquad Q = \sum_j \langle j | \e^{-\beta\hat{H}} | j \rangle,
+%\end{equation}
+%with the summation is to be carried out over all accessible states of the system (phase space), and
+%$\beta$ is the `thermodynamical beta',
+%\begin{equation}
+%  \beta \equiv \frac{d\ln\Omega}{dE} = \frac{1}{k}\frac{dS}{dE} = \frac{1}{kT}
+%\end{equation}
+%where $\Omega$ is the multiplicity, $S$ the entropy, $k$ Boltzmann's constant and $T$ is the (thermodynamic) temperature. 
+
+
+%The total multiplicity of all the macrostates is the number of microstates.
+
+%
+ %As an example, a particle can be a system, and an ensemble a set of N particles with a large N.
+%In statistical mechanics, We imagine having a large number of copies of the \emph{same} system. 
+%
+%A statistical ensemble is a theoretical tool used to analyse a macroscopic system. 
+%One imagines many copies (sometimes infinitely many) of the system. 
+%\url{http://en.wikipedia.org/wiki/Statistical_mechanics#Statistical_ensembles}
+
+%A statistical ensemble is determined by the probability for a certain microstate to occur.
+%The probability that any given system in an ensemble will be in an energy eigenstate $i$ at temperature $T$ is 
+%given by $P_i=\langle i | \hat{P} | i \rangle$, where
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{The ergodic hypothesis}\label{sec:ergodic-hypothesis}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The basic idea of molecular dynamics is that the average over \emph{all systems} in the ensemble at a single time \eqref{eq:configuration-int} 
+can be replaced by an average over a single system in the ensemble at \emph{all times}, that is over the time evolution of that system,
+\begin{equation}
+  \bar{A} = \lim_{\tau\to\infty} \frac{1}{\tau}\int_{0}^{\tau} A(r(t),p(t)) \,dt
+  \label{eq:time-integral}
+\end{equation}
+along the trajectory, where $\tau$ is the observation time. 
+
+The ergodic hypothesis has only been proved for some simple model systems such as the hard sphere gas.\cite{Ford:1973}
+For a general system, it can neither be proven or disproven,\cite[99]{Tuckerman:2010}
+but it can be tested by comparing Monte Carlo results (ensemble averages) with molecular dynamics results (time averages).
+Its plausibility for any given system may also be discussed in terms of the energy barriers of the system,
+since unsurpassable energy barriers will separate phase space into regions that can not be sampled from the same initial conditions.
+
+For the simulation of phosphorus diffusion in silicon, the ergodic hypothesis is expected to hold,
+but we may still run into sampling problems if we can not simulate the system for a long enough time $\tau$.
+In practice, we also have to use finite time steps $\Delta t$ instead of infinitesimals $dt$, as discussed in section \ref{sec:verlet} below.
+
+%Stated in another manner, ergodicity requires the full constant-Hamiltonian surface to be accessible.
+%Interestingly, it also requires some mixing, since a perfectly harmonic system will only sample a limited region.\cite[47-53]{Haile:1992}
+
+%%of phase space that can be sampled,
+%%as the probability of an atom passing an energy barrier decreases as [\ldots]. 
+
+%For the study of phosphorus diffusion, non-ergodicity is not expected to be a problem, however. 
+%The effect of mixing can actually be seen in fig \ref{fig:simple-vibration}, where the motion would have been perfectly harmonic if no mixing took place.
+%The barriers to diffusion are also expected to be \emph{accessible}, although long simulations may be needed to actually cross them.
+
+%j
+%For the diffusion of a dopant atom in a crystal, it is plausible that the system is ergodic, but very long
+%simulation times out of reeach may be required
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Ensembles}\label{sec:ensembles}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The Hamiltonian \eqref{eq:nucleiHamiltonian},
+describes a system completely isolated from its surroundings.
+For such a system, the number of particles $N$, the volume $V$ and the internal energy $E$ are all conserved, 
+since there is no mechanism in the model for exchanging particles, volume or energy with the surroundings.
+During a simulation, only configurations with the same $N$, $V$ and $E$ will thus be visited, 
+configurations of the so-called \emph{microcanonical} or $NVE$ ensemble. 
+This ensemble is characterised by the phase space probability function being constant,
+\begin{equation}
+  \rho \propto \delta(E-H(r,p)),
+\end{equation}
+with equal probability of sampling phase space points on the hypersurface $H(r,p) = E$.
+
+Molecular dynamics samples configurations from the microcanonical ensemble, but we may well be interested in sampling ensembles with other control variables 
+to better simulate experimental conditions. 
+In a typical experiment, it is easier to control the temperature $T$ than the internal energy $E$, the pressure $P$ than the volume $V$, 
+and often the chemical potential $\mu$ than the number of particles $N$.
+Such an $\mu P T$ ensemble is the \emph{grand canonical ensemble}.
+
+In the case of a solid system, the volume and number of particles will generally vary little, 
+justifying the use of the simpler $NVT$ or \emph{canonical ensemble}, where the phase space probability function
+is the Gibbs probability distribution,
+\begin{equation}
+  \rho(r,p) = \frac{1}{Z} \e^{-\beta H(r,p)},\qquad Z = \int \e^{-\beta H(r,p)} \,dr\,dp
+  \label{eq:gibbs}
+\end{equation}
+Methods for carrying out a molecular dynamics simulation sampling the canonical ensemble is discussed in 
+section \ref{sec:thermostats} on thermostats below.
+It is worth noting that the constant-volume restriction may not always be justified, even for solids.
+If the unit cell is relaxed at zero temperature, and simulations are carried out at elevated temperatures,
+this will lead to an artificial pressure build-up.
+
+Experimentally, the lattice parameter of silicon has been shown to expand by about 0.026~Å, from 5.431~Å to 5.457~Å, when the temperature is increased from 298~K to 1500~K.\cite{Okada:1984}
+With the quite flat minimum in the energy-lattice parameter curve (fig. \ref{fig:si_bulk_conv_vol}) and uncertainties related to it, 
+this effect is expected to be of less importance, but it could be interesting to investigate.
+Especially at temperatures close to the melting point, at least equilibrating the system using a $NPT$ ensemble rather than a $NVT$ ensemble might be advantageous.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{The virial and the equipartition theorems}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The virial theorem is one of the theorems connecting microscopic phase space functions with macroscopic thermodynamic observables. 
+If $x_i$ and $x_j$ are generalised coordinates,
+then the virial theorem states that\footnote{For a proof, see e.g. \cite[81]{Tuckerman:2010}.}
+\begin{equation}
+  \left\langle x_i \frac{\partial H}{\partial x_j}\right\rangle = k_BT \delta_{ij}
+\end{equation}
+where the brackets indicate an average over a microcanonical ensemble, which can, if the system is ergodic, be replaced by an average over time.
+
+If we take $x_i = p_i$, a momentum component, then for a system described by a Hamiltonian \eqref{eq:nucleiHamiltonian}, we have
+\begin{align}
+  \left\langle p_i \frac{\partial H}{\partial p_i}\right\rangle &= k_BT,  \\
+  \left\langle \frac{p_i^2}{2m_i}\right\rangle &= \frac12k_BT,
+\end{align}
+where $m_i$ is the mass of the particle having the momentum component $p_i$. 
+Summing both sides over all $3N-3$ components, results in the equipartition theorem,
+\begin{align}
+  \sum_{i=1}^{3N-3} \left\langle\frac{p_i^2}{2m_i} \right\rangle &= \sum_{i=1}^{3N-3} \frac12 k_BT, \\
+  \langle K \rangle &= \frac12 f k_BT,
+  \label{eq:temp}
+\end{align}
+where $f = 3N-3$ is the degrees of freedoms. 
+The theorem relates the thermodynamic temperature $T$ to the average kinetic energy $\langle K \rangle$.
+From the relation, we could also define an `instantaneous temperature'
+\begin{equation}
+    \mathcal{T}(t) = \frac{2K(t)}{fk_B} = \frac{2}{fk_B} \sum_{k=1}^N \varepsilon_k(t) = \sum_{k=1}^N \frac{m_k v_k(t)^2}{fk_B},
+  \label{eq:kinetictemp}
+\end{equation}
+that we will make use of in the next section to discuss temperature fluctuations in a system.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Maxwell-Boltzmann distribution for kinetic energies}\label{sec:maxwell-boltzmann}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+With the Hamiltonian being separable, $H(r,p) = K(p) + V(r)$, Gibbs probability function \eqref{eq:gibbs} 
+is separable as well; $\rho(r,p)=\rho_T(p)\rho_V(r)$. With the total kinetic energy
+\begin{equation}
+    K(p) = \sum_{k,x=1}^{3N} \frac{p_{kx}^2}{2m_k}
+\end{equation}
+from \eqref{eq:nucleiHamiltonian}, we find
+\begin{equation}
+    \rho_T(p) = \frac{\e^{-\beta K(p)}}{\int \e^{-\beta K(p)} dp} = \prod_{k,x}^{3N} \frac{\e^{-\beta p_{kx}^2/2m_k}}{\int \e^{-\beta p_{kx}^2/2m_k} dp_{kx}}
+    = \prod_{k,x}^{3N} \rho_{\text{MB}}(p_{kx}),
+\end{equation}
+where $p_{kx}$ is a momentum component for nucleus $k$, related to a velocity component by $p_{kx}=m_k v_{kx}$,
+so we can find the distribution of velocities
+\begin{equation}
+    \rho_{\text{MB}}(v_{kx}) = \frac{\e^{-\beta m_k v_{kx}^2/2}}{\int \e^{-\beta m_k v_{kx}^2/2} dv_{kx}} = \left(\frac{\beta m_k}{2\pi}\right)^{1/2} \e^{-\beta m_k v_{kx}^2/2},
+    \label{eq:maxwell-boltzmann}
+\end{equation}
+which is the Maxwell-Boltzmann distribution, anticipated by the choice of subscript. 
+This is a Gaussian with standard deviation $\sigma = 1/\sqrt{\beta m_k} = \sqrt{k_BT/m_k}$ about $\langle v_{kx} \rangle = 0$.
+
+Although derived in the canonical ensemble, the velocity distribution is expected to be Maxwellian in any equilibrium situation, 
+since properties in different ensembles become equivalent in the thermodynamic limit (large $N$ and $V$).\cite[65]{Haile:1992}
+With only 65 atoms we can not really claim being close to the thermodynamic limit, but we will still assume a Maxwellian distribution.
+
+Now, for the speed $v_k=\sqrt{v_{kx}^2+v_{ky}^2+v_{kz}^2}$, we have 
+\begin{equation}
+  \rho_{\text{MB}}(v_k) = 4\pi\left(\frac{\beta m_k}{2\pi }\right)^{3/2} v_k^2 \e^{-\beta m_k v_k^2 / 2}.
+  \label{eq:maxboltz-vdist}
+\end{equation}
+From its second and fourth moments, % Frenkel, p. 126-127
+
+% Simplify[Integrate[4 \[Pi] ((b m)/(2 \[Pi]))^(3/2) x^4 Exp[-b m x^2/2], {x, 0, \[Infinity]}, Assumptions -> {b > 0, m > 0}]]
+\begin{equation}
+  \langle v_k^2 \rangle = \int_0^{\infty} v_k^2 \rho_{\text{MB}}(v_k) \,dv_k = \frac{3}{m_k\beta},
+\end{equation}
+and
+%Simplify[Integrate[4 \[Pi] ((b m)/(2 \[Pi]))^(3/2) x^6 Exp[-b m x^2/2], {x, 0, \[Infinity]}, Assumptions -> {b > 0, m > 0}]]
+\begin{equation}
+  \langle v_k^4 \rangle = \int_0^{\infty} v_k^4 \rho_{\text{MB}}(v_k) \,dv_k = \frac{15}{(m_k\beta)^2},
+\end{equation}
+we can find the relative variance in single-particle kinetic energy $\varepsilon_k = \frac12 m_k v_k^2$ as
+\begin{equation}
+  \frac{\sigma_{\varepsilon_k}^2}{\langle \varepsilon_k \rangle^2} 
+  = \frac{\langle \varepsilon_k^2 \rangle - \langle \varepsilon_k \rangle^2}{ \langle \varepsilon_k \rangle^2 }
+  = \frac{\langle v_k^4 \rangle - \langle v_k^2 \rangle^2}{ \langle v_k^2 \rangle^2 }
+  = \frac{2}{3},
+\end{equation}
+and the relative variance in instantaneous temperature \eqref{eq:kinetictemp},\cite[127]{Frenkel:1996}
+\begin{equation}
+    \frac{\sigma_{\mathcal{T}}^2}{\langle \mathcal{T} \rangle^2} = \frac{2}{f} = \frac{2}{3N-3}.
+  \label{eq:tempvar}
+\end{equation}
+We will come back to this instantaneous temperature fluctuation in section \ref{sec:thermostats} on thermostats.
+%These f
+%In our everyday (macroscopic) world, the fluctuation in temperature is negligible due to the large number of particles. 
+%More generally, it can be shown that in the thermodynamic limit ($M\to\infty$, $V\to\infty$, $N/V=\text{const.}$, 
+%averages over all the different ensembles become the same. We will, however, work far from the thermodynamic limit, 
+%and in our truly microscopic system the fluctuations will be significant (see for instance fig. \ref{fig:md_test_temperature}).
+
+%---
+
+%From the equipartion theorem / virial theorem,
+%\begin{equation}
+%  \langle E_k \rangle = f \frac12 kT
+%\end{equation}
+%where $f$ is the number of degrees of freedom.
+%\begin{align}
+%  T &= \langle T_k \rangle
+%\end{align}
+%where $E_k$ is the total kinetic energy of the ions.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{The Einstein-Smoluchowski diffusion relation}\label{sec:einstein-relation}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Following Frenkel\cite[78-79]{Frenkel:1996}, we start with Fick's second law \eqref{eq:ficks2nd}, 
+\begin{equation}
+    \frac{\partial c}{\partial t} - D\nabla^2c = 0
+  \label{eq:fick2nd}
+\end{equation}
+where $c(\vec{r},t)$ is the concentration, whose second moment is
+\begin{equation}
+    \langle r^2(t)\rangle \equiv \int_V r^2(t) c(\vec{r},t) \,dV,
+  \label{eq:secondmom}
+\end{equation}
+and normalization is
+\begin{equation}
+    \int_V c\,dV = 1.
+  \label{eq:cnorm}
+\end{equation}
+We multiply \eqref{eq:fick2nd} by $r^2$, and integrate over all space ($V$),
+\begin{equation}
+    \frac{\partial}{\partial t} \int_V r^2(t) c(\vec{r},t)\,dV = D\int_V r^2(t) \nabla^2 c(\vec{r},t) \,dV
+  \label{eq:fick2nd2}
+\end{equation}
+The left hand side is just
+\begin{equation}
+  \frac{\partial}{\partial t} \langle r^2(t)\rangle,
+  \label{eq:fickleft}
+\end{equation}
+while the integral on the right hand-side can be treated with partial integration and the divergence theorem.
+Here, $S$ is the surface of all space, with surface element $d\vec{S}=\hat{\vec{n}}dS$, $\hat{\vec{n}}$ being the surface normal.
+\begin{align}
+  \int_V r^2 \nabla^2 c \,dV &= \int_V \nabla\cdot (r^2\nabla c) \,dV - \int_V \nabla r^2 \cdot \nabla c \, dV \nonumber\\
+  &= \underbrace{\oint_S r^2 \nabla c \cdot d\vec{S}}_0 - 2\int_V \vec{r}\cdot\nabla c \,dV \nonumber\\
+  &= -2\int_V \nabla (c\vec{r}) \,dV + 2 \int c \nabla \vec{r} \, dV \nonumber\\
+  &= \underbrace{-2\oint_S c\vec{r}\cdot d\vec{S}}_0 + 2 \int c \nabla \vec{r} \, dV \nonumber\\
+  &= 2d\int_V c \, dV \nonumber\\
+  &= 2d \label{eq:fickright}
+\end{align}
+since $\nabla\vec{r} = d$, the dimensionality. 
+Substituting \eqref{eq:fickleft} and \eqref{eq:fickright} into \eqref{eq:fick2nd2}, and letting $d=3$, we have
+\begin{equation}
+  \frac{\partial}{\partial t} \langle r^2(t)\rangle = 6D.
+\end{equation}
+Since motion at the microlevel is chaotic, Fickian diffusion is only obtained over `long' time scales, 
+making the relation exact in the limit $t\to\infty$,
+\begin{equation}
+    D = \frac{1}{6}\lim_{t\to\infty} \frac{\partial}{\partial t} \langle r^2(t)\rangle.
+\end{equation}
+This is the Einstein-Smulowski relation, revealed independently by Einstein (1905)\cite{Einstein:1905}
+and Smoluchowski (1906),\cite{Smoluchowski:1906}
+which relates the macroscopic self-diffusion coefficient $D$ to the slope of the microscopic mean-square displacements $r^2$ as a function of time.
+
+If we have $N_{\alpha}$ atoms of a species $\alpha$, the self-diffusion coefficient $D_{\alpha}$ for species $\alpha$ is
+\begin{equation}
+  D = \frac{1}{6N_{\alpha}} \lim_{t\to\infty} \frac{d}{dt} \sum_{k=1}^{N_{\alpha}} \left \langle r_k(t)^2 \right\rangle,
+  \label{eq:einstein-relation}
+\end{equation}
+%The self-diffusion coefficient can also be calculated from the velocity autocorrelation function,
+%\begin{equation}
+%  D_{\alpha} = \frac{1}{3N_{\alpha}} \sum_{k=1}^{N_{\alpha}} \int_0^{\infty} \langle \vec{v}_k(t) \cdot \vec{v}_k(0) \rangle dt
+%\end{equation}
+%Both equations call for infinitely long simulations, while the best we can obtain is `long enough' simulations. 
+While the relation is generally exact in the limit of infinite trajectories, we can only finite ones,
+in practice timespans of picoseconds or nanoseconds.
+This calls for the question about how long is `long enough', a question that is not necessarily easy to answer in advance.
+During a simulation, we have some options, however. 
+One way is to monitor the slope of the mean square displacement.
+If the slope approaches a straight line, that is a good indication for the validity of the Einstein relation.
+
+%One way is to monitore the mean square displacement, the simulation length may be considered sufficient once a good fit for the slope to a straight line is obtained for use with \eqref{eq:einstein-relation}.
+%Similarly, the velocity correlation function could be monitored, and the simulation length considered sufficient when the function fall close to zero, 
+%and no further contributes significantly to the integral.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{The velocity Verlet algorithm}\label{sec:verlet}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The trajectory $\vec{r}_k(t)$ of a classical particle $k$ can in principle be found by integrating Newton's law of motion
+\begin{equation}
+  \ddot{\vec{r}}_k(t) = \frac{1}{m_k}\vec{F}_k(t).
+\end{equation}
+with $\vec{F}_k(t)$ the force acting on the particle (atom) at time $t$. 
+No analytic expression is available for $\vec{F}_k(t)$ (if it was, carrying out a simulation would not be necessary),
+but $\vec{r}_k(t)$ can be found in a step-wise manner using finite-difference methods 
+to estimate the position $\vec{r}_k(t+\Delta t)$ for small $\Delta t$. 
+In principle, using a Taylor expansion to infinite order, the position can be found for any $\Delta t$, but that would require knowledge about the time derivatives of $\vec{r}_k(t)$ to infinite order. 
+In practice the expansion has to be truncated at low order, requiring $\Delta t$ to be small to minimize \emph{truncation errors}.
+Apart from truncation errors, which will depend on the specific finite-difference method, all such methods will be prone to \emph{round-off errors}, since a small round-off error in each step may grow very large with very many steps.
+
+The `prototype method' is the Euler method, which makes use of a Taylor expansion to first order around time $t$,
+\begin{equation}
+    \vec{r}_k(t+\Delta t) \approx \vec{r}_k(t) + \vec{v}_k(t) \Delta t,
+\end{equation}
+where $\vec{v}_k(t) = \dot{\vec{r}}_k(t)$ is the particle's velocity.
+%The method generally suffers from severe drift, and is not recommended for MD.\cite[65]{Frenkel:1996}
+
+In the Verlet method,\cite{Verlet:1968b}, here shown in the ``velocity Verlet'' variant by Swope,\cite{Swope:1982}
+we expand to second order about $t$,
+\begin{equation}
+    \vec{r}_k(t+\Delta t) \approx \vec{r}_k(t) + \vec{v}_k(t)\Delta t + \frac{1}{2m_k}\vec{F}_k(t)(\Delta t)^2,
+  \label{eq:vverlet1}
+\end{equation}
+and about $t+\Delta t$, evolving backwards in time,
+\begin{equation}
+  \vec{r}_k(t) \approx \vec{r}_k(t+\Delta t) - \vec{v}_k(t+\Delta t)\Delta t + \frac{1}{2m_k}\vec{F}_k(t+\Delta t)^2.
+  \label{eq:vverlet2}
+\end{equation}
+Substituting \ref{eq:vverlet1} for $\vec{r}_k(t+\Delta t$ in \ref{eq:vverlet2}, and solving for $\vec{v}_k(t+\Delta t)$,
+\begin{equation}
+    \vec{v}_k(t+\Delta t) = \vec{v}_k(t) + \frac{\Delta t}{2m_k} \left[ \vec{F}_k(t) + \vec{F}_k(t+\Delta t) \right]
+  \label{eq:vverlet3}
+\end{equation}
+In the velocity Verlet algorithm, \eqref{eq:vverlet1} and \eqref{eq:vverlet3} are used in combination to 
+evolve the positions and velocities simultaneously.
+
+While the Euler method is a one-step algorithm, we see that the Verlet algorithm is a two-step algorithm, requiring information both from the current and the previous step.
+In the initial step, there is no previous step, so positions and velocities have to be supplied. 
+The initial positions will be discussed in section \ref{sec:structures}, and the initial velocities in section \ref{sec:initial-velocities} below.
+
+The Verlet method requires relatively short time steps compared to more advanced methods, such as the class
+of predictor-corrector algorithms,
+but a major advantage of the Verlet method is that it exhibits little long-term drift.
+This is related to the method being time-symmetric and sympletic (it preserves phase-space volume), 
+unlike the Euler method and most of the more advanced methods.\cite[61-63]{Frenkel:1996}
+
+%More advanced algorithms exist that allows for longer time steps, such as the class of predictor-corrector algorithms.
+%Predictor-corrector algorithms will not be used in this work, but the interested reader will find more on these in many introductory books on molecular dynamics, such as the one by Haile\cite[158]{Haile:1992}.
+%are popular in simulation, but these are generally less stable, which means that they have a tendency to drift over long runs, not conserving energy.
+
+%\comment{More?}
+%\begin{itemize}
+%  \item 
+%Verlet integration
+%\url{http://en.wikipedia.org/wiki/Verlet_integration}
+%\item
+%Symplectic integrator
+%\url{http://en.wikipedia.org/wiki/Symplectic_integrator}
+%\item 
+%Illustration? Something like the first figure on
+%\url{http://en.wikipedia.org/wiki/Euler_integration} ?
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Initial velocities}\label{sec:initial-velocities}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+For the first step, the positions and velocities (or momenta) of all the atoms have to be specified manually. 
+%The positions are given in the form of a crystal structure, as further discussed in section \ref{sec:structures}.
+The velocities should be sampled from a Maxwell-Boltzmann velocity distribution \eqref{eq:maxwell-boltzmann},
+that is, from a normal distribution
+\begin{equation}
+    f(v_{kx}) = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \e^{-v_{kx}^2/2\sigma^2}
+  \label{eq:normal-dist}
+\end{equation}
+where $\sigma=1/\sqrt{\beta m_k}$ is the width of the Gaussian and $v_{kx}$ is a single velocity component.
+We can get a computer to generate a set of random (or pseudo-random) numbers $\xi$ from a \emph{uniform} distribution with a given range, like $[0,1]$.
+To turn these into random numbers from a normal distribution, we make use of the cumulative distribution function
+\begin{equation}
+    F(X) = \int_{-\infty}^X f(v_{kx})\,dv_{kx} = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \int_{-\infty}^X \e^{-v_x^2/2\sigma^2} \,dv_x,
+    \label{eq:CDF}
+\end{equation}
+since $\xi = F(X)$ is a uniformly distributed variable in the range $[0,1]$. 
+The problem of sampling $f(v_x)$ then consists of solving the equation $F(X)=\xi$ for $X$.
+In the most naïve approach, known as \emph{inverse transform sampling}, we just find $X=F^{-1}(\xi)$.
+But since we don't have a closed form expression for $F(X)$, a computationally more efficient method is preferred. 
+A common approach, which is also used in {\vasp}, % function RANG in random.f90, called by subroutine INITIO in dyna.f90
+is the \emph{Box-Muller transform sampling} method, which is
+described very well in \cite[101]{Tuckerman:2010}. 
+From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and $Y$ are generated by
+\begin{align}
+    X &= \sigma \sqrt{-2\ln\xi_2} \cos(2\pi\xi_1), \\
+    Y &= \sigma \sqrt{-2\ln\xi_1} \sin(2\pi\xi_2).
+  \label{eq:box-muller-sampling}
+\end{align}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Thermostats}\label{sec:thermostats}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{No thermostat}\label{sec:nothermo}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The Hamiltonian \eqref{eq:nucleiHamiltonian} describes an isolated system, in which the total energy $E$ must necessarily be a constant of motion.
+Upon the start of the simulation, a temperature $T(t=0)$ is imposed by giving the system a total kinetic energy $K$ corresponding to that temperature. 
+The potential energy is found by solving the electronic Hamiltonian.
+%, and adding the coulombic interactions between the nuclei.\footnote{\comment{The Madelung energy found from an Ewald summation?}}
+
+By following the time evolution of such a Hamiltonian, we will sample a microcanonical ensemble. 
+While the total energy $E=K+V$ is a constant of motion, the kinetic energy $K$ and potential energy $V$ themselves will fluctuate as energy is exchanged in particle collisions, and over time the kinetic and potential energy may very well each drift away from their initial values.
+And if they do, so does the temperature, according to \eqref{eq:kinetictemp}. 
+%To illustrate this, figure \ref{fig:md_test_temperature_micro} shows the energy evolution in a 5~ps simulation of an isolated system of 63 atoms (Si$_{62}$P$_1$) at 1400~K for 5~ps. 
+A most dramatic example of this can be seen in fig. \ref{fig:md_test_temperature_micro} below, showing the temperature and total energy variation for the first 0.5~ps of a 5.0~ps simulation of a system of 62 silicon atoms and a phosphorus atom in a 64-atom cell. 
+The system starts with an initial temperature of 1400~K, but rapidly drops to a mean temperature of 690~K.
+Interestingly, the system remains very stable at this temperature for the remaining 4.5~ps.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../figures/tests/thermostats/nothermo_simple}
+  \caption{
+    Instantaneous temperature variation for a system with no thermostat, starting at 1400~K.
+    To be able to see the rapid temperature drop, only the first 0.5~ps of the 5.0~ps simulation is shown.
+    In the remaining 4.5~ps, the system remained very stable at the same temperature.
+  }
+  \label{fig:md_test_temperature_micro}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Ad-hoc velocity-scaling thermostat}\label{sec:velocity-scaling}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In thermodynamics, constant temperature is achieved by putting the system in contact with an infinite heat bath, or with a \emph{thermostat}.
+The simplest approach to simulating a thermostat is to just rescale the particle velocities so that the instantaneous temperature $\mathcal{T}(t)$ matches the temperature $T$ of the thermostat. 
+From the definition of the instantaneous temperature \eqref{eq:kinetictemp}, we see that rescaled velocities can be introduced as
+\begin{equation}
+    v_j' = \sqrt{\frac{T}{T_k}} v_j.
+\end{equation}
+Physically, such a rescaling corresponds to a process where energy is instantaneously transferred between the heat bath and all the particles. 
+As such, it is not the most realistic model. 
+Also, there is no inherent clue on how often the re-scaling should be carried out. 
+Re-scaling the temperature every single step is clearly not a good idea, since that would result in a delta function distribution instead of the Gaussian distribution with standard deviation
+\begin{equation}
+    \sigma_{\mathcal{T}} = \langle \mathcal{T} \rangle \sqrt{\frac{2}{3N-3}}
+  \label{eq:canostd}
+\end{equation}
+expected for a canonical ensemble with $N$ particles from \eqref{eq:tempvar}.
+The number of steps between rescaling is therefore a parameter that has to be selected such as to obtain a temperature distribution similar to the temperature distribution for a canonical ensemble.\footnote{In \vasp\ this is the NBLOCK parameter}
+
+In this work, the rescale periode has been set to 50.
+Fig. \ref{fig:md_test_temperature_scaled} shows the resulting instantaneous temperature and total energy variations for a 5~ps simulation of the same system simulated without a thermostat in section \ref{sec:nothermo} above.
+In the temperature distribution, we see that the rescaling results in a strong peak at the thermostat temperature,
+but otherwise the shape is quite Gaussian. 
+In particular, it's satisfying that the distribution is quite symmetric. 
+If the temperature had dropped between each rescaling in the same way as it did in \ref{fig:md_test_temperature_micro},
+the result would have been a very asymmetric distribution.
+The standard deviation of 110~K is lower than 146~K, the standard deviation for the perfect canonical distribution, \eqref{eq:canostd},
+but it was considered acceptably close, and a more systematic investigation of the effect of 
+varying the rescale period was not carried out, although it would certainly be interesting.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{Nose-Hoover thermostat}\label{sec:nose-hoover}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+While velocity-scaling is a simple and straightforward approach to keeping the thermodynamic temperature constant, it does not sample a canonical ensemble, but rather some canonical-like ensemble. 
+More advanced thermostat models have therefore evolved, that accurately sample a canonical ensemble, of which the most popular approaches are those of Andersen\cite{Andersen:1980} and Nose\cite{Nose:1984,Nose:1991,Bylander:1992}.
+
+In Andersen-type thermostats, the temperature is controlled by stochastic collisions with the heat bath.\footnote{
+A simple pseudo-code is given in \cite[129]{Frenkel:1996}.}
+This makes the simulation non-deterministic and the interpretation of the trajectories somewhat difficult.
+
+In Nose-type thermostats, a heath bath is added as a component $s$ to the Lagrangian, forming an ``extended system'' coupled with the original system, from which a new Hamiltonian can be derived in the Nose-Hoover scheme.
+The original system is allowed to exchange energy with the thermostat through variations in $s$, 
+thus breaking the energy conservation of the original system, but conserving the total energy of the system plus the thermostat.
+The heath bath is associated with an ``effective mass'' called the Nose mass, that is used to control the coupling strength.
+The Nose-Hoover equations of motion are smooth, deterministic and time-reversible, but may lead to high-frequency temperature 
+oscillations, and some care must be taken in the choice of the Nose mass.\cite{Hunenberger:2005}
+
+The simulation carried out above with no thermostat (fig. \ref{fig:md_test_temperature_micro}) and with
+velocity-scaling (fig. \ref{fig:md_test_temperature_scaled}), was repeated using a Nose-Hoover thermostat.
+As seen in figure \ref{fig:md_test_temperature_nose}, the thermostat gives a near-perfect Gaussian distribution with a standard deviation of 130~K. 
+It is worth noting that this is still lower than the expected 146~K for a perfect canonical ensemble of this size and temperature. 
+It is possible that this is an effect of non-ergodicity, with the distribution not fully corresponding to the state-averaged distribution,
+or an effect of choosing a non-optimal Nose mass.
+
+\begin{figure}[htbp]
+  \centering
+  \subfloat[Velocity-scaling]{
+    \includegraphics{../figures/tests/thermostats/velocity-scaling}
+    \label{fig:md_test_temperature_scaled}
+  }
+  \subfloat[Nose-Hoover thermostat]{
+    %\includegraphics[width=5cm]{../figures/silicon_with_p_interstitial_octahedral}
+    \includegraphics{../figures/tests/thermostats/nose-0-25}
+    %\crossbox{7cm}
+    \label{fig:md_test_temperature_nose}
+  }
+  \caption{
+    Instantaneous temperature distribution (above) and total energy fluctuation (below) 
+    in a simulation using velocity-scaling (left) and Nose-Hoover thermostat (right),
+    for a system with $N=62$, $T=\SI{1400}{\kelvin}$.
+    A 0.5 ps symmetric running mean is drawn (black) on top of the raw data (gray). 
+    The standard deviation $\sigma$ is indicated by a solid, green overlay. 
+    In the upper right, the temperature distribution and its standard deviation is shown, 
+    together with a Gaussian (thick black line) with the same standard deviation and normalization.
+   }
+  \label{fig:md_test_temperature}
+\end{figure}
+
+At this point, the Nose-Hoover thermostat may seem superior to the velocity-scaling thermostat, 
+and it probably is.
+The choice of using the velocity-scaling thermostat was taken primarily based on reports of energy drift issues with the Nose-Hoover thermostat within my group. 
+I'm not sure if this could have been related to the implementation in {\vasp}, poor choice of parameters, or a more general issue with the method, 
+and I regret that I did not investigate this further.
+Yet, the velocity-scaling thermostat does keep the temperature, produces a quite Gaussian distribution, and its simplicity at least makes it very transparent.
+
+%Nose-type thermostats may under some circunstances, have problems with long-time energy conservation,
+%according to earlier experience in my group.
+%Energy can be transferred from the system into the nose system
+%I'm not sure if this was due to the implementation of the algorithm in {\vasp} or a general problem.
+%I suspect the former, since I did not find much information about this in literature.
+%Nevertheless, a velocity-scaling thermostat was chosen 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -2057,7 +2692,7 @@ where motion occurs in a way as to preserve the Hamiltonian function.
 %At elevated temperatures 
 %During a simulation it is convenient to have a parameter that 
 Crystals are characterised by the presence of short- and long-range translational order,
-and the melting of a crystal is characterized by the loss of long-range translational order.
+and the melting of a crystal is characterised by the loss of long-range translational order.
 During a molecular dynamics simulation it can therefore be useful to monitor to what degree translational order is preserved with a simple parameter.
 
 For the current purpose we can assume all $M$ atoms are equal, 
@@ -2233,460 +2868,6 @@ Fig. \ref{fig:latticedrift1400} shows the components of the drift vectors before
 %  \label{fig:simelt}
 %\end{figure}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Statistical mechanics}\label{sec:statistical-mechanics}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We are interested in calculating the diffusion coefficient or diffusivity of phosphorus in a specified material -- 
-a material parameter that can be measured experimentally.
-What is obtained from a molecular dynamics simulation, on the other hand, is the configuration of the system (the positions and momenta of every single atom) at any given time included in the simulation -- a quantity that can not be measured experimentally. 
-How do we then relate the \emph{microscopic} configuration to \emph{macroscopic} quantities, such as the diffusivity?
-The branch of physics that deals with such questions is statistical mechanics. 
-To answer the question already, the relation we are looking for is the so-called Einstein-relation \eqref{eq:einstein-relation}, given in the end of this section, but it rests on a number of quite serious assumptions. 
-And to discuss the plausability of these assumptions, some concepts from statistical mechanics will be introduced first.
-
-To specify the microstate of a system, we must specify the state of each individual particle. If we merely say how many particles that are in each state, we call it a macrostate. The number of microstates corresponding to a given macrostate n is called the multiplicity Q(n) of that macrostate. The total multiplicity of all the macrostates is the number of microstates.
-
-
-
-A statistical ensemble is a theoretical tool used to analyze a macroscopic system. One imagines many copies (sometimes infinitely many) of the system. Each copy of the system has a different microstate, but all copies share the same macrostate. As an example, a particle can be a system, and an ensemble a set of N particles with a large N.
-To fully describe a statistical ensemble it is also necessary to specify the probability for a certain microstate to occur.
-
-
-We imagine having a large number of copies of the \emph{same} system. 
-%\url{http://en.wikipedia.org/wiki/Statistical_mechanics#Statistical_ensembles}
-
-
-The probability that a system will be in an energy eigenstate $i$ at temperature $T$ is 
-given by $P_i=\langle i | \hat{P} | i \rangle$, where
-\begin{equation}
-  \hat{P} = \frac{1}{Q} \e^{-\beta\hat{H}}, \qquad Q = \sum_j \langle j | \e^{-\beta\hat{H}} | j \rangle,
-\end{equation}
-where the summation is to be carried out over all accessible states of the system, and
-$\beta$ is the `thermodynamical beta',
-\begin{equation}
-  \beta \equiv \frac{d\ln\Omega}{dE} = \frac{1}{k}\frac{dS}{dE} = \frac{1}{kT}
-\end{equation}
-where $\Omega$ is the multiplicity, $S$ the entropy, $k$ Boltzmann's constant and $T$ is the (thermodynamic) temperature. 
-The ensemble average of some observable $A$ represented by the operator $\hat{A}$ is
-\begin{equation}
-  \langle A \rangle = \sum_i P_i \langle i | \hat{A} | i\rangle = \sum_i \langle i | \hat{P} \hat{A} | i \rangle,
-\end{equation}
-where angle brackets $\langle \cdots \rangle$ indicate an ensemble average, or expectation value.
-In the classical limit, this be shown to reduce to\footnote{See e.g. \cite[13-15]{Frenkel:1996}.}
-\begin{equation}
-  \langle A \rangle = \int \rho(p,q) A(p,q)\,dp\,dq 
-  \label{eq:configuration-int}
-\end{equation}
-where the integration is done over the complete phase space (configuration space), the $6N$-dimensional space created from the momenta and positions of all the $N$ particles in the system. $\rho(p,q)$ is the phase space density, the probability of finding the system with momenta $p$ and positions $r$. In the $N,V,T$ ensemble, the density is given by Gibbs probability distribution
-\begin{equation}
-  \rho(p,r) = \frac{1}{Q} \e^{-\beta H(p,r)},\qquad Q = \int \e^{-\beta H(p,r)} \,dp\,dq
-\end{equation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{The ergodic hypothesis}\label{sec:ergodic-hypothesis}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The basic idea of molecular dynamics is that the average over \emph{all systems} in the ensemble at a single time \eqref{eq:configuration-int} can be replaced by an average over a single system in the ensemble at \emph{all times}, that is over the time evolution of that system,
-\begin{equation}
-  \bar{A} = \lim_{\tau\to\infty} \frac{1}{\tau}\int_{0}^{\tau} A(p(t),r(t)) \,dt
-  \label{eq:time-integral}
-\end{equation}
-along the trajectory, where $\tau$ is the observation time. 
-
-In practice, finite time steps $\Delta t$ is used instead of infinitesimals $dt$, and a practical scheme for doing
-the integration is the Verlet algorithm, presented in section \ref{sec:verlet-algo} below.
-
-The ergodic hypothesis has been proved for some simple model systems [Citation Needed!], 
-but for a general system it can neither be proven or disproven. 
-It's plausability may be discussed in terms of the energy barriers appearant in the system,
-as the probability of an atom passing an energy barrier decreases as [\ldots]. 
-But in a system with many degrees of freedom, determining all possible energy barriers is generally not possible.
-For the diffusion of a dopant atom in a crystal, it is plausible that the system is ergodic, but very long
-simulation times out of reeach may be required
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Ensembles}\label{sec:ensembles}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The Hamiltonian \eqref{eq:nucleiHamiltonian}, or its classical counterpart, describes a system completely isolated from its surroundings.
-For such a system, the number of particles $N$, the total energy $E$ and the volume $V$ are all conserved, since there is no mechanism for exchange of particles, energy or volume with the surroundings in the model.
-Upon a simulation, only configurations with the same $N$, $V$ and $E$ will be visited, only configurations of the so-called \emph{microcanonical} or $N,V,E$ ensemble. This ensemble is characterized by the phase space density, $\rho$, being constant.
-
-While a standard molecular dynamics simulation samples configurations from the microcanonical ensemble, we may very well be interested in sampling other ensembles to better simulate an experimental situation. 
-In a typical experiment, the quantities conserved are the temperature $T$ rather than the total energy $E$, the pressure $P$ rather than the volume $V$, and the chemical potential $\mu$ rather than the number of particles $N$. 
-This is the \emph{grand canonical ensemble} or the $\mu,P,T$ ensemble. 
-In our case of a solid system, the volume and the number of particles will generally vary little, and this may justify our use of the simpler $N,V,T$ ensemble -- the \emph{canonical ensemble}. 
-The constant volume restriction will, however, in general lead to a significant pressure build-up in the order of many kilobars at higher temperatures. 
-Since simulations will be carried out even at temperatures very close to the melting point, this pressure should ideally be relaxed, and it may be an objective of further work.
-
-
-
-
-
-For a molecular dynamics simulation, the microcanonical ensemble is a practical ensemble, but  
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{The virial and the equipartition theorems}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The virial theorem is one of those beautiful theorems connecting microscopic phase space functions with macroscopic thermodynamic observables. 
-If $x_i$ and $x_j$ are components of the $6N$ dimensional phase space vector $\nvec{x}$, 
-then for a microcanonical ensemble, the virial theorem states that\footnote{For a proof, see e.g. \cite[81]{Tuckerman:2010}.}
-\begin{equation}
-  \left\langle x_i \frac{\partial H_N}{\partial x_j}\right\rangle = kT \delta_{ij}
-\end{equation}
-where the brackets indicate an average over phase space, which can, if the system is ergodic, be replaced by an average over time.
-
-Now, if we let $x_i = p_i$, a momentum component, then for a system described by a Hamiltonian \eqref{eq:nucleiHamiltonian} and $i=j$,
-\begin{align}
-  \left\langle p_i \frac{\partial H_n}{\partial p_i}\right\rangle &= kT  \\
-  \left\langle \frac{p_i^2}{2m_i}\right\rangle &= \frac12kT
-\end{align}
-where $m_i$ is the mass of the particle having the momentum component $p_i$. 
-Summing both sides over all $3N$ components, 
-\begin{align}
-  \sum_{i=1}^{3N} \left\langle\frac{p_i^2}{2m_i} \right\rangle &= \sum_{i=1}^{3N} \frac12 kT \\
-  \langle E_k \rangle = \frac32 NkT
-\end{align}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Maxwell-Boltzmann distribution for kinetic energies}\label{sec:maxwell-boltzmann}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-The Maxwell-Boltzmann particle velocity distribution is
-
-For a single direction is
-\begin{equation}
-  f_{\text{MB}}(v_x) = \left(\frac{\beta m}{2\pi }\right)^{1/2} \e^{-\beta m v_x^2 / 2}
-  \label{eq:maxboltz-vdist-1D}
-\end{equation}
-
-\begin{equation}
-  f_{\text{MB}}(v) = 4\pi\left(\frac{\beta m}{2\pi }\right)^{3/2} v^2 \e^{-\beta m v^2 / 2}
-  \label{eq:maxboltz-vdist}
-\end{equation}
-where $v=\sqrt{v_x^2+v_y^2+v_z^2}$.
-From its second and fourth moments,
-\begin{equation}
-  \langle v^2 \rangle = \int_0^{\infty} v^2 f_{\text{MB}}(v) \,dv = 3\left(\frac{m}{\beta}\right),
-\end{equation}
-and
-\begin{equation}
-  \langle v^4 \rangle = \int_0^{\infty} v^4 f_{\text{MB}}(v) \,dv = 15\left(\frac{m}{\beta}\right)^2,
-\end{equation}
-we can find the relative variance in single-particle kinetic energy $\varepsilon_k = \frac12 m v^2$,
-\begin{equation}
-  \frac{\sigma_{\varepsilon_k}^2}{\langle \varepsilon_k \rangle^2} 
-  = \frac{\langle \varepsilon_k^2 \rangle - \langle \varepsilon_k \rangle^2}{ \langle \varepsilon_k \rangle^2 }
-  = \frac{\langle p^4 \rangle - \langle p^2 \rangle^2}{ \langle p^2 \rangle^2 }
-  = \frac{2}{3}.
-\end{equation}
-If we define the instantaneous temperature to be
-\begin{equation}
-  T_k = \frac{1}{f} \sum_{j=1}^M \varepsilon_j = \frac{1}{f}\sum_{j=1}^M m_j v_j^2
-  \label{eq:kinetictemp}
-\end{equation}
-where $f$ the degrees of freedom.
-In our case, $f=3M-3$, where $M$  is the number of ions.
-If we further assume equal masses, then $T_K = (N/f) \varepsilon_k$, and the relative variance in instantaneous temperature is
-\begin{equation}
-  \frac{\sigma_{T_k}^2}{\langle T_k \rangle^2} = \frac{2}{3M}.
-  \label{eq:tempvar}
-\end{equation}
-In our everyday (macroscopic) world, the fluctuation in temperature is negligible due to the large number of particles. 
-More generally, it can be shown that in the thermodynamic limit ($M\to\infty$, $V\to\infty$, $N/V=\text{const.}$, 
-averages over all the different ensembles become the same. We will, however, work far from the thermodynamic limit, 
-and in our truly microscopic system the fluctuations will be significant (see for instance fig. \ref{fig:md_test_temperature}).
-
-
-
-From the equipartion theorem / virial theorem,
-\begin{equation}
-  \langle E_k \rangle = f \frac12 kT
-\end{equation}
-where $f$ is the number of degrees of freedom.
-\begin{align}
-  T &= \langle T_k \rangle
-\end{align}
-where $E_k$ is the total kinetic energy of the ions.
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{The Einstein-Smoluchowski diffusion relation}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-If we have $N_{\alpha}$ atoms of a species $\alpha$, the self-diffusion coefficient $D_{\alpha}$ for species $\alpha$ at a temperature $T$ can be calculated from the slope of the mean-square displacement at long times,
-\begin{equation}
-  D = \frac{1}{6N_{\alpha}} \lim_{t\to\infty} \frac{d}{dt} \sum_{j=1}^{N_{\alpha}} \left \langle |\vec{r}_j(t)-\vec{r}_j(0)|^2 \right\rangle,
-  \label{eq:einstein-relation}
-\end{equation}
-which is sometimes referred to as the Einstein relation or the Einstein Smulowski relation. 
-The self-diffusion coefficient can also be calculated from the velocity autocorrelation function,
-\begin{equation}
-  D_{\alpha} = \frac{1}{3N_{\alpha}} \sum_{j=1}^{N_{\alpha}} \int_0^{\infty} \langle \vec{v}_j(t) \cdot \vec{v}_j(0) \rangle dt
-\end{equation}
-Both equations call for infinitely long simulations, while the best we can obtain is `long enough' simulations. 
-How long is `long enough' is one of the difficult and important questions of MD.
-By monitoring the mean square displacement, the simulation length may be considered sufficient once a good fit for the slope to a straight line is obtained for use with \eqref{eq:einstein-relation}.
-Similarly, the velocity correlation function could be monitored, and the simulation length considered sufficient when the function fall close to zero, 
-and no further contributes significantly to the integral.
-
-We will now integrate over all space $V$ with volum element $dV$, using partial integration and the divergence theorem.
-I will call the surface of all space $S$, with surface element $d\vec{S}=\hat{\vec{n}}dS$, $\hat{\vec{n}}$ being the surface normal.
-\begin{align}
-  \int_V r^2 \nabla^2 c \,dV &= \int_V \nabla\cdot (r^2\nabla c) \,dV - \int_V \nabla r^2 \cdot \nabla c \, dV \\
-  &= \underbrace{\oint_S r^2 \nabla c \cdot d\vec{S}}_0 - 2\int_V \vec{r}\cdot\nabla c \,dV \\
-  &= -2\int_V \nabla (c\vec{r}) \,dV + 2 \int c \nabla \vec{r} \, dV \\
-  &= \underbrace{-2\oint_S c\vec{r}\cdot d\vec{S}}_0 + 2 \int c \nabla \vec{r} \, dV \\
-  &= 2d\int_V c \, dV \\
-  &= 2d
-\end{align}
-since $\nabla\vec{r} = d$, the dimensionality. In our casual world, $d=3$. We also make use of the normalization
-\begin{equation}
-  \int_V c \,dV = 1
-\end{equation}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{The velocity Verlet algorithm}\label{sec:verlet-algo}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The trajectory $\vec{r}(t)$ of a classical particle can in principle be found by integrating Newton's law of motion
-\begin{equation}
-  \ddot{\vec{r}}(t) = \frac{1}{m}\vec{F}(t).
-\end{equation}
-with $\vec{F}(t)$ the force acting on the particle (atom) at time $t$. 
-No analytic expression is available for $\vec{F}(t)$ (if it was, carrying out a simulation would not be necessary),
-but $\vec{r}(t)$ can be found in a step-wise manner using finite-difference methods 
-to estimate the position $\vec{r}(t+\Delta t)$ for small $\Delta t$. 
-In principle, using a Taylor expansion to infinite order, the position can be found for any $\Delta t$, but that would require knowledge about the time derivatives of $\vec{r}(t)$ to infinite order. 
-In practice the expansion has to be truncated at low order, requiring $\Delta t$ to be small to minimize \emph{truncation errors}.
-Apart from truncation errors, which will depend on the specific finite-difference method, all such methods will be prone to \emph{round-off errors}, since a small round-off error in each step may grow very large with very many steps.
-
-The `prototype method' is the Euler method, which makes use of a Taylor expansion to first order around time $t$,
-\begin{equation}
-    \vec{r}(t+\Delta t) \approx \vec{r}(t) + \vec{v}(t) \Delta t,
-\end{equation}
-where $\vec{v}_k(t) = \dot{\vec{r}}_k(t)$ is the velocity for particle $k$ at time $t$. 
-%The method generally suffers from severe drift, and is not recommended for MD.\cite[65]{Frenkel:1996}
-
-In the Verlet method,\cite{Verlet:1968b}, here shown in the ``velocity Verlet'' variant by Swope,\cite{Swope:1982}
-we expand to second order about $t$,
-\begin{equation}
-    \vec{r}(t+\Delta t) \approx \vec{r}(t) + \vec{v}(t)\Delta t + \frac{1}{2m}\vec{F}(t)(\Delta t)^2,
-  \label{eq:vverlet1}
-\end{equation}
-and about $t+\Delta t$, evolving backwards in time,
-\begin{equation}
-  \vec{r}(t) \approx \vec{r}(t+\Delta t) - \vec{v}(t+\Delta t)\Delta t + \frac{1}{2m}\vec{F}(t+\Delta t)^2.
-  \label{eq:vverlet2}
-\end{equation}
-Substituting \ref{eq:vverlet1} for $\vec{r}(t+\Delta t$ in \ref{eq:vverlet2}, and solving for $\vec{v}(t+\Delta t)$,
-\begin{equation}
-    \vec{v}(t+\Delta t) = \vec{v}(t) + \frac{\Delta t}{2m} \left[ \vec{F}(t) + \vec{F}(t+\Delta t) \right]
-  \label{eq:vverlet3}
-\end{equation}
-In the velocity Verlet algorithm, \eqref{eq:vverlet1} and \eqref{eq:vverlet3} are used in combination to 
-evolve the positions and velocities simultaneously.
-
-While the Euler method is a one-step algorithm, we see that the Verlet algorithm is a two-step algorithm, requiring information both from the current and the previous step.
-In the initial step, there is no previous step, so positions and velocities have to be supplied. 
-The initial positions will be discussed in section \ref{sec:structures}, and the initial velocities in section \ref{sec:initial-velocities} below.
-
-The Verlet method requires relatively short time steps compared to more advanced methods, such as the class
-of predictor-corrector algorithms,
-but a major advantage of the Verlet method is that it exhibits little long-term drift.
-This is related to the method being time-symmetric and sympletic (it preserves phase-space volume), 
-unlike the Euler method and most of the more advanced methods.\cite[61-63]{Frenkel:1996}
-
-%More advanced algorithms exist that allows for longer time steps, such as the class of predictor-corrector algorithms.
-%Predictor-corrector algorithms will not be used in this work, but the interested reader will find more on these in many introductory books on molecular dynamics, such as the one by Haile\cite[158]{Haile:1992}.
-%are popular in simulation, but these are generally less stable, which means that they have a tendency to drift over long runs, not conserving energy.
-
-%\comment{More?}
-%\begin{itemize}
-%  \item 
-%Verlet integration
-%\url{http://en.wikipedia.org/wiki/Verlet_integration}
-%\item
-%Symplectic integrator
-%\url{http://en.wikipedia.org/wiki/Symplectic_integrator}
-%\item 
-%Illustration? Something like the first figure on
-%\url{http://en.wikipedia.org/wiki/Euler_integration} ?
-%\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Initial velocities}\label{sec:initial-velocities}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-For the first step, the positions and velocities (or momenta) of all the atoms have to be specified manually. 
-The positions are given in the form of a crystal structure, as further discussed in section \ref{sec:structures}.
-The velocities should be sampled from a Maxwell-Boltzmann velocity distribution \eqref{eq:maxboltz-vdist-1D},
-that is, from a normal distribution
-\begin{equation}
-    f(v_x) = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \e^{-v_x^2/2\sigma^2}
-  \label{eq:normal-dist}
-\end{equation}
-where $\sigma=1/\sqrt{\beta m}$ is the width of the Gaussian and $v_x$ is a single velocity component.
-Now, a computer can easily generate a set of random (or pseudo-random) numbers $\xi$ from a \emph{uniform} distribution with a given range, like $[0,1]$.
-But how can the set of uniformly distributed numbers $\xi$ be transformed into a set of normally distribtued numbers $v_x$?
-The cumulative distribution function of $f(v_x)$ is
-\begin{equation}
-    F(X) = \int_{-\infty}^X f(v_x)\,dx = \left(\frac{1}{2\pi\sigma^2}\right)^{1/2} \int_{-\infty}^X \e^{-v_x^2/2\sigma^2} \,dv_x
-    \label{eq:CDF}
-\end{equation}
-and it turns out $\xi = F(X)$ is a uniformly distributed variable in the range $[0,1]$. 
-The problem of sampling $f(v_x)$ then consists of solving the equation $F(X)=\xi$ for $X$.
-In the most naïve approach, known as \emph{inverse transform sampling}, we just find $X=F^{-1}(\xi)$.
-But since we don't have a closed form expression for $F(X)$, a computationally more efficient method is preferred. 
-A common approach, which is also used in {\vasp}, % function RANG in random.f90, called by subroutine INITIO in dyna.f90
-is the \emph{Box-Muller transform sampling} method, which is
-described very well in \cite[101]{Tuckerman:2010}. 
-From two random numbers $\xi_1$ and $\xi_2$, two gaussian random numbers $X$ and $Y$ are generated by
-\begin{align}
-    X &= \sigma \sqrt{-2\ln\xi_2} \cos(2\pi\xi_1), \\
-    Y &= \sigma \sqrt{-2\ln\xi_1} \sin(2\pi\xi_2).
-  \label{eq:box-muller-sampling}
-\end{align}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Thermostats}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{No thermostat}\label{sec:nothermo}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The Hamiltonian \eqref{eq:nucleiHamiltonian} describes an isolated system, in which the total energy $E$ must necessarily be a constant of motion.
-Upon the start of the simulation, a temperature $T(t=0)$ is defined by giving the system a total kinetic energy $E_k$, corresponding to that temperature. The potential energy is found by solving the electronic Hamiltonian, and adding the coulombic interactions between the nuclei.\footnote{\comment{The Madelung energy found from an Ewald summation?}}
-
-By following the time evolution of such a hamiltonian, we will sample a microcanonical ensemble. 
-While the total energy $E=E_k+E_v$ is a constant of motion, the kinetic energy $E_k$ and potential energy $E_v$ themselves will fluctuate as energy is exchanged in particle collisions, and over time the kinetic and potential energy may very well each drift away from their initial values.
-And if they do, so does the temperature, according to \eqref{eq:kinetictemp}. 
-%To illustrate this, figure \ref{fig:md_test_temperature_micro} shows the energy evolution in a 5~ps simulation of an isolated system of 63 atoms (Si$_{62}$P$_1$) at 1400~K for 5~ps. 
-A most dramatic example of this can be seen in fig. \ref{fig:md_test_temperature_micro} below, showing the temperature and total energy variation for the first 0.5~ps of a 5.0~ps simulation of a system of 62 silicon atoms and a phosphorus atom in a 64-atom cell. 
-The system starts with an initial temperature of 1400~K, but rapidly drops to a mean temperature of 690~K.
-Interestingly, the system remains very stable at this temperature for the remaining 4.5~ps.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics{../figures/tests/thermostats/nothermo_simple}
-  \caption{
-    Instantaneous temperature variation for a system with no thermostat, starting at 1400~K.
-    To be able to see the rapid temperature drop, only the first 0.5~ps of the 5.0~ps simulation is shown.
-    In the remaining 4.5~ps, the system remained very stable at the same temperature.
-  }
-  \label{fig:md_test_temperature_micro}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Ad-hoc velocity-scaling `thermostat'}\label{sec:velocity-scaling}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-In thermodynamics, constant temperature is achieved by putting the system in contact with an infinite heat bath, or with a \emph{thermostat}.
-The simplest approach to simulating a thermostat is to just rescale the particle velocities so that the instantaneous temperature $T_k$ matches the temperature $T$ of the thermostat. 
-From \eqref{eq:kinetictemp}, we see that rescaled velocities can be introduced as
-\begin{equation}
-    v_j' = \sqrt{\frac{T}{T_k}} v_j.
-\end{equation}
-Physically, such a rescaling corresponds to a process where energy is instantaneously transferred between the heat bath and all the particles. 
-As such, it is not the most realistic model. 
-Also, there is no inherent clue on how often the re-scaling should be carried out. 
-Re-scaling the temperature every single step is clearly not a good idea, since that would result in a delta function distribution instead of the gaussian distribution with relative variance given by \eqref{eq:tempvar} that we expect in a canoncal ensemble.
-The number of steps between rescaling is therefore a parameter that has to be selected such as to obtain a temperature distribution similar to the temperature distribution for a canonical ensemble.\footnote{In \vasp\ this is the NBLOCK parameter}
-
-From \eqref{eq:tempvar}, the expected temperature standard deviation for a canonical ensemble of $M$ particles of equal mass is
-\begin{equation}
-  \sigma = \langle T_k \rangle \sqrt{\frac{2}{3M}}.
-  \label{eq:canostd}
-\end{equation}
-In this work, the number of steps between rescaling has been set to 50.
-Fig. \ref{fig:md_test_temperature_scaled} shows the resulting instantaneous temperature and total energy variations for a 5~ps simulation of the same system simulated in section \ref{sec:nothermo} above.
-The temperature distribution is quite gaussian, but the rescaling results in a too strong peak at the thermodynamic temperature.
-The standard deviation of 110~K is acceptably close to, but still lower than 144~K, the standard deviation for the perfect canonical distribution, \eqref{eq:canostd}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsection{Nose-Hoover thermostat}\label{sec:nose-hoover}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-While velocity-scaling is a simple and straightforward approach to keeping the thermodynamic temperature constant, it does not sample a canonical ensemble, but rather some canonical-like ensemble. 
-More advanced thermostat models have therefore evolved, that accurately sample a canonical ensemble, of which the most popular approaches are those of Andersen\cite{Andersen:1980} and Nose\cite{Nose:1984,Nose:1991,Bylander:1992}.
-
-In Andersen-type thermostats, the temperature is controlled by stochastic collisions with the heat bath.\footnote{
-A simple pseudo-code is given in \cite[129]{Frenkel:1996}.}
-This makes the simulation non-deterministic and the interpretation of the trajectories somewhat difficult.
-
-In Nose-type thermostats\comment{\ldots}
-
-The simulation carried out above with no thermostat (fig. \ref{fig:md_test_temperature_micro}) and with
-velocity-scaling (fig. \ref{fig:md_test_temperature_scaled}), was repeated using a Nose-Hoover thermostat.
-As seen in figure \ref{fig:md_test_temperature_nose}, the thermostat gives a near-perfect gaussian distribution with a standard deviation of 130~K. 
-It is worth noting that this is still lower than the expected 144~K for a perfect canonical ensemble of this size and temperature. 
-This is not unlikely to be an effect of non-ergodicity, with the distribution not fully corresponding to the state-averaged distribution. 
-
-
-\begin{figure}[htbp]
-  \centering
-  \subfloat[Velocity-scaling]{
-    \includegraphics{../figures/tests/thermostats/velocity-scaling}
-    \label{fig:md_test_temperature_scaled}
-  }
-  \subfloat[Nose-Hoover thermostat]{
-    %\includegraphics[width=5cm]{../figures/silicon_with_p_interstitial_octahedral}
-    \includegraphics{../figures/tests/thermostats/nose-0-25}
-    %\crossbox{7cm}
-    \label{fig:md_test_temperature_nose}
-  }
-  \caption{
-    Instantaneous temperature distribution (above) and total energy fluctuation (below) 
-    in a simulation using velocity-scaling (left) and Nose-Hoover thermostat (right). 
-    A 0.5 ps symmetric running mean is drawn (black) on top of the raw data (gray). 
-    The standard deviation $\sigma$ is indicated by a solid, green overlay. 
-    In the upper right, the temperature distribution and its standard deviation is shown, 
-    together with a gaussian (thick black line) with the same standard deviation and normalization.
-   }
-  \label{fig:md_test_temperature}
-\end{figure}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %\section{Ensembles}
@@ -2733,7 +2914,6 @@ When a name is necessary, the system will be referred to as Si$_{64}$P, lending 
 
 The extra phosphorus atom was inserted into an interstitial position, and relaxed together with the silicon atoms.
 The rationale for the choice of an interstitial position as the initial position is given in \ref{sec:PDiffusion}.
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3245,7 +3425,7 @@ In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\ce
          \item[a] See discussion in text
          \item[b] X-ray diffraction study
          \item[c] Ab initio Car-Parinello MD at LDA-level
-         \item[d] Ab initio Car-Parinello MD at spin-polarized GGA-level
+         \item[d] Ab initio Car-Parinello MD at spin-polarised GGA-level
          \item[e] supercooled
        \end{tablenotes}
      }
@@ -3603,7 +3783,7 @@ Another interesting question is how long phosphorus remains in the interstitial 
 This has been tabulated in table \ref{tab:interstitial-to-substitutional}.
 At low temperatures, phosphorus remain in interstitial positions for the whole simulation, but at temperatures of 900 K and higher, 
 phosphorus almost always enters a lattice site during the simulation, kicking out a silicon atom.
-This is an activated process, so an attempt was made to determine the activation energy from the slope of $1/t$ as a function of $1/kT$, 
+This is an activated process, so an attempt was made to determine the activation energy from the slope of $1/t$ as a function of $1/k_BT$, 
 shown in fig. \ref{fig:interstitial-to-substitutional}, leaving out the simulations in which no such process took place.
 The slope of the fitted line corresponds to an activation energy of 0.3~eV, but the fit is much too poor to be reliable (The Pearson correlation coefficient is $-0.58$).
 If a reliable fit could be obtained, using data from more simulations, an interesting next question would be how the value compares to the time for a silicon atom. Is phosphorus more or less stable in an interstitial position than is a silicon self-interstitial?
@@ -3693,8 +3873,8 @@ Further work:
 	$R_s$	& Sheet resistance \\
 	$D(E)$	& Density of $k$-states \\
 	$d(E)$	& Density of electronic states \\
-    $H_e$   & Electronic hamiltonian \\
-    $H_n$   & Nuclear hamiltonian \\
+    $H_e$   & Electronic Hamiltonian \\
+    $H_n$   & Nuclear Hamiltonian \\
     $E_{\text{mad}}$ & Madelung energy \\
     $E$     & Total energy of the system, $E = E_k + E_v$ \\
     $E_k$   & Kinetic energy for the nuclei \\
@@ -3710,8 +3890,8 @@ Further work:
     $T(t)$  & Instantaneous temperature \\
     $\langle A \rangle$ & Ensemble average or expectation value of $A$\\
     $\bar{A}$ & Time average of $A$ \\
-    $q_i$   & Generalized position coordinate \\
-    $p_i$   & Generalized momentum coordinate \\
+    $q_i$   & Generalised position coordinate \\
+    $p_i$   & Generalised momentum coordinate \\
     $\nvec{x}$ & Phase space vector with $6N$ components $x_i=\{q_i,p_i\}$
   \end{tabular}
 
