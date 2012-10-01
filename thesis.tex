@@ -39,17 +39,17 @@
 \frontmatter
 \includepdf{frontpage/frontpage.pdf}
 
-Acknowledgement
+%Acknowledgement
 
-Abstract
+%Abstract
 
-Sammendrag på norsk
+%Sammendrag på norsk
 
 
 %Og det er alt sammen som det bør være, for i et slikt problem som dette kan man bare finne sannheten ved å sammenholde mange ulike feiltagelser. Virginia Woolf. Et eget room, s. 124
 
 % pdflatex -v | head -n1
-Set with the help of {\LaTeXe} and {\KOMAScript}.
+%Set with the help of {\LaTeXe} and {\KOMAScript}.
 
 %Grasping the amount of work behind this possibility is hard,
 %generations before you have laid out the theories of quantum mechanics and of
@@ -99,10 +99,10 @@ Two well-tested empirical potentials for silicon are the Stillinger-Weber (SW) p
 A drawback with empirical potentials is that they are defined for a limited range of conditions and problems, 
 and it is generally not known how well they perform outside that range.
 A given potential may for instance capture elastic and cohesive properties of a material with the same accuracy as an \textit{ab initio} potential, 
-but may fail for other properties.\cite{Powell:2007}
+but fail for other properties.\cite{Powell:2007}
 For silicon self-diffusion, Posselt et al. found that the activation energies differed by about 1~eV between the SW potential and the T3 potential in a non-systematic way, and that the migration mechanism also depended on the choice of potential.\cite{Posselt:2008}
 
-With empirical potentials, transferability between different bonding environments can also not be expected, so rather than a general phosphorus potential, a specific potential for phosphorus in silicon would be needed.
+With empirical potentials, transferability between different bonding environments can also not be expected, so rather than a general phosphorus potential, a specific parametrisation for phosphorus in silicon is needed.
 Over the years, many groups have developed parameters for more systems that can be used with the original form of the Tersoff potential, for instance for all III-V semiconductors.\cite{Powell:2007}
 Yet, at least to my knowledge, no such potential for phosphorus in silicon has been published.
 %\comment{MEN SKULLE IKKE KEITH LAGE ETT?}
@@ -111,8 +111,9 @@ A motivation for studying phosphorus diffusion in silicon has been the use of ph
 This front layer of the solar cell is contacted with metal fingers, and 
 the contact resistivity $\rho_c$ depends strongly on the phosphorus doping concentration $N_D$.
 If the metal contacts take up 5\% of the cell surface, a contact resistance $\rho_c < \SI{2e-3}{\ohm\centi\metre\squared}$ is required to not degrade the output power by more than 0.5\%. 
-This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$, but even higher doping concentrations is required if the area occupied by metal contacts is reduced, or if used in concentrator cells with higher power.\cite{Schroder:1984}
-Concentrations may reach \SI{1e21}{\per\centi\metre\cubed} can be found in the outermost part of a typical emitter layer,\cite[40]{Bentzen:2006}
+This in turn requires a doping concentration $N_D > \SI{1e19}{\per\centi\metre\cubed}$,\cite{Schroder:1984} 
+and even higher doping concentrations is required if the area occupied by metal contacts is to be reduced further, or for contacting concentrator cells.
+Concentrations may reach \SI{1e21}{\per\centi\metre\cubed} in the outermost part of a typical emitter layer,\cite[40]{Bentzen:2006}
 corresponding to about one phosphorus atom for every 50 silicon atoms,
 while the limit of electrically active phosphorus is somewhat lower, about \SI{2e20}{\per\centi\metre\cubed}.\cite[40]{Bentzen:2006}
 In this work, a unit cell is simulated with one phosphorus atom to 64 silicon atoms,
@@ -271,7 +272,7 @@ Some key properties of pure silicon are listed in table \ref{tb:si}, while diffu
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Diffusion\index{diffusion} is the redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria.} due to their thermal motion. 
+Diffusion\index{diffusion} is macroscopic redistribution of atoms\footnote{I will only be concerned with atoms here, but the concept of diffusion also applies to other small particles such as molecules, viruses and bacteria.} due to their microscopic thermal motion. 
 Such redistribution occurs in all materials, but at a negligible rate at temperatures considerably below the melting point of the material.
 For silicon, with a melting point of \SI{1414}{\celsius}, diffusion is negligible at room temperature, 
 but significant at elevated temperatures, and controlled diffusion is commonly carried out at temperatures 
@@ -350,11 +351,13 @@ As mentioned, the diffusivity may also depend on other factors, such as crystal 
 
 In the continuum picture, the diffusion coefficients are just empirical parameters, and we have to invoke a model involving atoms to explain them. 
 Such a model was found independently by Einstein in 1905,\cite{Einstein:1905} and Smoluchowski in 1906.\cite{Smoluchowski:1906}
-Studying the Gaussian diffusion outwards from a point,
+
+Einstein related the Gaussian diffusion outwards from a point to
+the probability of finding a particle moving by a random walk process,
 \begin{equation}
-    c(x,t) = \frac{n}{\sqrt{4\pi D}} \e^{-x^2/4Dt} / \sqrt{t},
+    f(x,t) = \frac{n}{\sqrt{4\pi D}} \e^{-x^2/4Dt} / \sqrt{t},
 \end{equation}
-Einstein related the mean square displacement of a particle in one dimension, $\langle x^2 \rangle$, to the diffusivity\cite{Einstein:1905},
+thus relating the mean square displacement of a particle (in one dimension), $\langle x^2 \rangle$, to the diffusivity\cite{Einstein:1905},
 \begin{equation}
     \langle x^2\rangle = 2Dt,
     \label{eq:einsteinRelationSimple}
@@ -415,7 +418,10 @@ As seen in fig. \ref{fig:simple-vibration}, the atoms do vibrate at frequencies 
 but the motion is neither simple nor harmonic.
 If it was, we would not need \emph{simulation} anyway.
 
-Estimated jump frequency using \eqref{eq:jumpfreq-est} is plotted in fig. \ref{fig:jumpfreq-est} for three different activation energies.
+%Estimated jump frequency using \eqref{eq:jumpfreq-est} is plotted 
+In fig. \ref{fig:jumpfreq-est}, the estimated number of jumps in 100~ps is plotted from \eqref{eq:jumpfreq-est},
+for three different activation energies. 
+100~ps was choosen, since it's about the maximum simulation time we can conveniently sample.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -433,7 +439,7 @@ Estimated jump frequency using \eqref{eq:jumpfreq-est} is plotted in fig. \ref{f
   \begin{center}
     \includegraphics{../figures/jump_frequency}
   \end{center}
-  \caption{Estimated jump frequencies from \eqref{eq:jumpfreq-est} with $\nu=\SI{e13}{\hertz}$.}
+  \caption{Estimated number of jumps in 100~ps, from \eqref{eq:jumpfreq-est} with $\nu=\SI{e13}{\hertz}$.}
   \label{fig:jumpfreq-est}
 \end{figure}
 
@@ -486,15 +492,14 @@ it was demonstrated in the 1940s that phosphorus enters mainly substitutional si
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-While phosphorus prefers substitutional sites, interstitial sites are of 
-
-it will, at elevated temperatures and/or in imperfect (real) materials also occupy intersitial positions, just as silicon will.
-Phosphorus interstitials are of interest for their role in diffusion processes, as discussed in the next section.
-Direct experimental evidence for phosphorus interstitials is probably missing, so their binding energy have formerly been taken from fitting diffusion models to experimental data, and later also from purely theoretical investigations.\cite[391]{Pichler:2004}
+While phosphorus prefers substitutional sites,
+phosphorus interstitials are of interest for their role in diffusion processes, as discussed in the next section.
+Direct experimental evidence for phosphorus interstitials is probably missing, 
+so their binding energy have formerly been taken from fitting diffusion models to experimental data, 
+and lately also from purely theoretical investigations,\cite[391]{Pichler:2004} such as nudged elastic band studies.
 
 The tetrahedral structure of silicon is a relatively open one, with a spherical packing density of only $\pi\sqrt{3}/16\approx 0.34$,\footnote{Close-packed spheres have a spherical packing density of $\pi/3\sqrt{2} \approx 0.74$.}.
-The eight-atom cubic unit cell shown in fig. \ref{fig:sipure} contains eight equivalent tetrahedral voids ($T_d$ symmetry), all potentially large enough to hold an atom without distorting the surrounding structure considerably.
-Interstitials at two tetrahedral sites are shown in fig. \ref{fig:tetsite1} and \ref{fig:tetsite2}.\footnote{Tetrahedral sites are found at
+The eight-atom cubic unit cell, shown in fig. \ref{fig:sipure}, contains eight equivalent tetrahedral voids ($T_d$ symmetry),\footnote{Tetrahedral sites are found at
 $(\frac{1}{4},\frac{1}{4},\frac{3}{4})$, 
 $(\frac{1}{4},\frac{3}{4},\frac{1}{4})$, 
 $(\frac{3}{4},\frac{1}{4},\frac{1}{4})$, 
@@ -505,9 +510,11 @@ $(0,\frac{1}{2},0)$,
 $(\frac{1}{2},0,0)$,
 and at the centre
 $(\frac{1}{2},\frac{1}{2},\frac{1}{2})$}
+all potentially large enough to hold an atom without distorting the surrounding structure considerably.
+Interstitials at two different tetrahedral sites are shown in fig. \ref{fig:tetsite1} and \ref{fig:tetsite2}.
 
-The tetrahedral site can be distorted into a ``hexagonal'' site with $D_{3d}$ symmetry, 
-at the centre of a slightly distorted hexagon with normal in the $\langle 111 \rangle$ direction. 
+A tetrahedral site can be distorted into a ``hexagonal'' site with $D_{3d}$ symmetry, 
+at the centre of a slightly distorted hexagon, with normal in the $\langle 111 \rangle$ direction. 
 Fig. \ref{fig:hexsite1} shows a hexagonal interstitial at $(\frac{3}{8},\frac{5}{8},\frac{3}{8})$, 
 distorted from the tetrahedral position $(\frac{4}{8},\frac{4}{8},\frac{4}{8})$ in fig. \ref{fig:tetsite1}.
 
@@ -529,58 +536,64 @@ distorted from the tetrahedral position $(\frac{4}{8},\frac{4}{8},\frac{4}{8})$ 
   %  \label{fig:hexsite2}
   %  \includegraphics[width=4.0cm]{figs/structures/hexsite_sideview.png}
   %}\\
-  \subfloat[Tetrahedral site]{
+  \subfloat[Tetrahedral]{
     \label{fig:tetsite1}
     \includegraphics[width=4.0cm]{figs/structures/tetsite_center.png}
   }
-  \subfloat[Tetrahedral site]{
+  \subfloat[Tetrahedral]{
     \label{fig:tetsite2}
     \includegraphics[width=4.0cm]{figs/structures/tetsite_persp.png}
   }\\
-  \subfloat[Hexagonal site]{
+  \subfloat[Hexagonal]{
     \label{fig:hexsite1}
     \includegraphics[width=4.0cm]{figs/structures/hexsite_persp.png}
   }
-  \subfloat[Split 110]{
+  \subfloat[\spl{110}]{
     \label{fig:split110site}
     \includegraphics[width=4.0cm]{figs/structures/split110relaxed.png}
   }
-  \subfloat[Split 001]{
+  \subfloat[\spl{001}]{
     \label{fig:split001site}
     \includegraphics[width=4.0cm]{figs/structures/split001_2.png}
   }
-  \caption{Cubic Si unit cell with edge atoms from neighbouring cells shown.
-  split001 involves bond lengths of 2.0 Å,
-  while the split110 is able to relax upwards so the final bond lengths are not shortened.
+  \caption{
+      Interstitial and interstitialcy configurations in the cubic silicon unit cell, 
+      with edge atoms from neighbouring cells included.
   }
   \label{fig:interstitials}
 \end{figure}
 
-An alternative to the ``pure'' tetrahedral and hexagonal interstitials are the ``interstitialcies'', consisting of $N+1$ atoms sharing $N$ lattice sites, of which the simplest, consisting of two atoms sharing one site, are called ``split interstitials'' or ``dumb-bell interstitials''\cite[6]{Pichler:2004}
+An alternative to the ``pure'' tetrahedral and hexagonal interstitials are the ``interstitialcies'', consisting of $N+1$ atoms sharing $N$ lattice sites, of which the simplest, consisting of two atoms sharing one site, are called ``split interstitials'' or ``dumb-bell interstitials''.\cite[6]{Pichler:2004}
 Two symmetrically inequivalent such configurations exists, the ``\spl{110}'' and the ``\spl{001}'' configurations depicted in fig. \ref{fig:split110site} and \ref{fig:split001site}.
+
 For equivalent atoms, the \spl{001} site has $D_{2d}$ symmetry, reducing to $C_{2v}$ for inequivalent atoms,
-while the \spl{110} site has $C_{2v}$ symmetry for equivalent atoms, reducing to $C_{1h}$ (just a mirror plane) for inequivalent atoms.
+while the \spl{110} site has $C_{2v}$ symmetry for equivalent atoms, reducing to $C_{1h}$ (just a mirror plane) for inequivalent atoms.\cite[12]{Pichler:2004}
 An advantage of the lower symmetry of the \spl{110} site compared to the \spl{001} site is that there is freedom for relaxing the bond lengths. 
 While the \spl{001} site is quite strained, the atoms in the \spl{110} position can relax freely in the $\langle 001 \rangle$ direction. 
-In figure \ref{fig:split110site} normal bond lengths have been obtained without relaxing the neighbour atoms.\footnote{
-/Users/danmichael/Documents/Studier/Master/notur/hipersol/templates/si64/movie2.avi }
+In figure \ref{fig:split110site} normal bond lengths have been obtained without relaxing the neighbour atoms.
+%\footnote{/Users/danmichael/Documents/Studier/Master/notur/hipersol/templates/si64/movie2.avi }
 
-
-
-Early theoretical investigations by Car\cite{Car:1985} suggested the energetical stability of P at the hexagonal site over the tetrahedral site or P-Si interstitialcies. (FLERE KILDER)
-
-Chelyadinskii and Burenkov found from X-ray diffraction studies that phosphorus and silicon do not form stable complexes, and that they form split interstitial pairs bound solely by grid relaxation.[5.560 i Pichler]
-
-In a 2003 nudged elastic band study, Liu et al identified four lowest energy configurations for insterstitial phosphorus in silicon.
+%Chelyadinskii and Burenkov found from X-ray diffraction studies that phosphorus and silicon do not form stable complexes, and that they form split interstitial pairs bound solely by grid relaxation.[5.560 i Pichler]
+Early theoretical investigations by Car suggested the energetical stability of P at the hexagonal site over the tetrahedral site and P-Si interstitialcies.\cite{Car:1985}
+In a 2003 nudged elastic band (NEB) study, Liu \textit{et al.} identified four lowest energy configurations for insterstitial phosphorus in silicon;\cite{Liu:2003}
 \begin{itemize}
   \item $P_i^X$, a \spl{110} configuration (fig. \ref{fig:split110site}) distorted in the 110 direction so that symmetry is reduced from $C_{1h}$ to $C_1$.
-  \item $P_i^{X_2}$, a configuration with approximate $C_2$ symmetry, that the authors suggest can be viewed as a $P_i^X$ configuration with local structural distortion.
+  \item $P_i^{X_2}$, a configuration with approximate $C_2$ symmetry, suggested to be viewed as a $P_i^X$ configuration with local structural distortion.
   \item $P_i^H$, a hexagonal configuration with $D_{3d}$ symmetry, as in fig. \ref{fig:hexsite1}
   \item $P_i^S$, a \spl{001}-like configuration, with symmetry reduced from $C_{2v}$ to $C_{1h}$.
 \end{itemize}
-Of these, the $P_i^X$ and $P_i^{X_2}$ were the lowest energy structures for the neutral charge state, while $P_i^H$ and $P_i^S$ were the lowest energy structures for the +1 charge state.\cite{Liu:2003}
-%Second, they
+Of these, the $P_i^X$ and $P_i^{X_2}$ were reported to be the lowest energy structures for the neutral charge state, 
+and $P_i^H$ and $P_i^S$ the lowest energy structures for the +1 charge state.\cite{Liu:2003}
 
+A 2006 NEB study by Harrison \text{et al.} confirmed a hexagonal site as the most stable one for the +1 charge state, 
+but suggested a ``bond-centre'' site to be preferred in the neutral case.\cite{Harrison:2006}
+The suggested name is a bit confusing, since the configuration is not similar to the traditional bond-centre site 
+described in Pichler\cite[12]{Pichler:2004}, which is literally at the center of a Si-Si bond and has $C_{3v}$ symmetry.
+Instead, P is displaced 1.55~Å normal to the bond, forming a triangle, with the two Si atoms with the two Si-P bonds being of equal length.
+The Si-Si bond part of the triangle increased in length by 30~\%, 
+so its possible that the configuration could be viewed as a form of interstitialcy with three atoms sharing two lattice sites.
+
+%Second, they
 
 %The most stable one was 
 
@@ -613,20 +626,28 @@ Of these, the $P_i^X$ and $P_i^{X_2}$ were the lowest energy structures for the 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Substitutional phosphorus, like other substitutional defects, is considered immobile, but can enter a mobile state through a (random) encounter with mobile defects such as interstitials or vacancies, or by concerted exchange (direct interchange of a pair of atoms).
-Many different mechanisms come into play, but it is commonly accepted today that the dominant mechanism for phosphorus diffusion in silicon is mediated by self-interstitials (or -interstitialcies), not by vacancies or concerted exchange, except at very high doping concentrations, for which it has been suggested that vacancy-mediated diffusion becomes the dominant mechanism.\cite{Ural:1999,Bentzen:2006}
+Substitutional phosphorus, like other substitutional defects, is considered immobile, 
+but can enter a mobile state through a (random) encounter with mobile defects such as interstitials or vacancies, 
+or by concerted exchange (direct interchange of a pair of atoms).
+Many different mechanisms come into play, but it is commonly accepted today that the dominant mechanism for phosphorus diffusion in silicon is mediated by self-interstitials (or -interstitialcies), 
+not by vacancies or concerted exchange, except at very high doping concentrations, 
+for which it has been suggested that vacancy-mediated diffusion becomes the dominant mechanism.\cite{Ural:1999,Bentzen:2006,Liu:2003}
 
-In the classic interstitial mechanism, a self-interstitial, which migrates through the interstices of the lattice, approaches the substituional defect and ``kicks'' it out into an interstitial position, itself taking over the lattice site. The process is often called ``kick out reaction'';\cite{Fahey:1989}
+In the classic interstitial mechanism, a self-interstitial, which migrates through the interstices of the lattice, 
+approaches the substitutional defect and ``kicks'' it out into an interstitial position, 
+itself taking over the lattice site. 
+The process is often called ``kick out reaction'';\cite{Fahey:1989}
 \begin{align*}
     \text{I} + \text{P} &\rightleftarrows \text{P}_{\text{i}},
 \end{align*}
 where I is the self-interstitial, P the substitutional phosphorus, and P$_{\text{i}}$ the interstitial phosphorus,\footnote{For an introduction to defect nomenclature, see e.g. Fahey\cite{Fahey:1989}.} which can migrate and eventually kick out a silicon atom to return to a lattice site.
 
-< FIGUR ála fig. 17 i Fahey >
+%< FIGUR ála fig. 17 i Fahey >
 
 In the classic interstitial mechanism, the mobile defect is considered to be a single atom, either a host-interstitial or a dopant-interstitial. 
-An alternative is to consider instead a ``interstitialcy, a term coined by Frederick Seitz, better known for the Wigner–Seitz cell, to describe an entity that ``has the same type of phase-like existence as a vacancy or a dislocation, since the pattern can move without having a fixed atom move with it'',\cite{Seitz:1950} 
+An alternative is to consider instead a ``interstitialcy'', a term coined by Frederick Seitz, better known for the Wigner–Seitz cell, to describe an entity that ``has the same type of phase-like existence as a vacancy or a dislocation, since the pattern can move without having a fixed atom move with it'',\cite{Seitz:1950} 
 and commonly associated with a pair of atoms.
+
 Following Fahey,\cite[322]{Fahey:1989} the migration of an interstitialcy with a pair of atoms centred around a lattice site A, takes place when the pair is shifted along its principal axis towards another (occupied) lattice site B to such an extent that one of the two atoms ends up forming a new pair with the atom at site B, while the other atom relaxes at site A. 
 If the atom at site B happens to be a P atom, it becomes part of a P-Si pair (PI using defect nomenclature), 
 that can then migrate in the same manner.
@@ -638,7 +659,7 @@ It's important to note that it is not the same pair of atoms that migrate over t
 Each time the interstitialcy makes a jump, one of the atoms moves along, while the other is left behind,
 and each jump is considered independent of the previous one.\cite[323]{Fahey:1989}
 
-< FIGUR ála fig. 15 i Fahey >
+%< FIGUR ála fig. 15 i Fahey >
 
 %The mobile state can be either a pure interstitial P$_{\text{i}}$, or an interstitialcy -- a phosphorus-silicon pair (PI) -- sharing a site. 
 %This process of creating a mobile defect is often called a ``kick out'' reaction;\footnote{
@@ -650,12 +671,97 @@ and each jump is considered independent of the previous one.\cite[323]{Fahey:198
 %Correspondingly, the diffusion mechanism may be referred to as either the interstitial mechanism or the interstitialcy mechanism.
 %The interstitialcy mechanism has also been referred to as the `dumbbell mechanism' when the PI pair forms a dumbbell configuration.\cite{Posselt:2008} 
 % interstitialcy introduced by Seitz, F. On the theory of diffusion in metals. Acta Cryst. 3, 355–363 (1950).
-In practice, distinguishing between interstitial and interstitialcy mechanisms is often not needed, and it's also very hard to distinguish the two experimentally.\cite[295]{Fahey:1989}
+In practice, distinguishing between interstitial and interstitialcy mechanisms is often not needed, 
+and it's also very hard to distinguish the two experimentally.\cite[295]{Fahey:1989}
 
-The diffusion mechanism of phosphorus in silicon is considered to be similar to that of boron in silicon, 
-albeit with a lower activation energy, arguably due to P-I bonding being stronger than B-I bonding.\cite{Christensen:2003}
+%The diffusion mechanism of phosphorus in silicon is considered to be similar to that of boron in silicon, 
+%albeit with a lower activation energy, arguably due to P-I bonding being stronger than B-I bonding.\cite{Christensen:2003}
 
-< SETT INN FIGUR INSPIRERT AV Martin-Bragado 2005 > ?
+%< SETT INN FIGUR INSPIRERT AV Martin-Bragado 2005 > ?
+
+On the overall activation energy for phosphorus diffusion, Fahey wrote in a 1989 review on point defects and diffusivities in silicon, 
+that ``determination of $Q_{\text{P}}$ by different studies using a variety of techniques agree to within 0.2~eV and are considered accurate.''\cite{Fahey:1989}
+The situation is more or less the same today, with an accepted overall activation energy of about 3.5~eV.\cite{Pichler:2004}
+Interestingly, two studies in the early 2000s suggested a significantly lower value of 2.7--2.8~Å at low temperatures,\cite{Haddara:2000}\cite{Christensen:2003}
+indicating the possibility of a change in dominant diffusion mechanism at some temperature, but this is yet to be confirmed.
+
+Table \ref{tab:diffusivities} lists a selection of reported diffusivities for phosphorus,
+including two review values, three `non-standard' values, and two values from purely theoretical investigations.
+Most older results form part of the review results by Fahey\cite{Fahey:1989} and Pichler,\cite{Pichler:2004}
+and are not included separately.
+
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}[htbp]
+      \begin{tabular}{lp{7cm}l}
+      \toprule
+        $E_a$ [eV]      & Conditions                                            & Ref. \\
+      \midrule
+        3.51–3.67       & selective listing of earlier work                     & Fahey(1989)\cite[320]{Fahey:1989} \\
+        3.507           & regression 900-1200 \si{\celsius} from 16 studies     & Pichler(2004)\cite[395]{Pichler:2004} \\
+      \midrule
+        2.81            & 850, 900, 1000 \si{\celsius}                          & Haddara(2000)\cite{Haddara:2000} \\
+        $2.74\pm 0.07$  & 810 -- 1100 \si{\celsius}                             & Christensen(2003)\cite{Christensen:2003} \\
+        $2.88\pm 0.15$  & 800 -- 1050 \si{\celsius}                             & Naganawa(2008)\cite{Naganawa:2008} \\
+      \midrule
+        3.1--3.5        & NEB                                                   & Liu(2003)\cite{Liu:2003} \\
+        3.43            & NEB                                                   & Harrison(2006)\cite{Harrison:2006} \\
+      \bottomrule
+    \end{tabular}
+    %{\footnotesize
+    %    \begin{tablenotes}
+    %      \item[a] 
+    %        low implant dose (\SI{4e13}{\per\centi\metre\squared}, about \SI{10e18}{\per\centi\metre\cubed}) to 
+    %        avoid concentration-dependent or transient effects
+    %      \item[b] 810 – 1100 C. concentration \SI{10e18}{\per\centi\metre\cubed}
+    %    \end{tablenotes}
+    %}
+  \end{threeparttable}
+  \caption{Activation energies for overall diffusion of phosphorus in silicon.}
+  \label{tab:diffusivities}
+\end{table}
+
+An activation energy of about 3.5~eV would require very long simulations to be able to see any jumps.
+While the estimate presented in fig. \ref{fig:jumpfreq-est} is a very rough one, 
+the indicationt that simulating diffusion with such an activation energy is several orders of magnitude out of reach, 
+is not encouraging.
+On the other hand, the total activation energy of interstitial diffusion can be partitioned into 
+a formation enthalpy of the PI complex, $H_{\text{PI}}^{\text{f}}$, and a migration energy of 
+the complex, $E_{\text{PI}}^{\text{m}}$;\cite[323]{Fahey:1989}
+\begin{align}
+    E_{\text{PI}} = H_{\text{PI}}^{\text{f}} + E_{\text{PI}}^{\text{m}},
+    %&= H_{\text{PI}}^{\text{m}} + H_{\text{I}}^{\text{f}} - E_{\text{PI}}^{\text{b}}
+\end{align}
+with the formation enthalpy $H_{\text{PI}}^{\text{f}}$ being by far the larger term of the two.
+If we start the simulation with a phosphorus interstitial, 
+we have effectively already supplied the enthalpy to create the PI complex, 
+and we can expect diffusion measured from such a starting point to correspond more or less to the migration energy $E_{\text{PI}}^{\text{m}}$.
+More or less because in molecular dynamics, just like in experiment, different diffusion mechanisms are usually at the play at the same time.
+It may also happen during any given simulation that the complete activation energy $E_{\text{PI}}$ is supplied, 
+so that phosphorus, after having returned to a lattice site, forms a new complex and diffuses further.
+This may complicate the process of describing the diffusivity using a simple Arrhenius form \eqref{eq:arrhenius-dif}.
+
+%To my knowledge, there are not many reported values for the migration energy of phosphorus in silicon.
+Two quite recent studies have attempted to estimate the migration energy using \textit{ab initio} calculations and the nudged elastic band method.
+Liu \textit{et al}. (2003) found a migration energy of 0.6--0.7 eV for a mechanism where P migrates between \spl{110} sites through hexagonal sites.\cite{Liu:2003}
+Harrison \textit{et al}. (2006) found a lower barrier of 0.18~eV for a different mechanism where P diffuses between what they call ``bond-centred'' sites, 
+through another site that was not named.\cite{Harrison:2006}
+
+%With migration barriers of 0.18 or 0.6--0.7 eV,  should be within reach of sit \textit{ab initio} molecular dynamics.
+
+%Liu \textit{et al.} identified a migration path from a \spl{110}-like dumb-bell configuration ($P_i^X$) to another, via a hexagonal ($P_i^H$) configuration as the saddle point, having a migration barrier of 0.6~eV.\cite{Liu:2003}
+%Another path involving a \spl{001}-like dumb-bell configuration ($P_i^S$) was found to have a migration energy of 0.7~eV. Overall activation energy (including formation energy) 3.1 eV.
+
+%An interstitial position was chosen since phosphorus is known to diffuse largely by 
+%the interstitialcy mechanism discussed in section \ref{sec:PDiffusion},\comment{[REF]}
+%involving a silicon self-interstitial (I) meeting 
+%a phosphorus atom (P), making a mobile phosphorus-silicon self-interstitial (PI) complex, 
+%that diffuses for some (short) distance, possibly swapping the silicon atom, before phosphorus 
+%returns to a lattice site.
+
+%The activation energy for diffusion of phosphorus by the interstitialcy mechanism is known from experiments to be rather high, with values between 2.8 and 3.5~eV reported in the literature (section \ref{sec:PDiffusion}). 
+%For such a high activation energy, we could in general expect no diffusion at all within timespans that could be practically simulated (10-100~ps), at least according to the simple model in fig. \ref{fig:jumpfreq-est}.
+%But the activation energy for the interstitialcy process, $E_{\text{PI}}$,
 
 %Despite a similar diffusion mechanism mediated by Si self-interstitials, P exhibits a lower activation energy than B because of stronger bonding to the Si self-interstitial.
 
@@ -669,84 +775,12 @@ albeit with a lower activation energy, arguably due to P-I bonding being stronge
 %This makes possible many different interstitial configurations, and also interstitial diffusion
 %In the interstitialcy mechanism, a self-interstitial  replaces an impurity atom, making it an interstitial.
 
-Liu \textit{et al.} identified a migration path from a \spl{110}-like dumb-bell configuration ($P_i^X$) to another, via a hexagonal ($P_i^H$) configuration as the saddle point, having a migration barrier of 0.6~eV.\cite{Liu:2003}
-Another path involving a \spl{001}-like dumb-bell configuration ($P_i^S$) was found to have a migration energy of 0.7~eV. Overall activation energy (including formation energy) 3.1 eV.
 
-In a 1989 review on point defects and diffusivities in silicon, Fahey wrote that ``determination of $Q_{\text{P}}$ by different studies using a variety of techniques agree to within 0.2~eV and are considered accurate.''\cite{Fahey:1989}
-Yet this view has been challenged by studies in the early 2000s suggesting lower values: 
-Recently, the values have been challenged by studies suggesting quite lower values
-
-2.65 eV \cite{Wittel:1995}
-
-2.88 eV \cite{Naganawa:2008}
-
-3.43 eV \cite{Harrison:2006}
-
-Experimental activation energies at intrinsic conditions: 2.81 eV (low T), 3.61 eV (hight T, sjekk!) (Haddara:2000), 3.55 eV (Ural:1999), 3.30 eV (Chohtagore:1971), 3.69 eV (Makris:1973)
+%2.65 eV \cite{Wittel:1995}
+%Experimental activation energies at intrinsic conditions: 2.81 eV (low T), 3.61 eV (hight T, sjekk!) (Haddara:2000), 3.55 eV (Ural:1999), 3.30 eV (Chohtagore:1971), 3.69 eV (Makris:1973)
+%2.74 eV (Christensen:2003)
 
 
-2.74 eV (Christensen:2003)
-
-As mentioned in section \ref{sec:Diffusion}, diffusion often takes the simple Arrhenius form, \eqref{eq:arrhenius-dif},
-\begin{equation*}
-    D = D_0 \e^{-E_a/k_BT},
-\end{equation*}
-
-
-\begin{table}[htbp]
-  \centering
-  \begin{threeparttable}[htbp]
-  \begin{tabular}{llll}
-      \toprule
-        $D_0$ & $E_a$ [eV] & Conditions & Ref. \\
-      \midrule
-      $1.71\times 10^{-3}$ & 2.81 & low $T$\tnote{a} & Haddara(2000)\cite{Haddara:2000} \\
-      $8\pm5\times 10^{-4}$ & $2.74\pm 0.07$ & low $T$\tnote{b} & Christensen(2003)\cite{Christensen:2003} \\
-      %? & 3.51 & - & Hill(1981) (bestilt kopi) \\
-      & 3.51–3.67 & selective listing of earlier work in review by Fahey.\cite[320]{Fahey:1989} \\
-      1.03 & 3.507 & regression curve 900-1200 C from 16 studies & Pichler(2004)\cite{Pichler:2004} \\
-      \bottomrule
-    \end{tabular}
-    {\footnotesize
-        \begin{tablenotes}
-          \item[a] 850, 900 and 1000 C.
-            low implant dose (\SI{4e13}{\per\centi\metre\squared}, about \SI{10e18}{\per\centi\metre\cubed}) to 
-            avoid concentration-dependent or transient effects
-          \item[b] 810 – 1100 C. concentration \SI{10e18}{\per\centi\metre\cubed}
-        \end{tablenotes}
-    }
-  \end{threeparttable}
-  \caption{Diffusivities}
-  \label{tab:Label}
-\end{table}
-
-An interstitial position was chosen since phosphorus is known to diffuse largely by 
-the interstitialcy mechanism discussed in section \ref{sec:PDiffusion},\comment{[REF]}
-involving a silicon self-interstitial (I) meeting 
-a phosphorus atom (P), making a mobile phosphorus-silicon self-interstitial (PI) complex, 
-that diffuses for some (short) distance, possibly swapping the silicon atom, before phosphorus 
-returns to a lattice site.
-
-The activation energy for diffusion of phosphorus by the interstitialcy mechanism is known from experiments to be rather high, with values between 2.8 and 3.5~eV reported in the literature (section \ref{sec:PDiffusion}). 
-For such a high activation energy, we could in general expect no diffusion at all within timespans that could be practically simulated (10-100~ps), at least according to the simple model in fig. \ref{fig:jumpfreq-est}.
-But the activation energy for the interstitialcy process, $E_{\text{PI}}$,
-can be partitioned into a formation enthalpy of the PI complex, $H_{\text{PI}}^{\text{f}}$, and a migration enthalpy of 
-the complex, $H_{\text{PI}}^{\text{m}}$;\cite[323]{Fahey:1989}
-\begin{align}
-    E_{\text{PI}} = H_{\text{PI}}^{\text{f}} + H_{\text{PI}}^{\text{m}} \\
-    %&= H_{\text{PI}}^{\text{m}} + H_{\text{I}}^{\text{f}} - E_{\text{PI}}^{\text{b}}
-\end{align}
-The formation enthalpy $H_{\text{PI}}^{\text{f}}$ is the larger term of the two, but
-by starting the simulation with a phosphorus interstitial, we have effectively already 
-supplied the enthalpy to create the PI complex, 
-and we can expect diffusion measured from this starting point to correspond more or less to the migration enthalpy $H_{\text{PI}}^{\text{m}}$.
-More or less because in molecular dynamics, just like in experiment, different diffusion mechanisms are usually at the play at the same time.
-It may also happen during any given simulation that the complete activation energy $E_{\text{PI}}$ is supplied, so that phosphorus, after having returned to a lattice site, forms a new complex and diffuses further.
-This may complicate the process of describing the diffusivity using a simple Arrhenius form \eqref{eq:arrhenius-dif}.
-
-To my knowledge, there are not many reported values for the migration energy of phosphorus in silicon.
-Liu \textit{et al}. (2003) found a migration energy of 0.6-0.7 eV from \textit{ab initio} calculations using the nudged elastic band method,\cite{Liu:2003}
-while Christensen \textit{et al}. (2003) estimated it at 0.2~eV, but considered the value unrealistic.\cite{Christensen:2003}
 
 %where $H_{\text{PI}}^{\text{m}}$ is the migration enthalpy of the PI complex, 
 %%$H_{\text{PI}}^{\text{f}}$ the formation enthalpy of the complex -- 
@@ -858,7 +892,7 @@ The state (or states) with the lowest energy is called the \emph{ground state} (
 Observables like energy, momentum, \textit{et cætera} are extracted by letting the appropriate Hermitian linear operator act on the state. 
 %For instance, the kinetic energy of a particle $i$ is the expectation value of the kinetic energy operator
 For instance, the energy is the expectation value of an energy operator, a \emph{Hamiltonian} $\hat{H}$, 
-consisting of operators for the kinetic energy\footnote{Since quantum mechanical particles do not follow \emph{trajectories} in the way classical particles do, the name `kinetic energy' is a bit misleading, Reflecting the spatial variation of the wavefunction, Sauer and Kuhn suggested the name `localization energy' instead\cite{Sauer:1982}. Yet, there is an analogy with classical kinetic energy, and with `kinetic energy' being the dominating expression, it will be used here too.} and various potential energy terms.
+consisting of operators for the kinetic energy\footnote{Since quantum mechanical particles do not follow \emph{trajectories} in the way classical particles do, the name `kinetic energy' is a bit misleading, Reflecting the spatial variation of the wavefunction, Sauer and Kuhn suggested the name `localisation energy' instead\cite{Sauer:1982}. Yet, there is an analogy with classical kinetic energy, and with `kinetic energy' being the dominating expression, it will be used here too.} and various potential energy terms.
 The (non-relativistic) Hamiltonian for a system of $N_e$ electrons and $N_N$ nuclei, in Hartree atomic units\footnote{
 where the electron mass $m_e$, the elementary charge $e$, the reduced Planck constant $\hbar$ and the Coulomb constant $k_e=4\pi/\varepsilon_0$ all are unity by definition.
 }, is
@@ -1286,7 +1320,7 @@ making \eqref{eq:Blochwave}
     \varphi_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im(\vec{k}+\vec{G})\cdot\vec{r}}
   \label{eq:pwbasis}
 \end{equation}
-Refer to appendix \ref{app:pwbasis} for more details.
+%Refer to appendix \ref{spp:pwbasis} for more details.
 This makes for a well-defined basis, exact in the limit of all $\vec{G}$, and just as important, 
 one that can be systematically truncated by including only components with 
 \begin{equation}
@@ -1430,7 +1464,7 @@ If $|\Phi\rangle$ is an eigenstate of $\hat{H}$ with energy $E_e$, the first two
   &= E_e \frac{\partial}{\partial\lambda} \langle \Phi | \Phi \rangle 
   = E_e \frac{\partial}{\partial\lambda} (1) = 0
 \end{align}
-using the normalization $\langle\Phi|\Phi\rangle=1$. Thus the force is
+using the normalisation $\langle\Phi|\Phi\rangle=1$. Thus the force is
 \begin{equation}
     \vec{F}_k = - \biggl\langle \Phi \biggl| \frac{\partial\hat{H}_e}{\partial\vec{R}_k} \biggr| \Phi \biggr\rangle - \frac{\partial E_{\text{NN}}}{\partial\vec{R}_k}
   \label{eq:hellmann-feynman}
@@ -1547,7 +1581,7 @@ we can extrapolate to find a lower bound of \SI{5.427}{\angstrom} for the lattic
 (indicated with a thick, dashed line), while using PBE-GGA results in it being 0.75 \% (4.1~pm) too long.
 This is the well-known tendency of LDA to overbind, and the rather common tendency of PBE-GGA to underbind.
 Now, in this particular case of pure silicon, it turns out that the LDA-value comes closer to the experimental value than the PBE-GGA value, in line with the results of Haas et al.\cite{Haas:2010}\footnote{Following Haas, some minor adjustments to the PBE functional actually make the functional calculate lattice parameters much closer to experimental values.
-On the other hand, these adjustments tended to produce worse atomization energies. Since neither property is the interest of this work, we will stick to the very well-tested and theoretically robust standard PBE GGA functional.}
+On the other hand, these adjustments tended to produce worse atomisation energies. Since neither property is the interest of this work, we will stick to the very well-tested and theoretically robust standard PBE GGA functional.}
 This is most likely due to fortunate cancellation of errors,\cite[see e.g.][167]{Martin:2004} and since the purpose here is not to calculate accurate lattice constants, we will stay with the theoretically more robust PBE-GGA as it would be rather fortenous to expect the same level of error cancellation for every different configuration visited during a simulation at elevated temperatures. 
 Rather, we could expect the cancellation to work better for some configurations than others, and thus produce non-systematic errors.
 
@@ -2370,7 +2404,7 @@ where $c(\vec{r},t)$ is the concentration, whose second moment is
     \langle r^2(t)\rangle \equiv \int_V r^2(t) c(\vec{r},t) \,dV,
   \label{eq:secondmom}
 \end{equation}
-and normalization is
+and normalisation is
 \begin{equation}
     \int_V c\,dV = 1.
   \label{eq:cnorm}
@@ -2653,7 +2687,7 @@ or an effect of choosing a non-optimal Nose mass.
     A 0.5 ps symmetric running mean is drawn (black) on top of the raw data (gray). 
     The standard deviation $\sigma$ is indicated by a solid, green overlay. 
     In the upper right, the temperature distribution and its standard deviation is shown, 
-    together with a Gaussian (thick black line) with the same standard deviation and normalization.
+    together with a Gaussian (thick black line) with the same standard deviation and normalisation.
    }
   \label{fig:md_test_temperature}
 \end{figure}
@@ -2797,7 +2831,7 @@ with 64 silicon atoms and one phosphorus atom at 1400 K (the experimental meltin
 Note that the extra phosphorus atom introduces a local distortion into the crystal, but this is quite short-ranged,
 so the overall translational order of the crystal is still largely preserved, as reflected in the order parameters.
 
-\subsubsection{Handling drift of the reference frame}
+\subsection{Handling drift of the reference frame}\label{sec:drift}
 
 Comparing the two translational order parameter functions, it's seen that the whole system drifts over time in this particular run, although the shift is not easily quantified from this information alone. 
 There is nothing inherently unphysical about the drift, as the total momentum is conserved and there is no drift in the mass centre.
@@ -2909,12 +2943,11 @@ Fig. \ref{fig:latticedrift1400} shows the components of the drift vectors before
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-All simulations were carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
-When a name is necessary, the system will be referred to as Si$_{64}$P, lending notation from chemistry, while hopefully not giving associations to a giant molecule.
-
-The extra phosphorus atom was inserted into an interstitial position, and relaxed together with the silicon atoms.
-The rationale for the choice of an interstitial position as the initial position is given in \ref{sec:PDiffusion}.
-
+All calculations were carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
+When a name is necessary, the system will be referred to as Si$_{64}$P.
+%, lending notation from chemistry, while hopefully not giving associations to a giant molecule.
+All simulations started from a relaxed structure with phosphorus at an interstitial position. 
+The rationale for this choice was given in section \ref{sec:PDiffusion}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -2922,10 +2955,82 @@ The rationale for the choice of an interstitial position as the initial position
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As discussed in section \ref{sec:P}, several different interstitial positions are known to be stable.
-While it is expected that the differences between different interstitial initial configurations
-will only have a minor effect on the simulation outcome once the system has equilibrated,
-it is still worth investigating which initial configuration is the most stable one to start from.
+Two trajectories with even very minor differences in initial properties (structure and/or velocities),
+can easily diverge exponentially from each other due to Lyapunov instability.\cite[72]{Frenkel:1996}
+Trajectory averages, on the other hand, are relatively stable with respect to such minor differences.
+However, since many different interstitial and interstitialcy positions have been reported in literature 
+(section \ref{sec:P}), we will look slightly into the stability of the different structures, to make
+sure we start from a quite stable initial position.
+
+Structures were prepared and relaxed with phosphorus at the tetrahedral site, the hexagonal site, 
+the ``classic'' bond-centred site (with $C_{3v}$ symmetry) and the \spl{110} site.
+Special interest was taken in the \spl{110} site, since it has been identified as the most stable site 
+in a recent nudged elastic band study.\cite{Liu:2003}
+Since there is some freedom in defining the site, several structures were prepared with slight variations 
+to see if they would result in the same minimum-energy structure or not.
+All relaxations were carried out in a two-step manner using the conjugate gradient method, 
+requiring forces on the atoms less than 0.05 eV/Å.
+% EDIFFG = 1E-6
+% import numpy as np
+% from oppvasp.vasp.parsers import IterativeVasprunParser
+% vp = IterativeVasprunParser('vasprun.1.xml')
+% t = vp.get_trajectory()
+% np.max(q.forces[-1])
+
+The tetrahedral site (fig. \ref{fig:tetrahedral}), where the phosphorus atom is surrounded by four nearest neighbours, 
+turned out less stable than anticipated from purely geometrical considerations.
+On the first relaxation attempts, it relaxed into the more stable hexagonal position (fig. \ref{fig:hexagonal}), with
+phosphorus surrounded by six neighbours.
+It was eventually possible to relax the tetrahedral configuration, but this indicates that the minimum is a very shallow one.
+Energetically, the tetrahedral site is less favourable than the hexagonal and \spl{110} sites by about 1~eV.
+
+The bond-centred $\langle 111 \rangle$ site (fig. \ref{fig:bc111}) is the energetically least favourable of the investigated sites,
+due to the large distortion effect it has on the neighbouring silicon atoms. 
+In the relaxed structure, each of the two silicon atoms has moved 0.9~Å away from its original lattice site.
+It is interesting that the original symmetry is preserved, even though the relaxation was carried out without use of symmetrisation,
+illustrating the general importance of starting relaxations from slightly asymmetric structures.
+
+The figures \ref{fig:split110-2} and \ref{fig:split110} show the two lowest-energy variants of the \spl{110} configuration,
+both close to 0.1~eV lower in energy than the hexagonal configuration.
+While the two variants are practically equal energetically, 
+there is considerable variation in bond lengths, illustrating
+the relative freedom available in this configuration.
+%An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
+%The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
+%The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site.
+%More surprisingly the distance between the Si and P atoms sharing a lattice site increased to \SI{2.44}{\angstrom}, slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, making the description of them as a pair questionable. 
+
+An interesting case is fig. \ref{fig:split110w}, showing a structure that emerged from relaxing 
+a \spl{110} variant, and which I will refer to as just the ``triangle'' configuration.
+A relaxed \spl{110} configuration is already shifted in the [110] direction with respect to the shared lattice site,
+with Si closer to the lattice site than P. 
+The triangle configuration can be viewed as a result of further shifting the pair in the same direction. 
+It can be seen that the structure in figs. \ref{fig:split110} and \ref{fig:split110w} are not very different, 
+and \ref{fig:split110} may be viewed as an intermediate structure between \ref{fig:split110-2} and \ref{fig:split110w}.
+
+At the point of identifying the triangle structure, I had not yet seen such a structure before,
+and it was therefore quite exciting to later find a very similar structure reported as 
+the lowest-energy configuration in a NEB study by Harrison \textit{et al.}, referred to as a bond-centre site,\cite{Harrison:2006}
+a name I will not use, however, since it conflicts with the classic bond-centre site with $C_{3v}$ symmetry (fig. \ref{fig:bc111}).
+In the structure found by Harrison, 
+the two P-Si bonds are 2.19~Å long, with an angle of \ang{107}, 
+while the structure in fig. \ref{fig:split110w} has P-Si bonds 2.22~Å long, with an angle of \ang{101}.
+This agreement is satisfying.
+
+Comparing the total energies of the relaxed structures, the triangle configuration is the lowest-energy configuration.
+This is in agreement with the NEB study by Harrison,\cite{Harrison:2006}
+while the NEB study by Liu\cite{Liu:2003} identified a \spl{110} configuration as minimum.
+Bond lengths or angles were not reported by Liu, so it's not possible to compare the structure with
+the structures found here.
+
+%Upon comparison, it was found that the energy of the split~$\langle110\rangle$ was the most stable structure,
+%having an energy XXXXX lower than the hexagonal and YYYY lower than the tetragonal. The bond-centered $\langle 111 \rangle$
+%position was the most unfavourable. Since the phosphorus atom is about the same size as the silicon atom, it is not surprising that positioning a phosphorus atom in-between two silicon atoms results in a great outward relaxation for the silicon atoms. 
+%It is probably unlikely to find such a configuration in a simulation, while we expect the three other configurations to be visited.
+
+%While it is expected that the differences between different interstitial initial configurations
+%will only have a minor effect on the simulation outcome once the system has equilibrated,
+%it is still worth investigating which initial configuration is the most stable one to start from.
 
 % Sammenlign med perfekt 64Si
 % test_structures/perfect/stdrelax/OUTCAR.3
@@ -2947,7 +3052,7 @@ it is still worth investigating which initial configuration is the most stable o
   %    -348.787620 eV
   % 3) test_structures/tetrahedral/stdrelax-short/OUTCAR.2  [FINAL!]
   %    -348.846128 eV
-  \subfloat[Tetrahedral, -1.188 eV]{
+  \subfloat[Tetrahedral, \SI{-1.188}{\electronvolt}]{
     \includegraphics[width=4.3cm]{../figures/initial_structures/tetrahedral.png}
     \label{fig:tetrahedral}
   }
@@ -2962,7 +3067,7 @@ it is still worth investigating which initial configuration is the most stable o
   % 3) test_structures/hexagonal/stdrelax/OUTCAR.3  [FINAL!]
   %    -349.794169 eV
   % relaxed -> hexagonal
-  \subfloat[Hexagonal, -2.136 eV]{
+  \subfloat[Hexagonal, \SI{-2.136}{\electronvolt}]{
     \includegraphics[width=4.3cm]{../figures/initial_structures/hexagonal.png}
     \label{fig:hexagonal}
   }
@@ -2973,19 +3078,19 @@ it is still worth investigating which initial configuration is the most stable o
   %    -344.934249 eV
   % 3) test_structures/bond-centered-111/stdrelax/OUTCAR.3  [FINAL!]
   %    -348.540818 eV
-  \subfloat[Bond-centred $\langle111\rangle$, -0.883 eV]{
+  \subfloat[Bond-centred $\langle111\rangle$, \SI{-0.883}{\electronvolt}]{
     \includegraphics[width=4.3cm]{../figures/initial_structures/bond-centered-111.png}
     \label{fig:bc111}
   }\\
   %
-  \subfloat[split $\langle110\rangle$, -2.214 eV ]{
+  \subfloat[split $\langle110\rangle$, \SI{-2.214}{\electronvolt} ]{
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
     \includegraphics[width=4.3cm]{../figures/initial_structures/split-110-1.png}
     \label{fig:split110-2}
   }
   %
-  \subfloat[split $\langle110\rangle$, -2.215 eV]{
+  \subfloat[split $\langle110\rangle$, \SI{-2.215}{\electronvolt}]{
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
     \includegraphics[width=4.3cm]{../figures/initial_structures/split-110-2.png}
@@ -3002,36 +3107,31 @@ it is still worth investigating which initial configuration is the most stable o
   %    -350.023235 eV
   % 5) test_structures/split-110-from-md/stdrelax-strange/OUTCAR.3
   %    -350.041718 eV
-  \subfloat[not split $\langle110\rangle$, -2.384 eV]{
+  \subfloat[``triangle'', \SI{-2.384}{\electronvolt}]{
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/vmd_detail2.png}
     %\includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-from-md/stdrelax-short/vmd_detail2.png}
     \includegraphics[width=4.3cm]{../figures/initial_structures/split-110-3.png}
     \label{fig:split110w}
   }
   %
-  \caption{Different interstitial positions for a phosphorous atom in the diamond lattice of silicon. 
-  The light-grey bond-framework is the perfect silicon structure with no defects, 
-  while the spherical atoms come from a fully-relaxed structure with one P defect. 
-  The bond lengths can be compared with the Si-Si bond length in this work, 2.37~Å. }
+  \caption{
+    Relaxed structures with P in interstitial/interstitialcy positions.
+    The light-grey bond-framework is the perfect silicon structure with no defects, 
+    while the spheres are the positions of the relaxed atoms, with phosphorus in red
+    and silicon in grey.
+    Bond lengths are given in Ångstrøm, and should be compared to 
+    the equilibrium Si-Si bond length in this unit cell, 2.37~Å, not 
+    the experimental bond length of 2.35~Å (see section \ref{sec:parameters:a}).
+    The energies are total energies relative to the total energy of the 64-atom Si-cell without P.
+    They are not formation energies or bond-energies, and are included only as a relative measure to
+    compare the configurations.
+  }
   \label{fig:interstitial_positions}
 \end{figure}
 
 %Does there exist a PI complex, in which the phoshphorus atom is bonded to a silicon self-interstitial?
 
-The four (?) different interstitial configurations shown in fig. \ref{fig:interstitial_positions} were prepared and relaxed.
-All the structures were relaxed twice, requiring forces to be less than 0.05 eV/Å.(?)
-The tetrahedral position (fig. \ref{fig:tetrahedral}), where the phosphorus atom is surrounded by four nearest neighbours, 
-was less stable than anticipated.
-On the first relaxation attempts, it relaxed into the more stable hexagonal position (fig. \ref{fig:hexagonal}), where 
-phosphorus is surrounded by six neighbours.
-
-None of the structures changed significantly, indicating that the different structures form different local minima.
-Upon comparison, it was found that the energy of the split~$\langle110\rangle$ was the most stable structure,
-having an energy XXXXX lower than the hexagonal and YYYY lower than the tetragonal. The bond-centered $\langle 111 \rangle$
-position was the most unfavourable. Since the phosphorus atom is about the same size as the silicon atom, it is not surprising that positioning a phosphorus atom in-between two silicon atoms results in a great outward relaxation for the silicon atoms. 
-It is probably unlikely to find such a configuration in a simulation, while we expect the three other configurations to be visited.
-
-Pichler also noted a similar ``antibond-centered $\langle 111 \rangle$'' interstitial position, but this position was not tested here.
+%The four (?) different interstitial configurations shown in fig. \ref{fig:interstitial_positions} were prepared and relaxed.
 
 
 %Hexagonal relax 1: -339.644215 -> 340.418075 eV
@@ -3064,18 +3164,6 @@ Pichler also noted a similar ``antibond-centered $\langle 111 \rangle$'' interst
 %Tetrahedral
 %-339.349832 eV
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\subsubsection{Preparation of the split 110 cell}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-An extra phosphorus atom was added to a relaxed 64-atom silicon structure, making the phosphorus atom share a lattice site with a silicon atom.
-The Si-P pair was first selectively relaxed to allow the pair to adjust itself before a relaxation of the full structure.
-The centre of the pair relaxed by nearly \SI{0.6}{\angstrom} in the 001 direction, centring the pair slightly away from the original lattice site.
-More surprisingly the distance between the Si and P atoms sharing a lattice site increased to \SI{2.44}{\angstrom}, slightly longer than the average Si-Si bond length, \SI{2.37}{\angstrom}, making the description of them as a pair questionable. 
-
-
 %\begin{figure}[htbp]
 %  \centering
 %  \includegraphics[width=6cm]{../figures/split110_initial.png}
@@ -3083,38 +3171,27 @@ More surprisingly the distance between the Si and P atoms sharing a lattice site
 %  \label{fig:relaxedSIPsplit}
 %\end{figure}
 
-\begin{figure}[htbp]
-  \centering
-    \subfloat[First -340.827613 eV]{
-      \label{fig:split110a}
-      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-opt2/view011.png}
-    }
-    \subfloat[Second -340.627774 eV]{
-      \label{fig:split110b}
-      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_011.png}
-    }
-    \subfloat[Second -340.627774 eV]{
-      \label{fig:split110c}
-      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_0m11.png}
-    }
-  \caption{Relaxation of the split 110 Si-P pair}
-  \label{fig:relaxedSIPsplit}
-\end{figure}
+%\begin{figure}[htbp]
+%  \centering
+%    \subfloat[First -340.827613 eV]{
+%      \label{fig:split110a}
+%      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/test_structures/split-110-opt2/view011.png}
+%    }
+%    \subfloat[Second -340.627774 eV]{
+%      \label{fig:split110b}
+%      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_011.png}
+%    }
+%    \subfloat[Second -340.627774 eV]{
+%      \label{fig:split110c}
+%      \includegraphics[width=4cm]{../notur/hipersol/si-pi/si64/split110_1000/relax_frame4493/view_v2_0m11.png}
+%    }
+%  \caption{Relaxation of the split 110 Si-P pair}
+%  \label{fig:relaxedSIPsplit}
+%\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Stability of the \spl{110} configuration}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-One rather 
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Trajectories}
+\section{Trajectories}\label{sec:trajectories}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -3125,16 +3202,25 @@ One rather
 
 %The integrity of the lattice remains high during the entire simulation, so the lattice sites are well defined,
 
-In total, 25 trajectories was simulated at 14 temperatures ranging from \SI{700}{\kelvin} to \SI{1700}{\kelvin}.
+In total, 25 trajectories were simulated at 14 temperatures, ranging from \SI{700}{\kelvin} to \SI{1700}{\kelvin}.
 In addition, an attempt was made running a simulation at 1750~K, but this system melted almost immediately.
 At temperatures in the range 1600 to \SI{1700}{\kelvin}, the system could easily melt, 
 but could also remain in a crystalline state for tens of picoseconds.
 Excluding the melted parts of the trajectories, the total simulated time was 1036~ps.
 
-In this section, I will discuss two specific trajectories in some detail before the more statistically oriented discussions that follow in the next sections.
-The first one is a 30 ps simulation at 1000 K, in which a single diffusion jump takes place. 
-The trajectory shows many features that are quite typical of most simulations.
-The second example is one of extraordinary diffusion, in which phosphorus diffuses about 10 Å in 90 ps at 1300 K.
+Note that simulations were started either from a \spl{110} configuration (fig. \ref{fig:split110}) 
+or from a hexagonal configuration (fig. \ref{fig:hexagonal}), 
+not the triangle configuration (fig. \ref{fig:split110w}), due to initial mistakes in assigning the correct minimum-energy structure. 
+Looking at the trajectories, it is however apparent that when P starts in the hexagonal position, 
+it quickly moves into a \spl{110}-like structure, as exemplified in fig. \ref{fig:cartoon2.1}~$\to$~\ref{fig:cartoon2.2},
+and we could expect the same to happen for the triangle configuration, but it is a bit unfortunate that it was not tested.
+%We can assume the same to happen in a simulation starting in a triangle configuration, but it's a bit unfortunate 0
+
+In this section, two specific trajectories will be discussed in some detail, 
+before the more statistically oriented discussion that follows in the next sections.
+The first trajectory is a 30 ps simulation at 1000 K, in which a single diffusive jump takes place. 
+This trajectory shows many features that are quite typical of most simulations.
+The second example, at 1300~K, is a more rare case in term of diffusion distance, with phosphorus migrating about 10 Å during the 90~ps simulation time.
 
 \begin{figure}[htbp]
   % Making of:
@@ -3155,17 +3241,17 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
   %     View along -1 -2 0
   %     Rotate: 4 <down>
   % Model and radii:
-  %     Bond radius: 0.05
+  %     Bond radius: 0.05  
   \centering
   \subfloat[Displacement $r(t)$ and distance to nearest lattice site $R$ for the P atom.]{ %
      \includegraphics[width=9cm]{../notur/hipersol/si-pi/si64/split110_1000/plot_dist_from_lattice.pdf} %
      \label{fig:split110_1000_occ} %
     }
-  \subfloat[The full diffusion path for the P atom]{%
+  \subfloat[The full P trajectory]{%
      \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/full_path.png} %
      \label{fig:cartoon1.all} %
   }\\
-  \subfloat[Relaxed initial structure, with P at a hexagonal interstitial site.]{
+  \subfloat[Relaxed initial structure, with P at \spl{110} site.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t0.png}
     \label{fig:cartoon1.1}
   }
@@ -3173,7 +3259,7 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t5.png}
     \label{fig:cartoon1.2}
   }
-  \subfloat[P at site 2. The resulting Si-Si pair shares the adjacent site in the plane above (not depicted).]{
+  \subfloat[P at site 2. A Si-Si pair shares the adjacent site in the plane above (not depicted).]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t20.png}
     \label{fig:cartoon1.3}
   }\\
@@ -3189,10 +3275,14 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/split110_1000/cartoon_v3_t30_relaxed_alt1.png}
     \label{fig:cartoon1.6}
   }
-  \caption{30 ps simulation at 1000 K. (c-g) shows 5 selected configurations viewed 
-  along the [$\bar{1}1\bar{1}$] direction, indicated on (a) by vertical grey lines.
-  (h) shows the final structure after geometry relaxation.
-  Interstitial silicon atoms are drawn with a darker shade than silicon atoms at lattice sites.}
+  \caption{
+    30 ps simulation at 1000 K. (c-g) shows 5 selected configurations viewed 
+    along the [$\bar{1}1\bar{1}$] direction, indicated on (a) by vertical grey lines.
+    (h) shows the final structure after geometry relaxation.
+    Interstitial silicon atoms are drawn with a darker shade than silicon atoms at lattice sites.
+    Vibrations have beeen smoothed out by a 0.5~ps symmetric mean.
+  }
+  \label{fig:example1}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -3201,11 +3291,11 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
     \includegraphics[width=9cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/plot_dist_from_lattice.pdf} %
     \label{fig:hexagonal_1300_2_occ} %
   }
-  \subfloat[Full diffusion path]{
+  \subfloat[The full P trajectory]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/full_path.png} %
     \label{fig:cartoon2.all} %
   }\\
-  \subfloat[Relaxed initial structure, with P at hexagonal interstitial site.]{
+  \subfloat[Relaxed initial structure, with P at hexagonal site.]{
     \includegraphics[width=4.3cm]{../notur/hipersol/si-pi/si64/hexagonal_1300_2/cartoon_v2_t0.png}
     \label{fig:cartoon2.1}
   }
@@ -3232,6 +3322,7 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
   \caption{90 ps simulation at 1300 K.
   (c-f) shows 6 selected configurations, indicated on (a) by vertical grey lines. 
   Only interstitial silicon atoms are shown.}
+  \label{fig:example2}
   %The non-interstitial silicon atoms vibrate about their lattice positions, indicated by
   %the static lattice framework.}
   %VjjViewing along the [$\bar{5}04$] direction 
@@ -3244,15 +3335,40 @@ The second example is one of extraordinary diffusion, in which phosphorus diffus
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Figure \ref{fig:split110_1000_occ} shows data from a single run at 1000~K,
-where phosphorus starts in a split-110 position with a silicon atom, sharing the site which we call 1. During the first 18~ps, phosphorus moves between two split positions, sharing site 1 and 2, respectively. At about 20~ps phosphorus succeeds in obtaining lattice site 1, producing a Si-Si pair, but only for a very short time. A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
+Figure \ref{fig:example1} shows some snapshots and plots from a trajectory at 1000~K,
+where phosphorus starts in a \spl{110} position, sharing the site labelled 2 with a Si atom.
+During the first 18~ps, phosphorus moves between two split positions, 
+centred about site 1 (fig. \ref{fig:cartoon1.2}) and 2 (fig. \ref{fig:cartoon1.1}), respectively,
+and the intermediate position is similar to the ``triangle configuration''.
+Such a movement is seen in many of the simulations, especially at low temperatures,
+with Si-P-Si triangle-like structure moving in a quite correlated way back and forth between two lattice sites.
+In this example, the mean Si-P-Si angle is about \ang{112}.
 
-At low temperatures, the P atom is more or less trapped between the neighbour lattice site 28 (0.250,0.250,0.500) and lattice site 60 (0.375,0.375,0.625)
+The stability of the Si-P-Si structure is eventually broken, with P first jumping into lattice site 2 (fig. \ref{fig:cartoon1.3}), 
+pushing the Si atom into forming a Si-Si pair, which after a few picoseconds returns to push P
+through a hexagonal site (fig. \ref{fig:cartoon1.4}) into a new lattice site~4 (fig. \ref{fig:cartoon1.5}).
 
-  The lower figure shows the distance from the phosphorus atom $r(t)$ to the nearest three lattice sites $R$.
-  and are taken to be positions of the silicon atom in a perfect structure with the same volume, but without the extra phosphorus atom.
-  The dashed lines indicates the distances at the beginning of the simulation. 1.32 and 2.05 Å are thus the distance to the nearest
-  and second nearest lattice position when in a split site.
+The complete phosphorus trajectory is shown in fig. \ref{fig:cartoon1.all},
+while fig. \ref{fig:split110_1000_occ} shows its displacement $r(t)$ (above),
+and its distance to the three nearest lattice sites (below),
+with dashed lines indicating the distances in the initial structure,
+and the closest lattice site at any given time is indicated by the colour-coded band at the bottom.
+Vertical grey lines indicate the times at which the snapshots 
+in fig. \ref{fig:cartoon1.1}--\ref{fig:cartoon1.5} were taken.
+
+The lattice site distance plot illustrates quite well the jumping back and forth that takes place in the first 18~ps.
+Interestingly, P is never stable in the middle position, the ``triangle'' position.
+It is possible that this is a bias arising from starting in the \spl{110}, 
+but it seems a bit unlikely for the bias to remain over such a long timespan, 
+since the Si-P-Si system is far from isolated.
+
+%After about 20~ps, P succeeds in obtains lattice site 1 for itself, pushing the Si atom into forming a Si-Si pair, 
+%A little later, however, at about 25~ps, phosphorus makes a diffusive jump to the lattice site we call 4. 
+
+%At low temperatures, the P atom is more or less trapped between the neighbour lattice site 28 (0.250,0.250,0.500) and lattice site 60 (0.375,0.375,0.625)
+
+  %The lower figure shows the distance from the phosphorus atom $r(t)$ to the nearest three lattice sites $R$.
+  %and are taken to be positions of the silicon atom in a perfect structure with the same volume, but without the extra phosphorus atom.
 
   %\clearpage
 %\begin{figure}[H]
@@ -3261,7 +3377,6 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 %  \caption{Displacement $r(t)$ and distance to nearest lattice site $R$ for P atom at 1000 K.}
 %  \label{fig:split110_1000_occ}
 %\end{figure}
-
 
 
   %\subfigure[Relaxed final structure. Note: along {[$1\overline{11}$]} direction.]{
@@ -3278,10 +3393,36 @@ At low temperatures, the P atom is more or less trapped between the neighbour la
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Here the hexagonal position is seen as a transition state(?). 
-The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
-with femtosecond resolution.
+Figure \ref{fig:example2} shows some snapshots and plots from a trajectory at 1300~K.
+Here, phosphorus starts in a hexagonal position (fig. \ref{fig:cartoon2.1}), 
+but immediately (in less than 200~fs) enters a \spl{110}-like position (fig. \ref{fig:cartoon2.2}).
+This is typical for the trajectories that started from the hexagonal configuration.
+Interestingly, some of the Si-P-Si dynamic seen in the previous example, can also be seen here during the first 5~ps, indicating
+that this type of dynamics is not an effect of the initial structure. 
+During this timespan, the mean angle for the Si-P-Si structure is about \ang{115}.
 
+After 5~ps, the P atom makes a very short visit to lattice site 1 before returning to a rotated \spl{110}-like configuration.
+At 9~ps it approaches the Si atom at lattice site 2, and effectively changes place with it, 
+through a process that involves many steps and takes about 10~ps.
+In the lattice site distance plot in fig. \ref{fig:hexagonal_1300_2_occ} it is seen that the P atom first enters the lattice site at about 12~ps
+(fig. \ref{fig:cartoon2.3}), but 
+then retracts. This is part of the process where P and Si change places.
+At about 18~ps, the change of places is complete, and the P atom can diffuse further in the same direction.
+
+I will not attempt to describe the remainder of the trajectory, since the dynamics is quite complex,  
+%with many different processes often going on at the same time,
+but I have included a snapshot showing a \spl{110}-like configuration (fig. \ref{fig:cartoon2.4}), which is seen all the time, 
+and also an intermediate hexagonal position (fig. \ref{fig:cartoon2.4}), 
+which the P atom rapidly passes through from one site to another, just as in the previous example.
+
+It should perhaps be stressed that these snapshots are just snapshots, 
+and should thus not be taken as particularly representative for phosphorus diffusion in silicon in general.
+Studying single trajectories may provide some intuitive familiarity with the system, 
+but with such complex dynamics there is also inherent a great danger of seeing what you expect to see.
+
+%Here the hexagonal position is seen as a transition state(?). 
+%The hexagonal position is not stable though, and its only visible in the nearest neighbours plots
+%with femtosecond resolution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -3292,15 +3433,17 @@ with femtosecond resolution.
 %Since j trajectories $\vec{r}(t)$ are the 
 %Since trajectories are not so often depicted, even in books on molecular dynamics, I've chosen to include two pictures showing what the atomic motion looks like.
 
-The lowest temperature for which the Si$_{64}$P system melted in our simulations was \SI{1600}{\kelvin} (\SI{1330}{\celsius}), making this an upper limit for the melting point of the system. 
+The lowest temperature at which the system melted was \SI{1600}{\kelvin} (\SI{1330}{\celsius}), making this an upper limit for the melting point of the system. 
 It is likely that the melting point is lower though, since a system near its melting point can remain in a metastable state for a long time, even on a macroscopic timescale.
-That no melting was seen at \SI{1550}{\kelvin} may be due to the temperature being below the melting point, or due to metastability.
+That no melting was seen at \SI{1550}{\kelvin} may be due to the temperature being below the melting point, 
+or just as well due to metastability.
 
 Figure \ref{fig:dancea} shows an example of a melted system at 1600 K; the lines are 20 ps trajectories of the 65 atoms in the system, starting after the system melted from its original crystalline state. 
-It is evident that no long scale order is present, and to be sure the lattice order parameter \eqref{eq:lattice_order_parameter} is $\sim 0.1$. If we were to follow a single atom on its journey, however, we would find some local order that can be revealed from e.g. the radial pair distribution function, discussed in section \ref{sec:pair-distribution} below.
+It is evident that no long scale order is present, and to be sure the lattice order parameter \eqref{eq:lattice_order_parameter} is $\sim 0.1$. If we were to follow a single atom on its journey, however, we would find some local order, 
+that can be revealed from e.g. the radial pair distribution function, discussed in section \ref{sec:pair-distribution} below.
 
-The difference to the crystalline state, exemplified with 20 ps trajectories in \ref{fig:danceb}, is of course striking. 
-The example is from a simulation at 1700 K, the highest temperature for which the system remained in a crystalline state over a considerable time.
+The difference to the crystalline state, exemplified with 20 ps trajectories in fig. \ref{fig:danceb}, is of course striking. 
+The example is from a simulation at 1700 K, the highest temperature for which the system remained in a crystalline state for a considerable time.
 Yet, while the system depicted here could melt at any moment, the trajectories are not qualitatively different from the trajectories obtained at a temperature below the melting point. The ``nests'' are larger due to the higher kinetic energy, but they are still centred about points, and the points are part of a lattice, indicated by the grid for which the lattice order parameter \eqref{eq:lattice_order_parameter} is > 0.8, using $\vec{G}_{111}$. 
 
 \begin{figure}[htbp]
@@ -3345,11 +3488,11 @@ This can be seen in the radial pair distribution function $g(r)$, defined as the
 \begin{equation}
   \rho(r) = g(r) \rho
 \end{equation}
-For any given atom in a simulation, the function can be found from counting the number of atoms $N(r,r+\Delta r)$ within surrounding shells of thickness $\Delta r$, and the numbers averaged over the timespan of the simulation. 
+For any given atom in a simulation, the function can be found from counting the number of atoms $N(r,r+\Delta r)$ within surrounding shells of thickness $\Delta r$, and average the numbers over the timespan of the simulation. 
 The shell thickness $\Delta r$ must be chosen thin enough to capture the structure of the function, 
-while large enough to provide sufficiently large sampling populations for statistically reliable results. 
+while thick enough to provide sufficiently large sampling populations for statistically reliable results. 
 A value near 1/40 the average interatomic distance is often satisfactory.\cite[263]{Haile:1992} 
-We can write
+We have
 \begin{equation}
     g(r) = \frac{\langle N(r,r+\Delta r) \rangle}{\rho V(r,\Delta r)}
   \label{eq:gofr}
@@ -3373,14 +3516,13 @@ The function falls to zero for $r\to 0$ due to repulsive forces between atoms, a
   \label{fig:pcf}
 \end{figure}
 
-The upper part of fig. \ref{fig:pcf} shows $g(r)$ for the crystalline Si$_{64}$P system at the lowest and highest temperatures simulated.
-In an ideal, homogeneous liquid, the radial pair distribution function would be independent of the choice of atom atom, but the addition of phosphorus gives rise to a slight inhomogeneity and dependence of selection.
+The upper part of fig. \ref{fig:pcf} shows $g(r)$ for the crystalline system at the lowest and highest temperatures simulated.
+In an ideal, homogeneous liquid, the radial pair distribution function would be independent of the choice of atom, but the addition of phosphorus gives rise to a slight inhomogeneity and dependence of selection.
 To avoid selection bias, and improve statistics at the same time, the function was therefore averaged over all the 64 silicon atoms.
 At 700 K, the nearest neighbour peak is centred at \SI{2.36}{\angstrom}, 
-the second nearest neighbour peak at \SI{3.86}{\angstrom} and the 
+the second nearest neighbour peak at \SI{3.86}{\angstrom}, and the 
 third-nearest neighbour peak at \SI{4.55}{\angstrom}.\footnote{
-For simplicity, the function was only plotted to a radius \SI{5.94}{\angstrom}, half the side length of the unit cell.
-Methods for extending the function above such a radius is discussed in e.g. Alder 1968.}
+    For simplicity, the function was only plotted to a radius \SI{5.94}{\angstrom}, half the side length of the unit cell.}
 %Alder, B. J  and W. G Hoover, ``Numerical Statistical Mechanics'' in ''Physics of Simple Liquids, H. N. V. Temperley, J. S. Rowlinson,
 %and G. S. Rushbrooke, Eds., North-Holland, Amsterdam, 1968, Chapter 4
 At 1700 K, the distribution is more smoothed out due to larger vibrations, but otherwise the same structure can be seen.
@@ -3430,7 +3572,7 @@ In their MD studies, Stich \textit{et al.} used a density \SI{2.59}{\gram\per\ce
        \end{tablenotes}
      }
    \end{threeparttable}
-   \caption{Comparison of radial pair correlation function positions (units are Å)}
+   \caption{Comparison of silicon radial pair distribution function features (units are Å)}
    \label{tab:pcf}
 \end{table}
 
@@ -3441,14 +3583,14 @@ Coordination numbers are found from $g(r)$ by
 \end{equation}
 In particular, the integration carried out from zero to the first minimum, 
 gives what is known as the number of nearest neighbours $n_1(r') = n(0,r')$.\cite[7]{Waseda:1980}
-The process is illustrated in fig. \ref{fig:rdffirstcoord}.
-As expected, this yields approximately four nearest neighbours when integrating until the deep minimum found for a system in the crystalline state.
+The integration process is illustrated in fig. \ref{fig:rdffirstcoord}.
+As expected, this yields approximately four nearest neighbours when integrating to the deep minimum found for a system in the crystalline state.
 For the shallow minimum found in a liquid state, however, there is considerable disambiguity in how to evaluate the integral.
 In fig. \ref{fig:rdffirstcoord}, it was evaluated to 
 the first minimum in $g(r)r^2$, for which $n_1(3.04)=5.5$.
 Evaluated to the first minimum in $g(r)$ instead, we obtain $n_1(3.18) = 6.1$. 
 With this kind of sensitivity, it's hard to make much sense about the absolute numbers,
-but relatively, the numbers are lower than other values found in the literature, 
+but relatively, the numbers found here are lower than other values found in the literature, 
 table \ref{tab:pcf}, which may again be due to the differing density.
 
 %Instead of an abrupt cutoff, other methods have been, such as evaluating the peak as symmetric, integrating to the top of the peak only, and multiplying the value by two, (VAR DET i Alder:1968?)
@@ -3475,17 +3617,18 @@ A molecular dynamics simulation provides, in addition, the microscopic data that
 %but 
 %but an interesting aspect of molecular dynamics is that 
 %it also provides the dynamic data underlying the function.
-In fig. \ref{fig:nn_melting}, the distance between a silicon atom and its 16 nearest neighbours (4 in `first shell', 12 in `second shell') is plotted for each of the 64 silicon atoms, with each distance plotted as a small point.
+In fig. \ref{fig:nn_melting}, the distance between a silicon atom and its 16 nearest neighbours (4 in `first shell', 12 in `second shell') is plotted for each of the 64 silicon atoms, with each distance plotted as a small dot.
 The data is from a 50~ps simulation at 1600~K, for which the system remained crystalline for about 30~ps.
-It can be seen that the first `band', arising from the four nearest neighbours, is somewhat preserved upon melting. 
+It can be seen that the first `band' (in black), arising from the four nearest neighbours, is somewhat preserved upon melting. 
 This is of course the first peak in the radial pair distribution function.
-The disambuigity in defining the integration limit in \eqref{eq:coordno}, discussed above, is also clear. 
-The 12 second nearest neighbours in the crystalline state are distributed quite evenly in the liquid state.
+The disambuigity in defining the integration limit in \eqref{eq:coordno}, discussed above, is also made clear here.
+%since the 12 second nearest neighbours in the crystalline state are seen to be distributed quite evenly in the liquid state.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=10cm]{figs/tetrahedral_1600_neighboursdst_atom_all_nosmooth.png}
-  \caption{Nearest neighbour distance for the 16 nearest neighbours, for each of the 64 silicon atoms.
+  \caption{Nearest neighbour distance for the 16 nearest neighbours, for each of the 64 silicon atoms,
+      with black dots for the nearest 4 atoms, and blue dots for the next 12.
       From a simulation at $T=\SI{1600}{\kelvin}$ which melted at $\sim$ 30~ps.
       Average distances are drawn as lines at the edges only.
   }
@@ -3499,7 +3642,9 @@ The 12 second nearest neighbours in the crystalline state are distributed quite 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Table \ref{tab:displacements} lists phosphorus and silicon mean displacements 
-$\langle\Delta r\rangle = \left\langle\sqrt{\Delta r^2}\right\rangle$ and diffusivities $D = \left\langle\Delta r^2\right\rangle / 6t$, 
+$\langle\Delta r\rangle = \left\langle\sqrt{\Delta r^2}\right\rangle$ 
+and diffusivities 
+$D = \left\langle\Delta r^2\right\rangle / 6t$, 
 for all the simulations carried out.
 The angle brackets indicate averages over atoms of the same type (1 for phoshorus, 64 for silicon), 
 $\Delta r^2 = [\vec{r}(t) - \vec{r}(0)]^2$ are mean square displacements,
@@ -3614,34 +3759,33 @@ Temp (K) & $t$ (ps) & $\Delta r_{\text{P}}$ (Å) & $\langle\Delta r_{\text{Si}}\
         1700 & 19.8  &  1.3 &  0.6 &  1.32 &  1.03 \\
     \bottomrule
   \end{tabular}
-  \caption{Mean displacements (in Ångstrøm) and diffusion coefficients (in \si{\centi\metre\squared\per\second}) 
+  \caption{Mean displacements and diffusion coefficients  
     for phosphorus (P) and silicon (Si) in the simulations carried out. 
-    The times $t$ are the total times of each simulation, or the time until the system melted (indicated by *).
+    The times $t$ are the durations of each simulation, or the duration the system remained crystalline 
+    (systems that melted are indicated by *).
     %The first picosecond has been removed from all simulations as equilibration time.
     }
   \label{tab:displacements}
 \end{table}
 
-There are several issues with calculating diffusivities from the simulation data.
+There are several issues with calculating diffusivities from the simulation data shown in the above table.
 One is the small magnitudes of the displacements. 
-With phosphorus starting in a interstitial site, a displacement of $\sim \SI{2.3}{\angstrom}$ 
+With phosphorus starting in an interstitial site, a displacement of $\sim \SI{2.3}{\angstrom}$ 
 constitutes only a movement from the interstitial site to the neighbouring lattice site 
 (see fig. \ref{fig:interstitial_positions}). 
 Such a displacement, which was the largest displacement that took place in many of the simulations, 
 cannot by itself be related to macroscopic diffusion.
+
 Related to this issue, is the issue that the relation $D = \Delta r^2 / 6t$ requires $r^2(t)$ to be linear,
 but with few jumps taking place, $r^2(t)$ is generally not very linear.
 Fig. \ref{fig:r2p} illustrates this, showing a quite representative simulation, where phosphorus 
 first jumps from the initial interstitial site to the neighbouring lattice site, and then later to another lattice site.
-While a linear fit can be made, the slope will depend quite strongly on the (random) choice of endpoint. 
+While a linear fit can be made, the slope depends quite strongly on the (random) choice of endpoint. 
 If the simulation for instance had ended after 50~ps, not after 60~ps, the slope would have been steeper.
 Several more jumps would be needed to reliably assign $D$ from $\langle r^2 (t) \rangle$.
 
-The statistics for silicon are better, since the jump count accumulate over all the 64 atoms, see fig. \ref{fig:r2si}.
-This is why calculating the self-diffusion coefficient of silicon is a more tractable problem than calculating the diffusion coefficient of a dopant.
-As seen in the Arrhenius plot in fig. \ref{fig:arrhenius}, the least square fit for the silicon diffusivities is better than for phosphorus diffusivities.
-Yet, neither fit is close to acceptable, so to reliably extract diffusion parameters, 
-it is clear that longer simulations, or more simulations at each temperature, would be needed.
+As seen in fig. \ref{fig:r2si}, the statistics for silicon is better, since the diffusion accumulates over all the 64 atoms.
+This is why calculating the self-diffusion coefficient is a more tractable problem than calculating the diffusion coefficient of a dopant.
 
 \begin{figure}[htbp]
   \centering
@@ -3658,11 +3802,20 @@ it is clear that longer simulations, or more simulations at each temperature, wo
   \label{fig:r2examples}
 \end{figure}
 
+Figure \ref{fig:arrhenius} is an Arrhenius plot with the diffusivities from table \ref{tab:displacements} 
+plotted on a log scale as a function of the inverse temperature.
+The least square fit for the silicon diffusivities is better than the fit for the phosphorus diffusivities, due to the better statistics.
+From the fits, an activation energy of 0.17~eV was found for phosphorus, and 0.58~eV for silicon. 
+The values are not terribly far off values reported in the literature,
+but the fits are not particularly good, 
+and it is clear that longer simulations, or more simulations at each temperature, would be needed
+to somehow reliably determine migration energies.
+
 \begin{figure}[htp]
   \centering
   \includegraphics[width=8cm]{figs/arrhenius}
   \caption{Arrhenius plot of diffusivities of phosphorus and silicon, with attempted least square fits. 
-      Pearson's correlation coefficient is -0.36 for phosphorus and -0.79 for silicon.
+      Pearson's correlation coefficient is $-0.36$ for phosphorus and $-0.79$ for silicon.
       From the slopes of the fitted lines, the activation energy is 0.17~eV for phosphorus and 0.58~eV for silicon.
   }
   \label{fig:arrhenius}
@@ -3684,44 +3837,123 @@ it is clear that longer simulations, or more simulations at each temperature, wo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Jump frequencies}
+\section{Jump analysis}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The concept of jumps was introduced in section \ref{sec:AtomisticPicture}. 
-With the phosphorus displacements listed in the previous section, it could also be interesting to extract the number of jumps from the data.
+Molecular dynamics provides very detailed information about the movements of the simulated atoms,
+but the quite chaotic motion that results, especially at temperatures close to the melting point, can be hard to interpret directly. 
+An attempt was therefore made to analyse the data in terms of atomic jumps between lattice sites.
+To do this, we must first define what is meant by an atom sitting at a lattice site.
 
-The jump from one lattice site to another being an activated process, 
+In the lattice site distance plots \ref{fig:hexagonal_1300_2_occ} and \ref{fig:split110_1000_occ} for the example trajectories in section \ref{sec:trajectories},
+we calculated the distance between an atom and its nearest lattice site, and the nearest site was identified by an index.
+In doing this, we calculated the distance between the given atom and all the 64 sites in the ideal silicon lattice, 
+and corrected for drift using the method described in section \ref{sec:drift}.
 
-From a quick look on the simulated trajectories, it is apparent that the number of jumps is too low for good statistics to emerge from them.
-An attempt was still made to estimate jump frequencies as a function of temperature, to see if some trends emerged or just randomness.\footnote{
-Life at the microscopic level? Heisenberg}
+Having obtained the distance to the nearest lattice site, we must define some threshold for what it means for an atom to sit on a lattice site.
+Figure \ref{fig:distsite1400} shows an example result from an automated procedure for identifying when the atom sits at a lattice site with threshold \SI{0.5}{\angstrom}, and also for identifying melting using the translational order parameter. 
+Using this procedure, figure \ref{fig:timelattsite} shows the time the P atom spends at lattice sites in all the simulations using the given threshold.
 
-From textbook solid state physics, and from monte carlo simulations alike, we are accustomed with the picture of a single atom jumping from one lattice site to another. 
-While such idealisations are what makes physics possible and useful, molecular dynamics provides us with a continuous picture to which the discrete jump does not fit in naturally. 
-We have to define it.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=8cm]{../notur/hipersol/si-pi/si64/hexagonal_1600/hexagonal_1600_dist_from_lattice.pdf}
+  \caption{
+      Distance to the nearest lattice site for the P atom in a simulation at $T=\SI{1400}{\kelvin}$,
+      with shaded (yellow) regions indicating a distance less than the threshold distance (0.5~Å).
+      The nearest lattice site is identified by an index. The shaded (red) region to the right indicates melting, and should be excluded from analysis.
+  }
+  \label{fig:distsite1400}
+\end{figure}
 
-First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
-To be sure, we monitor the stability of the lattice using the translational lattice order parameter \eqref{eq:lattice_order_parameter}. From the discussion in the accompanying section \ref{sec:translational-order}, we also have a means to remove lattice drift.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=8cm]{figs/time_at_lattice.pdf}
+  \caption{Average percentage of the simulation time the P atom spends at lattice sites (threshold 0.5~Å).
+  }
+  \label{fig:timelattsite}
+\end{figure}
 
-An atom A is defined to \emph{sit} on a lattice site X when (a) X has been the nearest lattice site to A for more than $t_{\text{min}}$ ps, and (b) the distance between X and A has been less than $x_{\text{max}}$ (not necessarily for any long time). Having defined what it means to \emph{sit} on a lattice site, an atom \emph{jumps} simply when it changes from sitting at one site to another.
+More interesting perhaps, we can find the amount of time $\tau$ the P atom remains in an interstitial position,
+before moving to a substitutional site, kicking out a Si atom.
+This has been tabulated in table \ref{tab:interstitial-to-substitutional}.
+At the lowest temperatures, phosphorus remains in interstitial positions for the whole simulation, 
+but at temperatures of 900 K and higher, 
+phosphorus almost always enters a lattice site during the timespan of the simulation.
+This is an activated process, so an attempt was made to determine the activation energy from the slope of $1/\langle\tau\rangle$ as a function of $1/k_BT$, 
+shown in fig. \ref{fig:interstitial-to-substitutional}, leaving out the simulations where the P atom remained in interstitial positions during the entire simulation,
+and also the simulation at 1450~K, since only one simulation was carried out at this temperature.
+The slope of the fitted line corresponds to an activation energy of 0.26~eV, 
+but since simulations started from different initial configurations, 
+its possible that the value is a mean value for slightly different mechanisms.
 
-Two different attemps at calculating the jump frequencies of the single phosphorus atom were made.
+If a reliable value could be obtained, using data from more simulations with the same initial configuration, 
+an interesting next question would be how the value compares to the corresponding time for a silicon atom.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{llllllll}\toprule
+      $T$ [K] & $\tau$ [ps] &
+      $T$ [K] & $\tau$ [ps] &
+      $T$ [K] & $\tau$ [ps] &
+      $T$ [K] & $\tau$ [ps] \\\midrule
+        700 & > 30 & 1300 & > 30 & 1500 & 13.25 & 1600 & 6.35\\
+        800 & > 30 & 1400 & 3.75 & 1500 & 4.60 & 1600 & 6.70\\
+        900 & 22.65 & 1400 & 37.90 & 1500 & 7.90 & 1650 & 4.35\\
+        1000 & 19.35 & 1400 & 4.50 & 1550 & 6.00 & 1700 & 1.15\\
+        1100 & > 30 & 1400 & 6.10 & 1550 & 6.85 & 1700 & 10.30\\
+        1200 & 14.35 & 1400 & 9.60 & 1600 & 2.45 &  & \\
+        1300 & 12.75 & 1450 & 2.30 & 1600 & 5.80 &  & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Time $\tau$ in ps before the P atom jumps from the initial interstitial site to a substitutional site.}
+  \label{tab:interstitial-to-substitutional}
+\end{table}
+
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=8cm]{figs/firstsite_log.pdf}
+  \caption{Arrhenius plot for interstitial to lattice site jump
+  The Pearson correlation coefficient is $-0.92$.}
+  \label{fig:interstitial-to-substitutional}
+\end{figure}
+
+
+%An attempt was made at quantifying the continuous trajectory into discrete jump, as introduced in .
+%In order to do this, we must define what is meant by a lattice site, and what is meant by a jump.
+%From molecular dynamics data, this is not necessarily obvious.
+
+%With the phosphorus displacements listed in the previous section, it could also be interesting to the number of jumps from the data.
+
+%The jump from one lattice site to another being an activated process, 
+
+%From a quick look on the simulated trajectories, it is apparent that the number of jumps is too low for good statistics to emerge from them.
+%An attempt was still made to estimate jump frequencies as a function of temperature, to see if some trends emerged or just randomness.\footnote{
+%Life at the microscopic level? Heisenberg}
+
+%From textbook solid state physics, and from monte carlo simulations alike, we are accustomed with the picture of a single atom jumping from one lattice site to another. 
+%While such idealisations are what makes physics possible and useful, molecular dynamics provides us with a continuous picture to which the discrete jump does not fit in naturally. 
+%We have to define it.
+
+%First, we need a reference point of frame, which is the lattice. The static lattice points are the fixed points, around which we assume the atoms vibrate.
+%To be sure, we monitor the stability of the lattice using the translational lattice order parameter \eqref{eq:lattice_order_parameter}. From the discussion in the accompanying section \ref{sec:translational-order}, we also have a means to remove lattice drift.
+
+Finally, it was attempted to quantify the total number of jumps in the simulations. 
+This turned out not to be very straightforward though.
+
+Here, an atom A is defined to \emph{sit} on a lattice site X when (a) X has been the nearest lattice site to A for more than $t_{\text{min}}$ ps, and (b) the distance between X and A has been less than $x_{\text{max}}$ (not necessarily for any long time). 
+Having defined what it means to \emph{sit} on a lattice site, an atom \emph{jumps} simply when it changes from sitting at one site to another.
+
+Two different attempts were carried out for calculating the number of jumps for the single phosphorus atom.
 In the first ``liberal'' attempt, the distance criterion is ignored altogether, but the time criterion is set to 0.3~ps.
 This should suffice to avoid counting particularly long vibrations as jumps, but still be short enough to avoid missing jumps if multiple jumps are made in series. 
 In the second ``conservative'' attempt, a distance criterion of 0.3~Å is imposed. This should filter out most cases where the atom jumps from one interstitial position to another. 
 
-Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs, plotted in figure \ref{fig:jumpfreq}. \comment{Logplott og 1/T}
+Table \ref{tab:jumps} shows the results of applying the two attempts for all the runs, illustrating that very different results are obtained 
+with different jump definitions. 
 
-Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=10cm]{figs/split110_1400_dist_from_lattice.pdf}
-  \caption{distsite1400}
-  \label{fig:distsite1400}
-\end{figure}
-
+%Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
 
 \begin{table}[htbp]
   \centering
@@ -3768,231 +4000,233 @@ Compare with eq. \eqref{eq:jumpfreq-est} and fig. \ref{fig:jumpfreq-est}.
     \end{tablenotes}
     }
   \end{threeparttable}
-  \caption{Jump frequencies at different temperatures}
+  \caption{Jumps and jump frequencies of phosphorus in the simulations carried out.}
   \label{tab:jumps}
 \end{table}
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=12cm]{../notur/hipersol/si-pi/si64/find_jump_frequencies.pdf}
-  \caption{Jump frequencies as a function of temperature}
-  \label{fig:jumpfreq}
-\end{figure}
+%\begin{figure}[htbp]
+%  \centering
+%  \includegraphics[width=12cm]{../notur/hipersol/si-pi/si64/find_jump_frequencies.pdf}
+%  \caption{Jump frequencies as a function of temperature}
+%  \label{fig:jumpfreq}
+%\end{figure}
 
-Another interesting question is how long phosphorus remains in the interstitial position before moving to a substitutional site and kicking out a silicon atom.
-This has been tabulated in table \ref{tab:interstitial-to-substitutional}.
-At low temperatures, phosphorus remain in interstitial positions for the whole simulation, but at temperatures of 900 K and higher, 
-phosphorus almost always enters a lattice site during the simulation, kicking out a silicon atom.
-This is an activated process, so an attempt was made to determine the activation energy from the slope of $1/t$ as a function of $1/k_BT$, 
-shown in fig. \ref{fig:interstitial-to-substitutional}, leaving out the simulations in which no such process took place.
-The slope of the fitted line corresponds to an activation energy of 0.3~eV, but the fit is much too poor to be reliable (The Pearson correlation coefficient is $-0.58$).
-If a reliable fit could be obtained, using data from more simulations, an interesting next question would be how the value compares to the time for a silicon atom. Is phosphorus more or less stable in an interstitial position than is a silicon self-interstitial?
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 \clearpage
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{llllllll}\toprule
-      $T$ [K] & $t$ [ps] &
-      $T$ [K] & $t$ [ps] &
-      $T$ [K] & $t$ [ps] &
-      $T$ [K] & $t$ [ps] \\\midrule
-        700 & > 30 & 1300 & > 30 & 1500 & 13.25 & 1600 & 6.35\\
-        800 & > 30 & 1400 & 3.75 & 1500 & 4.60 & 1600 & 6.70\\
-        900 & 22.65 & 1400 & 37.90 & 1500 & 7.90 & 1650 & 4.35\\
-        1000 & 19.35 & 1400 & 4.50 & 1550 & 6.00 & 1700 & 1.15\\
-        1100 & > 30 & 1400 & 6.10 & 1550 & 6.85 & 1700 & 10.30\\
-        1200 & 14.35 & 1400 & 9.60 & 1600 & 2.45 &  & \\
-        1300 & 12.75 & 1450 & 2.30 & 1600 & 5.80 &  & \\
-    \bottomrule
-  \end{tabular}
-  \caption{Time $t$ in ps before the P atom enters a lattice site, for the simulations carried out.}
-  \label{tab:interstitial-to-substitutional}
-\end{table}
-
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=8cm]{figs/firstsite_log.pdf}
-  \caption{Arrhenius plot for interstitial to lattice site jump}
-  \label{fig:interstitial-to-substitutional}
-\end{figure}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Occupancies, etc.}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=12cm]{figs/time_at_lattice_sites.pdf}
-  \caption{Time at lattice site (need to stop at melting)}
-  \label{fig:timelattsite}
-\end{figure}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\section{Discussion}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 \section{Final discussion}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+The use of \textit{ab initio} molecular dynamics for studying systems in the solid state is still quite rare, due to the high computational cost involved.
+This work was started without knowing \textit{a priori} how long time spans could be simulated, 
+nor how long time spans would be needed to provide reliable statistical results.
+Use of new PAW potentials and parameter optimisation showed that only 13 CPU-seconds was needed per ionic step for a 65-atom system.
+This led to the generation of about one nanosecond of simulation data using a quite modest amount of computation time.
 
-Further work:
-- Liquid silicion metallic\cite{Glazov:1969}, yet with coordination numbers much lower than simple metallic liquids.
- studies on semiconductor-metal transition?
-- longer runs, more atoms
+Yet a good estimate of the migration energy could not be obtained.
+This might be due to simulation times being too short, but perhaps equally well
+because it's not really possible to sample just one mechanism in molecular dynamics. 
+Once the P atom makes a move to a substitutional site, we are generally not sampling the migration mechanism anymore.
 
+Molecular dynamics is therefore best suited for finding the overall diffusion parameters, the same found from experiment,
+but an activation energy of >~3~eV is out of reach when using an \textit{ab initio} potential, at least for diffusion of dopants,
+where a large number of atoms needs to be simulated, while only data from a single atom (the dopant) can be used for analysis.
+
+Simulating the overall diffusion process should, however, be perfectly possible using an empirical potential.
+A parametrisation for phosphorus in silicon does probably not exist, but once such a parametrisation is developed (or found), 
+for instance on the Tersoff form, the simulation data obtained in this work could be used to test many aspects of the potential.
+
+Considered the difficulty of isolating a single mechanism in a molecular dynamics, the analysis of 
+the initial interstitial-to-substitutional time $\tau$ appeared to be quite successful. 
+With a more carefully designed setup (equal initial structures) and more, but shorter simulations per temperature, 
+it is possible that similar analyses could provide reliable jump frequencies or activation energies for 
+some jump mechanisms. This could in turn be useful as input to Kinetic Monte Carlo simulations.
+
+%averages over several shorter simulations with equal initial structures is likely
+%to be a better way to study individual mechanisms.
+%Rather than time-averages over a few, long simulations, 
+
+
+%perhaps combined with automatic post-filtering of only the mechanism of interest.
+
+%It is that similar analyses, with carefully controlled initial conditions, averaged over many trajectories
+
+%is generally more successful than an analysis involving 
+
+%approaches like the analysis of the time $\tau$ it took for the P atom to move from an interstitial site to a substitutional site
+
+%Time τ in ps before the P atom enters a lattice site.
+
+%many different mechanisms at play during the simulations in 
+
+%but not enough to estimate migration energy
+%hard with dopants due to low conc. simulating 65 atoms, but only using data from 1
+%way to go forward to be to use the data to fit an empirical potential
+%also difficult with many different mechanisms into play
+%in some sense one of the more successful approach was the estimation of the activatino energy for int->si jump.
+%Such study could be carried out in more well-defined manner: same initial structures,
+%trying to distinguish different mechanisms
+%generated data to kmd
+
+%Determining the overall migration energy of phosphorus was not successful
+%Estimating diffusion of dopants using \texit{ab intio} molecular dynamics 
+
+%All calculations were carried out using a 64-atom silicon unit cell with an extra phosphorus atom added. 
+%When a name is necessary, the system will be referred to as Si$_{64}$P.
+
+%One nanosecond 
+%1 nanosek
+%A total of about 1 
+
+%Further work:
+%- Liquid silicion metallic\cite{Glazov:1969}, yet with coordination numbers much lower than simple metallic liquids.
+% studies on semiconductor-metal transition?
+%- longer runs, more atoms
 
 \printbibliography
 
 \appendix
-\chapter{List of selected symbols used}
-  Mainly used in sections on DFT:
+%\chapter{List of selected symbols used}
+%  Mainly used in sections on DFT:
 
-  \begin{tabular}{ll}
-    $\vec{r}$ & Spatial coordinates, $\vec{r}\in\mathbb{R}^3$ \\
-    $\vec{x}$ & Spin coordinates, $\vec{x}=(\vec{r},\zeta)$ with $\zeta\in\pm 1$ \\
-    $\Psi$  & Ground state many-body wavefunction \\
-    $E_0$   & Ground state electronic energy (endre til $E_e$ ? ) \\
-    $\ksorb_k(\vec{x})$  & Single-particle Kohn-Sham orbital \\
-    $\rho(\vec{r})$  & Ground state electron density \\
-	$n$		& Conduction band electron density \\
-	$n_0$	& Equilibrium conduction band electron density \\
-	$p$		& Valence band hole density \\
-	$p_0$	& Equilibrium valence band hole density \\
-	$m^*$	& Effective mass \\
-	$R_s$	& Sheet resistance \\
-	$D(E)$	& Density of $k$-states \\
-	$d(E)$	& Density of electronic states \\
-    $H_e$   & Electronic Hamiltonian \\
-    $H_n$   & Nuclear Hamiltonian \\
-    $E_{\text{mad}}$ & Madelung energy \\
-    $E$     & Total energy of the system, $E = E_k + E_v$ \\
-    $E_k$   & Kinetic energy for the nuclei \\
-    $E_v$   & Potential energy for the nuclei, $E_v = E_e + E_{\text{mad}}$. \\
-    $N$     & The number of electrons \\
-    $M$     & The number of atoms / ions
-  \end{tabular}
+%  \begin{tabular}{ll}
+%    $\vec{r}$ & Spatial coordinates, $\vec{r}\in\mathbb{R}^3$ \\
+%    $\vec{x}$ & Spin coordinates, $\vec{x}=(\vec{r},\zeta)$ with $\zeta\in\pm 1$ \\
+%    $\Psi$  & Ground state many-body wavefunction \\
+%    $E_0$   & Ground state electronic energy (endre til $E_e$ ? ) \\
+%    $\ksorb_k(\vec{x})$  & Single-particle Kohn-Sham orbital \\
+%    $\rho(\vec{r})$  & Ground state electron density \\
+%    $n$		& Conduction band electron density \\
+%    $n_0$	& Equilibrium conduction band electron density \\
+%    $p$		& Valence band hole density \\
+%    $p_0$	& Equilibrium valence band hole density \\
+%    $m^*$	& Effective mass \\
+%    $R_s$	& Sheet resistance \\
+%    $D(E)$	& Density of $k$-states \\
+%    $d(E)$	& Density of electronic states \\
+%    $H_e$   & Electronic Hamiltonian \\
+%    $H_n$   & Nuclear Hamiltonian \\
+%    $E_{\text{mad}}$ & Madelung energy \\
+%    $E$     & Total energy, $E = T + V$ \\
+%    $T$     & Kinetic energy \\
+%    $V$     & Potential energy \\ % for the nuclei, $E_v = E_e + E_{\text{mad}}$. \\
+%    $N$     & The number of electrons \\
+%    $M$     & The number of atoms / ions
+%  \end{tabular}
 
-  Mainly used in sections on statistical mechanics:
+%  Mainly used in sections on statistical mechanics:
   
-  \begin{tabular}{ll}
-    $T$     & Thermodynamic temperature \\
-    $T(t)$  & Instantaneous temperature \\
-    $\langle A \rangle$ & Ensemble average or expectation value of $A$\\
-    $\bar{A}$ & Time average of $A$ \\
-    $q_i$   & Generalised position coordinate \\
-    $p_i$   & Generalised momentum coordinate \\
-    $\nvec{x}$ & Phase space vector with $6N$ components $x_i=\{q_i,p_i\}$
-  \end{tabular}
+%  \begin{tabular}{ll}
+%    $N$     & The number of atoms \\
+%    $T$     & Thermodynamic temperature \\
+%    $\mathcal{T}(t)$  & Instantaneous temperature \\
+%    $\langle A \rangle$ & Ensemble average or expectation value of $A$\\
+%    $\bar{A}$ & Time average of $A$ \\
+%    $q_i$   & Generalised position coordinate \\
+%    $p_i$   & Generalised momentum coordinate \\
+%    $\nvec{x}$ & Phase space vector with $6N$ components $x_i=\{q_i,p_i\}$
+%  \end{tabular}
 
-\chapter{The plane wave basis in $k$-space}\label{app:pwbasis}
+%\chapter{The plane wave basis in $k$-space}\label{app:pwbasis}
 
-\begin{equation}
-    H_{\text{KS}} |n\vec{k}\rangle - \varepsilon_n|n\vec{k}\rangle = 0
-\end{equation}
-Expanding the orbitals,
-\begin{equation}
-    |n\vec{k}\rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} |\vec{k}+\vec{G}\rangle\qquad\text{where}\qquad c_{n\vec{k}\vec{G}} = \langle \vec{k}+\vec{G}|n\vec{k}\rangle
-\end{equation}
-%and in real space,
 %\begin{equation}
-%    \phi_{n\vec{k}}(\vec{r}) = \langle\vec{r}|n\vec{k}\rangle = \frac{1}{\sqrt{\omega}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im(\vec{k}+\vec{G})\cdot\vec{r}}.
+%    H_{\text{KS}} |n\vec{k}\rangle - \varepsilon_n|n\vec{k}\rangle = 0
 %\end{equation}
-makes K.s eqn
-\begin{equation}
-  \sum_{\vec{G}} \left(H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n |\vec{k}+\vec{G}\rangle \right) c_{n\vec{k}\vec{G}} = 0
-\end{equation}
-Left mltpl. by $\langle \vec{k}+\vec{G}'|$, we get
-\begin{align}
-    \sum_{\vec{G}} \left( \langle \vec{k}+\vec{G}'| H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n \langle \vec{k}+\vec{G}'|\vec{k}+\vec{G}\rangle \right)c_{n\vec{k}\vec{G}} &= 0 \\
-    \sum_{\vec{G}} \left( H_{\vec{G}\vec{G}'} - \varepsilon_n S_{\vec{G}\vec{G}'} \right)c_{n\vec{k}\vec{G}} &= 0
-\end{align}
-Since the PWs are orthonormal, the overlap elements $S_{\vec{G}\vec{G}'} = \delta_{\vec{G}\vec{G}'}$.
-Remembering that $H_{\text{KS}} = t + V_{\text{ext}} + V_{\text{int}} + V_{\text{xc}}$,
-we first notice that the kinetic term is diagonal in this basis,
-\begin{equation}
-    T_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'| -\frac12\nabla^2 |\vec{k}+\vec{G}\rangle = -\frac12|\vec{k}+\vec{G}|^2 \delta_{\vec{G}\vec{G}'},
-\end{equation}
-a great advantage of using a PW basis.
+%Expanding the orbitals,
+%\begin{equation}
+%    |n\vec{k}\rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}} |\vec{k}+\vec{G}\rangle\qquad\text{where}\qquad c_{n\vec{k}\vec{G}} = \langle \vec{k}+\vec{G}|n\vec{k}\rangle
+%\end{equation}
+%%and in real space,
+%%\begin{equation}
+%%    \phi_{n\vec{k}}(\vec{r}) = \langle\vec{r}|n\vec{k}\rangle = \frac{1}{\sqrt{\omega}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}} \e^{\im(\vec{k}+\vec{G})\cdot\vec{r}}.
+%%\end{equation}
+%makes K.s eqn
+%\begin{equation}
+%  \sum_{\vec{G}} \left(H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n |\vec{k}+\vec{G}\rangle \right) c_{n\vec{k}\vec{G}} = 0
+%\end{equation}
+%Left mltpl. by $\langle \vec{k}+\vec{G}'|$, we get
+%\begin{align}
+%    \sum_{\vec{G}} \left( \langle \vec{k}+\vec{G}'| H_{\text{KS}} |\vec{k}+\vec{G}\rangle - \varepsilon_n \langle \vec{k}+\vec{G}'|\vec{k}+\vec{G}\rangle \right)c_{n\vec{k}\vec{G}} &= 0 \\
+%    \sum_{\vec{G}} \left( H_{\vec{G}\vec{G}'} - \varepsilon_n S_{\vec{G}\vec{G}'} \right)c_{n\vec{k}\vec{G}} &= 0
+%\end{align}
+%Since the PWs are orthonormal, the overlap elements $S_{\vec{G}\vec{G}'} = \delta_{\vec{G}\vec{G}'}$.
+%Remembering that $H_{\text{KS}} = t + V_{\text{ext}} + V_{\text{int}} + V_{\text{xc}}$,
+%we first notice that the kinetic term is diagonal in this basis,
+%\begin{equation}
+%    T_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'| -\frac12\nabla^2 |\vec{k}+\vec{G}\rangle = -\frac12|\vec{k}+\vec{G}|^2 \delta_{\vec{G}\vec{G}'},
+%\end{equation}
+%a great advantage of using a PW basis.
 
----
+%---
 
 
-%The Hamiltonian elements $H_{\vec{G}\vec{G}'$ can be written as a sum of kinetic and potential terms
+%%The Hamiltonian elements $H_{\vec{G}\vec{G}'$ can be written as a sum of kinetic and potential terms
 
 
 
 
 
-A set of eigenfunctions $\varphi_n(\vec{r})$ with corresponding eigenvalues $\varepsilon_n$ is found from some one-particle Schrödinger equation
-\begin{equation}
-    \hat{H}\varphi_n(\vec{r}) = \varepsilon_n\varphi_n(\vec{r}),
-    \label{eq:ks1}
-\end{equation}
-with a Hamiltonian
-\begin{equation}
-    \hat{H} = -\frac12 \nabla^2 + V(\vec{r}) = -\frac12\nabla^2 + \sum_{\vec{G}} \mathcal{V}_{\vec{G}} \e^{\im\vec{G}\cdot\vec{r}},
-  \label{eq:hks1}
-\end{equation}
-where the potential $V(\vec{r})$, which may for instance be the Kohn-Sham potential $V_{\text{KS}}(\vec{r})$, is periodic in the lattice vectors $\vec{G}$, 
-having Fourier components
-\begin{equation}
-    \mathcal{V}_{\vec{G}} = \frac{1}{\Omega}\int_{\Omega} V(\vec{r}) \e^{\im \vec{G}\cdot\vec{r}} d\vec{r}
-\end{equation}
-with $\Omega$ being the Brillouin zone volume.
-Expanding the eigenfunctions in plane waves $|\vec{q}\rangle$,
-\begin{equation}
-    \varphi_n(\vec{r}) = \sum_{\vec{q}} c_{n\vec{q}}|\vec{q}\rangle,\qquad |\vec{q}\rangle = \frac{1}{\sqrt{\Omega}} \e^{\im\vec{q}\cdot\vec{r}},
-    \label{eq:1porb}
-\end{equation}
-inserting them into \eqref{eq:ks1}, left-multiplying by $\langle\vec{q}'|$, and making use of the orthonormality $\langle \vec{q}'|\vec{q}\rangle = \delta_{\vec{q}'\vec{q}}$, we find the Schrödinger equation in Fourier space;
-\begin{equation}
-    \sum_{\vec{q}} c_{n\vec{q}} \langle\vec{q}'|\hat{H}|\vec{q}\rangle = \varepsilon_n c_{n\vec{q}'}
-    \label{eq:schrf}
-\end{equation}
-Defining $\vec{q}=\vec{k}+\vec{G}$ and $\vec{q}'=\vec{k}+\vec{G}'$, eigenfunctions with a definite $\vec{k}$ can be written
-\begin{equation}
-    \varphi_{n\vec{k}}(\vec{r}) = \e^{\im \vec{k}\cdot\vec{r}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{G} \rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{k}+\vec{G}\rangle,
-  \label{eq:psik}
-\end{equation}
-which inserted into the Schrodinger equation \eqref{eq:schrf} gives
-\begin{equation}
-    \sum_{\vec{G}} H_{\vec{G}\vec{G}'} c_{n\vec{k}\vec{G}}  = \varepsilon_n c_{n\vec{k}\vec{G}'}, \qquad H_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'|H_{ks}|\vec{k}+\vec{G}\rangle
-\end{equation}
-where the matrix elements are
-\begin{align}
-    \langle\vec{k}+\vec{G}'|\hat{H}|\vec{k}+\vec{G}\rangle &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \sum_{\vec{G}''} \mathcal{V}_{\vec{G}''} \delta_{\vec{G}',\vec{G''}+\vec{G}}\\
-    &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \mathcal{V}_{\vec{G}'-\vec{G}}
-\end{align}
+%A set of eigenfunctions $\varphi_n(\vec{r})$ with corresponding eigenvalues $\varepsilon_n$ is found from some one-particle Schrödinger equation
+%\begin{equation}
+%    \hat{H}\varphi_n(\vec{r}) = \varepsilon_n\varphi_n(\vec{r}),
+%    \label{eq:ks1}
+%\end{equation}
+%with a Hamiltonian
+%\begin{equation}
+%    \hat{H} = -\frac12 \nabla^2 + V(\vec{r}) = -\frac12\nabla^2 + \sum_{\vec{G}} \mathcal{V}_{\vec{G}} \e^{\im\vec{G}\cdot\vec{r}},
+%  \label{eq:hks1}
+%\end{equation}
+%where the potential $V(\vec{r})$, which may for instance be the Kohn-Sham potential $V_{\text{KS}}(\vec{r})$, is periodic in the lattice vectors $\vec{G}$, 
+%having Fourier components
+%\begin{equation}
+%    \mathcal{V}_{\vec{G}} = \frac{1}{\Omega}\int_{\Omega} V(\vec{r}) \e^{\im \vec{G}\cdot\vec{r}} d\vec{r}
+%\end{equation}
+%with $\Omega$ being the Brillouin zone volume.
+%Expanding the eigenfunctions in plane waves $|\vec{q}\rangle$,
+%\begin{equation}
+%    \varphi_n(\vec{r}) = \sum_{\vec{q}} c_{n\vec{q}}|\vec{q}\rangle,\qquad |\vec{q}\rangle = \frac{1}{\sqrt{\Omega}} \e^{\im\vec{q}\cdot\vec{r}},
+%    \label{eq:1porb}
+%\end{equation}
+%inserting them into \eqref{eq:ks1}, left-multiplying by $\langle\vec{q}'|$, and making use of the orthonormality $\langle \vec{q}'|\vec{q}\rangle = \delta_{\vec{q}'\vec{q}}$, we find the Schrödinger equation in Fourier space;
+%\begin{equation}
+%    \sum_{\vec{q}} c_{n\vec{q}} \langle\vec{q}'|\hat{H}|\vec{q}\rangle = \varepsilon_n c_{n\vec{q}'}
+%    \label{eq:schrf}
+%\end{equation}
+%Defining $\vec{q}=\vec{k}+\vec{G}$ and $\vec{q}'=\vec{k}+\vec{G}'$, eigenfunctions with a definite $\vec{k}$ can be written
+%\begin{equation}
+%    \varphi_{n\vec{k}}(\vec{r}) = \e^{\im \vec{k}\cdot\vec{r}} \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{G} \rangle = \sum_{\vec{G}} c_{n\vec{k}\vec{G}}|\vec{k}+\vec{G}\rangle,
+%  \label{eq:psik}
+%\end{equation}
+%which inserted into the Schrodinger equation \eqref{eq:schrf} gives
+%\begin{equation}
+%    \sum_{\vec{G}} H_{\vec{G}\vec{G}'} c_{n\vec{k}\vec{G}}  = \varepsilon_n c_{n\vec{k}\vec{G}'}, \qquad H_{\vec{G}\vec{G}'} = \langle \vec{k}+\vec{G}'|H_{ks}|\vec{k}+\vec{G}\rangle
+%\end{equation}
+%where the matrix elements are
+%\begin{align}
+%    \langle\vec{k}+\vec{G}'|\hat{H}|\vec{k}+\vec{G}\rangle &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \sum_{\vec{G}''} \mathcal{V}_{\vec{G}''} \delta_{\vec{G}',\vec{G''}+\vec{G}}\\
+%    &= \frac12|\vec{k}+\vec{G}|^2\delta_{\vec{G}\vec{G}'} + \mathcal{V}_{\vec{G}'-\vec{G}}
+%\end{align}
 
-The density of states is
-\begin{equation}
-    \text{DOS}(E) = \frac{1}{N_k}\sum_{n\vec{k}}\delta(\varepsilon_{n\vec{k}}-E) 
-\end{equation}
-and the electron density
-eqn
+%The density of states is
+%\begin{equation}
+%    \text{DOS}(E) = \frac{1}{N_k}\sum_{n\vec{k}}\delta(\varepsilon_{n\vec{k}}-E) 
+%\end{equation}
+%and the electron density
+%eqn
 
-The electron density is an average over $k$ points,
-\begin{equation}
-    \rho(\vec{r}) = \frac{1}{N_k}\sum_{n,\vec{k}} \omega_{\vec{k}} f(\varepsilon_{n\vec{k}}) \rho_{n\vec{k}}(\vec{r}),
-\end{equation}
-where $\omega_{\vec{k}}<1$ is the weight of a given $\vec{k}$ point,
-$f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} = \delta(\varepsilon-\varepsilon_{n\vec{k}})$ at $T=0$), and using \eqref{eq:psik},
+%The electron density is an average over $k$ points,
+%\begin{equation}
+%    \rho(\vec{r}) = \frac{1}{N_k}\sum_{n,\vec{k}} \omega_{\vec{k}} f(\varepsilon_{n\vec{k}}) \rho_{n\vec{k}}(\vec{r}),
+%\end{equation}
+%where $\omega_{\vec{k}}<1$ is the weight of a given $\vec{k}$ point,
+%$f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} = \delta(\varepsilon-\varepsilon_{n\vec{k}})$ at $T=0$), and using \eqref{eq:psik},
 
-\begin{equation}
-    \rho_{n\vec{k}}(\vec{r}) = |\varphi_{n\vec{k}}(\vec{r})|^2 = \sum_{\vec{G},\vec{G}'} c_{n\vec{k}\vec{G}'}^* c_{n\vec{k}\vec{G}} \langle \vec{k}+\vec{G}' | \vec{k}+\vec{G} \rangle = \sum_{\vec{G}} |c_{n\vec{k}\vec{G}}|^2 
-\end{equation}
-\comment{Siste m{\aa} sjekkes! Sammenlign med 12.29 i Martin. Noe ser ut til {\aa} v\ae re galt!}
+%\begin{equation}
+%    \rho_{n\vec{k}}(\vec{r}) = |\varphi_{n\vec{k}}(\vec{r})|^2 = \sum_{\vec{G},\vec{G}'} c_{n\vec{k}\vec{G}'}^* c_{n\vec{k}\vec{G}} \langle \vec{k}+\vec{G}' | \vec{k}+\vec{G} \rangle = \sum_{\vec{G}} |c_{n\vec{k}\vec{G}}|^2 
+%\end{equation}
+%\comment{Siste m{\aa} sjekkes! Sammenlign med 12.29 i Martin. Noe ser ut til {\aa} v\ae re galt!}
 
 
 
@@ -4001,76 +4235,92 @@ $f$ is the occupation function (such as the Fermi-Dirac function $f_{\text{FD}} 
 \section{VMD plugins}
 
 For visualisation purposes, the two programs {\vesta} (Visualization for Electronic and STructural Analysis) and {\vmd} (Visual Molecular Dynamics) have been used, both free for non-commercial use.
-As the name suggest, \vmd was developed for visualising trajectories, while {\vesta} only supports still structures.
+As the name suggest, {\vmd} was developed for visualising trajectories, while {\vesta} only supports still structures.
 But there are other major differences between the programs. While {\vmd} originates from the biophysics community, {\vesta} comes from the crystallographic community.
-{\vesta} is therefore better suited for viewing crystals, and I found that I especially missed a visualization of and alignment to crystal vectors in \vmd.
+{\vesta} is therefore better suited for viewing crystals, and I found that I especially missed a visualisation of, and alignment to, crystal vectors in \vmd.
 {\vmd} comes with embedded Tcl, so I wrote a plugin first mimicking {\vesta}'s Orientation dialogue, and then adding 
 display of crystal vectors, view vectors and some extras.
+The plugin is about 2000 codelines, includes a GUI and is quite usable.
 
-\url{https://github.com/danmichaelo/crystallography}
-The plugin is available to download using git
-\lstset{language=Bash}
-% Using read-only URL
-\begin{lstlisting}
-git clone git://github.com/danmichaelo/crystallography.git
-\end{lstlisting}
+In addition, two small plugins were developed, for introducing a cubic clipbox, which can later be rotated with the molecule,
+and a progressbar like the one shown in fig. \ref{fig:example1} and \ref{fig:example2},
+which can be useful when producing movies. 
 
-\section{Python packages}
+The plugins can be downloaded from
 
-How are we to monitor the bonding situation over time?
+\url{https://github.com/danmichaelo/crystallography} \\
+\url{https://github.com/danmichaelo/statusindicator}\\
+\url{https://github.com/danmichaelo/clipbox}
 
-An atom at a lattice site will in general have four nearest neighbours, each at a distance 2.37 Å.
-In fig. \ref{fig:nneighboursex}, the nearest neighbour distances for a given atom is plotted over time 
-at 1500 K.
-The left figure depicts the diffusing P-atom, while the right figure depicts a Si atom originally 4.05 Å 
-away from the P atom. 
-For a long time it remains on its site, but after 43 ps it is kicked away from its lattice site, 
-and at 49 ps it falls to rest at a new site.
+%\lstset{language=Bash}
+%% Using read-only URL
+%\begin{lstlisting}
+%git clone git://github.com/danmichaelo/crystallography.git
+%\end{lstlisting}
 
-\begin{lstlisting}
-from read_trajectory import read_trajectory
-from ?? import NearestNeighbours
-traj = read_trajectory(unwrap_pbcs = True)
-for i in range(65):
-    nn = NearestNeighbours(traj, atom=i)
-    nn.plot_to_file('neighboursdst_atom%02d.pdf' % i)
-\end{lstlisting}
+\section{Python package for working with trajectory data}
 
-\begin{figure}[htbp]
-  \centering
-    \subfloat[Phosphorus]{
-      \label{fig:p}
-      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom00.pdf}
-      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom00.pdf}
-    }
-    \subfloat[A Si atom]{
-      \label{fig:si10}
-      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom08.pdf}
-      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom08.pdf}
-    }
-  \caption{Distance to four nearest neighbours for the P atom (left) and a non-diffusing 
-      Si atom (right) atom at 1500 K. 
-      The relaxed Si-Si bond length, 2.37 Å is shown by a red line. 
-      Areas where all four nearest neighbour distances are less than 0.15 Å 
-  from 2.37 Å are shaded, indicating where the atom is tetrahedrally bonded.}
-  \label{fig:nneighboursex}
-\end{figure}
-
-
+For analysing trajectory data, a python package of about 5000 code lines was developed to parse and work with trajectory information 
+from the \texttt{vasprun.xml} files generated by {\vasp}. 
+Trajectory data is stored internally as NumPy-arrays, making it easy to work with.
+Motion across periodic boundaries can be unwrapped, and trajectories can then be exported as vtf-files, which can be read by newer versions of {\vmd}'s vtfplugin.
+This solves the slightly irritating issue with atoms jumping from one side to the other of the unit cell when viewing trajectories.
+Parts of the python package are far from complete however, and may not work at all, but other parts should work very well.
+It can be downloaded from
 
 \url{https://github.com/danmichaelo/oppvasp}
-\begin{lstlisting}
-git clone git://github.com/danmichaelo/oppvasp.git
-\end{lstlisting}
 
-The vtf writer writes both positions and forces, and the latter can be read by newer versions of {\vmd}'s vtfplugin.
+%While {\vmd} can also read \texttt{vasprun.xml} files, it can be useful 
+%it can be quite useful to be able to 
+%It can unwrap motion across periodic boundaries
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/vmdscene4.png}
-  \caption{Force visualization}
-  \label{fig:forceviz}
-\end{figure}
+%The vtf writer writes both positions and forces, and the latter can be read by 
+
+%\begin{figure}[htbp]
+%  \centering
+%  \includegraphics[width=6cm]{../notur/hipersol/si-pi/si64/split110_1000/vmdscene4.png}
+%  \caption{Force visualisation}
+%  \label{fig:forceviz}
+%\end{figure}
+
+%An atom at a lattice site will in general have four nearest neighbours, each at a distance 2.37 Å.
+%In fig. \ref{fig:nneighboursex}, the nearest neighbour distances for a given atom is plotted over time 
+%at 1500 K.
+%The left figure depicts the diffusing P-atom, while the right figure depicts a Si atom originally 4.05 Å 
+%away from the P atom. 
+%For a long time it remains on its site, but after 43 ps it is kicked away from its lattice site, 
+%and at 49 ps it falls to rest at a new site.
+
+%\begin{lstlisting}
+%from read_trajectory import read_trajectory
+%from ?? import NearestNeighbours
+%traj = read_trajectory(unwrap_pbcs = True)
+%for i in range(65):
+%    nn = NearestNeighbours(traj, atom=i)
+%    nn.plot_to_file('neighboursdst_atom%02d.pdf' % i)
+%\end{lstlisting}
+
+%\begin{figure}[htbp]
+%  \centering
+%    \subfloat[Phosphorus]{
+%      \label{fig:p}
+%      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom00.pdf}
+%      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom00.pdf}
+%    }
+%    \subfloat[A Si atom]{
+%      \label{fig:si10}
+%      %\includegraphics[width=6cm]{figs/nneighbours/split1500_atom08.pdf}
+%      \includegraphics[width=6cm]{figs/nneighbours/hexa1500_customplot_atom08.pdf}
+%    }
+%  \caption{Distance to four nearest neighbours for the P atom (left) and a non-diffusing 
+%      Si atom (right) atom at 1500 K. 
+%      The relaxed Si-Si bond length, 2.37 Å is shown by a red line. 
+%      Areas where all four nearest neighbour distances are less than 0.15 Å 
+%  from 2.37 Å are shaded, indicating where the atom is tetrahedrally bonded.}
+%  \label{fig:nneighboursex}
+%\end{figure}
+
+
 
 
 %\layout
